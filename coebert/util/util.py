@@ -1,4 +1,6 @@
-def formataTempo(tempo):
+class Util:
+     
+  def formataTempo(tempo):
      '''
      Pega a tempo em segundos e retorna uma string hh:mm:ss
      '''
@@ -11,7 +13,7 @@ def formataTempo(tempo):
      # Formata como hh:mm:ss
      return str(datetime.timedelta(seconds=tempoArredondado))
     
-def remove_tags(documento):
+  def remove_tags(documento):
      '''
      Remove tags de um documento(texto)
      '''
@@ -20,7 +22,7 @@ def remove_tags(documento):
      documentoLimpo = re.compile('<.*?>')
      return re.sub(documentoLimpo, '', documento)
   
-def carregar(nomeArquivo):
+  def carregar(nomeArquivo):
      '''
      Carrega um arquivo texto e retorna as linhas como um único parágrafo(texto)
      '''
@@ -40,28 +42,28 @@ def carregar(nomeArquivo):
      # Remove os espaços em branco antes e depois do parágrafo
      return paragrafo.strip()
 
-def carregarLista(nomeArquivo):
-    '''
-    Carrega um arquivo texto e retorna as linhas como uma lista de sentenças(texto)
-    '''
+  def carregarLista(nomeArquivo):
+     '''
+     Carrega um arquivo texto e retorna as linhas como uma lista de sentenças(texto)
+     '''
 
-    # Linha anterior    
-    arquivo = open(nomeArquivo, 'r')
-    sentencas = []
-    for linha in arquivo:        
+     # Linha anterior    
+     arquivo = open(nomeArquivo, 'r')
+     sentencas = []
+     for linha in arquivo:        
          linha = linha.splitlines()
          linha = ' '.join(linha)
          linha = remove_tags(linha)
          if linha != '':
             sentencas.append(linha.strip())
-    arquivo.close()
-    return sentencas    
+     arquivo.close()
+     return sentencas    
 
-def salvar(nomeArquivo,texto):                       
-    '''
-    Salva um texto em um arquivo
-    '''
+  def salvar(nomeArquivo,texto):                       
+     '''
+     Salva um texto em um arquivo
+     '''
 
-    arquivo = open(nomeArquivo, 'w')
-    arquivo.write(str(texto))
-    arquivo.close() 
+     arquivo = open(nomeArquivo, 'w')
+     arquivo.write(str(texto))
+     arquivo.close() 
