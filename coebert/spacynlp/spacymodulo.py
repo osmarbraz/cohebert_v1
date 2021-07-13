@@ -1,22 +1,31 @@
+# Import das bibliotecas.
+import wget
+import tarfile
+
 def downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
     Realiza o download do arquivo do modelo para o diretório corrente
     '''
-    !wget https://github.com/explosion/spacy-models/releases/download/{ARQUIVOMODELOSPACY}{VERSAOSPACY}/{ARQUIVOMODELOSPACY}{VERSAOSPACY}.tar.gz
+    # Url do arquivo
+    URL_ARQUIVO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
+
+    # Realiza o download do arquivo
+    wget.download(ENDERECO)        
 
 def descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
     Descompacta o arquivo do modelo
     '''
-    !tar -xvf  /content/{ARQUIVOMODELOSPACY}{VERSAOSPACY}.tar.gz
-
-def moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
-    '''
-    Coloca a pasta do modelo descompactado em uma pasta de nome mais simples
-    '''
-    !mv /content/{ARQUIVOMODELOSPACY}{VERSAOSPACY}/{ARQUIVOMODELOSPACY}/{ARQUIVOMODELOSPACY}{VERSAOSPACY} /content/{ARQUIVOMODELOSPACY}
-
-
+    # Nome do arquivo a ser descompactado
+    ARQUIVO = ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
+    
+    arquivoTar = tarfile.open(fname, "r:gz")
+    
+    # Coloca a pasta do modelo descompactado em uma pasta de nome mais simples
+    arquivoTar.extractall(ARQUIVOMODELOSPACY)
+    
+    arquivoTar.close()
+    
 def carregaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
     Realiza o carregamento do Spacy.    
@@ -25,8 +34,6 @@ def carregaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
 
     descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
-
-    moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
 
     # Importando as bibliotecas.
     import spacy
