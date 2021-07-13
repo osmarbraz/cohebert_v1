@@ -1,38 +1,32 @@
-# Definição do nome do arquivo do modelo
-ARQUIVOMODELOSPACY = model_args.modelo_spacy
-
-# Definição da versão da spaCy
-VERSAOSPACY = '-2.3.0'
-
-def downloadSpacy():
+def downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
     Realiza o download do arquivo do modelo para o diretório corrente
     '''
     !wget https://github.com/explosion/spacy-models/releases/download/{ARQUIVOMODELOSPACY}{VERSAOSPACY}/{ARQUIVOMODELOSPACY}{VERSAOSPACY}.tar.gz
 
-def descompactaSpacy():
+def descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
     Descompacta o arquivo do modelo
     '''
     !tar -xvf  /content/{ARQUIVOMODELOSPACY}{VERSAOSPACY}.tar.gz
 
-def moveSpacy():
+def moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
     Coloca a pasta do modelo descompactado em uma pasta de nome mais simples
     '''
     !mv /content/{ARQUIVOMODELOSPACY}{VERSAOSPACY}/{ARQUIVOMODELOSPACY}/{ARQUIVOMODELOSPACY}{VERSAOSPACY} /content/{ARQUIVOMODELOSPACY}
 
 
-def carregaSpacy():
+def carregaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
     Realiza o carregamento do Spacy.    
     '''
 
-    downloadSpacy()
+    downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
 
-    descompactaSpacy()
+    descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
 
-    moveSpacy()
+    moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
 
     # Importando as bibliotecas.
     import spacy
