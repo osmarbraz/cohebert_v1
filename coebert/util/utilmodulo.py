@@ -1,6 +1,4 @@
-class Util:
-     
-  def formataTempo(self, tempo):
+def formataTempo(self, tempo):
      '''
      Pega a tempo em segundos e retorna uma string hh:mm:ss
      '''
@@ -13,7 +11,7 @@ class Util:
      # Formata como hh:mm:ss
      return str(datetime.timedelta(seconds=tempoArredondado))
     
-  def remove_tags(self, documento):
+def remove_tags(self, documento):
      '''
      Remove tags de um documento(texto)
      '''
@@ -22,7 +20,7 @@ class Util:
      documentoLimpo = re.compile('<.*?>')
      return re.sub(documentoLimpo, '', documento)
   
-  def carregar(self, nomeArquivo):
+def carregar(self, nomeArquivo):
      '''
      Carrega um arquivo texto e retorna as linhas como um único parágrafo(texto)
      '''
@@ -42,7 +40,7 @@ class Util:
      # Remove os espaços em branco antes e depois do parágrafo
      return paragrafo.strip()
 
-  def carregarLista(self, nomeArquivo):
+def carregarLista(self, nomeArquivo):
      '''
      Carrega um arquivo texto e retorna as linhas como uma lista de sentenças(texto)
      '''
@@ -59,7 +57,7 @@ class Util:
      arquivo.close()
      return sentencas    
 
-  def salvar(self, nomeArquivo,texto):                       
+def salvar(self, nomeArquivo,texto):                       
      '''
      Salva um texto em um arquivo
      '''
@@ -67,5 +65,3 @@ class Util:
      arquivo = open(nomeArquivo, 'w')
      arquivo.write(str(texto))
      arquivo.close() 
-
-         
