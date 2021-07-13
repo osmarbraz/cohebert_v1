@@ -111,7 +111,7 @@ def copiaModeloAjustado():
 
     return DIRETORIO_LOCAL_MODELO_AJUSTADO
 
-def verificaModelo():
+def verificaModelo(model_args):
     ''' 
     Verifica de onde utilizar o modelo
     ''' 
@@ -123,6 +123,7 @@ def verificaModelo():
     else:
         DIRETORIO_MODELO = downloadModeloPretreinado(model_args.pretrained_model_name_or_path)
         print('Usando modelo pré-treinado de download ou comunidade')
+        
     return DIRETORIO_MODELO
 
 def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO):
@@ -188,3 +189,15 @@ def carregaModelo(MODELO, DIRETORIO_MODELO, model_args):
 
     return model
 
+def carregaBERT(MODELO, model_args):
+    ''' 
+    Carrega o BERT e retorna o modelo e o tokenizador.
+    ''' 
+    # Verifica a origem do modelo
+    DIRETORIO_MODELO = verificaModelo(model_args)
+    
+    tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO):
+    
+    model = carregaModelo(MODELO, DIRETORIO_MODELO, model_args)
+    
+    return model, tokenizer
