@@ -1,4 +1,4 @@
-def formataTempo(self, tempo):
+def formataTempo(tempo):
      '''
      Pega a tempo em segundos e retorna uma string hh:mm:ss
      '''
@@ -11,7 +11,7 @@ def formataTempo(self, tempo):
      # Formata como hh:mm:ss
      return str(datetime.timedelta(seconds=tempoArredondado))
     
-def remove_tags(self, documento):
+def remove_tags(documento):
      '''
      Remove tags de um documento(texto)
      '''
@@ -20,7 +20,7 @@ def remove_tags(self, documento):
      documentoLimpo = re.compile('<.*?>')
      return re.sub(documentoLimpo, '', documento)
   
-def carregar(self, nomeArquivo):
+def carregar(nomeArquivo):
      '''
      Carrega um arquivo texto e retorna as linhas como um único parágrafo(texto)
      '''
@@ -40,7 +40,7 @@ def carregar(self, nomeArquivo):
      # Remove os espaços em branco antes e depois do parágrafo
      return paragrafo.strip()
 
-def carregarLista(self, nomeArquivo):
+def carregarLista(nomeArquivo):
      '''
      Carrega um arquivo texto e retorna as linhas como uma lista de sentenças(texto)
      '''
@@ -57,7 +57,7 @@ def carregarLista(self, nomeArquivo):
      arquivo.close()
      return sentencas    
 
-def salvar(self, nomeArquivo,texto):                       
+def salvar(nomeArquivo,texto):                       
      '''
      Salva um texto em um arquivo
      '''
