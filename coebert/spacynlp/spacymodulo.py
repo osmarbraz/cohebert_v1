@@ -1,7 +1,7 @@
 # Import das bibliotecas.
-import wget
-import tarfile
-import shutil
+import wget # Biblioteca de download
+import tarfile # Biblioteca de descompactação
+import shutil # Biblioteca para mover arquivos
 
 def downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
