@@ -10,7 +10,7 @@ def downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     URL_ARQUIVO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
 
     # Realiza o download do arquivo
-    wget.download(ENDERECO)        
+    wget.download(URL_ARQUIVO)        
 
 def descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
