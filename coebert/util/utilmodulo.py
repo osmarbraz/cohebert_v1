@@ -5,7 +5,7 @@ def formataTempo(tempo):
      import time
      import datetime
         
-     # Arredonda para o segundo mais próximo.
+     # Arredonda para o segundo mais prÃ³ximo.
      tempoArredondado = int(round((tempo)))
    
      # Formata como hh:mm:ss
@@ -22,7 +22,7 @@ def remove_tags(documento):
   
 def carregar(nomeArquivo):
      '''
-     Carrega um arquivo texto e retorna as linhas como um único parágrafo(texto)
+     Carrega um arquivo texto e retorna as linhas como um Ãºnico parÃ¡grafo(texto)
      '''
      # Linha anterior    
      arquivo = open(nomeArquivo, 'r')
