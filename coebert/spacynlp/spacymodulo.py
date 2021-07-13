@@ -1,6 +1,7 @@
 # Import das bibliotecas.
 import wget
 import tarfile
+import shutil
 
 def downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
@@ -19,12 +20,19 @@ def descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     # Nome do arquivo a ser descompactado
     ARQUIVO = ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
     
-    arquivoTar = tarfile.open(ARQUIVO, "r:gz")
+    arquivoTar = tarfile.open(ARQUIVO, "r:gz")    
+    arquivoTar.extractall()    
+    arquivoTar.close()    
     
-    # Coloca a pasta do modelo descompactado em uma pasta de nome mais simples
-    arquivoTar.extractall(ARQUIVOMODELOSPACY)
+def moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
+    '''
+    Coloca a pasta do modelo descompactado em uma pasta de nome mais simples.
+    '''
     
-    arquivoTar.close()
+    ORIGEM = "/content/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + ARQUIVOMODELOSPACY + "/" + ARQUIVOMODELOSPACY + VERSAOSPACY 
+    DESTINO = "/content/" + ARQUIVOMODELOSPACY
+
+    shutil.move(ORIGEM, DESTINO)
     
 def carregaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
@@ -34,6 +42,8 @@ def carregaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
 
     descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
+    
+    moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
 
     # Importando as bibliotecas.
     import spacy
