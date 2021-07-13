@@ -8,15 +8,16 @@ def downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     Realiza o download do arquivo do modelo para o diretório corrente
     '''
     # Url do arquivo
-    URL_ARQUIVO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
+    URL_ARQUIVO_MODELO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
 
-    # Realiza o download do arquivo
-    wget.download(URL_ARQUIVO)        
+    # Realiza o download do arquivo do modelo
+    wget.download(URL_ARQUIVO_MODELO)        
 
 def descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
     Descompacta o arquivo do modelo
     '''
+    
     # Nome do arquivo a ser descompactado
     ARQUIVO = ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
     
@@ -28,8 +29,9 @@ def moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     '''
     Coloca a pasta do modelo descompactado em uma pasta de nome mais simples.
     '''
-    
+    # Caminho da origem do diretório
     ORIGEM = "/content/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + ARQUIVOMODELOSPACY + "/" + ARQUIVOMODELOSPACY + VERSAOSPACY 
+    # Destino do diretório
     DESTINO = "/content/" + ARQUIVOMODELOSPACY
 
     shutil.move(ORIGEM, DESTINO)
