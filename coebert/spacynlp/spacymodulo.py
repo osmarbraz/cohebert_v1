@@ -1,29 +1,29 @@
-# DefiniÁ„o do nome do arquivo do modelo
+# Defini√ß√£o do nome do arquivo do modelo
 ARQUIVOMODELOSPACY = model_args.modelo_spacy
 
-# DefiniÁ„o da vers„o da spaCy
+# Defini√ß√£o da vers√£o da spaCy
 VERSAOSPACY = '-2.3.0'
 
-def downloadSpacy()
+def downloadSpacy():
     '''
-    Realiza o download do arquivo do modelo para o diretÛrio corrente
+    Realiza o download do arquivo do modelo para o diret√≥rio corrente
     '''
     !wget https://github.com/explosion/spacy-models/releases/download/{ARQUIVOMODELOSPACY}{VERSAOSPACY}/{ARQUIVOMODELOSPACY}{VERSAOSPACY}.tar.gz
 
-def descompactaSpacy()
+def descompactaSpacy():
     '''
     Descompacta o arquivo do modelo
     '''
     !tar -xvf  /content/{ARQUIVOMODELOSPACY}{VERSAOSPACY}.tar.gz
 
-def moveSpacy()
+def moveSpacy():
     '''
     Coloca a pasta do modelo descompactado em uma pasta de nome mais simples
     '''
     !mv /content/{ARQUIVOMODELOSPACY}{VERSAOSPACY}/{ARQUIVOMODELOSPACY}/{ARQUIVOMODELOSPACY}{VERSAOSPACY} /content/{ARQUIVOMODELOSPACY}
 
 
-def carregaSpacy()
+def carregaSpacy():
     '''
     Realiza o carregamento do Spacy.    
     '''
@@ -40,12 +40,12 @@ def carregaSpacy()
     # Caminho completo do modelo do spaCy
     CAMINHOMODELOSPACY = '/content/' + ARQUIVOMODELOSPACY
 
-    # Necess·rio 'tagger' para encontrar os substantivos
+    # Necess√°rio 'tagger' para encontrar os substantivos
     nlp = spacy.load(CAMINHOMODELOSPACY, disable=['tokenizer', 'lemmatizer', 'ner', 'parser', 'textcat', 'custom'])
 
     return nlp
 
-def getStopwords(nlp)
+def getStopwords(nlp):
     '''
     Recupera as stop words do nlp(Spacy).
     '''
