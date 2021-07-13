@@ -1,6 +1,11 @@
+# Import das bibliotecas.
+import wget # Biblioteca de download
+import zipfile # Biblioteca para descompactar
+import os # Biblioteca para apagar arquivos
+
 def getNomeModeloBERT(model_args):
     '''    
-    Recupera a descriÁ„o do modelo para nomes de arquivos e diretÛrios.
+    Recupera a descri√ß√£o do modelo para nomes de arquivos e diret√≥rios.
     '''
 
     # Verifica o nome do modelo(default BERT)
@@ -10,78 +15,80 @@ def getNomeModeloBERT(model_args):
     else:
         if 'multilingual' in model_args.pretrained_model_name_or_path:
             MODELO_BERT = '_BERTmultilingual'
+            
     return MODELO_BERT
 
 def getTamanhoBERT(model_args):
     '''    
-    Recupera a dimens„o do modelo para nomes de arquivos e diretÛrios.
+    Recupera a dimens√£o do modelo para nomes de arquivos e diret√≥rios.
     '''
     # Verifica o tamanho do modelo(default large)
     TAMANHO_BERT = '_large'
     if 'base' in model_args.pretrained_model_name_or_path:
         TAMANHO_BERT = '_base'
+        
     return TAMANHO_BERT  
-
 
 def downloadModeloPretreinado(MODELO):
     ''' 
-    Realiza o download do MODELO e retorna o diretÛrio onde o MODELO foi descompactado.
+    Realiza o download do MODELO e retorna o diret√≥rio onde o MODELO foi descompactado.
     ''' 
 
     # Importando as bibliotecas.
     import os
 
-    # Vari·vel para setar o arquivo.
+    # Vari√°vel para setar o arquivo.
     URL_MODELO = None
 
     if 'http' in MODELO:
         URL_MODELO = MODELO
 
-    # Se a vari·vel foi setada.
+    # Se a vari√°vel foi setada.
     if URL_MODELO:
 
-        # DiretÛrio descompactaÁ„o.
+        # Diret√≥rio descompacta√ß√£o.
         DIRETORIO_MODELO = '/content/modelo'
 
         # Recupera o nome do arquivo do modelo da url.
         arquivo = URL_MODELO.split('/')[-1]
 
-        # Nome do arquivo do vocabul·rio.
+        # Nome do arquivo do vocabul√°rio.
         arquivo_vocab = 'vocab.txt'
 
         # Caminho do arquivo na url.
         caminho = URL_MODELO[0:len(URL_MODELO)-len(arquivo)]
 
-        # Verifica se a pasta de descompactaÁ„o existe na pasta corrente
+        # Verifica se a pasta de descompacta√ß√£o existe na pasta corrente
         if os.path.exists(DIRETORIO_MODELO):
-            print('Apagando diretÛrio existente do modelo!')
+            print('Apagando diret√≥rio existente do modelo!')
             # Apaga a pasta e os arquivos existentes
-            !rm -rf $DIRETORIO_MODELO    
+            #!rm -rf $DIRETORIO_MODELO                
+            shutil.rmtree(DIRETORIO_MODELO)
 
-        # Baixa o arquivo do modelo.
-        !wget $URL_MODELO
+        # Realiza o download do arquivo do modelo
+        wget.download(URL_MODELO)        
 
-        # Descompacta o arquivo na pasta de descompactaÁ„o.
-        !unzip -o $arquivo -d $DIRETORIO_MODELO
+        # Descompacta o arquivo na pasta de descompacta√ß√£o.
+        #!unzip -o $arquivo -d $DIRETORIO_MODELO
+        
+        arquivoZip = zipfile.ZipFile(arquivo,"r")
+        arquivoZip.extractall(DIRETORIO_MODELO)
 
-        # Baixa o arquivo do vocabul·rio.
-        # O vocabul·rio n„o est· no arquivo compactado acima, mesma url mas arquivo diferente.
-        URL_MODELO_VOCAB = caminho + arquivo_vocab
-        !wget $URL_MODELO_VOCAB
+        # Baixa o arquivo do vocabul√°rio.
+        # O vocabul√°rio n√£o est√° no arquivo compactado acima, mesma url mas arquivo diferente.
+        URL_MODELO_VOCAB = caminho + arquivo_vocab        
+        # Coloca o arquivo do vocabul√°rio no diret√≥rio de descompacta√ß√£o.
+        wget.download(URL_MODELO_VOCAB. out = DIRETORIO_MODELO)        
 
-        # Coloca o arquivo do vocabul·rio no diretÛrio de descompactaÁ„o.
-        !mv $arquivo_vocab $DIRETORIO_MODELO
-
-        # Move o arquivo para pasta de descompactaÁ„o
-        !mv $arquivo $DIRETORIO_MODELO
+        # Move o arquivo para pasta de descompacta√ß√£o
+        #!mv $arquivo $DIRETORIO_MODELO
+        shutil.move(arquivo, DIRETORIO_MODELO)
 
         print('Pasta do {} pronta!'.format(DIRETORIO_MODELO))
 
-        # Lista a pasta corrente.
-        !ls -la $DIRETORIO_MODELO
     else:
         DIRETORIO_MODELO = MODELO
-        print('Vari·vel URL_MODELO n„o setada!')
+        print('Vari√°vel URL_MODELO n√£o setada!')
 
     return DIRETORIO_MODELO
 
@@ -90,18 +97,16 @@ def copiaModeloAjustado():
     Copia o MODELO ajustado do GoogleDrive para o projeto.
     ''' 
 
-    # Importando as bibliotecas.
-    import os
-
-    # DiretÛrio local de salvamento do modelo.
+    # Diret√≥rio local de salvamento do modelo.
     DIRETORIO_LOCAL_MODELO_AJUSTADO = '/content/modelo_ajustado/'
 
-    # DiretÛrio remoto de salvamento do modelo.
+    # Diret√≥rio remoto de salvamento do modelo.
     DIRETORIO_REMOTO_MODELO_AJUSTADO = '/content/drive/MyDrive/Colab Notebooks/Data/CSTNEWS/validacao_classificacao/holdout/modelo/modelo' + MODELO_BERT + TAMANHO_BERT
 
-    ## Copia o arquivo do modelo para o diretÛrio no Google Drive.
-    !cp -r '$DIRETORIO_REMOTO_MODELO_AJUSTADO' '$DIRETORIO_LOCAL_MODELO_AJUSTADO' 
-
+    ## Copia o arquivo do modelo para o diret√≥rio no Google Drive.
+    #!cp -r '$DIRETORIO_REMOTO_MODELO_AJUSTADO' '$DIRETORIO_LOCAL_MODELO_AJUSTADO' 
+    shutil.copytree(DIRETORIO_REMOTO_MODELO_AJUSTADO, DIRETORIO_LOCAL_MODELO_AJUSTADO) 
+   
     print('Modelo copiado!')
 
     return DIRETORIO_LOCAL_MODELO_AJUSTADO
@@ -117,27 +122,27 @@ def verificaModelo():
         print('Usando modelo ajustado')
     else:
         DIRETORIO_MODELO = downloadModeloPretreinado(model_args.pretrained_model_name_or_path)
-        print('Usando modelo prÈ-treinado de download ou comunidade')
+        print('Usando modelo pr√©-treinado de download ou comunidade')
     return DIRETORIO_MODELO
 
 def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO):
     ''' 
     Carrega o tokenizador do MODELO.
     O tokenizador utiliza WordPiece.
-    Carregando o tokenizador da pasta '/content/modelo/' do diretÛrio padr„o se vari·vel `DIRETORIO_MODELO` setada.
-    Caso contr·rio carrega da comunidade
-    Por default(`do_lower_case=True`) todas as letras s„o colocadas para min˙sculas. Para ignorar a convers„o para min˙sculo use o par‚metro `do_lower_case=False`. Esta opÁ„o tambÈm considera as letras acentuadas(„ÁÈÌ...), que s„o necess·rias a lÌngua portuguesa.
-    O par‚metro `do_lower_case` interfere na quantidade tokens a ser gerado a partir de um texto. Quando igual a `False` reduz a quantidade de tokens gerados.
+    Carregando o tokenizador da pasta '/content/modelo/' do diret√≥rio padr√£o se vari√°vel `DIRETORIO_MODELO` setada.
+    Caso contr√°rio carrega da comunidade
+    Por default(`do_lower_case=True`) todas as letras s√£o colocadas para min√∫sculas. Para ignorar a convers√£o para min√∫sculo use o par√¢metro `do_lower_case=False`. Esta op√ß√£o tamb√©m considera as letras acentuadas(√£√ß√©√≠...), que s√£o necess√°rias a l√≠ngua portuguesa.
+    O par√¢metro `do_lower_case` interfere na quantidade tokens a ser gerado a partir de um texto. Quando igual a `False` reduz a quantidade de tokens gerados.
     ''' 
 
     # Importando as bibliotecas do tokenizador.
     from transformers import BertTokenizer
 
-    # Se a vari·vel DIRETORIO_MODELO foi setada.
+    # Se a vari√°vel DIRETORIO_MODELO foi setada.
     if DIRETORIO_MODELO:
 
         # Carregando o Tokenizador.
-        print('Carregando o tokenizador BERT do diretÛrio {}...'.format(DIRETORIO_MODELO))
+        print('Carregando o tokenizador BERT do diret√≥rio {}...'.format(DIRETORIO_MODELO))
 
         tokenizer = BertTokenizer.from_pretrained(DIRETORIO_MODELO, 
                                                   do_lower_case=model_args.do_lower_case)
@@ -151,25 +156,24 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO):
 
     return tokenizer
 
-
 def carregaModelo(MODELO, DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o modelo e retorna o modelo.
-    ...
-
-    # Importando as bibliotecas do Modelo
+    ''' 
+    
+    # Importando as bibliotecas do Modelo    
     from transformers import BertModel
 
-    # Vari·vel para setar o arquivo.
+    # Vari√°vel para setar o arquivo.
     URL_MODELO = None
 
     if 'http' in MODELO:
         URL_MODELO = MODELO
 
-    # Se a vari·vel URL_MODELO foi setada
+    # Se a vari√°vel URL_MODELO foi setada
     if URL_MODELO:
         # Carregando o Modelo BERT
-        print('Carregando o modelo BERT do diretÛrio {}...'.format(DIRETORIO_MODELO))
+        print('Carregando o modelo BERT do diret√≥rio {}...'.format(DIRETORIO_MODELO))
 
         model = BertModel.from_pretrained(DIRETORIO_MODELO,
                                           output_attentions = model_args.output_attentions,
