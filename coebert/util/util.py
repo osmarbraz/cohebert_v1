@@ -67,3 +67,5 @@ class Util:
      arquivo = open(nomeArquivo, 'w')
      arquivo.write(str(texto))
      arquivo.close() 
+
+         
