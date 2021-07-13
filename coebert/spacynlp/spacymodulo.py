@@ -19,7 +19,7 @@ def descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     # Nome do arquivo a ser descompactado
     ARQUIVO = ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
     
-    arquivoTar = tarfile.open(fname, "r:gz")
+    arquivoTar = tarfile.open(ARQUIVO, "r:gz")
     
     # Coloca a pasta do modelo descompactado em uma pasta de nome mais simples
     arquivoTar.extractall(ARQUIVOMODELOSPACY)
