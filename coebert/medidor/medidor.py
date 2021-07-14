@@ -4,35 +4,35 @@ import torch
 
 def getDocumentoLista(listaDocumento):
     '''
-    Recebe uma lista de sentenÁas e faz a concatenaÁ„o em uma string
+    Recebe uma lista de senten√ßas e faz a concatena√ß√£o em uma string
     '''
 
     stringDocumento = ''  
-    # Concatena as sentenÁas do documento
+    # Concatena as senten√ßas do documento
     for sentenca in listaDocumento:                
         stringDocumento = stringDocumento + sentenca
 
 def getListaSentencasDocumento(documento, nlp):
 
     '''
-    Retorna uma lista com as sentenÁas de um documento. Utiliza o spacy para dividir o documento em sentenÁas.
+    Retorna uma lista com as senten√ßas de um documento. Utiliza o spacy para dividir o documento em senten√ßas.
     '''
 
-    # Aplica tokenizaÁ„o de sentenÁa do spacy no documento
+    # Aplica tokeniza√ß√£o de senten√ßa do spacy no documento
     doc = nlp(documento) 
 
-    # Lista para as sentenÁas
+    # Lista para as senten√ßas
     lista = []
-    # Percorre as sentenÁas
+    # Percorre as senten√ßas
     for sentenca in doc.sents: 
-        # Adiciona as sentenÁas a lista
+        # Adiciona as senten√ßas a lista
         lista.append(str(sentenca))
 
     return lista
 
 def encontrarIndiceSubLista(lista, sublista):
     '''
-    Localiza os Ìndices de inÌcio e fim de uma sublista em uma lista
+    Localiza os √≠ndices de in√≠cio e fim de uma sublista em uma lista
     '''
     # https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm
     h = len(lista)
@@ -55,7 +55,7 @@ def removeStopWord(documento, stopwords):
     Remove as stopwords de um documento.
     '''
 
-    # RemoÁ„o das stop words do documento
+    # Remo√ß√£o das stop words do documento
     documentoSemStopwords = [palavra for palavra in documento.split() if palavra.lower() not in stopwords]
 
     # Concatena o documento sem os stopwords
@@ -66,7 +66,7 @@ def removeStopWord(documento, stopwords):
 
 def retornaSaliente(documento, tipoSaliente='NOUN', nlp):
     '''
-    Retorna somente os palavras do documento ou sentenÁa do tipo especificado.
+    Retorna somente os palavras do documento ou senten√ßa do tipo especificado.
     '''
   
     # Realiza o parsing no spacy
@@ -84,7 +84,7 @@ def retornaSaliente(documento, tipoSaliente='NOUN', nlp):
 def getDocumentoTokenizado(documento, tokenizador):
 
     '''
-    Retorna um documento tokenizado e concatenado com tokens especiais '[CLS]' no inÌcio
+    Retorna um documento tokenizado e concatenado com tokens especiais '[CLS]' no in√≠cio
     e o token '[SEP]' no fim para ser submetido ao BERT.
     '''
 
@@ -95,8 +95,6 @@ def getDocumentoTokenizado(documento, tokenizador):
     documentoTokenizado = tokenizador.tokenize(documentoMarcado)
 
     return documentoTokenizado
-
-
 
 # Constantes para padronizar o acesso aos dados do modelo do BERT.
 TEXTO_TOKENIZADO = 0
@@ -124,54 +122,54 @@ def getEmbeddingsTodasCamadas(documento, modelo, tokenizador):
 
     #tokeniza o documento e retorna os tensores.
     dicCodificado = tokenizador.encode_plus(
-                        documento,                          # Documento a ser codificado.
+                        documento,                      # Documento a ser codificado.
                         add_special_tokens = True,      # Adiciona os tokens especiais '[CLS]' e '[SEP]'
-                        max_length = qtdeTokens,        # Define o tamanho m·ximo para preencheer ou truncar.
+                        max_length = qtdeTokens,        # Define o tamanho m√°ximo para preencheer ou truncar.
                         truncation = True,              # Trunca o documento por max_length
-                        padding = 'max_length',         # Preenche o documento atÈ max_length
-                        return_attention_mask = True,   # ConstrÛi a m·scara de atenÁ„o.
+                        padding = 'max_length',         # Preenche o documento at√© max_length
+                        return_attention_mask = True,   # Constr√≥i a m√°scara de aten√ß√£o.
                         return_tensors = 'pt'           # Retorna os dados como tensores pytorch.
                    )
     
-    # Ids dos tokens de entrada mapeados em seus Ìndices do vocabu·rio.
+    # Ids dos tokens de entrada mapeados em seus √≠ndices do vocabu√°rio.
     input_ids =  dicCodificado['input_ids']
 
-    # M·scara de atenÁ„o de cada um dos tokens como pertencentes ‡ sentenÁa '1'.
+    # M√°scara de aten√ß√£o de cada um dos tokens como pertencentes √† senten√ßa '1'.
     attention_mask = dicCodificado['attention_mask']
 
     # Recupera os tensores dos segmentos.
     token_type_ids = dicCodificado['token_type_ids']
 
-    # Roda o documento atravÈs do BERT, e coleta todos os estados ocultos produzidos.
+    # Roda o documento atrav√©s do BERT, e coleta todos os estados ocultos produzidos.
     # das 12 camadas. 
     with torch.no_grad():
 
-        # Passe para a frente, calcule as previsıes outputs.     
+        # Passe para a frente, calcule as previs√µes outputs.     
         outputs = modelo(input_ids=input_ids, 
                         attention_mask=attention_mask)
 
-        # A avaliaÁ„o do modelo retorna um n˙mero de diferentes objetos com base em
-        # como È configurado na chamada do mÈtodo `from_pretrained` anterior. Nesse caso,
-        # porque definimos `output_hidden_states = True`, o terceiro item ser· o
-        # estados ocultos(hidden_states) de todas as camadas. Veja a documentaÁ„o para mais detalhes:
+        # A avalia√ß√£o do modelo retorna um n√∫mero de diferentes objetos com base em
+        # como √© configurado na chamada do m√©todo `from_pretrained` anterior. Nesse caso,
+        # porque definimos `output_hidden_states = True`, o terceiro item ser√° o
+        # estados ocultos(hidden_states) de todas as camadas. Veja a documenta√ß√£o para mais detalhes:
         # https://huggingface.co/transformers/model_doc/bert.html#bertmodel
 
-        # Retorno de model quando ¥output_hidden_states=True¥ È setado:    
+        # Retorno de model quando ¬¥output_hidden_states=True¬¥ √© setado:    
         # outputs[0] = last_hidden_state, outputs[1] = pooler_output, outputs[2] = hidden_states
-        # hidden_states È uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
+        # hidden_states √© uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
         
         # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
     return documentoTokenizado, input_ids, attention_mask, token_type_ids, outputs
 
 # getEmbeddingsTodasCamadasBuffer
-# Cria um buffer com os embeddings de sentenÁas para economizar no processamento.
+# Cria um buffer com os embeddings de senten√ßas para economizar no processamento.
 buffer_embeddings = {}
 
 def getEmbeddingsTodasCamadasBuffer(S, modelo, tokenizador):
     '''
-    Retorna os embeddings de uma sentenÁa de um buffer ou do modelo..
+    Retorna os embeddings de uma senten√ßa de um buffer ou do modelo..
     '''
-    # Se est· no dicion·rio retorna o embedding
+    # Se est√° no dicion√°rio retorna o embedding
     if S in buffer_embeddings:
         return buffer_embeddings.get(S)
     else:
@@ -182,76 +180,89 @@ def getEmbeddingsTodasCamadasBuffer(S, modelo, tokenizador):
 
 def limpaBufferEmbedding():
     '''
-    Esvazia o buffer de embeddings das sentenÁas.
+    Esvazia o buffer de embeddings das senten√ßas.
     '''
     buffer_embeddings.clear()
 
 
-# getEmbeddingCamada
-# Retorna os embeddings das camadas especificas.
-
 def getEmbeddingPrimeiraCamada(sentencaEmbedding):
-    # Cada elemento do vetor sentencaEmbeddinging È formado por:  
+    '''
+    Retorna os embeddings da primeira camada.
+    '''
+    
+    # Cada elemento do vetor sentencaEmbeddinging √© formado por:  
     # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
-    # hidden_states È uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
+    # hidden_states √© uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
     #[4]outpus e [2]hidden_states 
     #[OUTPUTS]outpus e [OUTPUTS_HIDDEN_STATES]hidden_states      
   
     # Retorna todas a primeira(-1) camada
     # Entrada: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
     resultado = sentencaEmbedding[OUTPUTS][OUTPUTS_HIDDEN_STATES][0]
-    # SaÌda: (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
+    # Sa√≠da: (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
     #print('resultado=',resultado.size())
 
     return resultado
 
 def getEmbeddingPenultimaCamada(sentencaEmbedding):
-    # Cada elemento do vetor sentencaEmbedding È formado por:  
+    '''
+    Retorna os embeddings da pen√∫ltima camada.
+    '''
+    
+    # Cada elemento do vetor sentencaEmbedding √© formado por:  
     # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
-    # hidden_states È uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
+    # hidden_states √© uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
     #[4]outpus e [2]hidden_states 
     #[OUTPUTS]outpus e [OUTPUTS_HIDDEN_STATES]hidden_states      
   
-    # Retorna todas a pen˙ltima(-2) camada
+    # Retorna todas a pen√∫ltima(-2) camada
     # Entrada: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
     resultado = sentencaEmbedding[OUTPUTS][OUTPUTS_HIDDEN_STATES][-2]
-    # SaÌda: (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
+    # Sa√≠da: (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
     #print('resultado=',resultado.size())
 
     return resultado
 
 def getEmbeddingUltimaCamada(sentencaEmbedding):
-    # Cada elemento do vetor sentencaEmbedding È formado por:  
+    '''
+    Retorna os embeddings da √∫ltima camada.
+    '''
+    
+    # Cada elemento do vetor sentencaEmbedding √© formado por:  
     # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
-    # hidden_states È uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
+    # hidden_states √© uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
     #[4]outpus e [2]hidden_states 
     #[OUTPUTS]outpus e [OUTPUTS_HIDDEN_STATES]hidden_states      
   
-    # Retorna todas a ˙ltima(-1) camada
+    # Retorna todas a √∫ltima(-1) camada
     # Entrada: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
     resultado = sentencaEmbedding[OUTPUTS][OUTPUTS_HIDDEN_STATES][-1]
-    # SaÌda: (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
+    # Sa√≠da: (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
     #print('resultado=',resultado.size())
   
     return resultado    
 
 def getEmbeddingSoma4UltimasCamadas(sentencaEmbedding):
-    # Cada elemento do vetor sentencaEmbedding È formado por:  
+    '''
+    Retorna os embeddings da soma das 4 √∫ltimas camadas.
+    '''
+    
+    # Cada elemento do vetor sentencaEmbedding √© formado por:  
     # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
-    # hidden_states È uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
+    # hidden_states √© uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
     #[4]outpus e [2]hidden_states 
     #[OUTPUTS]outpus e [OUTPUTS_HIDDEN_STATES]hidden_states      
   
-    # Retorna todas as 4 ˙ltimas camadas
+    # Retorna todas as 4 √∫ltimas camadas
     # Entrada: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
     embeddingCamadas = sentencaEmbedding[OUTPUTS][OUTPUTS_HIDDEN_STATES][-4:]
-    # SaÌda: List das camadas(4) (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
+    # Sa√≠da: List das camadas(4) (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
 
-    # Usa o mÈtodo `stack` para criar uma nova dimens„o no tensor 
-    # com a concateÁ„o dos tensores dos embeddings.        
+    # Usa o m√©todo `stack` para criar uma nova dimens√£o no tensor 
+    # com a concate√ß√£o dos tensores dos embeddings.        
     # Entrada: List das camadas(4) (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
     resultadoStack = torch.stack(embeddingCamadas, dim=0)
-    # SaÌda: <4> x <1(lote)> x <qtde_tokens> x <768 ou 1024>
+    # Sa√≠da: <4> x <1(lote)> x <qtde_tokens> x <768 ou 1024>
     #print('resultadoStack=',resultadoStack.size())
   
     # Realiza a soma dos embeddings de todos os tokens para as camadas
@@ -263,9 +274,13 @@ def getEmbeddingSoma4UltimasCamadas(sentencaEmbedding):
     return resultado
 
 def getEmbeddingConcat4UltimasCamadas(sentencaEmbedding):
-    # Cada elemento do vetor sentencaEmbedding È formado por:  
+    '''
+    Retorna os embeddings da concatena√ß√£o das 4 √∫ltimas camadas.
+    '''
+    
+    # Cada elemento do vetor sentencaEmbedding √© formado por:  
     # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
-    # hidden_states È uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
+    # hidden_states √© uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
     #[4]outpus e [2]hidden_states 
     #[OUTPUTS]outpus e [OUTPUTS_HIDDEN_STATES]hidden_states      
     
@@ -273,38 +288,42 @@ def getEmbeddingConcat4UltimasCamadas(sentencaEmbedding):
     # Entrada: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
     # Lista com os tensores a serem concatenados
     listaConcat = []
-    # Percorre os 4 ˙ltimos
+    # Percorre os 4 √∫ltimos
     for i in [-1,-2,-3,-4]:
         # Concatena da lista
         listaConcat.append(sentencaEmbedding[OUTPUTS][OUTPUTS_HIDDEN_STATES][i])
-    # SaÌda: Entrada: List das camadas(4) (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
+    # Sa√≠da: Entrada: List das camadas(4) (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
     #print('listaConcat=',len(listaConcat))
 
-    # Realiza a concatenaÁ„o dos embeddings de todos as camadas
-    # SaÌda: Entrada: List das camadas(4) (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
+    # Realiza a concatena√ß√£o dos embeddings de todos as camadas
+    # Sa√≠da: Entrada: List das camadas(4) (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
     resultado = torch.cat(listaConcat, dim=-1)
-    # SaÌda: Entrada: (<1(lote)> x <qtde_tokens> <3072 ou 4096>)  
+    # Sa√≠da: Entrada: (<1(lote)> x <qtde_tokens> <3072 ou 4096>)  
     # print('resultado=',resultado.size())
   
     return resultado   
 
 def getEmbeddingSomaTodasAsCamada(sentencaEmbedding):
-    # Cada elemento do vetor sentencaEmbedding È formado por:  
+    '''
+    Retorna os embeddings da soma de todas as camadas.
+    '''
+    
+    # Cada elemento do vetor sentencaEmbedding √© formado por:  
     # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
-    # hidden_states È uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
+    # hidden_states √© uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
     #[4]outpus e [2]hidden_states 
     #[OUTPUTS]outpus e [OUTPUTS_HIDDEN_STATES]hidden_states      
   
     # Retorna todas as camadas descontando a primeira(0)
     # Entrada: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
     embeddingCamadas = sentencaEmbedding[OUTPUTS][OUTPUTS_HIDDEN_STATES][1:]
-    # SaÌda: List das camadas(12 ou 24) (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
+    # Sa√≠da: List das camadas(12 ou 24) (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
 
-    # Usa o mÈtodo `stack` para criar uma nova dimens„o no tensor 
-    # com a concateÁ„o dos tensores dos embeddings.        
+    # Usa o m√©todo `stack` para criar uma nova dimens√£o no tensor 
+    # com a concate√ß√£o dos tensores dos embeddings.        
     # Entrada: List das camadas(12 ou 24) (<1(lote)> x <qtde_tokens> x <768 ou 1024>)  
     resultadoStack = torch.stack(embeddingCamadas, dim=0)
-    # SaÌda: <12 ou 24> x <1(lote)> x <qtde_tokens> x <768 ou 1024>
+    # Sa√≠da: <12 ou 24> x <1(lote)> x <qtde_tokens> x <768 ou 1024>
     #print('resultadoStack=',resultadoStack.size())
   
     # Realiza a soma dos embeddings de todos os tokens para as camadas
@@ -318,12 +337,12 @@ def getEmbeddingSomaTodasAsCamada(sentencaEmbedding):
 
 def getResultadoEmbeddings(sentencaEmbedding, camada):
     '''
-    Retorna o resultado da operaÁ„o sobre os embeddings das camadas de acordo com tipo de camada especificada.
+    Retorna o resultado da opera√ß√£o sobre os embeddings das camadas de acordo com tipo de camada especificada.
     '''
 
-    # Cada elemento do vetor sentencaEmbedding È formado por:  
+    # Cada elemento do vetor sentencaEmbedding √© formado por:  
     # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
-    # hidden_states È uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
+    # hidden_states √© uma lista python, e cada elemento um tensor pytorch no formado <lote> x <qtde_tokens> x <768 ou 1024>.
     #[4]outpus e [2]hidden_states 
     #[OUTPUTS]outpus e [OUTPUTS_HIDDEN_STATES]hidden_states      
     # Entrada: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> x <768 ou 1024>) 
@@ -353,123 +372,123 @@ def getResultadoEmbeddings(sentencaEmbedding, camada):
                         if camada[LISTATIPOCAMADA_ID] == TODAS_AS_CAMADAS:
                             resultadoEmbeddingCamadas = getEmbeddingSomaTodasAsCamada(sentencaEmbedding)
                             #print('resultadoEmbeddingCamadas5=',resultadoEmbeddingCamadas.size())
-                            # SaÌda: <1> x <qtde_tokens> x <768 ou 1024>
+                            # Sa√≠da: <1> x <qtde_tokens> x <768 ou 1024>
   
-    # Verifica se a primeira dimens„o È 1 para remover
+    # Verifica se a primeira dimens√£o √© 1 para remover
     # Entrada: <1> x <qtde_tokens> x <768 ou 1024>
     if resultadoEmbeddingCamadas.shape[0] == 1:
-        # Remove a dimens„o 0 caso seja de tamanho 1.
-        # Usa o mÈtodo 'squeeze' para remover a primeira dimens„o(0) pois possui tamanho 1
+        # Remove a dimens√£o 0 caso seja de tamanho 1.
+        # Usa o m√©todo 'squeeze' para remover a primeira dimens√£o(0) pois possui tamanho 1
         # Entrada: <1> x <qtde_tokens> x <768 ou 1024>
         resultadoEmbeddingCamadas = torch.squeeze(resultadoEmbeddingCamadas, dim=0)     
     #print('resultadoEmbeddingCamadas2=', resultadoEmbeddingCamadas.size())    
-    # SaÌda: <qtde_tokens> x <768 ou 1024>
+    # Sa√≠da: <qtde_tokens> x <768 ou 1024>
   
-    # Retorna o resultados dos embeddings dos tokens da sentenÁa  
+    # Retorna o resultados dos embeddings dos tokens da senten√ßa  
     return resultadoEmbeddingCamadas
 
 def getMedidasSentencasEmbeddingMEAN(embeddingSi, embeddingSj):
     '''
-    Retorna as medidas de duas sentenÁas Si e Sj utilizando a estratÈgia MEAN.
+    Retorna as medidas de duas senten√ßas Si e Sj utilizando a estrat√©gia MEAN.
     - Entrada
-        - embeddingSi - os embeddings da primeira sentenÁa
-        - embeddingSj - os embeddings da segunda sentenÁa
-    - SaÌda
-        - Scos - Similaridade do coseno - usando a mÈdia dos embeddings Si e Sj das camadas especificadas
-        - Seuc - Dist‚ncia euclidiana - usando a mÈdia dos embeddings Si e Sj das camadas especificadas
-        - Sman - Dist‚ncia de manhattan - usando a mÈdia dos embeddings Si e Sj das camadas especificadas
+        - embeddingSi - os embeddings da primeira senten√ßa
+        - embeddingSj - os embeddings da segunda senten√ßa
+    - Sa√≠da
+        - Scos - Similaridade do coseno - usando a m√©dia dos embeddings Si e Sj das camadas especificadas
+        - Seuc - Dist√¢ncia euclidiana - usando a m√©dia dos embeddings Si e Sj das camadas especificadas
+        - Sman - Dist√¢ncia de manhattan - usando a m√©dia dos embeddings Si e Sj das camadas especificadas
     '''
 
     #print('embeddingSi=', embeddingSi.shape) 
     #print('embeddingSj=', embeddingSj.shape)
   
-    # As operaÁıes de subtraÁ„o(sub), mul(multiplicaÁ„o/produto), soma(sum), cosseno(similaridade), euclediana(diferenÁa) e manhattan(diferenÁa)
-    # Necessitam que os embeddings tenha a mesmo n˙mero de dimensıes.
+    # As opera√ß√µes de subtra√ß√£o(sub), mul(multiplica√ß√£o/produto), soma(sum), cosseno(similaridade), euclediana(diferen√ßa) e manhattan(diferen√ßa)
+    # Necessitam que os embeddings tenha a mesmo n√∫mero de dimens√µes.
   
-    # Calcula a mÈdia dos embeddings para os tokens de Si, removendo a primeira dimens„o.
+    # Calcula a m√©dia dos embeddings para os tokens de Si, removendo a primeira dimens√£o.
     # Entrada: <qtde_tokens> x <768 ou 1024>  
     mediaEmbeddingSi = torch.mean(embeddingSi, dim=0)    
-    # SaÌda: <768 ou 1024>
+    # Sa√≠da: <768 ou 1024>
     #print('mediaCamadasSi=', mediaCamadasSi.shape)
   
-    # Calcula a mÈdia dos embeddings para os tokens de Sj, removendo a primeira dimens„o.
+    # Calcula a m√©dia dos embeddings para os tokens de Sj, removendo a primeira dimens√£o.
     # Entrada: <qtde_tokens> x <768 ou 1024>  
     mediaEmbeddingSj = torch.mean(embeddingSj, dim=0)    
-    # SaÌda: <768 ou 1024>
+    # Sa√≠da: <768 ou 1024>
     #print('mediaCamadasSj=', mediaCamadasSj.shape)
     
     # Similaridade do cosseno entre os embeddings Si e Sj
     # Entrada: (<768 ou 1024>) x (<768 ou 1024>)
     Scos = similaridadeCoseno(mediaEmbeddingSi, mediaEmbeddingSj)
-    # SaÌda: N˙mero real
+    # Sa√≠da: N√∫mero real
 
-    # Dist‚ncia euclidiana entre os embeddings Si e Sj
+    # Dist√¢ncia euclidiana entre os embeddings Si e Sj
     # Entrada: (<768 ou 1024>) x (<768 ou 1024>)
     Seuc = distanciaEuclidiana(mediaEmbeddingSi, mediaEmbeddingSj)
-    # SaÌda: N˙mero real
+    # Sa√≠da: N√∫mero real
 
-    # Dist‚ncia de manhattan entre os embeddings Si e Sj
+    # Dist√¢ncia de manhattan entre os embeddings Si e Sj
     # Entrada: (<768 ou 1024>) x (<768 ou 1024>)
     Sman = distanciaManhattan(mediaEmbeddingSi, mediaEmbeddingSj)
-    # SaÌda: N˙mero real
+    # Sa√≠da: N√∫mero real
 
-    # Retorno das medidas das sentenÁas  
+    # Retorno das medidas das senten√ßas  
     return mediaEmbeddingSi, mediaEmbeddingSj, Scos, Seuc, Sman
 
 
 def getMedidasSentencasEmbeddingMAX(embeddingSi, embeddingSj):
      '''
-     Retorna as medidas de duas sentenÁas Si e Sj utilizando a estratÈgia MAX.
+     Retorna as medidas de duas senten√ßas Si e Sj utilizando a estrat√©gia MAX.
      - Entrada
-        - embeddingSi - os embeddings da primeira sentenÁa
-        - embeddingSj - os embeddings da segunda sentenÁa
+        - embeddingSi - os embeddings da primeira senten√ßa
+        - embeddingSj - os embeddings da segunda senten√ßa
 
-     - SaÌda
+     - Sa√≠da
         - Scos - Similaridade do coseno - usando o maior dos embeddings Si e Sj das camadas especificadas
-        - Seuc - Dist‚ncia euclidiana - usando o maior dos embeddings Si e Sj das camadas especificadas
-        - Sman - Dist‚ncia de manhattan - usando o maior dos embeddings Si e Sj das camadas especificadas
+        - Seuc - Dist√¢ncia euclidiana - usando o maior dos embeddings Si e Sj das camadas especificadas
+        - Sman - Dist√¢ncia de manhattan - usando o maior dos embeddings Si e Sj das camadas especificadas
     '''
 
     #print('embeddingSi=', embeddingSi.shape) 
     #print('embeddingSj=', embeddingSj.shape)
 
-    # As operaÁıes de subtraÁ„o(sub), mul(multiplicaÁ„o/produto), soma(sum), cosseno(similaridade), euclediana(diferenÁa) e manhattan(diferenÁa)
-    # Necessitam que os embeddings tenha a mesmo n˙mero de dimensıes.
+    # As opera√ß√µes de subtra√ß√£o(sub), mul(multiplica√ß√£o/produto), soma(sum), cosseno(similaridade), euclediana(diferen√ßa) e manhattan(diferen√ßa)
+    # Necessitam que os embeddings tenha a mesmo n√∫mero de dimens√µes.
 
-    # Encontra os maiores embeddings os tokens de Si, removendo a primeira dimens„o.
+    # Encontra os maiores embeddings os tokens de Si, removendo a primeira dimens√£o.
     # Entrada: <qtde_tokens> x <768 ou 1024>  
     maiorEmbeddingSi, linha = torch.max(embeddingSi, dim=0)    
-    # SaÌda: <768 ou 1024>
+    # Sa√≠da: <768 ou 1024>
     #print('maiorEmbeddingSi=', maiorEmbeddingSi.shape)
 
-    # Encontra os maiores embeddings os tokens de Sj, removendo a primeira dimens„o.
+    # Encontra os maiores embeddings os tokens de Sj, removendo a primeira dimens√£o.
     # Entrada: <qtde_tokens> x <768 ou 1024>  
     maiorEmbeddingSj, linha = torch.max(embeddingSj, dim=0)    
-    # SaÌda: <768 ou 1024>
+    # Sa√≠da: <768 ou 1024>
     #print('maiorEmbeddingSj=', maiorEmbeddingSj.shape)
 
     # Similaridade do cosseno entre os embeddings Si e Sj
     # Entrada: (<768 ou 1024>) x (<768 ou 1024>)
     Scos = similaridadeCoseno(maiorEmbeddingSi, maiorEmbeddingSj)
-    # SaÌda: N˙mero real
+    # Sa√≠da: N√∫mero real
 
-    # Dist‚ncia euclidiana entre os embeddings Si e Sj
+    # Dist√¢ncia euclidiana entre os embeddings Si e Sj
     # Entrada: (<768 ou 1024>) x (<768 ou 1024>)
     Seuc = distanciaEuclidiana(maiorEmbeddingSi, maiorEmbeddingSj)
-    # SaÌda: N˙mero real
+    # Sa√≠da: N√∫mero real
 
-    # Dist‚ncia de manhattan entre os embeddings Si e Sj
+    # Dist√¢ncia de manhattan entre os embeddings Si e Sj
     # Entrada: (<768 ou 1024>) x (<768 ou 1024>)
     Sman = distanciaManhattan(maiorEmbeddingSi, maiorEmbeddingSj)
-    # SaÌda: N˙mero real
+    # Sa√≠da: N√∫mero real
 
-    # Retorno das medidas das sentenÁas
+    # Retorno das medidas das senten√ßas
     return maiorEmbeddingSi, maiorEmbeddingSj, Scos, Seuc, Sman
 
 
 def getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategiaPooling):
     '''
-    Realiza o c·lculo da medida do documento de acordo com a estratÈgia.
+    Realiza o c√°lculo da medida do documento de acordo com a estrat√©gia.
     '''
 
     if estrategiaPooling == 0:
@@ -480,132 +499,132 @@ def getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategiaPooling):
 
 def getEmbeddingSentencaEmbeddingDocumentoComTodasPalavras(embeddingDocumento, documento, sentenca, tokenizador):
     '''
-    Retorna os embeddings de uma sentenÁa com todas as palavras a partir dos embeddings do documento.
+    Retorna os embeddings de uma senten√ßa com todas as palavras a partir dos embeddings do documento.
     '''
         
     # Tokeniza o documento
     documentoTokenizado = getDocumentoTokenizado(documento, tokenizador)
     #print(documentoTokenizado)
 
-    # Tokeniza a sentenÁa
+    # Tokeniza a senten√ßa
     sentencaTokenizada = getDocumentoTokenizado(sentenca, tokenizador)
     #print(sentencaTokenizada)
-    # Remove os tokens de inÌcio e fim da sentenÁa
+    # Remove os tokens de in√≠cio e fim da senten√ßa
     sentencaTokenizada.remove('[CLS]')
     sentencaTokenizada.remove('[SEP]')    
     #print(len(sentencaTokenizada))
 
-    # Localiza os Ìndices dos tokens da sentenÁa no documento
+    # Localiza os √≠ndices dos tokens da senten√ßa no documento
     inicio, fim = encontrarIndiceSubLista(documentoTokenizado,sentencaTokenizada)
     #print(inicio,fim) 
 
-    # Recupera os embeddings dos tokens da sentenÁa a partir dos embeddings do documento
+    # Recupera os embeddings dos tokens da senten√ßa a partir dos embeddings do documento
     embeddingSentenca = embeddingDocumento[inicio:fim+1]
     #print('embeddingSentenca=', embeddingSentenca.shape)
 
-    # Retorna o embedding da sentenÁa no documento
+    # Retorna o embedding da senten√ßa no documento
     return embeddingSentenca
 
 def getEmbeddingSentencaEmbeddingDocumentoSemStopWord(embeddingDocumento, documento, sentenca, tokenizador):
     '''
-    Retorna os embeddings de uma sentenÁa sem stopwords a partir dos embeddings do documento.
+    Retorna os embeddings de uma senten√ßa sem stopwords a partir dos embeddings do documento.
     '''
       
     # Tokeniza o documento
     documentoTokenizado = getDocumentoTokenizado(documento, tokenizador)  
     #print(documentoTokenizado)
 
-    # Remove as stopword da sentenÁa
+    # Remove as stopword da senten√ßa
     sentencaSemStopWord = removeStopWord(sentenca, spacy_stopwords)
 
-    # Tokeniza a sentenÁa sem stopword
+    # Tokeniza a senten√ßa sem stopword
     sentencaTokenizadaSemStopWord = getDocumentoTokenizado(sentencaSemStopWord, tokenizador)
     #print(sentencaTokenizadaSemStopWord)
 
-    # Remove os tokens de inÌcio e fim da sentenÁa
+    # Remove os tokens de in√≠cio e fim da senten√ßa
     sentencaTokenizadaSemStopWord.remove('[CLS]')
     sentencaTokenizadaSemStopWord.remove('[SEP]')    
     #print(len(sentencaTokenizadaSemStopWord))
 
-    # Tokeniza a sentenÁa
+    # Tokeniza a senten√ßa
     sentencaTokenizada = getDocumentoTokenizado(sentenca, tokenizador)
 
-    # Remove os tokens de inÌcio e fim da sentenÁa
+    # Remove os tokens de in√≠cio e fim da senten√ßa
     sentencaTokenizada.remove('[CLS]')
     sentencaTokenizada.remove('[SEP]')  
     #print(sentencaTokenizada)
     #print(len(sentencaTokenizada))
 
-    # Localiza os Ìndices dos tokens da sentenÁa no documento
+    # Localiza os √≠ndices dos tokens da senten√ßa no documento
     inicio, fim = encontrarIndiceSubLista(documentoTokenizado,sentencaTokenizada)
-    #print('SentenÁa inicia em:', inicio, 'atÈ', fim) 
+    #print('Senten√ßa inicia em:', inicio, 'at√©', fim) 
 
-    # Recupera os embeddings dos tokens da sentenÁa a partir dos embeddings do documento
+    # Recupera os embeddings dos tokens da senten√ßa a partir dos embeddings do documento
     embeddingSentenca = embeddingDocumento[inicio:fim+1]
     #print('embeddingSentenca=', embeddingSentenca.shape)
 
     # Lista com os tensores selecionados
     listaTokensSelecionados = []
-    # Localizar os embeddings dos tokens da sentenÁa tokenizada sem stop word na sentenÁa 
-    # Procura somente no intervalo da sentenÁa
-    for i, tokenSentenÁa in enumerate(sentencaTokenizada):
+    # Localizar os embeddings dos tokens da senten√ßa tokenizada sem stop word na senten√ßa 
+    # Procura somente no intervalo da senten√ßa
+    for i, tokenSenten√ßa in enumerate(sentencaTokenizada):
         for tokenSentencaSemStopWord in sentencaTokenizadaSemStopWord: 
-            if tokenSentenÁa == tokenSentencaSemStopWord:
+            if tokenSenten√ßa == tokenSentencaSemStopWord:
                 #embeddingSentencaSemStopWord = torch.cat((embeddingSentencaSemStopWord, embeddingSentenca[i:i+1]), dim=0)
                 listaTokensSelecionados.append(embeddingSentenca[i:i+1])
 
     embeddingSentencaSemStopWord = None
 
     if len(listaTokensSelecionados) != 0:
-        # Concatena os vetores da lista pela dimens„o 0
+        # Concatena os vetores da lista pela dimens√£o 0
         embeddingSentencaSemStopWord = torch.cat(listaTokensSelecionados, dim=0)
         #print("embeddingSentencaSemStopWord:",embeddingSentencaSemStopWord.shape)
 
-    # Retorna o embedding da sentenÁa no documento
+    # Retorna o embedding da senten√ßa no documento
     return embeddingSentencaSemStopWord
 
 def getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, documento, sentenca, tokenizador, tipoSaliente='NOUN'):
     '''
-    Retorna os embeddings de uma sentenÁa somente com as palavras salientes a partir dos embeddings do documento.
+    Retorna os embeddings de uma senten√ßa somente com as palavras salientes a partir dos embeddings do documento.
     '''
 
     # Tokeniza o documento
     documentoTokenizado = getDocumentoTokenizado(documento, tokenizador)  
     #print(documentoTokenizado)
 
-    # Retorna as palavras salientes da sentenÁa do tipo especificado
+    # Retorna as palavras salientes da senten√ßa do tipo especificado
     sentencaSomenteSaliente = retornaSaliente(sentenca,tipoSaliente)
 
-    # Tokeniza a sentenÁa 
+    # Tokeniza a senten√ßa 
     sentencaTokenizadaSomenteSaliente = getDocumentoTokenizado(sentencaSomenteSaliente, tokenizador)
 
-    # Remove os tokens de inÌcio e fim da sentenÁa
+    # Remove os tokens de in√≠cio e fim da senten√ßa
     sentencaTokenizadaSomenteSaliente.remove('[CLS]')
     sentencaTokenizadaSomenteSaliente.remove('[SEP]')  
     #print(sentencaTokenizadaSomenteSaliente)
     #print(len(sentencaTokenizadaSomenteSaliente))
 
-    # Tokeniza a sentenÁa
+    # Tokeniza a senten√ßa
     sentencaTokenizada = getDocumentoTokenizado(sentenca, tokenizador)
 
-    # Remove os tokens de inÌcio e fim da sentenÁa
+    # Remove os tokens de in√≠cio e fim da senten√ßa
     sentencaTokenizada.remove('[CLS]')
     sentencaTokenizada.remove('[SEP]')  
     #print(sentencaTokenizada)
     #print(len(sentencaTokenizada))
 
-    # Localiza os Ìndices dos tokens da sentenÁa no documento
+    # Localiza os √≠ndices dos tokens da senten√ßa no documento
     inicio, fim = encontrarIndiceSubLista(documentoTokenizado,sentencaTokenizada)
-    #print('SentenÁa inicia em:', inicio, 'atÈ', fim) 
+    #print('Senten√ßa inicia em:', inicio, 'at√©', fim) 
 
-    # Recupera os embeddings dos tokens da sentenÁa a partir dos embeddings do documento
+    # Recupera os embeddings dos tokens da senten√ßa a partir dos embeddings do documento
     embeddingSentenca = embeddingDocumento[inicio:fim+1]
     #print('embeddingSentenca=', embeddingSentenca.shape)
 
     # Lista com os tensores selecionados
     listaTokensSelecionados = []
-    # Localizar os embeddings dos tokens da sentenÁa tokenizada sem stop word na sentenÁa 
-    # Procura somente no intervalo da sentenÁa
+    # Localizar os embeddings dos tokens da senten√ßa tokenizada sem stop word na senten√ßa 
+    # Procura somente no intervalo da senten√ßa
     for i, tokenSentenca in enumerate(sentencaTokenizada):
         for tokenSentencaSomenteSaliente in sentencaTokenizadaSomenteSaliente: 
             if tokenSentenca == tokenSentencaSomenteSaliente:        
@@ -614,16 +633,16 @@ def getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, do
     embeddingSentencaComSubstantivo = None
 
     if len(listaTokensSelecionados) != 0:
-        # Concatena os vetores da lista pela dimens„o 0  
+        # Concatena os vetores da lista pela dimens√£o 0  
         embeddingSentencaComSubstantivo = torch.cat(listaTokensSelecionados, dim=0)
         #print("embeddingSentencaComSubstantivo:",embeddingSentencaComSubstantivo.shape)
 
-    # Retorna o embedding da sentenÁa do documento
+    # Retorna o embedding da senten√ßa do documento
     return embeddingSentencaComSubstantivo
 
 def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, sentenca, tokenizador, filtro=0):
     '''
-    Retorna os embeddings de uma sentenÁa com todas as palavras, sem stopwords ou somente com palavra substantivas a partir dos embeddings do documentos.
+    Retorna os embeddings de uma senten√ßa com todas as palavras, sem stopwords ou somente com palavra substantivas a partir dos embeddings do documentos.
     '''
 
     if filtro == 0:
@@ -639,62 +658,62 @@ def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, senten
 
 def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, camada, tipoDocumento='p', filtro=0):
     '''
-    Retorna as medidas de coerÍncia do documento.
-    Considera somente sentenÁas com alguma palavra.
+    Retorna as medidas de coer√™ncia do documento.
+    Considera somente senten√ßas com alguma palavra.
     '''
 
-    # Quantidade de sentenÁas no documento
+    # Quantidade de senten√ßas no documento
     n = len(documento)
     # Divisor da quantidade de documentos
     divisor = n - 1
 
-    # Documento È uma lista com as sentenÁas
+    # Documento √© uma lista com as senten√ßas
     #print('camada=',camada)
     #print('Documento=', documento)
 
-    # Junta a lista de sentenÁas em um documento(string)
+    # Junta a lista de senten√ßas em um documento(string)
     stringDocumento = ' '.join(documento)
 
     # Envia o documento ao MCL e recupera os embeddings de todas as camadas
-    # Se for o documento original pega do buffer para evitar a repetiÁ„o
+    # Se for o documento original pega do buffer para evitar a repeti√ß√£o
     if tipoDocumento == 'o':
         # Retorna os embeddings de todas as camadas do documento
         # O embedding possui os seguintes valores        
         # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
         totalCamadasDocumento =  getEmbeddingsTodasCamadasBuffer(stringDocumento, modelo, tokenizador)      
-        # SaÌda: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> <768 ou 1024>) 
+        # Sa√≠da: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> <768 ou 1024>) 
     else:
         # Retorna os embeddings de todas as camadas do documento
         # O embedding possui os seguintes valores        
         # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
         totalCamadasDocumento =  getEmbeddingsTodasCamadas(stringDocumento, modelo, tokenizador)      
-        # SaÌda: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> <768 ou 1024>) 
+        # Sa√≠da: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> <768 ou 1024>) 
 
-    # Recupera os embeddings dos tokens das camadas especificadas de acordo com a estratÈgia especificada para camada  
+    # Recupera os embeddings dos tokens das camadas especificadas de acordo com a estrat√©gia especificada para camada  
     embeddingDocumento = getResultadoEmbeddings(totalCamadasDocumento, camada=camada)
     #print('embeddingDocumento=', embeddingDocumento.shape)
 
-    # Acumuladores das medidas entre as sentenÁas  
+    # Acumuladores das medidas entre as senten√ßas  
     somaScos = 0
     somaSeuc = 0
     somaSman = 0
 
-    # Seleciona os pares de sentenÁa a serem avaliados
+    # Seleciona os pares de senten√ßa a serem avaliados
     posSi = 0
     posSj = posSi + 1
 
-    #Enquanto o indÌce da sentneÁa posSj(2a sentenÁa) n„o chegou ao final da quantidade de sentenÁas
+    #Enquanto o ind√≠ce da sentne√ßa posSj(2a senten√ßa) n√£o chegou ao final da quantidade de senten√ßas
     while posSj <= (n-1):  
 
-        # Seleciona as sentenÁas do documento  
+        # Seleciona as senten√ßas do documento  
         Si = documento[posSi]
         Sj = documento[posSj]
 
-        # Recupera os embedding das sentenÁas Si e Sj do embedding do documento      
+        # Recupera os embedding das senten√ßas Si e Sj do embedding do documento      
         embeddingSi = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Si, tokenizador, filtro=filtro)                                
         embeddingSj = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Sj, tokenizador, filtro=filtro)
 
-        # Verifica se os embeddings sentenÁas est„o preenchidos
+        # Verifica se os embeddings senten√ßas est√£o preenchidos
         if embeddingSi != None and embeddingSj != None:
 
           # Recupera as medidas entre Si e Sj     
@@ -705,20 +724,20 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, camada, tipoDoc
           somaSeuc = somaSeuc + Seuc
           somaSman = somaSman + Sman
 
-           # avanÁa para o prÛximo par de sentenÁas
+           # avan√ßa para o pr√≥ximo par de senten√ßas
           posSi = posSj
           posSj = posSj + 1
         else:
-          # Reduz um da quantidade de sentenÁas pois uma delas est· vazia
+          # Reduz um da quantidade de senten√ßas pois uma delas est√° vazia
           divisor = divisor - 1
           # Se embeddingSi igual a None avanca pos1 e pos2
           if embeddingSi == None:
-            # AvanÁa a posiÁ„o da sentenÁa posSi para a posSj
+            # Avan√ßa a posi√ß√£o da senten√ßa posSi para a posSj
             posSi = posSj
-            # AvanÁa para a prÛxima sentenÁa de posSj
+            # Avan√ßa para a pr√≥xima senten√ßa de posSj
             posSj = posSj + 1        
           else:          
-            # Se embeddingSj = None avanÁa somente posJ para a prÛxima sentenÁa
+            # Se embeddingSj = None avan√ßa somente posJ para a pr√≥xima senten√ßa
             if embeddingSj == None:
               posSj = posSj + 1
 
@@ -737,18 +756,18 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, camada, tipoDoc
 
 # listaTipoCamadas
 # Define uma lista com as camadas a serem analisadas nos teste.
-# Cada elemento da lista 'listaTipoCamadas' È chamado de camada sendo formado por:
-#  - camada[0] = Õndice da camada
-#  - camada[1] = Um inteiro com o Ìndice da camada a ser avaliada. Pode conter valores negativos.
-#  - camada[2] = OperaÁ„o para n camadas, CONCAT ou SUM.
+# Cada elemento da lista 'listaTipoCamadas' √© chamado de camada sendo formado por:
+#  - camada[0] = √çndice da camada
+#  - camada[1] = Um inteiro com o √≠ndice da camada a ser avaliada. Pode conter valores negativos.
+#  - camada[2] = Opera√ß√£o para n camadas, CONCAT ou SUM.
 #  - camada[3] = Nome do tipo camada
 
-# Os nomes do tipo da camada prÈ-definidos.
+# Os nomes do tipo da camada pr√©-definidos.
 #  - 0 - Primeira                    
-#  - 1 - Pen˙ltima
-#  - 2 - ⁄ltima
-#  - 3 - Soma 4 ˙ltimas
-#  - 4 - Concat 4 ˙ltimas
+#  - 1 - Pen√∫ltima
+#  - 2 - √öltima
+#  - 3 - Soma 4 √∫ltimas
+#  - 4 - Concat 4 √∫ltimas
 #  - 5 - Todas
 
 # Constantes para facilitar o acesso os tipos de camadas
@@ -759,7 +778,7 @@ SOMA_4_ULTIMAS_CAMADAS = 3
 CONCAT_4_ULTIMAS_CAMADAS = 4
 TODAS_AS_CAMADAS = 5
 
-# Õndice dos campos da camada
+# √çndice dos campos da camada
 LISTATIPOCAMADA_ID = 0
 LISTATIPOCAMADA_CAMADA = 1
 LISTATIPOCAMADA_OPERACAO = 2
@@ -767,35 +786,35 @@ LISTATIPOCAMADA_NOME = 3
 
 # BERT Large possui 25 camadas(1a camada com os tokens de entrada e 24 camadas dos transformers)
 # BERT Large possui 13 camadas(1a camada com os tokens de entrada e 24 camadas dos transformers)
-# O Ìndice da camada com valor positivo indica uma camada especÌfica
-# O Ìndica com um valor negativo indica as camadas da posiÁ„o com base no fim descontado o valor indice atÈ o fim.
+# O √≠ndice da camada com valor positivo indica uma camada espec√≠fica
+# O √≠ndica com um valor negativo indica as camadas da posi√ß√£o com base no fim descontado o valor indice at√© o fim.
 listaTipoCamadas = [
                       [ PRIMEIRA_CAMADA,           1, '-',      'Primeira'],                      
-                      [ PENULTIMA_CAMADA,         -2, '-',      'Pen˙ltima'],
-                      [ ULTIMA_CAMADA,            -1, '-',      '⁄ltima'],
-                      [ SOMA_4_ULTIMAS_CAMADAS,   -4, 'SUM',    'Soma 4 ˙ltimas'],
-                      [ CONCAT_4_ULTIMAS_CAMADAS, -4, 'CONCAT', 'Concat 4 ˙ltimas'],                      
+                      [ PENULTIMA_CAMADA,         -2, '-',      'Pen√∫ltima'],
+                      [ ULTIMA_CAMADA,            -1, '-',      '√öltima'],
+                      [ SOMA_4_ULTIMAS_CAMADAS,   -4, 'SUM',    'Soma 4 √∫ltimas'],
+                      [ CONCAT_4_ULTIMAS_CAMADAS, -4, 'CONCAT', 'Concat 4 √∫ltimas'],                      
                       [ TODAS_AS_CAMADAS,          24, 'SUM',    'Todas']
                     ]
 
-# listaTipoCamadas e suas referÍncias:
+# listaTipoCamadas e suas refer√™ncias:
 # 0 - Primeira            listaTipoCamadas[PRIMEIRA_CAMADA]
-# 1 - Pen˙ltima           listaTipoCamadas[PENULTIMA_CAMADA]
-# 2 - ⁄ltima              listaTipoCamadas[ULTIMA_CAMADA]
-# 3 - Soma 4 ˙ltimas      listaTipoCamadas[SOMA_4_ULTIMAS_CAMADAS]
-# 4 - Concat 4 ˙ltimas    listaTipoCamadas[CONCAT_4_ULTIMAS_CAMADAS]
+# 1 - Pen√∫ltima           listaTipoCamadas[PENULTIMA_CAMADA]
+# 2 - √öltima              listaTipoCamadas[ULTIMA_CAMADA]
+# 3 - Soma 4 √∫ltimas      listaTipoCamadas[SOMA_4_ULTIMAS_CAMADAS]
+# 4 - Concat 4 √∫ltimas    listaTipoCamadas[CONCAT_4_ULTIMAS_CAMADAS]
 # 5 - Todas               listaTipoCamadas[TODAS_AS_CAMADAS]
 
 
 def comparaMedidasCamadasSentencas(Si, Sj, modelo, tokenizador, camada):
     '''
-    Facilita a exibiÁ„o dos valores de comparaÁ„o de duas oraÁıes.
+    Facilita a exibi√ß√£o dos valores de compara√ß√£o de duas ora√ß√µes.
     '''
   
-    # Recupera os embeddings da sentenÁa 1 e sentenÁa 2
+    # Recupera os embeddings da senten√ßa 1 e senten√ßa 2
     embeddingSi, embeddingSj, Scos, Seuc, Sman = getMedidasCamadasSentencas(Si, Sj, modelo, tokenizador, camada)
 
-    print('  ->Mostra comparaÁ„o da ' + camada[LISTATIPOCAMADA_NOME]+ ' camada(s)')    
+    print('  ->Mostra compara√ß√£o da ' + camada[LISTATIPOCAMADA_NOME]+ ' camada(s)')    
     print('   Cosseno(SixSj)     = %.8f' % Scos)
     print('   Euclidiana(SixSj)  = %.8f' % Seuc)
     print('   Manhattan(SixSj)   = %.8f' % Sman)
