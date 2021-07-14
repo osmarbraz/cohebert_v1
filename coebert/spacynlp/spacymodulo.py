@@ -35,7 +35,8 @@ def descompactaSpacy(model_args):
     arquivoTar.close()
     
     # Apaga o arquivo compactado
-    os.remove(ARQUIVO)
+    if os.path.isfile(ARQUIVO)
+        os.remove(ARQUIVO)
     
 def moveSpacy(model_args):
     '''
