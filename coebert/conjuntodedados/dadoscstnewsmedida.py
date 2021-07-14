@@ -103,9 +103,13 @@ def downloadCSTNewsOnDrive():
         # Apaga a pasta e os arquivos existentes                     
         shutil.rmtree('Modelo de Relações Discursivas')
 
-    # Descompacta o arquivo o experimento
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_EXPERIMENTO,"r")
-    arquivoZip.extractall()
+    # Descompacta o arquivo do experimento               
+    with zipfile.ZipFile(NOME_ARQUIVO_EXPERIMENTO, 'r') as f:
+      zipInfo = f.infolist()
+      for arquivo in zipInfo: 
+        # Limpa o nome do arquivo
+        arquivo.filename = limpaTexto(arquivo.filename)        
+        f.extract(arquivo)
 
     # Apaga o arquivo compactado
     os.remove(NOME_ARQUIVO_EXPERIMENTO)  
