@@ -96,8 +96,8 @@ def downloadCSTNewsOnDrive():
     os.remove(NOME_ARQUIVO)
 
     # Especifica o nome do arquivo do experimento
-    NOME_ARQUIVO_EXPERIMENTO = 'modelo_de_relaces_discursivas.zip'
-
+    NOME_ARQUIVO_EXPERIMENTO = 'Modelo de Relaces Discursivas.zip'
+        
     # Apaga o diretório 'Modelo de Relações Discursivas' e seus arquivos
     if os.path.exists('Modelo de Relações Discursivas'):
         # Apaga a pasta e os arquivos existentes                     
