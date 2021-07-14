@@ -2,7 +2,9 @@
 import wget # Biblioteca de download
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
-import shutil # Biblioteca para mover arquivos
+import shutil # Biblioteca para mover arquivos    
+from transformers import BertModel # Importando as bibliotecas do Modelo BERT   
+from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT
 
 def getNomeModeloBERT(model_args):
     '''    
@@ -37,9 +39,6 @@ def downloadModeloPretreinado(model_args):
     ''' 
 
     MODELO = model_args.pretrained_model_name_or_path
-    
-    # Importando as bibliotecas.
-    import os
 
     # Variável para setar o arquivo.
     URL_MODELO = None
@@ -54,36 +53,35 @@ def downloadModeloPretreinado(model_args):
         DIRETORIO_MODELO = '/content/modelo'
 
         # Recupera o nome do arquivo do modelo da url.
-        arquivo = URL_MODELO.split('/')[-1]
+        ARQUIVO = URL_MODELO.split('/')[-1]
 
         # Nome do arquivo do vocabulário.
-        arquivo_vocab = 'vocab.txt'
+        ARQUIVO_VOCAB = 'vocab.txt'
 
         # Caminho do arquivo na url.
-        caminho = URL_MODELO[0:len(URL_MODELO)-len(arquivo)]
+        CAMINHO_ARQUIVO = URL_MODELO[0:len(URL_MODELO)-len(ARQUIVO)]
 
         # Verifica se a pasta de descompactação existe na pasta corrente
         if os.path.exists(DIRETORIO_MODELO):
             print('Apagando diretório existente do modelo!')
-            # Apaga a pasta e os arquivos existentes
-            #!rm -rf $DIRETORIO_MODELO                
+            # Apaga a pasta e os arquivos existentes                     
             shutil.rmtree(DIRETORIO_MODELO)
 
         # Realiza o download do arquivo do modelo
         wget.download(URL_MODELO)        
 
         # Descompacta o arquivo na pasta de descompactação.                
-        arquivoZip = zipfile.ZipFile(arquivo,"r")
+        arquivoZip = zipfile.ZipFile(ARQUIVO,"r")
         arquivoZip.extractall(DIRETORIO_MODELO)
 
         # Baixa o arquivo do vocabulário.
         # O vocabulário não está no arquivo compactado acima, mesma url mas arquivo diferente.
-        URL_MODELO_VOCAB = caminho + arquivo_vocab        
+        URL_MODELO_VOCAB = CAMINHO_ARQUIVO + ARQUIVO_VOCAB        
         # Coloca o arquivo do vocabulário no diretório de descompactação.
         wget.download(URL_MODELO_VOCAB, out = DIRETORIO_MODELO)        
 
-        # Move o arquivo para pasta de descompactação        
-        shutil.move(arquivo, DIRETORIO_MODELO)
+        # Apaga o arquivo compactado
+        os.remove(ARQUIVO)
 
         print('Pasta do {} pronta!'.format(DIRETORIO_MODELO))
 
@@ -138,9 +136,6 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     O parâmetro `do_lower_case` interfere na quantidade tokens a ser gerado a partir de um texto. Quando igual a `False` reduz a quantidade de tokens gerados.
     ''' 
 
-    # Importando as bibliotecas do tokenizador.
-    from transformers import BertTokenizer
-
     # Se a variável DIRETORIO_MODELO foi setada.
     if DIRETORIO_MODELO:
 
@@ -163,9 +158,6 @@ def carregaModelo(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o modelo e retorna o modelo.
     ''' 
-    
-    # Importando as bibliotecas do Modelo    
-    from transformers import BertModel
 
     # Variável para setar o arquivo.
     URL_MODELO = None
