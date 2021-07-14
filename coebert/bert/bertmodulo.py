@@ -2,6 +2,7 @@
 import wget # Biblioteca de download
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
+import shutil # Biblioteca para mover arquivos
 
 def getNomeModeloBERT(model_args):
     '''    
@@ -22,6 +23,7 @@ def getTamanhoBERT(model_args):
     '''    
     Recupera a dimensão do modelo para nomes de arquivos e diretórios.
     '''
+    
     # Verifica o tamanho do modelo(default large)
     TAMANHO_BERT = '_large'
     if 'base' in model_args.pretrained_model_name_or_path:
@@ -68,9 +70,7 @@ def downloadModeloPretreinado(MODELO):
         # Realiza o download do arquivo do modelo
         wget.download(URL_MODELO)        
 
-        # Descompacta o arquivo na pasta de descompactação.
-        #!unzip -o $arquivo -d $DIRETORIO_MODELO
-        
+        # Descompacta o arquivo na pasta de descompactação.                
         arquivoZip = zipfile.ZipFile(arquivo,"r")
         arquivoZip.extractall(DIRETORIO_MODELO)
 
@@ -78,10 +78,9 @@ def downloadModeloPretreinado(MODELO):
         # O vocabulário não está no arquivo compactado acima, mesma url mas arquivo diferente.
         URL_MODELO_VOCAB = caminho + arquivo_vocab        
         # Coloca o arquivo do vocabulário no diretório de descompactação.
-        wget.download(URL_MODELO_VOCAB. out = DIRETORIO_MODELO)        
+        wget.download(URL_MODELO_VOCAB, out = DIRETORIO_MODELO)        
 
-        # Move o arquivo para pasta de descompactação
-        #!mv $arquivo $DIRETORIO_MODELO
+        # Move o arquivo para pasta de descompactação        
         shutil.move(arquivo, DIRETORIO_MODELO)
 
         print('Pasta do {} pronta!'.format(DIRETORIO_MODELO))
@@ -104,7 +103,6 @@ def copiaModeloAjustado():
     DIRETORIO_REMOTO_MODELO_AJUSTADO = '/content/drive/MyDrive/Colab Notebooks/Data/CSTNEWS/validacao_classificacao/holdout/modelo/modelo' + MODELO_BERT + TAMANHO_BERT
 
     ## Copia o arquivo do modelo para o diretório no Google Drive.
-    #!cp -r '$DIRETORIO_REMOTO_MODELO_AJUSTADO' '$DIRETORIO_LOCAL_MODELO_AJUSTADO' 
     shutil.copytree(DIRETORIO_REMOTO_MODELO_AJUSTADO, DIRETORIO_LOCAL_MODELO_AJUSTADO) 
    
     print('Modelo copiado!')
@@ -193,11 +191,14 @@ def carregaBERT(MODELO, model_args):
     ''' 
     Carrega o BERT e retorna o modelo e o tokenizador.
     ''' 
+    
     # Verifica a origem do modelo
     DIRETORIO_MODELO = verificaModelo(model_args)
     
-    tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO):
-    
+    # Carrega o modelo
     model = carregaModelo(MODELO, DIRETORIO_MODELO, model_args)
+    
+    # Carrega o tokenizador
+    tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO)
     
     return model, tokenizer
