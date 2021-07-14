@@ -4,24 +4,9 @@ import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
 import pandas as pd # Biblioteca pandas
-import re # Biblioteca para expressão regular
-import unicodedata # Biblioteca para tratar codificação de caracteres
 
-def removeAcentos(texto):   
-    try:
-        text = unicode(texto, 'utf-8')
-    except (TypeError, NameError): 
-        pass
-    texto = unicodedata.normalize('NFD', texto)
-    texto = texto.encode('ascii', 'ignore')
-    texto = texto.decode("utf-8")
-    return str(texto)
-
-def limpaTexto(texto):    
-    texto = removeAcentos(texto.lower())
-    texto = re.sub('[ ]+', '_', texto)
-    texto = re.sub('[^.0-9a-zA-Z_-]', '', texto)
-    return texto
+# Import de bibliotecas próprias
+from util.utilmodulo import *
 
 def downloadCSTNewsICMC():  
     '''    
@@ -99,9 +84,9 @@ def downloadCSTNewsOnDrive():
     NOME_ARQUIVO_EXPERIMENTO = 'Modelo de Relaces Discursivas.zip'
         
     # Apaga o diretório 'Modelo de Relações Discursivas' e seus arquivos
-    if os.path.exists('Modelo de Relações Discursivas'):
+    if os.path.exists('Modelo de Relacoaes Discursivas'):
         # Apaga a pasta e os arquivos existentes                     
-        shutil.rmtree('Modelo de Relações Discursivas')
+        shutil.rmtree('Modelo de Relacoaes Discursivas')
 
     # Descompacta o arquivo do experimento               
     with zipfile.ZipFile(NOME_ARQUIVO_EXPERIMENTO, 'r') as f:
