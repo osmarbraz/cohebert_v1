@@ -1,3 +1,30 @@
+# Import das bibliotecas.
+import re # Biblioteca para expressão regular
+import unicodedata # Biblioteca para tratar codificação de caracteres
+
+def removeAcentos(texto):   
+    '''    
+    Remove acentos de textos.
+    '''
+    try:
+        text = unicode(texto, 'utf-8')
+    except (TypeError, NameError): 
+        pass
+    texto = unicodedata.normalize('NFD', texto)
+    texto = texto.encode('ascii', 'ignore')
+    texto = texto.decode("utf-8")
+    return str(texto)
+
+def limpaTexto(texto):    
+    '''    
+    Remove acentos e espaços e outros caracteres de textos.
+    '''
+    texto = removeAcentos(texto.lower())
+    texto = re.sub('[ ]+', '_', texto)
+    texto = re.sub('[^.0-9a-zA-Z_-]', '', texto)
+    return texto
+
+
 def formataTempo(tempo):
      '''
      Pega a tempo em segundos e retorna uma string hh:mm:ss
