@@ -1,6 +1,9 @@
 # coebert_v1 - Classificação e mensuração de coerência textual usando BERT
 Classificação e mensuração de coerência textual utilizando o MCL BERT.
 
+
+## **Instalação**
+
 **Requisitos**
 
 * Python 3.6.9+
@@ -8,14 +11,13 @@ Classificação e mensuração de coerência textual utilizando o MCL BERT.
 * Spacy 2.3.5
 * Wandb
 
-
-**Instalação**
+**Download**
 
 ```
 !git clone https://github.com/osmarbraz/coebert.git
 ```
 
-**Execução da biblioteca**
+**Execução**
 
 Mudar o diretório corrente para a pasta clonada
 ```python
@@ -24,7 +26,7 @@ import sys
 sys.path.append('./coebert_v1/coebert')
 ```
 
-**Diretórios**
+## **Diretórios**
 * **coebert_v1** - Código fonte do coeberb v 1.0
 * **conjuntodedados** - Diretório com os conjuntos de dados.
   * **cstnews** - Arquivos do conjunto de dados do CSTNews.
