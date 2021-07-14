@@ -59,10 +59,8 @@ def downloadCSTNewsOnDrive():
     # Realiza o download do arquivo do OneDrive.
     URL_ARQUIVO = 'https://udesc-my.sharepoint.com/:u:/g/personal/91269423991_udesc_br/EQfOLQ6Vg_1Hs4JSwg0aO4wBnxY2ym8tua1XIQB00kczOg?e=hBAqpE&download=1'
 
-    #!wget -O '$NOME_ARQUIVO' --no-check-certificate  
-
     # Realiza o download do arquivo do modelo
-    wget.download(URL_ARQUIVO, out=NOME_ARQUIVO)
+    os.system(f"wget -O '{NOME_ARQUIVO}' --no-check-certificate '{URL_ARQUIVO}'")
 
     # Descompacta o arquivo dos experimentos             
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
@@ -188,7 +186,7 @@ def downloadConjuntoDeDados(ORIGEM):
     Verifica de onde será realizado o download dos arquivos de dados.
     '''
   
-    if ORIGEM == 'ICMC':
+    if ORIGEM:
        downloadCSTNewsICMC()
     else:
        downloadCSTNewsOnDrive()
