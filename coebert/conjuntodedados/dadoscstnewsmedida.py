@@ -269,10 +269,10 @@ def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):
     downloadConjuntoDeDados(ORIGEM)
     
     # Carrega os pares de documentos dos arquivos
-    lista_documentos = carregaParesDocumentosCSTNEWS()
+    lista_documentos = carregaParesDocumentosCSTNews()
         
     # Converte em um dataframe
-    dfdados = converteListaParesDocumentosCSTNEWS(lista_documentos)
+    dfdados = converteListaParesDocumentos(lista_documentos)
         
     # Descarta os documentos muito grandes. (Que geram mais de 512 tokens)
     dfdados = descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer)
