@@ -2,6 +2,9 @@
 import numpy as np
 import torch
 
+# Import de bibliotecas próprias
+from medidor.medidas import *
+
 def getDocumentoLista(listaDocumento):
     '''
     Recebe uma lista de sentenças e faz a concatenação em uma string
@@ -34,6 +37,7 @@ def encontrarIndiceSubLista(lista, sublista):
     '''
     Localiza os índices de início e fim de uma sublista em uma lista
     '''
+    
     # https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm
     h = len(lista)
     n = len(sublista)
@@ -106,8 +110,7 @@ OUTPUTS_LAST_HIDDEN_STATE = 0
 OUTPUTS_POOLER_OUTPUT = 1
 OUTPUTS_HIDDEN_STATES = 2
  
-def getEmbeddingsTodasCamadas(documento, modelo, tokenizador):
-    
+def getEmbeddingsTodasCamadas(documento, modelo, tokenizador):    
     '''   
     Retorna os embeddings de todas as camadas de um documento.
     '''
