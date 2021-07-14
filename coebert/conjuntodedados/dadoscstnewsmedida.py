@@ -183,12 +183,12 @@ def carregaParesDocumentosCSTNews():
     
     return lista_documentos
     
-def downloadConjuntoDeDados(ORIGEM='ICMC'): 
+def downloadConjuntoDeDados(ORIGEM): 
     '''    
     Verifica de onde será realizado o download dos arquivos de dados.
     '''
   
-    if ORIGEM ==  'ICMC':
+    if ORIGEM == 'ICMC':
        downloadCSTNewsICMC()
     else:
        downloadCSTNewsOnDrive()
@@ -231,7 +231,7 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     return dfdadosretorno  
   
     
-def getConjuntoDeDadosMedida(model_args, ORIGEM='ICMC', tokenizer):  
+def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):  
     '''    
     Carrega os dados do CSTNews e retorna um dataframe.
     '''
