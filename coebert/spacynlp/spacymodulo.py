@@ -1,5 +1,5 @@
 # Import das bibliotecas.
-import wget # Biblioteca de download
+import requests # Biblioteca para download
 import tarfile # Biblioteca de descompactação
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos
@@ -12,12 +12,17 @@ def downloadSpacy(model_args):
     
     ARQUIVOMODELOSPACY = model_args.modelo_spacy
     VERSAOSPACY = "-" + model_args.versao_spacy
+    NOME_ARQUIVO_MODELO_COMPACTADO = ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
     
     # Url do arquivo
-    URL_ARQUIVO_MODELO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
+    URL_ARQUIVO_MODELO_COMPACTADO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + NOME_ARQUIVO_MODELO_COMPACTADO
 
     # Realiza o download do arquivo do modelo
-    wget.download(URL_ARQUIVO_MODELO)        
+    # wget.download(URL_ARQUIVO_MODELO)     
+    data = requests.get(URL_ARQUIVO_MODELO_COMPACTADO)
+    arquivo = open(NOME_ARQUIVO_MODELO_COMPACTADO, 'wb')
+    arquivo.write(data.content)
+
 
 def descompactaSpacy(model_args):
     '''
@@ -28,15 +33,15 @@ def descompactaSpacy(model_args):
     VERSAOSPACY = "-" + model_args.versao_spacy
     
     # Nome do arquivo a ser descompactado
-    ARQUIVO = ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
+    NOME_ARQUIVO_MODELO_COMPACTADO = ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
     
-    arquivoTar = tarfile.open(ARQUIVO, "r:gz")    
+    arquivoTar = tarfile.open(NOME_ARQUIVO_MODELO_COMPACTADO, "r:gz")    
     arquivoTar.extractall()    
     arquivoTar.close()
     
     # Apaga o arquivo compactado
-    if os.path.isfile(ARQUIVO):
-        os.remove(ARQUIVO)
+    if os.path.isfile(NOME_ARQUIVO_MODELO_COMPACTADO):
+        os.remove(NOME_ARQUIVO_MODELO_COMPACTADO)
     
 def moveSpacy(model_args):
     '''
