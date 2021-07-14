@@ -201,8 +201,7 @@ def converteListaParesDocumentos(lista_documentos):
     # Converte a lista em um dataframe.
     dfdados = pd.DataFrame.from_records(lista_documentos, columns=['idOriginal','sentencasOriginais','documentoOriginal','idPermutado','sentencasPermutadas','documentoPermutado'])
 
-    return dfdados
-    
+    return dfdados    
     
 def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     '''    
@@ -229,7 +228,7 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     df = dfdados512SemLista.merge(dfdadosSemLista, how = 'outer' ,indicator=True).loc[lambda x : x['_merge']=='left_only']
     #print('Quantidade de registros removidos: {}'.format(len(df)))
 
-  return dfdadosretorno  
+    return dfdadosretorno  
   
     
 def getConjuntoDeDadosMedida(model_args, ORIGEM='ICMC', tokenizer):  
