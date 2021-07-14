@@ -4,7 +4,7 @@ import unicodedata # Biblioteca para tratar codificação de caracteres
 
 def removeAcentos(texto):   
     '''    
-    Remove acentos de textos.
+    Remove acentos de um texto.
     '''
     try:
         text = unicode(texto, 'utf-8')
@@ -17,13 +17,12 @@ def removeAcentos(texto):
 
 def limpaTexto(texto):    
     '''    
-    Remove acentos e espaços e outros caracteres de textos.
+    Remove acentos e espaços e outros caracteres de um texto.
     '''
     texto = removeAcentos(texto.lower())
     texto = re.sub('[ ]+', '_', texto)
     texto = re.sub('[^.0-9a-zA-Z_-]', '', texto)
     return texto
-
 
 def formataTempo(tempo):
      '''
