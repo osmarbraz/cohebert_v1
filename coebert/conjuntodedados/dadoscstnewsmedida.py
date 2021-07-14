@@ -237,6 +237,13 @@ def downloadConjuntoDeDados(ORIGEM):
 def converteListaParesDocumentos(lista_documentos):
     '''    
     Converte a lista de pares de documentos em um dataframe.
+    Atributos do dataframe:
+        0. 'idOriginal' - Nome do arquivo original
+        1. 'sentencasOriginais' - Lista das sentenças do documento original
+        2. 'documentoOriginal' - Documento original
+        3. 'idPermutado' - Nome do arquivo permutado
+        4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado
+        5. 'documentoPermutado' - Documento permutado
     '''
 
     # Converte a lista em um dataframe.
