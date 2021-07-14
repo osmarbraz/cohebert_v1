@@ -664,6 +664,7 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, camada, tipoDoc
 
     # Quantidade de sentenças no documento
     n = len(documento)
+    
     # Divisor da quantidade de documentos
     divisor = n - 1
 
@@ -716,30 +717,30 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, camada, tipoDoc
         # Verifica se os embeddings sentenças estão preenchidos
         if embeddingSi != None and embeddingSj != None:
 
-          # Recupera as medidas entre Si e Sj     
-          ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj)
+              # Recupera as medidas entre Si e Sj     
+              ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj)
 
-          # Acumula as medidas
-          somaScos = somaScos + Scos
-          somaSeuc = somaSeuc + Seuc
-          somaSman = somaSman + Sman
+              # Acumula as medidas
+              somaScos = somaScos + Scos
+              somaSeuc = somaSeuc + Seuc
+              somaSman = somaSman + Sman
 
-           # avança para o próximo par de sentenças
-          posSi = posSj
-          posSj = posSj + 1
-        else:
-          # Reduz um da quantidade de sentenças pois uma delas está vazia
-          divisor = divisor - 1
-          # Se embeddingSi igual a None avanca pos1 e pos2
-          if embeddingSi == None:
-            # Avança a posição da sentença posSi para a posSj
-            posSi = posSj
-            # Avança para a próxima sentença de posSj
-            posSj = posSj + 1        
-          else:          
-            # Se embeddingSj = None avança somente posJ para a próxima sentença
-            if embeddingSj == None:
+               # avança para o próximo par de sentenças
+              posSi = posSj
               posSj = posSj + 1
+        else:
+              # Reduz um da quantidade de sentenças pois uma delas está vazia
+              divisor = divisor - 1
+              # Se embeddingSi igual a None avanca pos1 e pos2
+              if embeddingSi == None:
+                    # Avança a posição da sentença posSi para a posSj
+                    posSi = posSj
+                    # Avança para a próxima sentença de posSj
+                    posSj = posSj + 1        
+              else:          
+                    # Se embeddingSj = None avança somente posJ para a próxima sentença
+                    if embeddingSj == None:
+                        posSj = posSj + 1
 
     # Calcula a medida 
     Ccos =  0
@@ -747,9 +748,9 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, camada, tipoDoc
     Cman =  0
 
     if divisor != 0:
-      Ccos = float(somaScos)/float(divisor)
-      Ceuc = float(somaSeuc)/float(divisor)
-      Cman = float(somaSman)/float(divisor)
+          Ccos = float(somaScos)/float(divisor)
+          Ceuc = float(somaSeuc)/float(divisor)
+          Cman = float(somaSman)/float(divisor)
 
     return Ccos, Ceuc, Cman
 
