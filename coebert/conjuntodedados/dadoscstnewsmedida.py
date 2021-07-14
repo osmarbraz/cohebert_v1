@@ -1,5 +1,5 @@
 # Import das bibliotecas.
-import wget # Biblioteca de download
+import requests # Biblioteca para download
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
@@ -20,7 +20,9 @@ def downloadCSTNewsICMC():
     URL_ARQUIVO = 'https://sites.icmc.usp.br/taspardo/Summary coherence models.zip'  
 
     # Realiza o download do arquivo do modelo
-    wget.download(URL_ARQUIVO, out=NOME_ARQUIVO)
+    data = requests.get(URL_ARQUIVO)
+    arquivo = open(NOME_ARQUIVO, 'wb')
+    arquivo.write(data.content)
 
     # Descompacta o arquivo dos experimentos             
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
@@ -30,7 +32,7 @@ def downloadCSTNewsICMC():
     os.remove(NOME_ARQUIVO)
 
     # Especifica o nome do arquivo do experimento
-    NOME_ARQUIVO_EXPERIMENTO = 'Modelo de RelaЗфes Discursivas.zip'
+    NOME_ARQUIVO_EXPERIMENTO = 'Modelo de RelaçΣes Discursivas.zip'
 
     # Apaga o diretório 'Modelo de Relações Discursivas' e seus arquivos
     if os.path.exists('Modelo de Relações Discursivas'):
@@ -60,7 +62,9 @@ def downloadCSTNewsOnDrive():
     URL_ARQUIVO = 'https://udesc-my.sharepoint.com/:u:/g/personal/91269423991_udesc_br/EQfOLQ6Vg_1Hs4JSwg0aO4wBnxY2ym8tua1XIQB00kczOg?e=hBAqpE&download=1'
 
     # Realiza o download do arquivo do modelo
-    os.system(f"wget -O '{NOME_ARQUIVO}' --no-check-certificate '{URL_ARQUIVO}'")
+    data = requests.get(URL_ARQUIVO)
+    arquivo = open(NOME_ARQUIVO, 'wb')
+    arquivo.write(data.content)
 
     # Descompacta o arquivo dos experimentos             
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
