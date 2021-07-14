@@ -3,7 +3,8 @@ import wget # Biblioteca de download
 import tarfile # Biblioteca de descompactação
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos
-
+import spacy # Biblioteca do spaCy
+    
 def downloadSpacy(model_args):
     '''
     Realiza o download do arquivo do modelo para o diretório corrente
@@ -55,14 +56,11 @@ def carregaSpacy(model_args):
     ARQUIVOMODELOSPACY = model_args.modelo_spacy
     VERSAOSPACY = "-" + model_args.versao_spacy
 
-    downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
+    downloadSpacy(model_args)
 
-    descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
+    descompactaSpacy(model_args)
     
-    moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
-
-    # Importando as bibliotecas.
-    import spacy
+    moveSpacy(model_args)
 
     # Caminho completo do modelo do spaCy
     CAMINHOMODELOSPACY = '/content/' + ARQUIVOMODELOSPACY
