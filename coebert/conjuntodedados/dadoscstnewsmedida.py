@@ -218,9 +218,11 @@ def downloadConjuntoDeDados(ORIGEM):
     '''
   
     if ORIGEM:
-       downloadCSTNewsICMC()
+        print("Realizando o download do site do ICMC.')
+        downloadCSTNewsICMC()
     else:
-       downloadCSTNewsOnDrive()
+        print("Realizando o download do meu OneDrive.')
+        downloadCSTNewsOnDrive()
     
 def converteListaParesDocumentos(lista_documentos):
     '''    
