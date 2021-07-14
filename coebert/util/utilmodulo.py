@@ -1,6 +1,16 @@
 # Import das bibliotecas.
 import re # Biblioteca para expressão regular
 import unicodedata # Biblioteca para tratar codificação de caracteres
+import requests # Biblioteca para download
+
+def downloadArquivo(url_arquivo, nome_arquivo_destino):
+    '''    
+    Realiza o download de um arquivo de uma url em salva em nome_arquivo_destino.    
+    '''
+    # Realiza o download do arquivo dos experimentos
+    data = requests.get(url_arquivo)
+    arquivo = open(nome_arquivo_destino, 'wb')
+    arquivo.write(data.content)
 
 def removeAcentos(texto):   
     '''    
