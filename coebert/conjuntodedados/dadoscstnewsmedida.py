@@ -22,32 +22,44 @@ def downloadCSTNewsICMC():
     # Realiza o download do arquivo do ICMC.
     URL_ARQUIVO = 'https://sites.icmc.usp.br/taspardo/Summary coherence models.zip'  
 
-    # Realiza o download do arquivo do modelo
+    # Realiza o download do arquivo dos experimentos
     data = requests.get(URL_ARQUIVO)
     arquivo = open(NOME_ARQUIVO, 'wb')
     arquivo.write(data.content)
-
+        
     # Descompacta o arquivo dos experimentos             
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
-    arquivoZip.extractall()
-
+    with zipfile.ZipFile(NOME_ARQUIVO, 'r') as arquivoCompactado:
+        # Recupera a lista dos nomes dos arquivos dentro do arquivo compactado
+        zipInfo = arquivoCompactado.infolist()
+        # Percorre a lista dos nomes arquivos compactados
+        for arquivo in zipInfo: 
+            # Limpa o nome do arquivo
+            arquivo.filename = removeAcentos(arquivo.filename)        
+            arquivoCompactado.extract(arquivo)
+    
     # Apaga o arquivo compactado
     os.remove(NOME_ARQUIVO)
 
     # Especifica o nome do arquivo do experimento
-    NOME_ARQUIVO_EXPERIMENTO = 'Modelo de RelaçΣes Discursivas.zip'
-
+    NOME_ARQUIVO_EXPERIMENTO = 'Modelo de Relaces Discursivas.zip'
+        
     # Apaga o diretório 'Modelo de Relações Discursivas' e seus arquivos
-    if os.path.exists('Modelo de Relações Discursivas'):
+    if os.path.exists('Modelo de Relacoaes Discursivas'):
         # Apaga a pasta e os arquivos existentes                     
-        shutil.rmtree('Modelo de Relações Discursivas')
+        shutil.rmtree('Modelo de Relacoaes Discursivas')
 
-    # Descompacta o arquivo o experimento
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_EXPERIMENTO,"r")
-    arquivoZip.extractall()
+    # Descompacta o arquivo do experimento               
+    with zipfile.ZipFile(NOME_ARQUIVO_EXPERIMENTO, 'r') as arquivoCompactado:
+        # Recupera a lista dos nomes dos arquivos dentro do arquivo compactado
+        zipInfo = arquivoCompactado.infolist()
+        # Percorre a lista dos nomes arquivos compactados
+        for arquivo in zipInfo: 
+            # Limpa o nome do arquivo
+            arquivo.filename = removeAcentos(arquivo.filename)        
+            arquivoCompactado.extract(arquivo)
 
     # Apaga o arquivo compactado
-    os.remove(NOME_ARQUIVO_EXPERIMENTO)
+    os.remove(NOME_ARQUIVO_EXPERIMENTO)  
   
 def downloadCSTNewsOnDrive():
   
@@ -64,18 +76,20 @@ def downloadCSTNewsOnDrive():
     # Realiza o download do arquivo do OneDrive.
     URL_ARQUIVO = 'https://udesc-my.sharepoint.com/:u:/g/personal/91269423991_udesc_br/EQfOLQ6Vg_1Hs4JSwg0aO4wBnxY2ym8tua1XIQB00kczOg?e=hBAqpE&download=1'
 
-    # Realiza o download do arquivo do modelo
+    # Realiza o download do arquivo dos experimentos
     data = requests.get(URL_ARQUIVO)
     arquivo = open(NOME_ARQUIVO, 'wb')
     arquivo.write(data.content)
 
     # Descompacta o arquivo dos experimentos             
-    with zipfile.ZipFile(NOME_ARQUIVO, 'r') as f:
-      zipInfo = f.infolist()
-      for arquivo in zipInfo: 
-        # Limpa o nome do arquivo
-        arquivo.filename = removeAcentos(arquivo.filename)        
-        f.extract(arquivo)
+    with zipfile.ZipFile(NOME_ARQUIVO, 'r') as arquivoCompactado:
+        # Recupera a lista dos nomes dos arquivos dentro do arquivo compactado
+        zipInfo = arquivoCompactado.infolist()
+        # Percorre a lista dos nomes arquivos compactados
+        for arquivo in zipInfo: 
+            # Limpa o nome do arquivo
+            arquivo.filename = removeAcentos(arquivo.filename)        
+            arquivoCompactado.extract(arquivo)
     
     # Apaga o arquivo compactado
     os.remove(NOME_ARQUIVO)
@@ -89,12 +103,14 @@ def downloadCSTNewsOnDrive():
         shutil.rmtree('Modelo de Relacoaes Discursivas')
 
     # Descompacta o arquivo do experimento               
-    with zipfile.ZipFile(NOME_ARQUIVO_EXPERIMENTO, 'r') as f:
-      zipInfo = f.infolist()
-      for arquivo in zipInfo: 
-        # Limpa o nome do arquivo
-        arquivo.filename = removeAcentos(arquivo.filename)        
-        f.extract(arquivo)
+    with zipfile.ZipFile(NOME_ARQUIVO_EXPERIMENTO, 'r') as arquivoCompactado:
+        # Recupera a lista dos nomes dos arquivos dentro do arquivo compactado
+        zipInfo = arquivoCompactado.infolist()
+        # Percorre a lista dos nomes arquivos compactados
+        for arquivo in zipInfo: 
+            # Limpa o nome do arquivo
+            arquivo.filename = removeAcentos(arquivo.filename)        
+            arquivoCompactado.extract(arquivo)
 
     # Apaga o arquivo compactado
     os.remove(NOME_ARQUIVO_EXPERIMENTO)  
