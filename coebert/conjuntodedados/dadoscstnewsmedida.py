@@ -17,7 +17,7 @@ def downloadCSTNewsICMC():
        os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do ICMC.
-    URL_ARQUIVO = 'https://sites.icmc.usp.br/taspardo/Summary%20coherence%20models.zip'  
+    URL_ARQUIVO = 'https://sites.icmc.usp.br/taspardo/Summary coherence models.zip'  
 
     # Realiza o download do arquivo do modelo
     wget.download(URL_ARQUIVO, out=NOME_ARQUIVO)
@@ -47,7 +47,7 @@ def downloadCSTNewsICMC():
 def downloadCSTNewsOnDrive():
   
     '''    
-    Download dos arquivos do conjunto de dados do CSTNews de uma psta compartilhada do One Drive.
+    Download dos arquivos do conjunto de dados do CSTNews de uma pasta compartilhada do One Drive.
     '''
   
     # Nome do arquivo a ser criado.
