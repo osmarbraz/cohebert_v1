@@ -81,6 +81,7 @@ def carregaArquivosPermutadosOnlineEduc():
         lista_documentos_permutados.append([nomeArquivo, sentencas, documento])
 
     print ('TERMINADO PERMUTADO: ', len(lista_documentos_permutados))
+    
     return lista_documentos_permutados 
   
 def carregaParesDocumentosOnlineEduc():
@@ -123,7 +124,10 @@ def carregaParesDocumentosOnlineEduc():
     return lista_documentos
     
 def downloadConjuntoDeDados(): 
-      
+    '''    
+    Verifica de onde será realizado o download dos arquivos de dados.
+    '''
+    
     downloadOnlineEducGoogleDrive()
     
     
@@ -163,7 +167,7 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     df = dfdados512SemLista.merge(dfdadosSemLista, how = 'outer' ,indicator=True).loc[lambda x : x['_merge']=='left_only']
     #print('Quantidade de registros removidos: {}'.format(len(df)))
 
-  return dfdadosretorno  
+    return dfdadosretorno  
   
     
 def getConjuntoDeDadosMedida(model_args, tokenizer): 
