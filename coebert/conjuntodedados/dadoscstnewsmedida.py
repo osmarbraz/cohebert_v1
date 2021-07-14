@@ -216,10 +216,10 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
   return dfdadosretorno  
   
     
-def getConjuntoDeDadosMedida(model_args, ORIGEM='ICMC'):
+def getConjuntoDeDadosMedida(model_args, ORIGEM='ICMC', tokenizer):
     
     # Realiza o download do conjunto de dados
-    downloadConjuntoDeDados(ORIGEM='ICMC', tokenizer)
+    downloadConjuntoDeDados(ORIGEM)
     
     # Carrega os pares de documentos dos arquivos
     lista_documentos = carregaParesDocumentosCSTNEWS()
