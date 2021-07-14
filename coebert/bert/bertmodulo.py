@@ -115,9 +115,11 @@ def verificaModelo(model_args):
     ''' 
 
     DIRETORIO_MODELO = None
+    
     if model_args.usar_mcl_ajustado == True:
         DIRETORIO_MODELO = copiaModeloAjustado()
         print('Usando modelo ajustado')
+        
     else:
         DIRETORIO_MODELO = downloadModeloPretreinado(model_args.pretrained_model_name_or_path)
         print('Usando modelo pré-treinado de download ou comunidade')
@@ -155,7 +157,7 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO):
 
     return tokenizer
 
-def carregaModelo(MODELO, DIRETORIO_MODELO, model_args):
+def carregaModelo(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o modelo e retorna o modelo.
     ''' 
@@ -166,8 +168,8 @@ def carregaModelo(MODELO, DIRETORIO_MODELO, model_args):
     # Variável para setar o arquivo.
     URL_MODELO = None
 
-    if 'http' in MODELO:
-        URL_MODELO = MODELO
+    if 'http' in model_args.pretrained_model_name_or_path:
+        URL_MODELO = model_args.pretrained_model_name_or_path
 
     # Se a variável URL_MODELO foi setada
     if URL_MODELO:
@@ -187,7 +189,7 @@ def carregaModelo(MODELO, DIRETORIO_MODELO, model_args):
 
     return model
 
-def carregaBERT(MODELO, model_args):
+def carregaBERT(model_args):
     ''' 
     Carrega o BERT e retorna o modelo e o tokenizador.
     ''' 
@@ -196,7 +198,7 @@ def carregaBERT(MODELO, model_args):
     DIRETORIO_MODELO = verificaModelo(model_args)
     
     # Carrega o modelo
-    model = carregaModelo(MODELO, DIRETORIO_MODELO, model_args)
+    model = carregaModelo(DIRETORIO_MODELO, model_args)
     
     # Carrega o tokenizador
     tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO)
