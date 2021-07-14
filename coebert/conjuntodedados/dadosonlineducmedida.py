@@ -7,6 +7,10 @@ import shutil # Biblioteca para mover arquivos
 import pandas as pd # Biblioteca pandas
 
 def downloadOnlineEducGoogleDrive():
+    '''    
+    Download dos arquivos do conjunto de dados do OnlineEduc 1.0 do google drive.
+    '''
+    
     # Nome do arquivo
     NOMEARQUIVOORIGINAL = 'original.zip'
     NOMEARQUIVOPERMUTADO = 'permutado.zip'
@@ -28,6 +32,9 @@ def downloadOnlineEducGoogleDrive():
     arquivoZip.extractall()
     
 def carregaArquivosOriginaisOnlineEduc():    
+    '''    
+    Carrega os arquivos originais dos arquivos do OnlineEduc 1.0.
+    '''
   
     lista_documentos_originais = []
 
@@ -50,7 +57,10 @@ def carregaArquivosOriginaisOnlineEduc():
 
     return lista_documentos_originais
    
-def carregaArquivosPermutadosOnlineEduc():    
+def carregaArquivosPermutadosOnlineEduc():
+    '''    
+    Carrega os arquivos permutados dos arquivos do OnlineEduc 1.0.
+    '''
 
     lista_documentos_permutados = []
 
@@ -73,7 +83,10 @@ def carregaArquivosPermutadosOnlineEduc():
     print ('TERMINADO PERMUTADO: ', len(lista_documentos_permutados))
     return lista_documentos_permutados 
   
-def carregaParesDocumentosOnlineEduc():  
+def carregaParesDocumentosOnlineEduc():
+    '''    
+    Carrega os arquivos e gera os pares de documentos em uma lista.
+    '''
   
     # Lista dos documentos originais e permutados 
     lista_documentos = []
@@ -153,7 +166,10 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
   return dfdadosretorno  
   
     
-def getConjuntoDeDadosMedida(model_args, tokenizer): #0 - CSTNews ou 1 - OnlineEduc 1.0    
+def getConjuntoDeDadosMedida(model_args, tokenizer): 
+    '''    
+    Carrega os dados do OnlineEduc 1.0 e retorna um dataframe.
+    '''
     
     # Realiza o download do conjunto de dados
     downloadConjuntoDeDados()
