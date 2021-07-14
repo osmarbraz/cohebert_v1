@@ -4,6 +4,7 @@ import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
 import pandas as pd # Biblioteca pandas
+import re # Biblioteca para expressão regular
 import unicodedata # Biblioteca para tratar codificação de caracteres
 
 def removeAcentos(texto):   
