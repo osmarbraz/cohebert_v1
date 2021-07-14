@@ -1,5 +1,5 @@
 # Import das bibliotecas.
-import wget # Biblioteca de download
+import requests # Biblioteca para download
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
@@ -67,8 +67,10 @@ def downloadModeloPretreinado(model_args):
             # Apaga a pasta e os arquivos existentes                     
             shutil.rmtree(DIRETORIO_MODELO)
 
-        # Realiza o download do arquivo do modelo
-        wget.download(URL_MODELO)        
+        # Realiza o download do arquivo do modelo        
+        data = requests.get(URL_MODELO)
+        arquivo = open(ARQUIVO, 'wb')
+        arquivo.write(data.content)
 
         # Descompacta o arquivo na pasta de descompactação.                
         arquivoZip = zipfile.ZipFile(ARQUIVO,"r")
@@ -78,7 +80,9 @@ def downloadModeloPretreinado(model_args):
         # O vocabulário não está no arquivo compactado acima, mesma url mas arquivo diferente.
         URL_MODELO_VOCAB = CAMINHO_ARQUIVO + ARQUIVO_VOCAB        
         # Coloca o arquivo do vocabulário no diretório de descompactação.
-        wget.download(URL_MODELO_VOCAB, out = DIRETORIO_MODELO)        
+        data = requests.get(URL_MODELO_VOCAB)
+        arquivo = open(DIRETORIO_MODELO + "/" + ARQUIVO_VOCAB, 'wb')
+        arquivo.write(data.content)
 
         # Apaga o arquivo compactado
         os.remove(ARQUIVO)
