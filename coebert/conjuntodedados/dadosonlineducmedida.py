@@ -1,6 +1,6 @@
 
 # Import das bibliotecas.
-import wget # Biblioteca de download
+import requests # Biblioteca para download
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
