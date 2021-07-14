@@ -7,8 +7,9 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
     '''    
     Realiza o download de um arquivo de uma url em salva em nome_arquivo_destino.    
     '''
-    # Realiza o download do arquivo dos experimentos
+    # Realiza o download de um arquivo em uma url
     data = requests.get(url_arquivo)
+    # Salva em um arquivo
     arquivo = open(nome_arquivo_destino, 'wb')
     arquivo.write(data.content)
 
