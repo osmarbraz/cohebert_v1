@@ -25,7 +25,7 @@ def downloadCSTNewsICMC():
     URL_ARQUIVO = 'https://sites.icmc.usp.br/taspardo/Summary coherence models.zip'  
 
     # Realiza o download do arquivo dos experimentos    
-    downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO):
+    downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
         
     # Descompacta o arquivo dos experimentos             
     with zipfile.ZipFile(NOME_ARQUIVO, 'r') as arquivoCompactado:
@@ -77,7 +77,7 @@ def downloadCSTNewsOnDrive():
     URL_ARQUIVO = 'https://udesc-my.sharepoint.com/:u:/g/personal/91269423991_udesc_br/EQfOLQ6Vg_1Hs4JSwg0aO4wBnxY2ym8tua1XIQB00kczOg?e=hBAqpE&download=1'
 
     # Realiza o download do arquivo dos experimentos    
-    downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO):
+    downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
 
     # Descompacta o arquivo dos experimentos             
     with zipfile.ZipFile(NOME_ARQUIVO, 'r') as arquivoCompactado:
