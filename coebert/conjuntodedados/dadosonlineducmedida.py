@@ -1,6 +1,5 @@
 
 # Import das bibliotecas.
-import requests # Biblioteca para download
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
@@ -128,6 +127,7 @@ def downloadConjuntoDeDados():
     Verifica de onde será realizado o download dos arquivos de dados.
     '''
     
+    print("Realizando o download do Google Drive.")
     downloadOnlineEducGoogleDrive()
     
     
