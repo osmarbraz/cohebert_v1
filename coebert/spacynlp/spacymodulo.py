@@ -1,6 +1,7 @@
 # Import das bibliotecas.
 import wget # Biblioteca de download
 import tarfile # Biblioteca de descompactação
+import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos
 
 def downloadSpacy(model_args):
@@ -29,7 +30,7 @@ def descompactaSpacy(model_args):
     
     arquivoTar = tarfile.open(ARQUIVO, "r:gz")    
     arquivoTar.extractall()    
-    arquivoTar.close()    
+    arquivoTar.close()
     
 def moveSpacy(model_args):
     '''
