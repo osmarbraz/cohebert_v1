@@ -31,11 +31,13 @@ def getTamanhoBERT(model_args):
         
     return TAMANHO_BERT  
 
-def downloadModeloPretreinado(MODELO):
+def downloadModeloPretreinado(model_args):
     ''' 
     Realiza o download do MODELO e retorna o diretório onde o MODELO foi descompactado.
     ''' 
 
+    MODELO = model_args.pretrained_model_name_or_path
+    
     # Importando as bibliotecas.
     import os
 
@@ -102,7 +104,7 @@ def copiaModeloAjustado():
     # Diretório remoto de salvamento do modelo.
     DIRETORIO_REMOTO_MODELO_AJUSTADO = '/content/drive/MyDrive/Colab Notebooks/Data/CSTNEWS/validacao_classificacao/holdout/modelo/modelo' + MODELO_BERT + TAMANHO_BERT
 
-    ## Copia o arquivo do modelo para o diretório no Google Drive.
+    # Copia o arquivo do modelo para o diretório no Google Drive.
     shutil.copytree(DIRETORIO_REMOTO_MODELO_AJUSTADO, DIRETORIO_LOCAL_MODELO_AJUSTADO) 
    
     print('Modelo copiado!')
@@ -121,12 +123,12 @@ def verificaModelo(model_args):
         print('Usando modelo ajustado')
         
     else:
-        DIRETORIO_MODELO = downloadModeloPretreinado(model_args.pretrained_model_name_or_path)
+        DIRETORIO_MODELO = downloadModeloPretreinado(model_args)
         print('Usando modelo pré-treinado de download ou comunidade')
         
     return DIRETORIO_MODELO
 
-def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO):
+def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o tokenizador do MODELO.
     O tokenizador utiliza WordPiece.
@@ -201,6 +203,6 @@ def carregaBERT(model_args):
     model = carregaModelo(DIRETORIO_MODELO, model_args)
     
     # Carrega o tokenizador
-    tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO)
+    tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args)
     
     return model, tokenizer
