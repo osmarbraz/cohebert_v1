@@ -89,7 +89,7 @@ def downloadCSTNewsOnDrive():
       zipInfo = f.infolist()
       for arquivo in zipInfo: 
         # Limpa o nome do arquivo
-        arquivo.filename = limpaTexto(arquivo.filename)        
+        arquivo.filename = removeAcentos(arquivo.filename)        
         f.extract(arquivo)
     
     # Apaga o arquivo compactado
