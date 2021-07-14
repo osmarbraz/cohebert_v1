@@ -3,20 +3,26 @@ import wget # Biblioteca de download
 import tarfile # Biblioteca de descompactação
 import shutil # Biblioteca para mover arquivos
 
-def downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
+def downloadSpacy(model_args):
     '''
     Realiza o download do arquivo do modelo para o diretório corrente
     '''
+    
+    ARQUIVOMODELOSPACY = model_args.modelo_spacy
+    VERSAOSPACY = "-" + model_args.versao_spacy
+    
     # Url do arquivo
     URL_ARQUIVO_MODELO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
 
     # Realiza o download do arquivo do modelo
     wget.download(URL_ARQUIVO_MODELO)        
 
-def descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
+def descompactaSpacy(model_args):
     '''
     Descompacta o arquivo do modelo
     '''
+    ARQUIVOMODELOSPACY = model_args.modelo_spacy
+    VERSAOSPACY = "-" + model_args.versao_spacy
     
     # Nome do arquivo a ser descompactado
     ARQUIVO = ARQUIVOMODELOSPACY + VERSAOSPACY + ".tar.gz"
@@ -25,10 +31,14 @@ def descompactaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
     arquivoTar.extractall()    
     arquivoTar.close()    
     
-def moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
+def moveSpacy(model_args):
     '''
     Coloca a pasta do modelo descompactado em uma pasta de nome mais simples.
     '''
+    
+    ARQUIVOMODELOSPACY = model_args.modelo_spacy
+    VERSAOSPACY = "-" + model_args.versao_spacy
+    
     # Caminho da origem do diretório
     ORIGEM = "/content/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + ARQUIVOMODELOSPACY + "/" + ARQUIVOMODELOSPACY + VERSAOSPACY 
     # Destino do diretório
@@ -36,10 +46,13 @@ def moveSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
 
     shutil.move(ORIGEM, DESTINO)
     
-def carregaSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY):
+def carregaSpacy(model_args):
     '''
     Realiza o carregamento do Spacy.    
     '''
+    
+    ARQUIVOMODELOSPACY = model_args.modelo_spacy
+    VERSAOSPACY = "-" + model_args.versao_spacy
 
     downloadSpacy(ARQUIVOMODELOSPACY, VERSAOSPACY)
 
