@@ -134,7 +134,7 @@ def carregaArquivosOriginaisCSTNews():
         # Recupera o nome do arquivo até a posição do ponto
         nomeArquivo = arquivos[i][:ponto]
 
-        documento = carregar('/content/Modelo de Relacoaes Discursivass/Sumarios_Humanos/'+arquivos[i])
+        documento = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivos[i])
         sentencas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivos[i])
 
         lista_documentos_originais.append([arquivos[i], sentencas, documento])
