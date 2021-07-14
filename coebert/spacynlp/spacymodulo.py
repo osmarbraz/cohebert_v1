@@ -23,6 +23,7 @@ def descompactaSpacy(model_args):
     '''
     Descompacta o arquivo do modelo
     '''
+    
     ARQUIVOMODELOSPACY = model_args.modelo_spacy
     VERSAOSPACY = "-" + model_args.versao_spacy
     
@@ -32,6 +33,9 @@ def descompactaSpacy(model_args):
     arquivoTar = tarfile.open(ARQUIVO, "r:gz")    
     arquivoTar.extractall()    
     arquivoTar.close()
+    
+    # Apaga o arquivo compactado
+    os.remove(ARQUIVO)
     
 def moveSpacy(model_args):
     '''
@@ -74,6 +78,7 @@ def getStopwords(nlp):
     '''
     Recupera as stop words do nlp(Spacy).
     '''
+    
     spacy_stopwords = nlp.Defaults.stop_words
 
     return spacy_stopwords 
