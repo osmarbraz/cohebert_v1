@@ -1,5 +1,4 @@
 # Import das bibliotecas.
-import requests # Biblioteca para download
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
@@ -25,10 +24,8 @@ def downloadCSTNewsICMC():
     # Realiza o download do arquivo do ICMC.
     URL_ARQUIVO = 'https://sites.icmc.usp.br/taspardo/Summary coherence models.zip'  
 
-    # Realiza o download do arquivo dos experimentos
-    data = requests.get(URL_ARQUIVO)
-    arquivo = open(NOME_ARQUIVO, 'wb')
-    arquivo.write(data.content)
+    # Realiza o download do arquivo dos experimentos    
+    downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO):
         
     # Descompacta o arquivo dos experimentos             
     with zipfile.ZipFile(NOME_ARQUIVO, 'r') as arquivoCompactado:
@@ -79,10 +76,8 @@ def downloadCSTNewsOnDrive():
     # Realiza o download do arquivo do OneDrive.
     URL_ARQUIVO = 'https://udesc-my.sharepoint.com/:u:/g/personal/91269423991_udesc_br/EQfOLQ6Vg_1Hs4JSwg0aO4wBnxY2ym8tua1XIQB00kczOg?e=hBAqpE&download=1'
 
-    # Realiza o download do arquivo dos experimentos
-    data = requests.get(URL_ARQUIVO)
-    arquivo = open(NOME_ARQUIVO, 'wb')
-    arquivo.write(data.content)
+    # Realiza o download do arquivo dos experimentos    
+    downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO):
 
     # Descompacta o arquivo dos experimentos             
     with zipfile.ZipFile(NOME_ARQUIVO, 'r') as arquivoCompactado:
