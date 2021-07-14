@@ -5,12 +5,15 @@ import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
 import pandas as pd # Biblioteca pandas
 
-def downloadCSTNewsICMC():
+def downloadCSTNewsICMC():  
+    '''    
+    Download dos arquivos do conjunto de dados do CSTNews do site do ICMC.
+    '''
   
     # Nome do arquivo a ser criado.
     NOME_ARQUIVO = 'Summarycoherencemodels.zip'
 
-    if os.path.isfile(NOME_ARQUIVO)
+    if os.path.isfile(NOME_ARQUIVO):
        os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do ICMC.
@@ -43,10 +46,14 @@ def downloadCSTNewsICMC():
   
 def downloadCSTNewsOnDrive():
   
+    '''    
+    Download dos arquivos do conjunto de dados do CSTNews de uma psta compartilhada do One Drive.
+    '''
+  
     # Nome do arquivo a ser criado.
     NOME_ARQUIVO = 'Summarycoherencemodels.zip'
 
-    if os.path.isfile(NOME_ARQUIVO)
+    if os.path.isfile(NOME_ARQUIVO):
        os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do OneDrive.
@@ -80,7 +87,10 @@ def downloadCSTNewsOnDrive():
     os.remove(NOME_ARQUIVO_EXPERIMENTO)  
 
     
-def carregaArquivosOriginaisCSTNews():
+def carregaArquivosOriginaisCSTNews():  
+    '''    
+    Carrega os arquivos originais dos arquivos do CSTNews.
+    '''
   
     lista_documentos_originais = []
 
@@ -104,7 +114,10 @@ def carregaArquivosOriginaisCSTNews():
 
     return lista_documentos_originais
 
-def carregaArquivosPermutadosCSTNews():
+def carregaArquivosPermutadosCSTNews():  
+    '''    
+    Carrega os arquivos permutados dos arquivos do CSTNews.
+    '''
   
     lista_documentos_permutados = []
 
@@ -171,6 +184,9 @@ def carregaParesDocumentosCSTNews():
     return lista_documentos
     
 def downloadConjuntoDeDados(ORIGEM='ICMC'): 
+    '''    
+    Verifica de onde será realizado o download dos arquivos de dados.
+    '''
   
     if ORIGEM ==  'ICMC':
        downloadCSTNewsICMC()
@@ -216,7 +232,10 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
   return dfdadosretorno  
   
     
-def getConjuntoDeDadosMedida(model_args, ORIGEM='ICMC', tokenizer):
+def getConjuntoDeDadosMedida(model_args, ORIGEM='ICMC', tokenizer):  
+    '''    
+    Carrega os dados do CSTNews e retorna um dataframe.
+    '''
     
     # Realiza o download do conjunto de dados
     downloadConjuntoDeDados(ORIGEM)
