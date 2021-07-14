@@ -123,7 +123,7 @@ def carregaArquivosOriginaisCSTNews():
   
     lista_documentos_originais = []
 
-    arquivos = os.listdir('/content/Modelo de Relações Discursivas/Sumarios_Humanos/') #Entrada (Input) - diretório de sumários humanos e permutados
+    arquivos = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/') #Entrada (Input) - diretório de sumários humanos e permutados
 
     if '.DS_Store' in arquivos:
       arquivos.remove('.DS_Store')
@@ -134,8 +134,8 @@ def carregaArquivosOriginaisCSTNews():
         # Recupera o nome do arquivo até a posição do ponto
         nomeArquivo = arquivos[i][:ponto]
 
-        documento = carregar('/content/Modelo de Relações Discursivas/Sumarios_Humanos/'+arquivos[i])
-        sentencas = carregarLista('/content/Modelo de Relações Discursivas/Sumarios_Humanos/'+arquivos[i])
+        documento = carregar('/content/Modelo de Relacoaes Discursivass/Sumarios_Humanos/'+arquivos[i])
+        sentencas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivos[i])
 
         lista_documentos_originais.append([arquivos[i], sentencas, documento])
 
@@ -150,7 +150,7 @@ def carregaArquivosPermutadosCSTNews():
   
     lista_documentos_permutados = []
 
-    arquivos = os.listdir('/content/Modelo de Relações Discursivas/Sumarios_Humanos_Permutados/') #Entrada (Input) - diret�rio de sum�rios humanos e permutados
+    arquivos = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/') #Entrada (Input) - diretório de sumários humanos e permutados
 
     if '.DS_Store' in arquivos:
         arquivos.remove('.DS_Store')
@@ -161,8 +161,8 @@ def carregaArquivosPermutadosCSTNews():
         # Recupera o nome do arquivo até a posição do ponto
         nomeArquivo = arquivos[i][:ponto]
 
-        documento = carregar('/content/Modelo de Relações Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
-        sentencas = carregarLista('/content/Modelo de Relações Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
+        documento = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
+        sentencas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
 
         lista_documentos_permutados.append([arquivos[i], sentencas, documento])
 
@@ -178,7 +178,7 @@ def carregaParesDocumentosCSTNews():
     # Lista dos documentos originais e permutados 
     lista_documentos = []
 
-    arquivosOriginais = os.listdir('/content/Modelo de Relações Discursivas/Sumarios_Humanos/') #Entrada (Input) - diretório de sumários humanos e permutados
+    arquivosOriginais = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/') #Entrada (Input) - diretório de sumários humanos e permutados
     
     if '.DS_Store' in arquivosOriginais:
         arquivosOriginais.remove('.DS_Store')
@@ -192,9 +192,9 @@ def carregaParesDocumentosCSTNews():
 
         # Carrega o documento original.
         # Carrega como parágrafo
-        documentoOriginal = carregar('/content/Modelo de Relações Discursivas/Sumarios_Humanos/'+arquivosOriginais[i])
+        documentoOriginal = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivosOriginais[i])
         # Carrega uma lista das sentenças
-        sentencasOriginais = carregarLista('/content/Modelo de Relações Discursivas/Sumarios_Humanos/'+arquivosOriginais[i])
+        sentencasOriginais = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivosOriginais[i])
 
         # Percorre as 20 permutações.
         for j in range(20):
@@ -202,8 +202,8 @@ def carregaParesDocumentosCSTNews():
             arquivoPermutado = arquivoOriginal + '_Perm_'+str(j) + '.txt'
 
             # Carrega o arquivo permutado.
-            documentoPermutado = carregar('/content/Modelo de Relações Discursivas/Sumarios_Humanos_Permutados/'+ arquivoPermutado)
-            sentencasPermutadas = carregarLista('/content/Modelo de Relações Discursivas/Sumarios_Humanos_Permutados/'+ arquivoPermutado)
+            documentoPermutado = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+ arquivoPermutado)
+            sentencasPermutadas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+ arquivoPermutado)
 
             # Adiciona o par original e sua versão permutada.
             lista_documentos.append([arquivosOriginais[i], sentencasOriginais, documentoOriginal, arquivoPermutado, sentencasPermutadas, documentoPermutado])
