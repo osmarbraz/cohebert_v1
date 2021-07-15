@@ -12,6 +12,182 @@ from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
 
+def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
+    '''
+    Esta função tentará escolher um intervalo de atualização de progresso inteligente com base na magnitude das iterações totais.
+
+    Parâmetros:
+       `total_iteracoes` - O número de iterações no loop for.
+       `numero_atualizacoes` - Quantas vezes queremos ver uma atualização sobre o
+                               curso do loop for.
+    '''
+    
+    # Divide o total de iterações pelo número desejado de atualizações. Provavelmente
+    # este será um número feio.
+    intervalo_exato = total_iteracoes / numero_atualizacoes
+
+    # A função `arredondar` tem a capacidade de arredondar um número para, por exemplo, o
+    # milésimo mais próximo: round (intervalo_exato, -3)
+    #
+    # Para determinar a magnitude para arredondar, encontre a magnitude do total,
+    # e então vá uma magnitude abaixo disso.
+    
+    # Obtenha a ordem de magnitude do total.
+    ordem_magnitude = len(str(total_iteracoes)) - 1
+    
+    # Nosso intervalo de atualização deve ser arredondado para uma ordem de magnitude menor.
+    magnitude_arrendonda = ordem_magnitude - 1
+
+    # Arredonde para baixo e lance para um int.
+    intervalo_atualizacao = int(round(intervalo_exato, -magnitude_arrendonda))
+
+    # Não permite que o intervalo seja zero!
+    if intervalo_atualizacao == 0:
+        intervalo_atualizacao = 1
+
+    return intervalo_atualizacao
+
+
+def cria_lotes_inteligentes(tokenizer, model_args, documentos, classes, documentoids, batch_size):
+    '''
+    Esta função combina todos os passos para preparar os lotes inteligentes(smartbatch).
+    '''
+    #print('Criando Lotes Inteligentes de {:,} amostras com tamanho de lote {:,}...\n'.format(len(documentos), batch_size))
+
+    # ============================
+    #   Tokenização & Truncamento
+    # ============================
+
+    input_ids_completos = []
+    
+    # Tokeniza todas as amostras de treinamento
+    #print('Tokenizando {:,} amostra...'.format(len(classes)))
+    
+    # Escolha o intervalo que o progresso será atualizado.
+    #intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(classes), numero_atualizacoes=10)
+    
+    # Para cada amostra de treinamento...
+    for documento in documentos:
+        
+        # Relatório de progresso
+        #if ((len(input_ids_completos) % intervalo_atualizacao) == 0):
+            #print('  Tokenizado {:,} amostras.'.format(len(input_ids_completos)))
+
+        # Tokeniza a amostra.
+        input_ids = tokenizer.encode(text=documento,                    # Documento a ser codificado.
+                                    add_special_tokens=True,            # Adiciona os ttokens especiais.
+                                    max_length=model_args.max_seq_len,  # Tamanho do truncamento!
+                                    truncation=True,                    # Faz o truncamento!
+                                    padding=False)                      # Não preenche.
+                
+        # Adicione o resultado tokenizado à nossa lista.
+        input_ids_completos.append(input_ids)
+        
+    #print('FEITO.')
+    #print('{:>10,} amostras\n'.format(len(input_ids_completos)))
+
+    # =========================
+    #      Seleciona os Lotes
+    # =========================    
+    
+    # Classifique as duas listas pelo comprimento da sequência de entrada.
+    amostras = sorted(zip(input_ids_completos, classes, documentoids), key=lambda x: len(x[0]))
+
+    #print('{:>10,} amostras após classificação\n'.format(len(amostras)))
+
+    import random
+
+    # Lista de lotes que iremos construir.
+    batch_ordered_documentos = []
+    batch_ordered_classes = []
+    batch_ordered_documentoids = []
+
+    print('Criando lotes de tamanho {:}...'.format(batch_size))
+
+    # Escolha um intervalo no qual imprimir atualizações de progresso.
+    intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(amostras), numero_atualizacoes=10)
+        
+    # Faça um loop em todas as amostras de entrada ... 
+    while len(amostras) > 0:
+        
+        # Mostra o progresso.
+        #if ((len(batch_ordered_documentos) % intervalo_atualizacao) == 0 \
+        #    and not len(batch_ordered_documentos) == 0):
+        #    print('  Selecionado {:,} lotes.'.format(len(batch_ordered_documentos)))
+        
+        # `to_take` é o tamanho real do nosso lote. Será `batch_size` até
+        # chegamos ao último lote, que pode ser menor.
+        to_take = min(batch_size, len(amostras))
+        
+        # Escolha um índice aleatório na lista de amostras restantes para começar o nosso lote.
+        select = random.randint(0, len(amostras) - to_take)
+
+        # Selecione um lote contíguo de amostras começando em `select`.
+        #print ("Selecionando lote de {:} a {:}".format(select, select+to_take))
+        batch = amostras[select:(select + to_take)]
+
+        #print("Tamanho do lote:", len(batch))
+        
+        # Cada amostra é uma tupla --divida para criar uma lista separada de
+        # sequências e uma lista de rótulos para este lote.
+        batch_ordered_documentos.append([s[0] for s in batch])
+        batch_ordered_classes.append([s[1] for s in batch])
+        batch_ordered_documentoids.append([s[2] for s in batch])
+        
+        # Remova a amostra da lista
+        del amostras[select:select + to_take]
+
+    #print('\n  FEITO - Selecionado {:,} lotes.\n'.format(len(batch_ordered_documentos)))
+
+    # =========================
+    #        Adicionando o preenchimento
+    # =========================    
+
+    #print('Preenchendo sequências dentro de cada lote...')
+
+    py_input_ids = []
+    py_attention_masks = []
+    py_labels = []
+    list_documentoids = []
+
+    # Para cada lote...
+    for (batch_input_ids, batch_labels, batch_documentoids) in zip(batch_ordered_documentos, batch_ordered_classes, batch_ordered_documentoids):
+
+        # Nova versão do lote, desta vez com sequências preenchidas
+        # e agora com as máscaras de atenção definidas.
+        batch_padded_input_ids = []
+        batch_attention_masks = []
+                
+        # Primeiro, encontre a amostra mais longa do lote.
+        # Observe que as sequências atualmente incluem os tokens especiais!
+        max_size = max([len(input) for input in batch_input_ids])
+        
+        # Para cada entrada neste lote...
+        for input in batch_input_ids:
+                        
+            # Quantos tokens pad precisam ser adicionados
+            num_pads = max_size - len(input)
+
+            # Adiciona `num_pads` do pad token(tokenizer.pad_token_id) até o final da sequência.
+            padded_input = input + [tokenizer.pad_token_id] * num_pads
+
+            # Define a máscara de atenção --é apenas um `1` para cada token real
+            # e um `0` para cada token de preenchimento(pad).
+            attention_mask = [1] * len(input) + [0] * num_pads
+            
+            # Adiciona o resultado preenchido ao lote.
+            batch_padded_input_ids.append(padded_input)
+            batch_attention_masks.append(attention_mask)
+        
+        # Nosso lote foi preenchido, portanto, precisamos salvar este lote atualizado.
+        # Também precisamos que as entradas sejam tensores PyTorch, então faremos isso aqui.
+        py_input_ids.append(torch.tensor(batch_padded_input_ids))
+        py_attention_masks.append(torch.tensor(batch_attention_masks))
+        py_labels.append(torch.tensor(batch_labels))
+        list_documentoids.append(batch_documentoids)
+    
+    # Retorna o conjunto de dados em lotes inteligentes!
+    return (py_input_ids, py_attention_masks, py_labels, list_documentoids)
 
 def getDeviceGPU():
     '''
@@ -55,41 +231,6 @@ def conectaGPU(model, device):
         print("Pytorch rodando sem GPU")
 
     return model
-
-def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
-    '''
-    Esta função tentará escolher um intervalo de atualização de progresso inteligente com base na magnitude das iterações totais.
-
-    Parâmetros:
-       `total_iteracoes` - O número de iterações no loop for.
-       `numero_atualizacoes` - Quantas vezes queremos ver uma atualização sobre o
-                               curso do loop for.
-    '''
-    
-    # Divida o total de iterações pelo número desejado de atualizações. Provavelmente
-    # este será um número feio.
-    intervalo_exato = total_iteracoes / numero_atualizacoes
-
-    # A função `arredondar` tem a capacidade de arredondar um número para, por exemplo, o
-    # milésimo mais próximo: round (intervalo_exato, -3)
-    #
-    # Para determinar a magnitude para arredondar, encontre a magnitude do total,
-    # e então vá uma magnitude abaixo disso.
-    
-    # Obtenha a ordem de magnitude do total.
-    ordem_magnitude = len(str(total_iteracoes)) - 1
-    
-    # Nosso intervalo de atualização deve ser arredondado para uma ordem de magnitude menor.
-    magnitude_arrendonda = ordem_magnitude - 1
-
-    # Arredonde para baixo e lance para um int.
-    intervalo_atualizacao = int(round(intervalo_exato, -magnitude_arrendonda))
-
-    # Não permite que o intervalo seja zero!
-    if intervalo_atualizacao == 0:
-        intervalo_atualizacao = 1
-
-    return intervalo_atualizacao
 
 def getNomeModeloBERT(model_args):
     '''    
