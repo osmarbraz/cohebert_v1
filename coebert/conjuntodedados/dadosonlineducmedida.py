@@ -55,8 +55,8 @@ def carregaArquivosOriginaisOnlineEduc():
         sentencas = carregarLista('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/' + arquivos[i])
 
         lista_documentos_originais.append([nomeArquivo, sentencas, documento])
-
-    print ('TERMINADO ORIGINAL: ', len(lista_documentos_originais))
+    
+    print ('Carregamento de documento originais concluído: ', len(lista_documentos_originais))    
 
     return lista_documentos_originais
    
@@ -82,8 +82,8 @@ def carregaArquivosPermutadosOnlineEduc():
 
         # Adiciona a lista o conteúdo do arquivo
         lista_documentos_permutados.append([nomeArquivo, sentencas, documento])
-
-    print ('TERMINADO PERMUTADO: ', len(lista_documentos_permutados))
+    
+    print ('Carregamento de documento permutados concluído: ', len(lista_documentos_permutados))    
     
     return lista_documentos_permutados 
   
