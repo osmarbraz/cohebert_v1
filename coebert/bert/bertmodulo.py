@@ -1,4 +1,5 @@
 # Import das bibliotecas.
+import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import torch
 from transformers import BertModel # Importando as bibliotecas do Modelo BERT   
