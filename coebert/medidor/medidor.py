@@ -652,7 +652,7 @@ def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, senten
     else:
         if palavra_relevante == 1:
             stopwords = getStopwords(nlp)
-            return getEmbeddingSentencaEmbeddingDocumentCLEAN(embeddingDocumento, documento, sentenca, tokenizador, stopwords)
+            return getEmbeddingSentencaEmbeddingDocumentoCLEAN(embeddingDocumento, documento, sentenca, tokenizador, stopwords)
         else:
             if palavra_relevante == 2:
                 return getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipo_palavra_relevante='NOUN')
