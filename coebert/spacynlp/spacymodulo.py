@@ -12,7 +12,9 @@ from util.utilarquivo import *
 
 def downloadSpacy(model_args):
     '''
-    Realiza o download do arquivo do modelo para o diretório corrente
+    Realiza o download do arquivo do modelo para o diretório corrente.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
     '''
     
     ARQUIVOMODELOSPACY = model_args.modelo_spacy
@@ -27,7 +29,9 @@ def downloadSpacy(model_args):
 
 def descompactaSpacy(model_args):
     '''
-    Descompacta o arquivo do modelo
+    Descompacta o arquivo do modelo.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
     '''
     
     ARQUIVOMODELOSPACY = model_args.modelo_spacy
@@ -47,6 +51,8 @@ def descompactaSpacy(model_args):
 def moveSpacy(model_args):
     '''
     Coloca a pasta do modelo descompactado em uma pasta de nome mais simples.
+    Parâmetros:    
+       `model_args` - Objeto com os argumentos do modelo.           
     '''
     
     ARQUIVOMODELOSPACY = model_args.modelo_spacy
@@ -61,7 +67,9 @@ def moveSpacy(model_args):
     
 def carregaSpacy(model_args):
     '''
-    Realiza o carregamento do Spacy.    
+    Realiza o carregamento do Spacy.  
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.           
     '''
     
     ARQUIVOMODELOSPACY = model_args.modelo_spacy
@@ -84,6 +92,8 @@ def carregaSpacy(model_args):
 def getStopwords(nlp):
     '''
     Recupera as stop words do nlp(Spacy).
+    Parâmetros:
+       `nlp` - Um modelo spaCy carregado.           
     '''
     
     spacy_stopwords = nlp.Defaults.stop_words
