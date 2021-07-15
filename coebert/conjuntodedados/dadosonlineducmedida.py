@@ -5,6 +5,11 @@ import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
 import pandas as pd # Biblioteca pandas
 
+# Import de bibliotecas próprias
+from util.utilmodulo import *
+from util.utiltempo import *
+from util.utilarquivo import *
+
 def downloadOnlineEducGoogleDrive():
     '''    
     Download dos arquivos do conjunto de dados do OnlineEduc 1.0 do google drive.
