@@ -1,17 +1,6 @@
 # Import das bibliotecas.
 import re # Biblioteca para expressão regular
 import unicodedata # Biblioteca para tratar codificação de caracteres
-import requests # Biblioteca para download
-
-def downloadArquivo(url_arquivo, nome_arquivo_destino):
-    '''    
-    Realiza o download de um arquivo de uma url em salva em nome_arquivo_destino.    
-    '''
-    # Realiza o download de um arquivo em uma url
-    data = requests.get(url_arquivo)
-    # Salva em um arquivo
-    arquivo = open(nome_arquivo_destino, 'wb')
-    arquivo.write(data.content)
 
 def removeAcentos(texto):   
     '''    
@@ -34,19 +23,6 @@ def limpaTexto(texto):
     texto = re.sub('[ ]+', '_', texto)
     texto = re.sub('[^.0-9a-zA-Z_-]', '', texto)
     return texto
-
-def formataTempo(tempo):
-     '''
-     Pega a tempo em segundos e retorna uma string hh:mm:ss
-     '''
-     import time
-     import datetime
-        
-     # Arredonda para o segundo mais próximo.
-     tempoArredondado = int(round((tempo)))
-   
-     # Formata como hh:mm:ss
-     return str(datetime.timedelta(seconds=tempoArredondado))
     
 def remove_tags(documento):
      '''
@@ -56,78 +32,5 @@ def remove_tags(documento):
 
      documentoLimpo = re.compile('<.*?>')
      return re.sub(documentoLimpo, '', documento)
-  
-def carregar(nomeArquivo):
-     '''
-     Carrega um arquivo texto e retorna as linhas como um único parágrafo(texto)
-     '''
-     # Linha anterior    
-     arquivo = open(nomeArquivo, 'r')
-    
-     paragrafo = ''
-     for linha in arquivo:
-         linha = linha.splitlines()
-         linha = ' '.join(linha)
-         # Remove as tags existentes no final das linhas
-         linha = remove_tags(linha)
-         if linha != '':
-             paragrafo = paragrafo + linha.strip() + ' '
-         
-     arquivo.close()
-     # Remove os espaços em branco antes e depois do parágrafo
-     return paragrafo.strip()
-
-def carregarLista(nomeArquivo):
-     '''
-     Carrega um arquivo texto e retorna as linhas como uma lista de sentenças(texto)
-     '''
-
-     # Linha anterior    
-     arquivo = open(nomeArquivo, 'r')
-     sentencas = []
-     for linha in arquivo:        
-         linha = linha.splitlines()
-         linha = ' '.join(linha)
-         linha = remove_tags(linha)
-         if linha != '':
-            sentencas.append(linha.strip())
-     arquivo.close()
-     return sentencas    
-
-def salvar(nomeArquivo, texto):                       
-     '''
-     Salva um texto em um arquivo
-     '''
-
-     arquivo = open(nomeArquivo, 'w')
-     arquivo.write(str(texto))
-     arquivo.close() 
-
-# Import das bibliotecas.
-from cmath import rect, phase
-from math import radians, degrees
-  
-def mediaAngulo(deg):
-    return degrees(phase(sum(rect(1, radians(d)) for d in deg)/len(deg)))
  
-def mediaTempo(tempos):
-    '''
-    Calcula a média de uma lista de tempo string no formato hh:mm:ss
-    '''
-    t = (tempo.split(':') for tempo in tempos)
-    # Converte para segundos
-    segundos = ((float(s) + int(m) * 60 + int(h) * 3600) for h, m, s in t)
-    # Verifica se deu algum dia
-    dia = 24 * 60 * 60
-    # Converte para angulos
-    paraAngulos = [s * 360. / dia for s in segundos]
-    # Calcula a média dos angulos
-    mediaComoAngulo = mediaAngulo(paraAngulos)
-    media_segundos = mediaComoAngulo * dia / 360.
-    if media_segundos < 0:
-        media_segundos += dia
-    # Recupera as horas e os minutos  
-    h, m = divmod(media_segundos, 3600)
-    # Recupera os minutos e os segundos
-    m, s = divmod(m, 60)    
-    return '{:02d}:{:02d}:{:02d}'.format(int(h), int(m), int(s))    
+
