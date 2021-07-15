@@ -9,6 +9,8 @@ from util.utilarquivo import *
 
 from spacynlp.spacymodulo import *
 
+from medidor.medidas import *
+
 def getDocumentoLista(listaDocumento):
     '''
     Recebe uma lista de sentenças e faz a concatenação em uma string
@@ -20,7 +22,6 @@ def getDocumentoLista(listaDocumento):
         stringDocumento = stringDocumento + sentenca
 
 def getListaSentencasDocumento(documento, nlp):
-
     '''
     Retorna uma lista com as sentenças de um documento. Utiliza o spacy para dividir o documento em sentenças.
     '''
