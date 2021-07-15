@@ -12,6 +12,9 @@ from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
 
+from bert.bertarguments import ModeloArgumentosClassificacao
+from bert.bertarguments import ModeloArgumentosMedida
+
 def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
     '''
     Esta função tentará escolher um intervalo de atualização de progresso inteligente com base na magnitude das iterações totais.
