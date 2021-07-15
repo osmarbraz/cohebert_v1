@@ -3,7 +3,10 @@ import numpy as np
 import torch
 
 # Import de bibliotecas próprias
-from medidor.medidas import *
+from util.utilmodulo import *
+from util.utiltempo import *
+from util.utilarquivo import *
+
 from spacynlp.spacymodulo import *
 
 def getDocumentoLista(listaDocumento):
