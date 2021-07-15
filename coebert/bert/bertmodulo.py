@@ -1,4 +1,5 @@
 # Import das bibliotecas.
+import os # Biblioteca para apagar arquivos
 import torch
 from transformers import BertModel # Importando as bibliotecas do Modelo BERT   
 from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT
