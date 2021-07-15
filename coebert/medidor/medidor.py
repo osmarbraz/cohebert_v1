@@ -68,16 +68,16 @@ def removeStopWord(documento, stopwords):
     # Retorna o documento
     return documentoLimpo
 
-def retornaSaliente(documento, nlp, tipoSaliente='NOUN'):
+def retornaPalavraRelevante(documento, nlp, tipo_palavra_relevante='NOUN'):
     '''
     Retorna somente os palavras do documento ou sentença do tipo especificado.
     '''
   
-    # Realiza o parsing no spacy
+    # Realiza o parsing no documento usando spacy
     doc = nlp(documento)
 
-    # Retorna a lista das palavras salientes
-    documentoComSubstantivos = [token.text for token in doc if token.pos_ == tipoSaliente]
+    # Retorna a lista das palavras relevantes de um tipo
+    documentoComSubstantivos = [token.text for token in doc if token.pos_ == tipo_palavra_relevante]
 
     # Concatena o documento com os substantivos
     documentoConcatenado = ' '.join(documentoComSubstantivos)
@@ -487,20 +487,20 @@ def getMedidasSentencasEmbeddingMAX(embeddingSi, embeddingSj):
     return maiorEmbeddingSi, maiorEmbeddingSj, Scos, Seuc, Sman
 
 
-def getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategiaPooling):
+def getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategia_pooling):
     '''
-    Realiza o cálculo da medida do documento de acordo com a estratégia.
+    Realiza o cálculo da medida do documento de acordo com a estratégia de pooling(MAX ou MEAN).
     '''
 
-    if estrategiaPooling == 0:
+    if estrategia_pooling == 0:
         return getMedidasSentencasEmbeddingMEAN(embeddingSi, embeddingSj)
     else:
         return getMedidasSentencasEmbeddingMAX(embeddingSi, embeddingSj)
 
 
-def getEmbeddingSentencaEmbeddingDocumentoComTodasPalavras(embeddingDocumento, documento, sentenca, tokenizador):
+def getEmbeddingSentencaEmbeddingDocumentoALL(embeddingDocumento, documento, sentenca, tokenizador):
     '''
-    Retorna os embeddings de uma sentença com todas as palavras a partir dos embeddings do documento.
+    Retorna os embeddings de uma sentença com todas as palavras(ALL) a partir dos embeddings do documento.
     '''
         
     # Tokeniza o documento
@@ -526,9 +526,9 @@ def getEmbeddingSentencaEmbeddingDocumentoComTodasPalavras(embeddingDocumento, d
     # Retorna o embedding da sentença no documento
     return embeddingSentenca
 
-def getEmbeddingSentencaEmbeddingDocumentoSemStopWord(embeddingDocumento, documento, sentenca, tokenizador):
+def getEmbeddingSentencaEmbeddingDocumentoCLEAN(embeddingDocumento, documento, sentenca, tokenizador):
     '''
-    Retorna os embeddings de uma sentença sem stopwords a partir dos embeddings do documento.
+    Retorna os embeddings de uma sentença sem stopwords(CLEAN) a partir dos embeddings do documento.
     '''
       
     # Tokeniza o documento
@@ -584,26 +584,26 @@ def getEmbeddingSentencaEmbeddingDocumentoSemStopWord(embeddingDocumento, docume
     # Retorna o embedding da sentença no documento
     return embeddingSentencaSemStopWord
 
-def getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipoSaliente='NOUN'):
+def getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipo_palavra_relevante='NOUN'):
     '''
-    Retorna os embeddings de uma sentença somente com as palavras salientes a partir dos embeddings do documento.
+    Retorna os embeddings de uma sentença somente com as palavras relevantes(NOUN) de um tipo a partir dos embeddings do documento.
     '''
 
     # Tokeniza o documento
     documentoTokenizado = getDocumentoTokenizado(documento, tokenizador)  
     #print(documentoTokenizado)
 
-    # Retorna as palavras salientes da sentença do tipo especificado
-    sentencaSomenteSaliente = retornaSaliente(sentenca,nlp, tipoSaliente)
+    # Retorna as palavras relevantes da sentença do tipo especificado
+    sentencaSomenteRelevante = retornaPalavraRelevante(sentenca,nlp, tipo_palavra_relevante)
 
     # Tokeniza a sentença 
-    sentencaTokenizadaSomenteSaliente = getDocumentoTokenizado(sentencaSomenteSaliente, tokenizador)
+    sentencaTokenizadaSomenteRelevante = getDocumentoTokenizado(sentencaSomenteRelevante, tokenizador)
 
     # Remove os tokens de início e fim da sentença
-    sentencaTokenizadaSomenteSaliente.remove('[CLS]')
-    sentencaTokenizadaSomenteSaliente.remove('[SEP]')  
-    #print(sentencaTokenizadaSomenteSaliente)
-    #print(len(sentencaTokenizadaSomenteSaliente))
+    sentencaTokenizadaSomenteRelevante.remove('[CLS]')
+    sentencaTokenizadaSomenteRelevante.remove('[SEP]')  
+    #print(sentencaTokenizadaSomenteRelevante)
+    #print(len(sentencaTokenizadaSomenteRelevante))
 
     # Tokeniza a sentença
     sentencaTokenizada = getDocumentoTokenizado(sentenca, tokenizador)
@@ -627,8 +627,8 @@ def getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, do
     # Localizar os embeddings dos tokens da sentença tokenizada sem stop word na sentença 
     # Procura somente no intervalo da sentença
     for i, tokenSentenca in enumerate(sentencaTokenizada):
-        for tokenSentencaSomenteSaliente in sentencaTokenizadaSomenteSaliente: 
-            if tokenSentenca == tokenSentencaSomenteSaliente:        
+        for tokenSentencaSomenteRelevante in sentencaTokenizadaSomenteRelevante: 
+            if tokenSentenca == tokenSentencaSomenteRelevante:        
                 listaTokensSelecionados.append(embeddingSentenca[i:i+1])
 
     embeddingSentencaComSubstantivo = None
@@ -641,26 +641,25 @@ def getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, do
     # Retorna o embedding da sentença do documento
     return embeddingSentencaComSubstantivo
 
-def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, sentenca, tokenizador, nlp, filtro=0):
+def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, sentenca, tokenizador, nlp, palavra_relevante=0):
     '''
-    Retorna os embeddings de uma sentença com todas as palavras, sem stopwords ou somente com palavra substantivas a partir dos embeddings do documentos.
+    Retorna os embeddings de uma sentença considerando a relevância das palavras (ALL, CLEAN ou NOUN) a partir dos embeddings do documento.    
     '''
 
-    if filtro == 0:
-        return getEmbeddingSentencaEmbeddingDocumentoComTodasPalavras(embeddingDocumento, documento, sentenca, tokenizador)
+    if palavra_relevante == 0:
+        return getEmbeddingSentencaEmbeddingDocumentoALL(embeddingDocumento, documento, sentenca, tokenizador)
     else:
-        if filtro == 1:
-            return getEmbeddingSentencaEmbeddingDocumentoSemStopWord(embeddingDocumento, documento, sentenca, tokenizador)
+        if palavra_relevante == 1:
+            return getEmbeddingSentencaEmbeddingDocumentCLEAN(embeddingDocumento, documento, sentenca, tokenizador)
         else:
-            if filtro == 2:
-                return getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipoSaliente='NOUN')
+            if palavra_relevante == 2:
+                return getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipo_palavra_relevante='NOUN')
 
 
-
-def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, estrategiaPooling, nlp, camada, tipoDocumento='p', filtro=0):
+def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, estrategia_pooling, nlp, camada, tipoDocumento='p', palavra_relevante=0):
     '''
     Retorna as medidas de coerência do documento.
-    Considera somente sentenças com alguma palavra.
+    Considera somente sentenças com pelo menos uma palavra.
     '''
 
     # Quantidade de sentenças no documento
@@ -712,14 +711,14 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, estrategiaPooli
         Sj = documento[posSj]
 
         # Recupera os embedding das sentenças Si e Sj do embedding do documento      
-        embeddingSi = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Si, tokenizador, nlp, filtro=filtro)
-        embeddingSj = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Sj, tokenizador, nlp, filtro=filtro)
+        embeddingSi = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Si, tokenizador, nlp, palavra_relevante=palavra_relevante)
+        embeddingSj = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Sj, tokenizador, nlp, palavra_relevante=palavra_relevante)
 
         # Verifica se os embeddings sentenças estão preenchidos
         if embeddingSi != None and embeddingSj != None:
 
               # Recupera as medidas entre Si e Sj     
-              ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategiaPooling)
+              ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategia_pooling)
 
               # Acumula as medidas
               somaScos = somaScos + Scos
