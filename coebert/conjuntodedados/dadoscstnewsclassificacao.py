@@ -1,4 +1,8 @@
 # Import das bibliotecas.
+# Import das bibliotecas.
+import zipfile # Biblioteca para descompactar
+import os # Biblioteca para apagar arquivos
+import shutil # Biblioteca para mover arquivos    
 import pandas as pd # Biblioteca pandas
 from sklearn.model_selection import train_test_split # Biblioteca de divisão
     
@@ -46,6 +50,46 @@ def organizaDados(dfdados):
     
     return dfdados 
 
+def downloadCSTNewsKFoldGithub():  
+    '''    
+    Download dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
+    '''
+  
+    # Diretório dos arquivos de dados.
+    DIRETORIO = "/content/validacao_kfold"
+
+    # Apaga o diretório e seus arquivos.    
+    if os.path.exists(DIRETORIO):
+        # Apaga a pasta e os arquivos existentes                     
+        shutil.rmtree(DIRETORIO)
+    
+    # Verifica se o diretório existe
+    if not os.path.exists(DIRETORIO):  
+        # Cria o diretório
+        os.makedirs(DIRETORIO)
+        print('Diretório criado: {}'.format(DIRETORIO))
+    else:
+        print('Diretório já existe: {}'.format(DIRETORIO))
+        
+    # Download do arquivo de dados  
+    
+    # Nome do arquivo a ser criado.
+    NOME_ARQUIVO = 'CSTNEWS_MD_KFOLD_10.zip'
+
+    # Apaga o arquivo.    
+    if os.path.isfile(NOME_ARQUIVO):
+       os.remove(NOME_ARQUIVO)
+    
+    # Realiza o download do arquivo do OneDrive.
+    URL_ARQUIVO = 'https://github.com/osmarbraz/coebert/blob/main/conjuntodedado/'+ NOME_ARQUIVO + '?raw=true'
+
+    # Realiza o download do arquivo do conjunto de dados    
+    downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
+    
+    # Descompacta o arquivo na pasta de descompactação.                
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip.extractall(DIRETORIO)       
+
 def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):  
     '''    
     Carrega os dados do CSTNews e retorna um dataframe para classificação.
@@ -67,3 +111,37 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
     dfdados = organizaDados(dfdados)
     
     return dfdados
+
+def getConjuntoDeDadosClassificacaoKFold(model_args):  
+    '''    
+    Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
+    '''
+    # Fold a ser carregado
+    fold = model_args.fold
+    
+    # Diretório dos arquivos de dados dos folds.
+    DIRETORIO = "/content/validacao_kfold"
+    
+    # Verifica se o diretório existe
+    if os.path.exists(DIRETORIO) == false:
+        # Realiza o download do conjunto de dados dos folds
+        downloadCSTNewsKFoldGithub()
+  
+    # Define o prefixo do nome dos arquivos dos folds
+    PREFIXO_NOME_ARQUIVO_TREINO = "cstnews_md_train_f"
+    PREFIXO_NOME_ARQUIVO_TESTE = "cstnews_md_test_f"
+
+    # Nome dos arquivos.
+    ARQUIVO_TREINO = DIRETORIO + "/" + PREFIXO_NOME_ARQUIVO_TREINO + str(fold) + ".csv"
+    ARQUIVO_TESTE = DIRETORIO + "/" + PREFIXO_NOME_ARQUIVO_TESTE + str(fold) + ".csv" 
+
+    print("Carregando arquivo de treino: {}".format(ARQUIVO_TREINO))
+    print("Carregando arquivo de teste: {}".format(ARQUIVO_TESTE))
+
+    # Carrega o dataset de treino e teste.
+    dfdados_train = pd.read_csv(ARQUIVO_TREINO, sep=';')
+    print('Qtde de dados de treino: {}'.format(len(dfdados_train)))
+    dfdados_test = pd.read_csv(ARQUIVO_TESTE, sep=';')
+    print('Qtde de dados de teste: {}'.format(len(dfdados_test)))
+
+    return dfdados_train, dfdados_test        
