@@ -6,6 +6,11 @@ import shutil # Biblioteca para mover arquivos
 from transformers import BertModel # Importando as bibliotecas do Modelo BERT   
 from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT
 
+# Import de bibliotecas próprias
+from util.utilmodulo import *
+from util.utiltempo import *
+from util.utilarquivo import *
+
 def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
     '''
     Esta função tentará escolher um intervalo de atualização de progresso inteligente com base na magnitude das iterações totais.
@@ -88,13 +93,13 @@ def downloadModeloPretreinado(model_args):
         DIRETORIO_MODELO = '/content/modelo'
 
         # Recupera o nome do arquivo do modelo da url.
-        ARQUIVO = URL_MODELO.split('/')[-1]
+        NOME_ARQUIVO = URL_MODELO.split('/')[-1]
 
         # Nome do arquivo do vocabulário.
         ARQUIVO_VOCAB = 'vocab.txt'
 
         # Caminho do arquivo na url.
-        CAMINHO_ARQUIVO = URL_MODELO[0:len(URL_MODELO)-len(ARQUIVO)]
+        CAMINHO_ARQUIVO = URL_MODELO[0:len(URL_MODELO)-len(NOME_ARQUIVO)]
 
         # Verifica se a pasta de descompactação existe na pasta corrente
         if os.path.exists(DIRETORIO_MODELO):
@@ -103,24 +108,20 @@ def downloadModeloPretreinado(model_args):
             shutil.rmtree(DIRETORIO_MODELO)
 
         # Realiza o download do arquivo do modelo        
-        data = requests.get(URL_MODELO)
-        arquivo = open(ARQUIVO, 'wb')
-        arquivo.write(data.content)
+        downloadArquivo(URL_MODELO, NOME_ARQUIVO)
 
         # Descompacta o arquivo na pasta de descompactação.                
-        arquivoZip = zipfile.ZipFile(ARQUIVO,"r")
+        arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
         arquivoZip.extractall(DIRETORIO_MODELO)
 
         # Baixa o arquivo do vocabulário.
         # O vocabulário não está no arquivo compactado acima, mesma url mas arquivo diferente.
-        URL_MODELO_VOCAB = CAMINHO_ARQUIVO + ARQUIVO_VOCAB        
+        URL_MODELO_VOCAB = CAMINHO_ARQUIVO + ARQUIVO_VOCAB
         # Coloca o arquivo do vocabulário no diretório de descompactação.
-        data = requests.get(URL_MODELO_VOCAB)
-        arquivo = open(DIRETORIO_MODELO + "/" + ARQUIVO_VOCAB, 'wb')
-        arquivo.write(data.content)
+        downloadArquivo(URL_MODELO_VOCAB, DIRETORIO_MODELO + "/" + ARQUIVO_VOCAB)
 
         # Apaga o arquivo compactado
-        os.remove(ARQUIVO)
+        os.remove(NOME_ARQUIVO)
 
         print('Pasta do {} pronta!'.format(DIRETORIO_MODELO))
 
