@@ -55,36 +55,36 @@ def encontrarIndiceSubLista(lista, sublista):
             return indiceInicio, indiceFim
     return -1, -1
 
-def removeStopWord(documento, stopwords):
+def removeStopWord(texto, stopwords):
     '''
-    Remove as stopwords de um documento.
+    Remove as stopwords de um texto.
     '''
 
-    # Remoção das stop words do documento
-    documentoSemStopwords = [palavra for palavra in documento.split() if palavra.lower() not in stopwords]
+    # Remoção das stop words do texto
+    textoSemStopwords = [palavra for palavra in texto.split() if palavra.lower() not in stopwords]
 
-    # Concatena o documento sem os stopwords
-    documentoLimpo = ' '.join(documentoSemStopwords)
+    # Concatena o texto sem os stopwords
+    textoLimpo = ' '.join(textoSemStopwords)
 
-    # Retorna o documento
-    return documentoLimpo
+    # Retorna o texto
+    return textoLimpo
 
-def retornaPalavraRelevante(documento, nlp, tipo_palavra_relevante='NOUN'):
+def retornaPalavraRelevante(texto, nlp, tipo_palavra_relevante='NOUN'):
     '''
-    Retorna somente os palavras do documento ou sentença do tipo especificado.
+    Retorna somente os palavras do texto ou sentença do tipo especificado.
     '''
   
-    # Realiza o parsing no documento usando spacy
-    doc = nlp(documento)
+    # Realiza o parsing no texto usando spacy
+    doc = nlp(texto)
 
     # Retorna a lista das palavras relevantes de um tipo
-    documentoComSubstantivos = [token.text for token in doc if token.pos_ == tipo_palavra_relevante]
+    textoComRelevantes = [token.text for token in doc if token.pos_ == tipo_palavra_relevante]
 
-    # Concatena o documento com os substantivos
-    documentoConcatenado = ' '.join(documentoComSubstantivos)
+    # Concatena o texto com as palavras relevantes
+    textoComRelevantesConcatenado = ' '.join(textoComRelevantes)
 
-    # Retorna o documento
-    return documentoConcatenado
+    # Retorna o texto
+    return textoComRelevantesConcatenado
 
 def getDocumentoTokenizado(documento, tokenizador):
 
