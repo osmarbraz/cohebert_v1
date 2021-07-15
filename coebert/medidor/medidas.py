@@ -23,7 +23,7 @@ def distanciaEuclidiana(texto1, texto2):
        `texto2` - Um texto a ser medido.
     '''
     
-    distancia = euclidean(texot1, texto2)
+    distancia = euclidean(texto1, texto2)
     return distancia
 
 def distanciaManhattan(texto1, texto2):
