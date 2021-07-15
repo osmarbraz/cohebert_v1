@@ -1,6 +1,7 @@
 # Import das bibliotecas.
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
+import shutil # Biblioteca para mover arquivos   
 import torch
 from transformers import BertModel # Importando as bibliotecas do Modelo BERT   
 from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT
