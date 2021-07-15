@@ -4,10 +4,10 @@ from typing import Dict, Optional
 from typing import List
 
 @dataclass
-class ModelArguments:
+class ModeloArgumentosMedida:
         
     '''
-    Classe(ModelArguments) de definição dos parâmetros do modelo
+    Classe(ModeloArgumentosMedida) de definição dos parâmetros do modelo para o cálculo de medidas.
     '''
  
     max_seq_len: Optional[int] = field(
