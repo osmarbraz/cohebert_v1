@@ -1,6 +1,9 @@
 # Import das bibliotecas.
 import requests # Biblioteca para download
 
+# Import de bibliotecas próprias
+from util.utilmodulo import *
+
 def downloadArquivo(url_arquivo, nome_arquivo_destino):
     '''    
     Realiza o download de um arquivo de uma url em salva em nome_arquivo_destino.    
