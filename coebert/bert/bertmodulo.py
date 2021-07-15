@@ -1,8 +1,5 @@
 # Import das bibliotecas.
-import requests # Biblioteca para download
-import zipfile # Biblioteca para descompactar
-import os # Biblioteca para apagar arquivos
-import shutil # Biblioteca para mover arquivos    
+import torch
 from transformers import BertModel # Importando as bibliotecas do Modelo BERT   
 from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT
 
@@ -10,6 +7,50 @@ from transformers import BertTokenizer # Importando as bibliotecas do tokenizado
 from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
+
+
+def retornaDeviceGPU():
+    '''
+    Retorna um dispositivo de GPU.
+    '''
+        
+    # Se existe GPU disponível...
+    if torch.cuda.is_available():    
+
+        # Diz ao PyTorch para usar GPU.    
+        device = torch.device("cuda")
+
+        print('Existem {} GPU(s) disponíveis.'.format(torch.cuda.device_count()))
+
+        print('Iremos usar a GPU: {}'.format(torch.cuda.get_device_name(0)))
+
+    # Se não...
+    else:
+        print('Sem GPU disponível, usando CPU.')
+        device = torch.device("cpu")
+        
+    return device
+
+def conectaGPU(model, device):
+    '''
+    Conecta um modelo BERT a GPU.
+
+    Parâmetros:
+       `model` - Um modelo BERT carregado.       
+       `device` - Um device de GPU.       
+    '''
+    # Associa a GPU ao modelo.
+    model.to(device)
+
+    # Se existe GPU disponível.
+    if torch.cuda.is_available():    
+        # Diga ao pytorch para rodar este modelo na GPU.
+        print("Pytorch rodando o modelo na GPU")
+        model.cuda()
+    else:
+        print("Pytorch rodando sem GPU")
+
+    return model
 
 def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
     '''
