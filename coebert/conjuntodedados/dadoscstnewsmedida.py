@@ -6,6 +6,8 @@ import pandas as pd # Biblioteca pandas
 
 # Import de bibliotecas próprias
 from util.utilmodulo import *
+from util.utiltempo import *
+from util.utilarquivo import *
 
 def downloadCSTNewsICMC():  
     '''    
