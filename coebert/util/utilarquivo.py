@@ -3,6 +3,7 @@ import requests # Biblioteca para download
 
 # Import de bibliotecas próprias
 from util.utilmodulo import *
+from util.utiltempo import *
 
 def downloadArquivo(url_arquivo, nome_arquivo_destino):
     '''    
