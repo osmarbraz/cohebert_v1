@@ -99,6 +99,10 @@ class ModeloArgumentosClassificacao:
         default=False,
         metadata={'help': 'habilita gerar as camadas ocultas do modelo.'},
     )
+    optimizer: str = field(
+        default="AdamW",
+        metadata={"help": "otimizador do modelo."},
+    )
     use_wandb : bool = field(
         default=True,
         metadata={'help': 'habilita o uso do wandb.'},
