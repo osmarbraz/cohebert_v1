@@ -329,7 +329,7 @@ def carregaBERTMedida(model_args):
     DIRETORIO_MODELO = verificaModelo(model_args)
     
     # Carrega o modelo
-    model = carregaModeloMedida((DIRETORIO_MODELO, model_args)
+    model = carregaModeloMedida(DIRETORIO_MODELO, model_args)
     
     # Carrega o tokenizador
     tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args)
