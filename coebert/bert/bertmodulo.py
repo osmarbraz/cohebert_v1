@@ -8,10 +8,10 @@ from transformers import BertTokenizer # Importando as bibliotecas do tokenizado
 
 def getNomeModeloBERT(model_args):
     '''    
-    Recupera a descrição do modelo para nomes de arquivos e diretórios.
+    Recupera uma string com uma descrição do modelo BERT para nomes de arquivos e diretórios.
     '''
 
-    # Verifica o nome do modelo(default BERT)
+    # Verifica o nome do modelo(default SEM_MODELO_BERT)
     MODELO_BERT = 'SEM_MODELO_BERT'
     if 'neuralmind' in model_args.pretrained_model_name_or_path:
         MODELO_BERT = '_BERTimbau'
@@ -23,7 +23,7 @@ def getNomeModeloBERT(model_args):
 
 def getTamanhoBERT(model_args):
     '''    
-    Recupera a dimensão do modelo para nomes de arquivos e diretórios.
+    Recupera uma string com o tamanho(dimensão) do modelo BERT para nomes de arquivos e diretórios.
     '''
     
     # Verifica o tamanho do modelo(default large)
@@ -35,7 +35,7 @@ def getTamanhoBERT(model_args):
 
 def downloadModeloPretreinado(model_args):
     ''' 
-    Realiza o download do MODELO e retorna o diretório onde o MODELO foi descompactado.
+    Realiza o download do modelo BERT(MODELO) e retorna o diretório onde o modelo BERT(MODELO) foi descompactado.
     ''' 
 
     MODELO = model_args.pretrained_model_name_or_path
