@@ -5,15 +5,15 @@ from scipy.spatial.distance import cityblock
 
 def similaridadeCoseno(documento1, documento2):
     '''
-    Similaridade do cosseno dos embeddgins das sentenças.
+    Similaridade do cosseno dos embeddgins das sentenÃ§as.
     '''
     similaridade = 1 - cosine(documento1, documento2)
     return similaridade
 
 def distanciaEuclidiana(sentenca1, sentenca2):
     '''
-    Distância euclidiana entre os embeddings das sentenças.
-    Possui outros nomes como distância L2 ou norma L2.
+    DistÃ¢ncia euclidiana entre os embeddings das sentenÃ§as.
+    Possui outros nomes como distÃ¢ncia L2 ou norma L2.
     '''
 
     distancia = euclidean(sentenca1, sentenca2)
@@ -22,8 +22,8 @@ def distanciaEuclidiana(sentenca1, sentenca2):
 
 def distanciaManhattan(sentenca1, sentenca2):
     '''
-    Distância Manhattan entre os embeddings das sentenças.
-    Possui outros nomes como distância Cityblock, distância L1, norma L1 e métrica do táxi.
+    DistÃ¢ncia Manhattan entre os embeddings das sentenÃ§as. 
+    Possui outros nomes como distÃ¢ncia Cityblock, distÃ¢ncia L1, norma L1 e mÃ©trica do tÃ¡xi.
     '''
     distancia = cityblock(sentenca1, sentenca2)
 
