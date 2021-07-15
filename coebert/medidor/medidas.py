@@ -14,7 +14,7 @@ def similaridadeCoseno(texto1, texto2):
     similaridade = 1 - cosine(texto1, texto2)
     return similaridade
 
-def distanciaEuclidiana(texto2, texto2):
+def distanciaEuclidiana(texto1, texto2):
     '''
     Distância euclidiana entre os embeddings dos textos.
     Possui outros nomes como distância L2 ou norma L2.
