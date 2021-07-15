@@ -11,22 +11,28 @@ from spacynlp.spacymodulo import *
 
 from medidor.medidas import *
 
-def getDocumentoLista(listaDocumento):
+def getDocumentoLista(listaSentencas):
     '''
-    Recebe uma lista de sentenças e faz a concatenação em uma string
+    Recebe uma lista de sentenças e faz a concatenação em uma string.
+    Parâmetros:
+       `listaDocumento` - Uma lista contendo diversas sentenças.           
     '''
 
     stringDocumento = ''  
     # Concatena as sentenças do documento
-    for sentenca in listaDocumento:                
+    for sentenca in listaSentencas:                
         stringDocumento = stringDocumento + sentenca
 
 def getListaSentencasDocumento(documento, nlp):
     '''
     Retorna uma lista com as sentenças de um documento. Utiliza o spacy para dividir o documento em sentenças.
+    Parâmetros:
+       `documento` - Um documento a ser convertido em uma lista de sentenças.           
+       `nlp` - Um objeto de sentenciação de textos.           
+       
     '''
 
-    # Aplica tokenização de sentença do spacy no documento
+    # Aplica sentenciação do spacy no documento
     doc = nlp(documento) 
 
     # Lista para as sentenças
@@ -40,7 +46,10 @@ def getListaSentencasDocumento(documento, nlp):
 
 def encontrarIndiceSubLista(lista, sublista):
     '''
-    Localiza os índices de início e fim de uma sublista em uma lista
+    Localiza os índices de início e fim de uma sublista em uma lista.
+    Parâmetros:
+       `lista` - Uma lista.
+       `sublista` - Uma sublista a ser localizada na lista.
     '''
     
     # https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm
@@ -62,6 +71,9 @@ def encontrarIndiceSubLista(lista, sublista):
 def removeStopWord(texto, stopwords):
     '''
     Remove as stopwords de um texto.
+    Parâmetros:
+       `texto` - Um texto com stopwords.
+       `stopwords` - Uma lista com as stopwords.
     '''
 
     # Remoção das stop words do texto
