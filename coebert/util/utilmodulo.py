@@ -24,13 +24,9 @@ def limpaTexto(texto):
     texto = re.sub('[^.0-9a-zA-Z_-]', '', texto)
     return texto
     
-def remove_tags(documento):
+def remove_tags(texto):
      '''
-     Remove tags de um documento(texto)
+     Remove tags de um texto
      '''
-     import re
-
-     documentoLimpo = re.compile('<.*?>')
-     return re.sub(documentoLimpo, '', documento)
- 
-
+     textoLimpo = re.compile('<.*?>')
+     return re.sub(textoLimpo, '', texto)
