@@ -22,7 +22,7 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
 
     print("Conjunto total:", len(dfdados))
     print("  Treino:", len(dfdados_train))
-    print("  Treino:", len(dfdados_test))
+    print("  Teste :", len(dfdados_test))
 
     return dfdados_train, dfdados_test
 
