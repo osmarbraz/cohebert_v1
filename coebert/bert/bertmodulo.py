@@ -66,7 +66,7 @@ def cria_lotes_inteligentes(tokenizer, model_args, documentos, classes, document
     # Escolha o intervalo que o progresso será atualizado.
     #intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(classes), numero_atualizacoes=10)
     
-    # Para cada amostra de treinamento...
+    # Para cada amostra de treinamento.
     for documento in documentos:
         
         # Relatório de progresso
@@ -76,8 +76,8 @@ def cria_lotes_inteligentes(tokenizer, model_args, documentos, classes, document
         # Tokeniza a amostra.
         input_ids = tokenizer.encode(text=documento,                    # Documento a ser codificado.
                                     add_special_tokens=True,            # Adiciona os ttokens especiais.
-                                    max_length=model_args.max_seq_len,  # Tamanho do truncamento!
-                                    truncation=True,                    # Faz o truncamento!
+                                    max_length=model_args.max_seq_len,  # Tamanho do truncamento.
+                                    truncation=True,                    # Faz o truncamento.
                                     padding=False)                      # Não preenche.
                 
         # Adicione o resultado tokenizado à nossa lista.
@@ -102,7 +102,7 @@ def cria_lotes_inteligentes(tokenizer, model_args, documentos, classes, document
     batch_ordered_classes = []
     batch_ordered_documentoids = []
 
-    print('Criando lotes de tamanho {:}...'.format(batch_size))
+    #print('Criando lotes de tamanho {:}...'.format(batch_size))
 
     # Escolha um intervalo no qual imprimir atualizações de progresso.
     intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(amostras), numero_atualizacoes=10)
@@ -150,7 +150,7 @@ def cria_lotes_inteligentes(tokenizer, model_args, documentos, classes, document
     py_labels = []
     list_documentoids = []
 
-    # Para cada lote...
+    # Para cada lote.
     for (batch_input_ids, batch_labels, batch_documentoids) in zip(batch_ordered_documentos, batch_ordered_classes, batch_ordered_documentoids):
 
         # Nova versão do lote, desta vez com sequências preenchidas
@@ -162,7 +162,7 @@ def cria_lotes_inteligentes(tokenizer, model_args, documentos, classes, document
         # Observe que as sequências atualmente incluem os tokens especiais!
         max_size = max([len(input) for input in batch_input_ids])
         
-        # Para cada entrada neste lote...
+        # Para cada entrada neste lote.
         for input in batch_input_ids:
                         
             # Quantos tokens pad precisam ser adicionados
