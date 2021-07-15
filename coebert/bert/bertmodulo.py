@@ -4,6 +4,7 @@ import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos   
 import torch
 from transformers import BertModel # Importando as bibliotecas do Modelo BERT   
+from transformers import BertForSequenceClassification # Importando as bibliotecas do Modelo BERT   
 from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT
 
 # Import de bibliotecas próprias
@@ -250,7 +251,7 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
 
     return tokenizer
 
-def carregaModelo(DIRETORIO_MODELO, model_args):
+def carregaModeloMedida(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o modelo e retorna o modelo.
     Parâmetros:
@@ -282,9 +283,44 @@ def carregaModelo(DIRETORIO_MODELO, model_args):
 
     return model
 
-def carregaBERT(model_args):
+
+def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
     ''' 
-    Carrega o BERT e retorna o modelo e o tokenizador.
+    Carrega o modelo e retorna o modelo.
+    Parâmetros:
+       `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
+       `model_args` - Objeto com os argumentos do modelo.           
+    ''' 
+
+    # Variável para setar o arquivo.
+    URL_MODELO = None
+
+    if 'http' in model_args.pretrained_model_name_or_path:
+        URL_MODELO = model_args.pretrained_model_name_or_path
+
+    # Se a variável URL_MODELO foi setada
+    if URL_MODELO:
+        # Carregando o Modelo BERT
+        print('Carregando o modelo BERT do diretório {}...'.format(DIRETORIO_MODELO))
+
+        model = BertForSequenceClassification.from_pretrained(DIRETORIO_MODELO, 
+                                                              num_labels = model_args.num_labels,
+                                                              output_attentions = model_args.output_attentions,
+                                                              output_hidden_states = model_args.output_hidden_states)
+            
+    else:
+        # Carregando o Modelo BERT da comunidade
+        print('Carregando o modelo BERT da comunidade ...')
+
+        model = BertForSequenceClassification.from_pretrained(model_args.pretrained_model_name_or_path,
+                                                              num_labels = model_args.num_labels,
+                                                              output_attentions = model_args.output_attentions,
+                                                              output_hidden_states = model_args.output_hidden_states)
+    return model
+
+def carregaBERTMedida(model_args):
+    ''' 
+    Carrega o BERT para cálculo de medida e retorna o modelo e o tokenizador.
     Parâmetros:
        `model_args` - Objeto com os argumentos do modelo.       
     ''' 
@@ -293,7 +329,26 @@ def carregaBERT(model_args):
     DIRETORIO_MODELO = verificaModelo(model_args)
     
     # Carrega o modelo
-    model = carregaModelo(DIRETORIO_MODELO, model_args)
+    model = carregaModeloMedida((DIRETORIO_MODELO, model_args)
+    
+    # Carrega o tokenizador
+    tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args)
+    
+    return model, tokenizer
+
+
+def carregaBERTClassifica(model_args):
+    ''' 
+    Carrega o BERT para classificação e retorna o modelo e o tokenizador.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
+    ''' 
+    
+    # Verifica a origem do modelo
+    DIRETORIO_MODELO = verificaModelo(model_args)
+    
+    # Carrega o modelo
+    model = carregaModeloClassifica(DIRETORIO_MODELO, model_args)
     
     # Carrega o tokenizador
     tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args)
