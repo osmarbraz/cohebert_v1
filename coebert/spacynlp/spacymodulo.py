@@ -23,11 +23,7 @@ def downloadSpacy(model_args):
     URL_ARQUIVO_MODELO_COMPACTADO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVOMODELOSPACY + VERSAOSPACY + "/" + NOME_ARQUIVO_MODELO_COMPACTADO
 
     # Realiza o download do arquivo do modelo
-    # wget.download(URL_ARQUIVO_MODELO)     
-    data = requests.get(URL_ARQUIVO_MODELO_COMPACTADO)
-    arquivo = open(NOME_ARQUIVO_MODELO_COMPACTADO, 'wb')
-    arquivo.write(data.content)
-
+    downloadArquivo(URL_ARQUIVO_MODELO_COMPACTADO, NOME_ARQUIVO_MODELO_COMPACTADO)
 
 def descompactaSpacy(model_args):
     '''
