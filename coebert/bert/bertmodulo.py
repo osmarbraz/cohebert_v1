@@ -9,7 +9,7 @@ from util.utiltempo import *
 from util.utilarquivo import *
 
 
-def retornaDeviceGPU():
+def getDeviceGPU():
     '''
     Retorna um dispositivo de GPU.
     '''
