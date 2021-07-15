@@ -107,7 +107,7 @@ class ModeloArgumentosClassificacao:
         default=True,
         metadata={'help': 'habilita o salvamento do modelo no wandb.'},
     )
-   salvar_classificacao : bool = field(
+    salvar_classificacao : bool = field(
         default=False,
         metadata={"help": "habilita o salvamento da classificação."},
     )
