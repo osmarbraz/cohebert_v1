@@ -6,6 +6,41 @@ import shutil # Biblioteca para mover arquivos
 from transformers import BertModel # Importando as bibliotecas do Modelo BERT   
 from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT
 
+def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
+    '''
+    Esta função tentará escolher um intervalo de atualização de progresso inteligente com base na magnitude das iterações totais.
+
+    Parâmetros:
+       `total_iteracoes` - O número de iterações no loop for.
+       `numero_atualizacoes` - Quantas vezes queremos ver uma atualização sobre o
+                               curso do loop for.
+    '''
+    
+    # Divida o total de iterações pelo número desejado de atualizações. Provavelmente
+    # este será um número feio.
+    intervalo_exato = total_iteracoes / numero_atualizacoes
+
+    # A função `arredondar` tem a capacidade de arredondar um número para, por exemplo, o
+    # milésimo mais próximo: round (intervalo_exato, -3)
+    #
+    # Para determinar a magnitude para arredondar, encontre a magnitude do total,
+    # e então vá uma magnitude abaixo disso.
+    
+    # Obtenha a ordem de magnitude do total.
+    ordem_magnitude = len(str(total_iteracoes)) - 1
+    
+    # Nosso intervalo de atualização deve ser arredondado para uma ordem de magnitude menor.
+    magnitude_arrendonda = ordem_magnitude - 1
+
+    # Arredonde para baixo e lance para um int.
+    intervalo_atualizacao = int(round(intervalo_exato, -magnitude_arrendonda))
+
+    # Não permite que o intervalo seja zero!
+    if intervalo_atualizacao == 0:
+        intervalo_atualizacao = 1
+
+    return intervalo_atualizacao
+
 def getNomeModeloBERT(model_args):
     '''    
     Recupera uma string com uma descrição do modelo BERT para nomes de arquivos e diretórios.
