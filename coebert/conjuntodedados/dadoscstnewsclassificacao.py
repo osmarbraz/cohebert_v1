@@ -27,10 +27,10 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
     return dfdados_train, dfdados_test
 
 def organizaDados(dfdados):
-    '''    
+    '''
     Organiza osdados do CSTNews para classificação e retorna um dataframe.
     '''
-  
+    
     # Organiza os dados
     dados_organizados = []
 
@@ -43,9 +43,8 @@ def organizaDados(dfdados):
 
     # Cria um dataframe com os dados
     dfdados = pd.DataFrame(dados_organizados, columns=["id","documento","classe"])      
-
+    
     return dfdados 
-
 
 def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):  
     '''    
