@@ -94,7 +94,7 @@ def carregarLista(nomeArquivo):
      arquivo.close()
      return sentencas    
 
-def salvar(nomeArquivo,texto):                       
+def salvar(nomeArquivo, texto):                       
      '''
      Salva um texto em um arquivo
      '''
@@ -102,3 +102,32 @@ def salvar(nomeArquivo,texto):
      arquivo = open(nomeArquivo, 'w')
      arquivo.write(str(texto))
      arquivo.close() 
+
+# Import das bibliotecas.
+from cmath import rect, phase
+from math import radians, degrees
+  
+def mediaAngulo(deg):
+    return degrees(phase(sum(rect(1, radians(d)) for d in deg)/len(deg)))
+ 
+def mediaTempo(tempos):
+    '''
+    Calcula a média de uma lista de tempo string no formato hh:mm:ss
+    '''
+    t = (tempo.split(':') for tempo in tempos)
+    # Converte para segundos
+    segundos = ((float(s) + int(m) * 60 + int(h) * 3600) for h, m, s in t)
+    # Verifica se deu algum dia
+    dia = 24 * 60 * 60
+    # Converte para angulos
+    paraAngulos = [s * 360. / dia for s in segundos]
+    # Calcula a média dos angulos
+    mediaComoAngulo = mediaAngulo(paraAngulos)
+    media_segundos = mediaComoAngulo * dia / 360.
+    if media_segundos < 0:
+        media_segundos += dia
+    # Recupera as horas e os minutos  
+    h, m = divmod(media_segundos, 3600)
+    # Recupera os minutos e os segundos
+    m, s = divmod(m, 60)    
+    return '{:02d}:{:02d}:{:02d}'.format(int(h), int(m), int(s))    
