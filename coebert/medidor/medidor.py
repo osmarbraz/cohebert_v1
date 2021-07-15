@@ -337,7 +337,6 @@ def getEmbeddingSomaTodasAsCamada(sentencaEmbedding):
   
     return resultado
 
-
 def getResultadoEmbeddings(sentencaEmbedding, camada):
     '''
     Retorna o resultado da operação sobre os embeddings das camadas de acordo com tipo de camada especificada.
@@ -658,7 +657,7 @@ def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, senten
 
 
 
-def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, nlp, camada, tipoDocumento='p', filtro=0):
+def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, estrategiaPooling, nlp, camada, tipoDocumento='p', filtro=0):
     '''
     Retorna as medidas de coerência do documento.
     Considera somente sentenças com alguma palavra.
@@ -720,7 +719,7 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, nlp, camada, ti
         if embeddingSi != None and embeddingSj != None:
 
               # Recupera as medidas entre Si e Sj     
-              ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj)
+              ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategiaPooling)
 
               # Acumula as medidas
               somaScos = somaScos + Scos
