@@ -658,10 +658,12 @@ def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, senten
                 return getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipo_palavra_relevante='NOUN')
 
 
-def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, estrategia_pooling, nlp, camada, tipoDocumento='p', palavra_relevante=0):
+def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, nlp, camada, tipoDocumento='p', estrategia_pooling=0, palavra_relevante=0):
     '''
     Retorna as medidas de coerência do documento.
     Considera somente sentenças com pelo menos uma palavra.
+    Estratégia de pooling padrão é MEAN(0).
+    Palavra relavante padrão é ALL(0).
     '''
 
     # Quantidade de sentenças no documento
@@ -720,7 +722,7 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, estrategia_pool
         if embeddingSi != None and embeddingSj != None:
 
               # Recupera as medidas entre Si e Sj     
-              ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategia_pooling)
+              ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategia_pooling=estrategia_pooling)
 
               # Acumula as medidas
               somaScos = somaScos + Scos
