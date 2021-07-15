@@ -4,7 +4,12 @@ import tarfile # Biblioteca de descompactação
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos
 import spacy # Biblioteca do spaCy
-    
+
+# Import de bibliotecas próprias
+from util.utilmodulo import *
+from util.utiltempo import *
+from util.utilarquivo import *
+
 def downloadSpacy(model_args):
     '''
     Realiza o download do arquivo do modelo para o diretório corrente
