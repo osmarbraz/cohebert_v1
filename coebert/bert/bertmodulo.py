@@ -1,13 +1,13 @@
 # Import das bibliotecas.
-import zipfile # Biblioteca para descompactar
-import os # Biblioteca para apagar arquivos
-import shutil # Biblioteca para mover arquivos   
-import torch
-from transformers import BertModel # Importando as bibliotecas do Modelo BERT   
-from transformers import BertForSequenceClassification # Importando as bibliotecas do Modelo BERT   
-from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT
+import zipfile # Biblioteca para descompactar.
+import os # Biblioteca para apagar arquivos.
+import shutil # Biblioteca para mover arquivos.
+import torch # Biblioteca para manipular os tensores.
+from transformers import BertModel # Importando as bibliotecas do Modelo BERT.
+from transformers import BertForSequenceClassification # Importando as bibliotecas do Modelo BERT.
+from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT.
 
-# Import de bibliotecas próprias
+# Import de bibliotecas próprias.
 from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
@@ -51,11 +51,18 @@ def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
     return intervalo_atualizacao
 
 
-def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, documentoids, batch_size):
+def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, documentoids, tamanho_lote):
     '''
     Esta função combina todos os passos para preparar os lotes inteligentes(smartbatch).
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
+       `tokenizer` - Tokenizador BERT dos documentos.
+       `documentos` - Lista dos documentos a serem colocados nos lotes inteligentes.
+       `classes` - Lista das classes dos documentos a serem colocados nos lotes inteligentes.
+       `documentosis` - Lista dos ids dos documentos a serem colocados nos lotes inteligentes.
+       `tamanho_lote` - Tamanho do lotes inteligente.       
     '''
-    #print('Criando Lotes Inteligentes de {:,} amostras com tamanho de lote {:,}...\n'.format(len(documentos), batch_size))
+    #print('Criando Lotes Inteligentes de {:,} amostras com tamanho de lote {:,}...\n'.format(len(documentos), tamanho_lote))
     
     # ============================
     #   Tokenização & Truncamento
@@ -105,7 +112,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
     batch_ordered_classes = []
     batch_ordered_documentoids = []
 
-    #print('Criando lotes de tamanho {:}...'.format(batch_size))
+    #print('Criando lotes de tamanho {:}...'.format(tamanho_lote))
 
     # Escolha um intervalo no qual imprimir atualizações de progresso.
     intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(amostras), numero_atualizacoes=10)
@@ -118,9 +125,9 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         #    and not len(batch_ordered_documentos) == 0):
         #    print('  Selecionado {:,} lotes.'.format(len(batch_ordered_documentos)))
         
-        # `to_take` é o tamanho real do nosso lote. Será `batch_size` até
+        # `to_take` é o tamanho real do nosso lote. Será `tamanho_lote` até
         # chegamos ao último lote, que pode ser menor.
-        to_take = min(batch_size, len(amostras))
+        to_take = min(tamanho_lote, len(amostras))
         
         # Escolha um índice aleatório na lista de amostras restantes para começar o nosso lote.
         select = random.randint(0, len(amostras) - to_take)
@@ -328,7 +335,7 @@ def downloadModeloPretreinado(model_args):
 
 def copiaModeloAjustado():
     ''' 
-    Copia o MODELO ajustado do GoogleDrive para o projeto.
+    Copia o modelo ajustado BERT do GoogleDrive para o projeto.
     ''' 
 
     # Diretório local de salvamento do modelo.
