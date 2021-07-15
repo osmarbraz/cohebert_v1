@@ -318,39 +318,30 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
                                                               output_hidden_states = model_args.output_hidden_states)
     return model
 
-def carregaBERTMedida(model_args):
+def carregaBERT(model_args):
     ''' 
-    Carrega o BERT para cálculo de medida e retorna o modelo e o tokenizador.
+    Carrega o BERT para cálculo de medida ou classificação e retorna o modelo e o tokenizador.
+    O tipo do model retornado pode ser BertModel ou BertForSequenceClassification, depende do tipo de model_args.
     Parâmetros:
        `model_args` - Objeto com os argumentos do modelo.       
+            - Se model_args = ModeloArgumentosClassificacao deve ser carregado o BERT para classificação(BertForSequenceClassification).
+            - Se model_args = ModeloArgumentosMedida deve ser carregado o BERT para cálculo de medida(BertModel).
     ''' 
     
     # Verifica a origem do modelo
     DIRETORIO_MODELO = verificaModelo(model_args)
     
-    # Carrega o modelo
-    model = carregaModeloMedida(DIRETORIO_MODELO, model_args)
+    # Verifica o tipo do modelo em model_args    
+    model = None
+    if type(model_args) == ModeloArgumentosMedida:
+        # Carrega o modelo
+        model = carregaModeloMedida(DIRETORIO_MODELO, model_args)
+    else:
+        # Carrega o modelo
+        model = carregaModeloClassifica(DIRETORIO_MODELO, model_args)
     
-    # Carrega o tokenizador
-    tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args)
-    
-    return model, tokenizer
-
-
-def carregaBERTClassifica(model_args):
-    ''' 
-    Carrega o BERT para classificação e retorna o modelo e o tokenizador.
-    Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.       
-    ''' 
-    
-    # Verifica a origem do modelo
-    DIRETORIO_MODELO = verificaModelo(model_args)
-    
-    # Carrega o modelo
-    model = carregaModeloClassifica(DIRETORIO_MODELO, model_args)
-    
-    # Carrega o tokenizador
+    # Carrega o tokenizador. 
+    # É o mesmo para o classificador e medidor.
     tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args)
     
     return model, tokenizer
