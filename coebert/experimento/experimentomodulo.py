@@ -2,7 +2,7 @@
 import os
 import pandas as pd
 
-def carregaMedidasCSTNews(CAMINHO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
+def carregaMedidasCSTNews(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
   '''
   Carrega as medidas de coerência de um diretório e retorna um dataframe.
   '''
@@ -12,10 +12,10 @@ def carregaMedidasCSTNews(CAMINHO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALA
   NOME_ARQUIVO_MEDICAO = NOME_BASE + TIPO_MODELO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
                                              
   # Verifica se o diretório dos resultados existem.
-  if os.path.exists(CAMINHO_MEDIDAS):
-      arquivos = os.listdir(CAMINHO_MEDIDAS)     
+  if os.path.exists(DIRETORIO_MEDIDAS):
+      arquivos = os.listdir(DIRETORIO_MEDIDAS)     
 
-      NOME_ARQUIVO_MEDICAO_COMPLETO = CAMINHO_MEDIDAS + NOME_ARQUIVO_MEDICAO
+      NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDIDAS + NOME_ARQUIVO_MEDICAO
     
       # Verifica se o arquivo existe.
       if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
