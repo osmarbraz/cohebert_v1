@@ -39,3 +39,18 @@ def mediaTempo(tempos):
     # Recupera os minutos e os segundos
     m, s = divmod(m, 60)    
     return '{:02d}:{:02d}:{:02d}'.format(int(h), int(m), int(s))    
+
+def somaTempo(tempos):
+    '''
+    Calcula a soma de uma lista de tempo string no formato hh:mm:ss
+    '''
+    t = (tempo.split(':') for tempo in tempos)
+    # Converte para segundos
+    segundos = ((float(s) + int(m) * 60 + int(h) * 3600) for h, m, s in t)
+    # Soma os segundos
+    soma_segundos = sum([s * 1. for s in segundos])
+    # Recupera as horas e os minutos   
+    h, m = divmod(soma_segundos, 3600)
+    # Recupera os minutos e os segundos
+    m, s = divmod(m, 60)    
+    return '{:02d}:{:02d}:{:02d}'.format(int(h), int(m), int(s))  
