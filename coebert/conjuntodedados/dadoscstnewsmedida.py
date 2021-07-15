@@ -286,7 +286,7 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
       
 def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):  
     '''    
-    Carrega os dados do CSTNews e retorna um dataframe.
+    Carrega os dados do CSTNews para o cálculo de medida e retorna um dataframe.
     '''
     
     # Realiza o download do conjunto de dados
