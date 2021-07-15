@@ -176,7 +176,7 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     
 def getConjuntoDeDadosMedida(model_args, tokenizer): 
     '''    
-    Carrega os dados do OnlineEduc 1.0 e retorna um dataframe.
+    Carrega os dados do OnlineEduc 1.0 para o cálculo de medida  e retorna um dataframe.
     '''
     
     # Realiza o download do conjunto de dados
