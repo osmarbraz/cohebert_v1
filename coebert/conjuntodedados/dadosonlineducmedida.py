@@ -1,4 +1,3 @@
-
 # Import das bibliotecas.
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
