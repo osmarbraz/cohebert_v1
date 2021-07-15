@@ -48,11 +48,13 @@ def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
     return intervalo_atualizacao
 
 
-def cria_lotes_inteligentes(tokenizer, model_args, documentos, classes, documentoids, batch_size):
+def cria_lotes_inteligentes(model_args, training_args, tokenizer, documentos, classes, documentoids):
     '''
     Esta função combina todos os passos para preparar os lotes inteligentes(smartbatch).
     '''
     #print('Criando Lotes Inteligentes de {:,} amostras com tamanho de lote {:,}...\n'.format(len(documentos), batch_size))
+    
+    batch_size = training_args.per_device_train_batch_size
 
     # ============================
     #   Tokenização & Truncamento
