@@ -255,7 +255,9 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     '''    
     Remove os documentos que extrapolam 512 tokens.
     Você pode definir o tamanho de documento que quiser no BERT, mas o modelo pré-treinado vem com um tamanho pré-definido. 
-    No nosso caso vamos utilizar o modelo BERT, que tem 512 tokens de tamanho limite de documento.     
+    No nosso caso vamos utilizar o modelo BERT, que tem 512 tokens de tamanho limite de documento. 
+    O tokenizador gera quantidades diferentes tokens para cada modelo pré-treinado. 
+    Portanto é necessário especificar o tokenizador para descatar os documentos que ultrapassam o limite de tokens de entrada do BERT.
     '''
   
     # Tokenize a codifica os documentos para o BERT.     
@@ -279,8 +281,7 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     #print('Quantidade de registros removidos: {}'.format(len(df)))
 
     return dfdadosretorno  
-  
-    
+      
 def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):  
     '''    
     Carrega os dados do CSTNews e retorna um dataframe.
