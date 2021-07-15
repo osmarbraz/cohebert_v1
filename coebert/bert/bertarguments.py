@@ -62,7 +62,7 @@ class ModelArguments:
         default=0, # 0 - MEAN estratégia de pooling média / 1 - MAX  estratégia de pooling maior
         metadata={'help': 'Estratégia de pooling de padronização do embeddings das= palavras das sentenças.'},
     )
-    relevancia_palavra: int = field(
+    palavra_relevante: int = field(
         default=0, # 0 - ALL Considera todas as palavras das sentenças / 1 - CLEAN desconsidera as stopwords / 2 - NOUN considera somente as palavras substantivas
         metadata={'help': 'Estratégia de relevância das palavras das sentenças para gerar os embeddings.'},
     )
