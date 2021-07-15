@@ -49,6 +49,8 @@ def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
 def getNomeModeloBERT(model_args):
     '''    
     Recupera uma string com uma descrição do modelo BERT para nomes de arquivos e diretórios.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
     '''
 
     # Verifica o nome do modelo(default SEM_MODELO_BERT)
@@ -64,6 +66,8 @@ def getNomeModeloBERT(model_args):
 def getTamanhoBERT(model_args):
     '''    
     Recupera uma string com o tamanho(dimensão) do modelo BERT para nomes de arquivos e diretórios.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
     '''
     
     # Verifica o tamanho do modelo(default large)
@@ -76,6 +80,8 @@ def getTamanhoBERT(model_args):
 def downloadModeloPretreinado(model_args):
     ''' 
     Realiza o download do modelo BERT(MODELO) e retorna o diretório onde o modelo BERT(MODELO) foi descompactado.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
     ''' 
 
     MODELO = model_args.pretrained_model_name_or_path
@@ -151,7 +157,9 @@ def copiaModeloAjustado():
 
 def verificaModelo(model_args):
     ''' 
-    Verifica de onde utilizar o modelo
+    Verifica de onde utilizar o modelo.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
     ''' 
 
     DIRETORIO_MODELO = None
@@ -174,6 +182,10 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     Caso contrário carrega da comunidade
     Por default(`do_lower_case=True`) todas as letras são colocadas para minúsculas. Para ignorar a conversão para minúsculo use o parâmetro `do_lower_case=False`. Esta opção também considera as letras acentuadas(ãçéí...), que são necessárias a língua portuguesa.
     O parâmetro `do_lower_case` interfere na quantidade tokens a ser gerado a partir de um texto. Quando igual a `False` reduz a quantidade de tokens gerados.
+    
+    Parâmetros:
+       `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
+       `model_args` - Objeto com os argumentos do modelo.       
     ''' 
 
     # Se a variável DIRETORIO_MODELO foi setada.
@@ -197,6 +209,9 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
 def carregaModelo(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o modelo e retorna o modelo.
+    Parâmetros:
+       `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
+       `model_args` - Objeto com os argumentos do modelo.           
     ''' 
 
     # Variável para setar o arquivo.
@@ -226,6 +241,8 @@ def carregaModelo(DIRETORIO_MODELO, model_args):
 def carregaBERT(model_args):
     ''' 
     Carrega o BERT e retorna o modelo e o tokenizador.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
     ''' 
     
     # Verifica a origem do modelo
