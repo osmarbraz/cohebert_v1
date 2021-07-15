@@ -4,6 +4,7 @@ import torch
 
 # Import de bibliotecas próprias
 from medidor.medidas import *
+from spacynlp.spacymodulo import *
 
 def getDocumentoLista(listaDocumento):
     '''
@@ -526,7 +527,7 @@ def getEmbeddingSentencaEmbeddingDocumentoALL(embeddingDocumento, documento, sen
     # Retorna o embedding da sentença no documento
     return embeddingSentenca
 
-def getEmbeddingSentencaEmbeddingDocumentoCLEAN(embeddingDocumento, documento, sentenca, tokenizador):
+def getEmbeddingSentencaEmbeddingDocumentoCLEAN(embeddingDocumento, documento, sentenca, tokenizador, stopwords):
     '''
     Retorna os embeddings de uma sentença sem stopwords(CLEAN) a partir dos embeddings do documento.
     '''
@@ -536,7 +537,7 @@ def getEmbeddingSentencaEmbeddingDocumentoCLEAN(embeddingDocumento, documento, s
     #print(documentoTokenizado)
 
     # Remove as stopword da sentença
-    sentencaSemStopWord = removeStopWord(sentenca, spacy_stopwords)
+    sentencaSemStopWord = removeStopWord(sentenca, stopwords)
 
     # Tokeniza a sentença sem stopword
     sentencaTokenizadaSemStopWord = getDocumentoTokenizado(sentencaSemStopWord, tokenizador)
@@ -650,7 +651,8 @@ def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, senten
         return getEmbeddingSentencaEmbeddingDocumentoALL(embeddingDocumento, documento, sentenca, tokenizador)
     else:
         if palavra_relevante == 1:
-            return getEmbeddingSentencaEmbeddingDocumentCLEAN(embeddingDocumento, documento, sentenca, tokenizador)
+            stopwords = getStopwords(nlp)
+            return getEmbeddingSentencaEmbeddingDocumentCLEAN(embeddingDocumento, documento, sentenca, tokenizador, stopwords)
         else:
             if palavra_relevante == 2:
                 return getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipo_palavra_relevante='NOUN')
