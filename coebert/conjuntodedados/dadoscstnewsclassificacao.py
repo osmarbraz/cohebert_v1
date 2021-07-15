@@ -1,12 +1,30 @@
 # Import das bibliotecas.
 import pandas as pd # Biblioteca pandas
-
+from sklearn.model_selection import train_test_split # Biblioteca de divisão
+    
 # Import de bibliotecas próprias
 from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
 
 from conjuntodedados.dadoscstnewsmedida import *
+
+def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
+    '''    
+    Divide o conjunto de dados em treino e teste utilizando um percentual de divisão.
+    '''
+        
+    # Quantidade de elementos de teste considerando o percentual
+    test_qtde = int(percentualDivisao*dfdados.shape[0])
+    
+    # Divide o conjunto
+    dfdados_train, dfdados_test = train_test_split(dfdados, test_size=test_qtde, random_state=42, stratify=dfdados[classeStratify])
+
+    print("Conjunto total:", len(dfdados))
+    print("  Treino:", len(dfdados_train))
+    print("  Treino:", len(dfdados_test))
+
+    return dfdados_train, dfdados_test
 
 def organizaDados(dfdados):
     '''    
