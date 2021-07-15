@@ -3,29 +3,38 @@ from scipy.spatial.distance import cosine
 from scipy.spatial.distance import euclidean
 from scipy.spatial.distance import cityblock
 
-def similaridadeCoseno(documento1, documento2):
+def similaridadeCoseno(texto1, texto2):
     '''
-    Similaridade do cosseno dos embeddgins das sentenças.
+    Similaridade do cosseno dos embeddgins dos textos.
+    Parâmetros:
+       `texto1` - Um texto a ser medido.           
+       `texto2` - Um texto a ser medido.                 
     '''
     
-    similaridade = 1 - cosine(documento1, documento2)
+    similaridade = 1 - cosine(texto1, texto2)
     return similaridade
 
-def distanciaEuclidiana(sentenca1, sentenca2):
+def distanciaEuclidiana(texto2, texto2):
     '''
-    Distância euclidiana entre os embeddings das sentenças.
+    Distância euclidiana entre os embeddings dos textos.
     Possui outros nomes como distância L2 ou norma L2.
+    Parâmetros:
+       `texto1` - Um texto a ser medido.           
+       `texto2` - Um texto a ser medido.
     '''
     
-    distancia = euclidean(sentenca1, sentenca2)
+    distancia = euclidean(texot1, texto2)
     return distancia
 
-def distanciaManhattan(sentenca1, sentenca2):
+def distanciaManhattan(texto1, texto2):
     '''
     Distância Manhattan entre os embeddings das sentenças. 
     Possui outros nomes como distância Cityblock, distância L1, norma L1 e métrica do táxi.
+    Parâmetros:
+       `texto1` - Um texto a ser medido.           
+       `texto2` - Um texto a ser medido.
     '''
     
-    distancia = cityblock(sentenca1, sentenca2)
+    distancia = cityblock(texto1, texto2)
 
     return distancia
