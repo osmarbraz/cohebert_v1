@@ -414,14 +414,14 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
     # Se a variável URL_MODELO foi setada
     if URL_MODELO:
         # Carregando o Modelo BERT
-        print('Carregando o modelo BERT do diretório {}...'.format(DIRETORIO_MODELO))
+        print('Carregando o modelo BERT do diretório {} pára classificação.'.format(DIRETORIO_MODELO))
 
         model = BertModel.from_pretrained(DIRETORIO_MODELO,
                                           output_attentions = model_args.output_attentions,
                                           output_hidden_states = model_args.output_hidden_states)
     else:
         # Carregando o Modelo BERT da comunidade
-        print('Carregando o modelo BERT da comunidade ...')
+        print('Carregando o modelo BERT da comunidade para cálculo de medida.')
 
         model = BertModel.from_pretrained(model_args.pretrained_model_name_or_path,
                                           output_attentions = model_args.output_attentions,
@@ -447,7 +447,7 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
     # Se a variável URL_MODELO foi setada
     if URL_MODELO:
         # Carregando o Modelo BERT
-        print('Carregando o modelo BERT do diretório {}...'.format(DIRETORIO_MODELO))
+        print('Carregando o modelo BERT do diretório {} para classificação.'.format(DIRETORIO_MODELO))
 
         model = BertForSequenceClassification.from_pretrained(DIRETORIO_MODELO, 
                                                               num_labels = model_args.num_labels,
@@ -456,7 +456,7 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
             
     else:
         # Carregando o Modelo BERT da comunidade
-        print('Carregando o modelo BERT da comunidade ...')
+        print('Carregando o modelo BERT da comunidade para classificação.')
 
         model = BertForSequenceClassification.from_pretrained(model_args.pretrained_model_name_or_path,
                                                               num_labels = model_args.num_labels,
@@ -480,10 +480,10 @@ def carregaBERT(model_args):
     # Verifica o tipo do modelo em model_args    
     model = None
     if type(model_args) == ModeloArgumentosMedida:
-        # Carrega o modelo
+        # Carrega o modelo para cálculo da medida
         model = carregaModeloMedida(DIRETORIO_MODELO, model_args)
     else:
-        # Carrega o modelo
+        # Carrega o modelo para classificação
         model = carregaModeloClassifica(DIRETORIO_MODELO, model_args)
     
     # Carrega o tokenizador. 
