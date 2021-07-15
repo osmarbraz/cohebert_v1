@@ -46,6 +46,10 @@ class ModeloArgumentosMedida:
         default=True,
         metadata={'help': 'habilita o salvamento do modelo no wandb.'},
     )
+    salvar_modelo : bool = field(
+        default=True,
+        metadata={"help": "habilita o salvamento do modelo."},
+    )
     salvar_avaliacao : bool = field(
         default=True,
         metadata={'help': 'habilita o salvamento do resultado da avaliação.'},
