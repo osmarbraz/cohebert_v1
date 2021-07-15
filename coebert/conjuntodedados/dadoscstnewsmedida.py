@@ -137,8 +137,9 @@ def carregaArquivosOriginaisCSTNews():
         ponto = arquivos[i].find('.')
         # Recupera o nome do arquivo até a posição do ponto
         nomeArquivo = arquivos[i][:ponto]
-
+        
         documento = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivos[i])
+        
         sentencas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivos[i])
 
         lista_documentos_originais.append([arquivos[i], sentencas, documento])
@@ -170,6 +171,7 @@ def carregaArquivosPermutadosCSTNews():
         nomeArquivo = arquivos[i][:ponto]
 
         documento = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
+        
         sentencas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
 
         lista_documentos_permutados.append([arquivos[i], sentencas, documento])
@@ -283,6 +285,22 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     #print('Quantidade de registros removidos: {}'.format(len(df)))
 
     return dfdadosretorno  
+
+def getListasDocumentosMedidas(model_args, ORIGEM):  
+    '''    
+    Carrega os arquivos de documentos originais e permutados do CSTNews e retorna suas listas preenchidas.
+    '''
+    
+    # Realiza o download do conjunto de dados
+    downloadConjuntoDeDados(ORIGEM)
+    
+    # Carrega os documentos permutados dos arquivos
+    lista_documentos_originais = carregaArquivosOriginaisCSTNews()
+    
+    # Carrega os documentos permutados dos arquivos
+    lista_documentos_permutados = carregaArquivosPermutadosCSTNews()
+            
+    return lista_documentos_originais, lista_documentos_permutados
       
 def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):  
     '''    
