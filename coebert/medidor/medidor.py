@@ -68,7 +68,7 @@ def removeStopWord(documento, stopwords):
     # Retorna o documento
     return documentoLimpo
 
-def retornaSaliente(documento, tipoSaliente='NOUN', nlp):
+def retornaSaliente(documento, nlp, tipoSaliente='NOUN'):
     '''
     Retorna somente os palavras do documento ou sentença do tipo especificado.
     '''
@@ -585,7 +585,7 @@ def getEmbeddingSentencaEmbeddingDocumentoSemStopWord(embeddingDocumento, docume
     # Retorna o embedding da sentença no documento
     return embeddingSentencaSemStopWord
 
-def getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, documento, sentenca, tokenizador, tipoSaliente='NOUN', nlp):
+def getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipoSaliente='NOUN'):
     '''
     Retorna os embeddings de uma sentença somente com as palavras salientes a partir dos embeddings do documento.
     '''
@@ -595,7 +595,7 @@ def getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, do
     #print(documentoTokenizado)
 
     # Retorna as palavras salientes da sentença do tipo especificado
-    sentencaSomenteSaliente = retornaSaliente(sentenca,tipoSaliente, nlp)
+    sentencaSomenteSaliente = retornaSaliente(sentenca,nlp, tipoSaliente)
 
     # Tokeniza a sentença 
     sentencaTokenizadaSomenteSaliente = getDocumentoTokenizado(sentencaSomenteSaliente, tokenizador)
@@ -642,7 +642,7 @@ def getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, do
     # Retorna o embedding da sentença do documento
     return embeddingSentencaComSubstantivo
 
-def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, sentenca, tokenizador, filtro=0, nlp):
+def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, sentenca, tokenizador, nlp, filtro=0):
     '''
     Retorna os embeddings de uma sentença com todas as palavras, sem stopwords ou somente com palavra substantivas a partir dos embeddings do documentos.
     '''
@@ -654,11 +654,11 @@ def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, senten
             return getEmbeddingSentencaEmbeddingDocumentoSemStopWord(embeddingDocumento, documento, sentenca, tokenizador)
         else:
             if filtro == 2:
-                return getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, documento, sentenca, tokenizador, tipoSaliente='NOUN', nlp)
+                return getEmbeddingSentencaEmbeddingDocumentoSomenteSaliente(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipoSaliente='NOUN')
 
 
 
-def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, camada, tipoDocumento='p', filtro=0, nlp):
+def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, nlp, camada, tipoDocumento='p', filtro=0):
     '''
     Retorna as medidas de coerência do documento.
     Considera somente sentenças com alguma palavra.
@@ -713,8 +713,8 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, camada, tipoDoc
         Sj = documento[posSj]
 
         # Recupera os embedding das sentenças Si e Sj do embedding do documento      
-        embeddingSi = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Si, tokenizador, filtro=filtro, nlp)                                
-        embeddingSj = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Sj, tokenizador, filtro=filtro, nlp)
+        embeddingSi = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Si, tokenizador, nlp, filtro=filtro)
+        embeddingSj = getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, stringDocumento, Sj, tokenizador, nlp, filtro=filtro)
 
         # Verifica se os embeddings sentenças estão preenchidos
         if embeddingSi != None and embeddingSj != None:
