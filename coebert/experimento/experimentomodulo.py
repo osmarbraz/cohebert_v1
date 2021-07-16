@@ -2,6 +2,7 @@
 import os
 import pandas as pd
 
+# ============================
 def carregaMedidasCSTNews(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
   '''
   Carrega as medidas de coerência de um diretório e retorna um dataframe.
