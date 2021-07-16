@@ -179,6 +179,6 @@ def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer):
     print('Qtde de dados de teste: {}'.format(len(dfdados_test)))
 
     # Remove os documentos muito grandes
-    dfdados_train, dfdados_test = descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test):
+    dfdados_train, dfdados_test = descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test)
     
     return dfdados_train, dfdados_test        
