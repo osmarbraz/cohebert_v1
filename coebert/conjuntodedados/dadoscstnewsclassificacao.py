@@ -193,7 +193,7 @@ def downloadCSTNewsKFold(ORIGEM):
         copiaCSTNewsKFoldGithub()
             
 # ============================
-def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM)
+def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM):
     '''    
     Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
     Parâmetros:
