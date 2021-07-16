@@ -30,7 +30,7 @@ sys.path.append('./coebert_v1/coebert')
 * **coebert_v1** - Código fonte do coeberb v 1.0
 * **conjuntodedados** - Diretório com os conjuntos de dados.
   * **cstnews** - Arquivos do conjunto de dados do CSTNews.
-  * **onlineeduc1.0** - Arquivos do conjunto de dados do OnlineEduc 1.0.
+  * **onlineeduc1.0** - Arquivos do conjunto de dados do OnlineEduc 1.0 (**Não disponibilizado**).
 
 * **experimentos** - Diretório com o resultados dos experimentos.
   * **cstnews** - Arquivos dos resultados do CSTNews.
