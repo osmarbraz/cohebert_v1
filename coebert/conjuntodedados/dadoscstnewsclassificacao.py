@@ -59,11 +59,6 @@ def downloadCSTNewsKFoldGithub():
   
     # Diretório dos arquivos de dados.
     DIRETORIO = "/content/validacao_kfold"
-
-    # Apaga o diretório e seus arquivos.    
-    if os.path.exists(DIRETORIO):
-        # Apaga a pasta e os arquivos existentes                     
-        shutil.rmtree(DIRETORIO)
     
     # Verifica se o diretório existe
     if not os.path.exists(DIRETORIO):  
@@ -92,6 +87,40 @@ def downloadCSTNewsKFoldGithub():
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)       
 
+def copiaCSTNewsKFoldGithub():  
+    '''    
+    Copia dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
+    '''
+  
+    # Diretório dos arquivos de dados.
+    DIRETORIO = "/content/validacao_kfold"
+    
+    # Verifica se o diretório existe
+    if not os.path.exists(DIRETORIO):  
+        # Cria o diretório
+        os.makedirs(DIRETORIO)
+        print('Diretório criado: {}'.format(DIRETORIO))
+    else:
+        print('Diretório já existe: {}'.format(DIRETORIO))
+        
+    # Nome do arquivo a ser criado.
+    NOME_ARQUIVO = "CSTNEWS_MD_KFOLD_10.zip"
+    
+    # Diretórios dos arquivos
+    DIRETORIO_FONTE_ARQUIVO = "/content/coebert_v1/conjuntodedados/cstnews/" + NOME_ARQUIVO
+    DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
+    
+    # Apaga o arquivo.    
+    if os.path.isfile(NOME_ARQUIVO):
+       os.remove(NOME_ARQUIVO)
+    
+    # Copia o arquivo de dados  
+    shutil.copy(DIRETORIO_FONTE_ARQUIVO, DIRETORIO_DESTINO_ARQUIVO) 
+    
+    # Descompacta o arquivo na pasta de descompactação.                
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip.extractall(DIRETORIO)           
+    
 # ============================
 def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):  
     '''    
@@ -145,10 +174,30 @@ def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_t
     return dfdados_train, dfdados_test
 
 # ============================
-def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer):  
+def downloadCSTNewsKFold(ORIGEM):
+    '''
+    Realiza o download o arquivo KFold do CSTNews.
+    Parâmetros:
+       `ORIGEM` - Se a variável for sertada indica para fazer o download do Github caso contrário usar a copia do checkout.       
+    '''    
+    
+    if ORIGEM:
+        # Realiza o download do conjunto de dados dos folds
+        downloadCSTNewsKFoldGithub()
+    else:
+        # Copia do diretório do github do checkout
+        copiaCSTNewsKFoldGithub():  
+            
+# ============================
+def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM)
     '''    
     Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.  
+       `tokenizer` -Tokenizador do BERT para descartar documentos grandes.  
+       `ORIGEM` - Se a variável for sertada indica para fazer o download do Github caso contrário usar a copia do checkout.       
     '''
+    
     # Fold a ser carregado
     fold = model_args.fold
     
@@ -157,8 +206,7 @@ def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer):
     
     # Verifica se o diretório existe
     if os.path.exists(DIRETORIO) == False:
-        # Realiza o download do conjunto de dados dos folds
-        downloadCSTNewsKFoldGithub()
+        downloadCSTNewsKFold(ORIGEM)
   
     # Define o prefixo do nome dos arquivos dos folds
     PREFIXO_NOME_ARQUIVO_TREINO = "cstnews_md_train_f"
