@@ -68,7 +68,7 @@ def descompactaSpacy(model_args):
         os.remove(NOME_ARQUIVO_MODELO_COMPACTADO)
     
 # ============================
-def moveSpacy(model_args):
+def moveSpacy1(model_args):
     '''
     Coloca a pasta do modelo descompactado em uma pasta de nome mais simples.
     Parâmetros:    
@@ -94,13 +94,13 @@ def carregaSpacy(model_args):
     Parâmetros:
        `model_args` - Objeto com os argumentos do modelo.           
     '''
-    
+    print("carrega")
     # Nome arquivo spacy
     ARQUIVO_MODELO_SPACY = model_args.modelo_spacy
     # Versão spaCy
     VERSAO_SPACY = "-" + model_args.versao_spacy
-    # Caminho completo do modelo do spaCy
-    DIRETORIO_MODELO_SPACY = '/content/' + ARQUIVO_MODELO_SPACY
+    # Caminho raoz do modelo do spaCy
+    DIRETORIO_MODELO_SPACY = '/content/' + ARQUIVO_MODELO_SPACY + VERSAO_SPACY
 
      # Verifica se o diretório existe
     if os.path.exists(DIRETORIO_MODELO_SPACY) == False:
@@ -108,10 +108,12 @@ def carregaSpacy(model_args):
         downloadSpacy(model_args)
         # Descompacta o spaCy
         descompactaSpacy(model_args)
-        # Move o spaCy
-        moveSpacy(model_args)
+    
+    # Diretório completo do spaCy
+    DIRETORIO_MODELO_SPACY = '/content/' + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + '/' + ARQUIVO_MODELO_SPACY + '/' + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + '/'
     
     # Carrega o spaCy. Necessário somente 'tagger' para encontrar os substantivos
     nlp = spacy.load(DIRETORIO_MODELO_SPACY, disable=['tokenizer', 'lemmatizer', 'ner', 'parser', 'textcat', 'custom'])
 
+    print("feito")
     return nlp
