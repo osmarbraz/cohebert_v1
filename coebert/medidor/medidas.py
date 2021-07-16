@@ -3,6 +3,7 @@ from scipy.spatial.distance import cosine
 from scipy.spatial.distance import euclidean
 from scipy.spatial.distance import cityblock
 
+# ============================  
 def similaridadeCoseno(texto1, texto2):
     '''
     Similaridade do cosseno dos embeddgins dos textos.
@@ -14,6 +15,7 @@ def similaridadeCoseno(texto1, texto2):
     similaridade = 1 - cosine(texto1, texto2)
     return similaridade
 
+# ============================  
 def distanciaEuclidiana(texto1, texto2):
     '''
     Distância euclidiana entre os embeddings dos textos.
@@ -26,6 +28,7 @@ def distanciaEuclidiana(texto1, texto2):
     distancia = euclidean(texto1, texto2)
     return distancia
 
+# ============================  
 def distanciaManhattan(texto1, texto2):
     '''
     Distância Manhattan entre os embeddings das sentenças. 
