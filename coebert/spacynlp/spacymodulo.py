@@ -103,7 +103,7 @@ def carregaSpacy(model_args):
     DIRETORIO_MODELO_SPACY = '/content/' + ARQUIVO_MODELO_SPACY
 
      # Verifica se o diretório existe
-    if os.path.exists(DIRETORIO_MODELO_SPACY) == false:
+    if os.path.exists(DIRETORIO_MODELO_SPACY) == False:
         # Realiza o download do arquivo modelo do spaCy
         downloadSpacy(model_args)
         # Descompacta o spaCy
