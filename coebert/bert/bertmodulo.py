@@ -503,7 +503,7 @@ def carregaBERT(model_args):
         model = carregaModeloClassifica(DIRETORIO_MODELO, model_args)
     
     # Carrega o tokenizador. 
-    # É o mesmo para o classificador e medidor.
+    # O tokenizador é o mesmo para o classificador e medidor.
     tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args)
     
     return model, tokenizer
