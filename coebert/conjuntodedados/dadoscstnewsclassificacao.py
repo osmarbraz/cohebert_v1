@@ -157,7 +157,7 @@ def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer):
     DIRETORIO = "/content/validacao_kfold"
     
     # Verifica se o diretório existe
-    if os.path.exists(DIRETORIO) == false:
+    if os.path.exists(DIRETORIO) == False:
         # Realiza o download do conjunto de dados dos folds
         downloadCSTNewsKFoldGithub()
   
