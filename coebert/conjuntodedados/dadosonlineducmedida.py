@@ -9,6 +9,7 @@ from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
 
+# ============================
 def downloadOnlineEducGoogleDrive():
     '''    
     Download dos arquivos do conjunto de dados do OnlineEduc 1.0 do google drive.
@@ -33,7 +34,8 @@ def downloadOnlineEducGoogleDrive():
     # Descompacta o arquivo na pasta de descompactação.                
     arquivoZip = zipfile.ZipFile(NOMEARQUIVOPERMUTADO,"r")
     arquivoZip.extractall()
-    
+
+# ============================    
 def carregaArquivosOriginaisOnlineEduc():    
     '''    
     Carrega os arquivos originais dos arquivos do OnlineEduc 1.0.
@@ -59,7 +61,8 @@ def carregaArquivosOriginaisOnlineEduc():
     print ('Carregamento de documento originais concluído: ', len(lista_documentos_originais))    
 
     return lista_documentos_originais
-   
+
+# ============================   
 def carregaArquivosPermutadosOnlineEduc():
     '''    
     Carrega os arquivos permutados dos arquivos do OnlineEduc 1.0.
@@ -86,7 +89,8 @@ def carregaArquivosPermutadosOnlineEduc():
     print ('Carregamento de documento permutados concluído: ', len(lista_documentos_permutados))    
     
     return lista_documentos_permutados 
-  
+
+# ============================  
 def carregaParesDocumentosOnlineEduc():
     '''    
     Carrega os arquivos e gera os pares de documentos em uma lista.
@@ -125,7 +129,8 @@ def carregaParesDocumentosOnlineEduc():
     print ('TERMINADO GERAÇÃO PARES:', len(lista_documentos))
     
     return lista_documentos
-    
+
+# ============================    
 def downloadConjuntoDeDados(): 
     '''    
     Verifica de onde será realizado o download dos arquivos de dados.
@@ -134,7 +139,7 @@ def downloadConjuntoDeDados():
     print("Realizando o download do Google Drive.")
     downloadOnlineEducGoogleDrive()
     
-    
+# ============================    
 def converteListaParesDocumentos(lista_documentos):
     '''    
     Converte a lista de pares de documentos em um dataframe.
@@ -145,7 +150,7 @@ def converteListaParesDocumentos(lista_documentos):
 
     return dfdados
     
-    
+# ============================    
 def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     '''    
     Remove os documentos que extrapolam 512 tokens.
@@ -173,7 +178,7 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
 
     return dfdadosretorno  
   
-    
+# ============================    
 def getConjuntoDeDadosMedida(model_args, tokenizer): 
     '''    
     Carrega os dados do OnlineEduc 1.0 para o cálculo de medida  e retorna um dataframe.
