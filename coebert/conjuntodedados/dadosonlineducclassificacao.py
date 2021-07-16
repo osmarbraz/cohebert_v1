@@ -11,6 +11,7 @@ from util.utilarquivo import *
 
 from conjuntodedados.dadosonlineducmedida import *
 
+# ============================
 def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
     '''    
     Divide o conjunto de dados em treino e teste utilizando um percentual de divisão.
@@ -28,6 +29,7 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
 
     return dfdados_train, dfdados_test
 
+# ============================
 def organizaDados(dfdados):
     '''    
     Organiza osdados do CSTNews para classificação e retorna um dataframe.
@@ -47,7 +49,8 @@ def organizaDados(dfdados):
     dfdados = pd.DataFrame(dados_organizados, columns=["id","documento","classe"])      
 
     return dfdados 
-  
+
+# ============================  
 def getConjuntoDeDadosClassificacao(model_args, tokenizer): 
     '''    
     Carrega os dados do OnlineEduc 1.0 para classificação e retorna um dataframe.
