@@ -1,5 +1,4 @@
 # Import das bibliotecas.
-# Import das bibliotecas.
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
@@ -84,7 +83,7 @@ def downloadCSTNewsKFoldGithub():
        os.remove(NOME_ARQUIVO)
     
     # Realiza o download do arquivo do OneDrive.
-    URL_ARQUIVO = 'https://github.com/osmarbraz/coebert/blob/main/conjuntodedado/'+ NOME_ARQUIVO + '?raw=true'
+    URL_ARQUIVO = 'https://github.com/osmarbraz/coebert/blob/main/conjuntodedados/'+ NOME_ARQUIVO + '?raw=true'
 
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
