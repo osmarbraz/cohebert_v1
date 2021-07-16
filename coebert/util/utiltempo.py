@@ -2,6 +2,7 @@
 from cmath import rect, phase
 from math import radians, degrees
   
+# ============================    
 def formataTempo(tempo):
      '''
      Pega a tempo em segundos e retorna uma string hh:mm:ss
@@ -14,10 +15,12 @@ def formataTempo(tempo):
    
      # Formata como hh:mm:ss
      return str(datetime.timedelta(seconds=tempoArredondado))  
-  
+
+# ============================      
 def mediaAngulo(deg):
     return degrees(phase(sum(rect(1, radians(d)) for d in deg)/len(deg)))
  
+# ============================  
 def mediaTempo(tempos):
     '''
     Calcula a média de uma lista de tempo string no formato hh:mm:ss
@@ -40,6 +43,7 @@ def mediaTempo(tempos):
     m, s = divmod(m, 60)    
     return '{:02d}:{:02d}:{:02d}'.format(int(h), int(m), int(s))    
 
+# ============================    
 def somaTempo(tempos):
     '''
     Calcula a soma de uma lista de tempo string no formato hh:mm:ss
