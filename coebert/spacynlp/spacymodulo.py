@@ -41,6 +41,7 @@ def downloadSpacy(model_args):
     URL_ARQUIVO_MODELO_COMPACTADO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + "/" + NOME_ARQUIVO_MODELO_COMPACTADO
 
     # Realiza o download do arquivo do modelo
+    print("Download do spaCy.")
     downloadArquivo(URL_ARQUIVO_MODELO_COMPACTADO, NOME_ARQUIVO_MODELO_COMPACTADO)
 
 # ============================   
@@ -59,6 +60,7 @@ def descompactaSpacy(model_args):
     # Nome do arquivo a ser descompactado
     NOME_ARQUIVO_MODELO_COMPACTADO = ARQUIVO_MODELO_SPACY + VERSAO_SPACY + ".tar.gz"
     
+    print("Descompactando o spaCy.")
     arquivoTar = tarfile.open(NOME_ARQUIVO_MODELO_COMPACTADO, "r:gz")    
     arquivoTar.extractall()    
     arquivoTar.close()
@@ -114,5 +116,6 @@ def carregaSpacy(model_args):
     
     # Carrega o spaCy. Necessário somente 'tagger' para encontrar os substantivos
     nlp = spacy.load(DIRETORIO_MODELO_SPACY, disable=['tokenizer', 'lemmatizer', 'ner', 'parser', 'textcat', 'custom'])
+    print("spaCy carregado.")
     
     return nlp
