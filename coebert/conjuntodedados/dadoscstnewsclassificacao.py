@@ -129,6 +129,10 @@ def copiaCSTNewsKFoldGithub():
 def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):  
     '''    
     Carrega os dados do CSTNews e retorna um dataframe para classificação.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.    
+       `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
+       `tokenizer` - Tokenizador BERT.
     '''
     
     # Realiza o download do conjunto de dados
@@ -150,6 +154,14 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
 
 # ============================
 def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test):
+    '''
+    Descarta os documentos maiores que o tamanho máximo.
+    Parâmetros:
+       `tokenizer` - Tokenizador BERT.
+       `model_args` - Objeto com os argumentos do modelo.
+       `dfdados_train` - Dataframe com os dados de treinamento.
+       `dfdados_test` - Dataframe com os dados de teste.       
+    '''    
     if tokenizer != None:
         
         # Define o tamanho máximo para os tokens.
@@ -187,7 +199,7 @@ def downloadCSTNewsKFold(ORIGEM):
     '''
     Realiza o download o arquivo KFold do CSTNews.
     Parâmetros:
-       `ORIGEM` - Se a variável for sertada indica para fazer o download do Github caso contrário usar a copia do checkout.       
+       `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.       
     '''    
     
     if ORIGEM:
@@ -204,7 +216,7 @@ def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM):
     Parâmetros:
        `model_args` - Objeto com os argumentos do modelo.  
        `tokenizer` -Tokenizador do BERT para descartar documentos grandes.  
-       `ORIGEM` - Se a variável for sertada indica para fazer o download do Github caso contrário usar a copia do checkout.       
+       `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.       
     '''
     
     # Fold a ser carregado
