@@ -150,30 +150,35 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
 
 # ============================
 def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test):
-
-    # Define o tamanho máximo para os tokens.
-    tamanho_maximo = model_args.max_seq_len
-
-    # Tokenize a codifica as setenças para o BERT.     
-    dfdados_train['input_ids'] = dfdados_train['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+    if tokenizer != None:
         
-    dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len)<tamanho_maximo]
-    
-    print('Tamanho do dataset de treino: {}'.format(len(dfdados_train)))
+        # Define o tamanho máximo para os tokens.
+        tamanho_maximo = model_args.max_seq_len
+        
+        print("Removendo documentos grandes, acima de ", tamanho_maximo, " tokens.")
 
-    # Remove as colunas desnecessárias.
-    dfdados_train = dfdados_train.drop(columns=['input_ids'])
+        # Tokenize a codifica as setenças para o BERT.     
+        dfdados_train['input_ids'] = dfdados_train['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
-    # Tokenize a codifica as setenças para o BERT.     
-    dfdados_test['input_ids'] = dfdados_test['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+        dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len)<tamanho_maximo]
 
-    # Corta os inputs para o tamanho máximo 512.
-    dfdados_test = dfdados_test[dfdados_test['input_ids'].apply(len)<tamanho_maximo]
+        print('Tamanho do dataset de treino: {}'.format(len(dfdados_train)))
 
-    print('Tamanho do dataset de teste: {}'.format(len(dfdados_test)))
-  
-    # Remove as colunas desnecessárias.
-    dfdados_test = dfdados_test.drop(columns=['input_ids'])
+        # Remove as colunas desnecessárias.
+        dfdados_train = dfdados_train.drop(columns=['input_ids'])
+
+        # Tokenize a codifica as setenças para o BERT.     
+        dfdados_test['input_ids'] = dfdados_test['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+
+        # Corta os inputs para o tamanho máximo 512.
+        dfdados_test = dfdados_test[dfdados_test['input_ids'].apply(len)<tamanho_maximo]
+
+        print('Tamanho do dataset de teste: {}'.format(len(dfdados_test)))
+
+        # Remove as colunas desnecessárias.
+        dfdados_test = dfdados_test.drop(columns=['input_ids'])
+    else:
+        print("Tokenizador não definido.")        
 
     return dfdados_train, dfdados_test
 
