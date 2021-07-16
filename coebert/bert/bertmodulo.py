@@ -15,6 +15,7 @@ from util.utilarquivo import *
 from bert.bertarguments import ModeloArgumentosClassificacao
 from bert.bertarguments import ModeloArgumentosMedida
 
+# ============================
 def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
     '''
     Esta função tentará escolher um intervalo de atualização de progresso inteligente com base na magnitude das iterações totais.
@@ -50,7 +51,7 @@ def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
 
     return intervalo_atualizacao
 
-
+# ============================
 def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, documentoids, tamanho_lote):
     '''
     Esta função combina todos os passos para preparar os lotes inteligentes(smartbatch).
@@ -199,6 +200,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
     # Retorna o conjunto de dados em lotes inteligentes!
     return (py_input_ids, py_attention_masks, py_labels, list_documentoids)
 
+# ============================
 def getDeviceGPU():
     '''
     Retorna um dispositivo de GPU.
@@ -221,6 +223,7 @@ def getDeviceGPU():
         
     return device
 
+# ============================
 def conectaGPU(model, device):
     '''
     Conecta um modelo BERT a GPU.
@@ -242,6 +245,7 @@ def conectaGPU(model, device):
 
     return model
 
+# ============================
 def getNomeModeloBERT(model_args):
     '''    
     Recupera uma string com uma descrição do modelo BERT para nomes de arquivos e diretórios.
@@ -259,6 +263,7 @@ def getNomeModeloBERT(model_args):
             
     return MODELO_BERT
 
+# ============================
 def getTamanhoBERT(model_args):
     '''    
     Recupera uma string com o tamanho(dimensão) do modelo BERT para nomes de arquivos e diretórios.
@@ -273,6 +278,7 @@ def getTamanhoBERT(model_args):
         
     return TAMANHO_BERT  
 
+# ============================
 def downloadModeloPretreinado(model_args):
     ''' 
     Realiza o download do modelo BERT(MODELO) e retorna o diretório onde o modelo BERT(MODELO) foi descompactado.
@@ -333,6 +339,7 @@ def downloadModeloPretreinado(model_args):
 
     return DIRETORIO_MODELO
 
+# ============================
 def copiaModeloAjustado():
     ''' 
     Copia o modelo ajustado BERT do GoogleDrive para o projeto.
@@ -351,6 +358,7 @@ def copiaModeloAjustado():
 
     return DIRETORIO_LOCAL_MODELO_AJUSTADO
 
+# ============================
 def verificaModelo(model_args):
     ''' 
     Verifica de onde utilizar o modelo.
@@ -370,6 +378,7 @@ def verificaModelo(model_args):
         
     return DIRETORIO_MODELO
 
+# ============================
 def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o tokenizador do MODELO.
@@ -402,6 +411,7 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
 
     return tokenizer
 
+# ============================
 def carregaModeloMedida(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o modelo e retorna o modelo.
@@ -434,7 +444,7 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
 
     return model
 
-
+# ============================
 def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o modelo e retorna o modelo.
@@ -469,6 +479,7 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
                                                               output_hidden_states = model_args.output_hidden_states)
     return model
 
+# ============================
 def carregaBERT(model_args):
     ''' 
     Carrega o BERT para cálculo de medida ou classificação e retorna o modelo e o tokenizador.
