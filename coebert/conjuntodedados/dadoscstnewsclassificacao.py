@@ -13,6 +13,7 @@ from util.utilarquivo import *
 
 from conjuntodedados.dadoscstnewsmedida import *
 
+# ============================
 def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
     '''    
     Divide o conjunto de dados em treino e teste utilizando um percentual de divisão.
@@ -30,6 +31,7 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
 
     return dfdados_train, dfdados_test
 
+# ============================
 def organizaDados(dfdados):
     '''
     Organiza osdados do CSTNews para classificação e retorna um dataframe.
@@ -50,6 +52,7 @@ def organizaDados(dfdados):
     
     return dfdados 
 
+# ============================
 def downloadCSTNewsKFoldGithub():  
     '''    
     Download dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
@@ -90,6 +93,7 @@ def downloadCSTNewsKFoldGithub():
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)       
 
+# ============================
 def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):  
     '''    
     Carrega os dados do CSTNews e retorna um dataframe para classificação.
@@ -111,7 +115,8 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
     dfdados = organizaDados(dfdados)
     
     return dfdados
- 
+
+# ============================
 def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test):
 
     # Define o tamanho máximo para os tokens.
@@ -140,6 +145,7 @@ def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_t
 
     return dfdados_train, dfdados_test
 
+# ============================
 def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer):  
     '''    
     Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
