@@ -16,23 +16,23 @@ def downloadOnlineEducGoogleDrive():
     '''
     
     # Nome do arquivo
-    NOMEARQUIVOORIGINAL = 'original.zip'
-    NOMEARQUIVOPERMUTADO = 'permutado.zip'
+    NOME_ARQUIVO_ORIGINAL = 'original.zip'
+    NOME_ARQUIVO_PERMUTADO = 'permutado.zip'
     
     # Define o caminho e nome do arquivo de dados
-    CAMINHOARQUIVOORIGINAL = '/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/' + NOMEARQUIVOORIGINAL
-    CAMINHOARQUIVOPERMUTADO = '/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/' + NOMEARQUIVOPERMUTADO
+    CAMINHO_ARQUIVO_ORIGINAL = '/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/' + NOME_ARQUIVO_ORIGINAL
+    CAMINHO_ARQUIVO_PERMUTADO = '/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/' + NOME_ARQUIVO_PERMUTADO
     
     # Copia o arquivo do modelo para o diretório no Google Drive.
-    shutil.copy(CAMINHOARQUIVOORIGINAL, '.') 
-    shutil.copy(CAMINHOARQUIVOPERMUTADO, '.') 
+    shutil.copy(CAMINHO_ARQUIVO_ORIGINAL, '.') 
+    shutil.copy(CAMINHO_ARQUIVO_PERMUTADO, '.') 
 
     # Descompacta o arquivo na pasta de descompactação.                
-    arquivoZip = zipfile.ZipFile(NOMEARQUIVOORIGINAL,"r")
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_ORIGINAL,"r")
     arquivoZip.extractall()
     
     # Descompacta o arquivo na pasta de descompactação.                
-    arquivoZip = zipfile.ZipFile(NOMEARQUIVOPERMUTADO,"r")
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_PERMUTADO,"r")
     arquivoZip.extractall()
 
 # ============================    
