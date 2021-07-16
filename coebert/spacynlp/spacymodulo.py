@@ -69,26 +69,6 @@ def descompactaSpacy(model_args):
     if os.path.isfile(NOME_ARQUIVO_MODELO_COMPACTADO):
         os.remove(NOME_ARQUIVO_MODELO_COMPACTADO)
     
-# ============================
-def moveSpacy1(model_args):
-    '''
-    Coloca a pasta do modelo descompactado em uma pasta de nome mais simples.
-    Parâmetros:    
-       `model_args` - Objeto com os argumentos do modelo.           
-    '''
-    
-    # Nome arquivo spacy
-    ARQUIVO_MODELO_SPACY = model_args.modelo_spacy
-    # Versão spaCy
-    VERSAO_SPACY = "-" + model_args.versao_spacy
-    
-    # Caminho da origem do diretório
-    ORIGEM = "/content/" + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + "/" + ARQUIVO_MODELO_SPACY + "/" + ARQUIVO_MODELO_SPACY + VERSAO_SPACY 
-    # Destino do diretório
-    DESTINO = "/content/" + ARQUIVO_MODELO_SPACY
-
-    shutil.move(ORIGEM, DESTINO)
-
 # ============================    
 def carregaSpacy(model_args):
     '''
