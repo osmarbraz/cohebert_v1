@@ -255,7 +255,7 @@ def converteListaParesDocumentos(lista_documentos):
 
     return dfdados    
     
-def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
+def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
     '''    
     Remove os documentos que extrapolam 512 tokens.
     Você pode definir o tamanho de documento que quiser no BERT, mas o modelo pré-treinado vem com um tamanho pré-definido. 
@@ -317,6 +317,6 @@ def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):
     dfdados = converteListaParesDocumentos(lista_documentos)
         
     # Descarta os documentos muito grandes. (Que geram mais de 512 tokens)
-    dfdados = descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer)
+    dfdados = descartandoDocumentosGrandes(dfdados, model_args, tokenizer)
     
     return dfdados       
