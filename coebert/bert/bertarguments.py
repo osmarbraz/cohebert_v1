@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from typing import Dict, Optional
 from typing import List
 
+# ============================
 @dataclass
 class ModeloArgumentosMedida:
         
@@ -67,7 +68,7 @@ class ModeloArgumentosMedida:
         metadata={'help': 'Estratégia de relevância das palavras das sentenças para gerar os embeddings.'},
     )
 
-        
+# ============================        
 @dataclass
 class ModeloArgumentosClassificacao:
         
