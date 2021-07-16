@@ -94,7 +94,7 @@ def carregaSpacy(model_args):
     Parâmetros:
        `model_args` - Objeto com os argumentos do modelo.           
     '''
-    print("carrega")
+    
     # Nome arquivo spacy
     ARQUIVO_MODELO_SPACY = model_args.modelo_spacy
     # Versão spaCy
@@ -114,6 +114,5 @@ def carregaSpacy(model_args):
     
     # Carrega o spaCy. Necessário somente 'tagger' para encontrar os substantivos
     nlp = spacy.load(DIRETORIO_MODELO_SPACY, disable=['tokenizer', 'lemmatizer', 'ner', 'parser', 'textcat', 'custom'])
-
-    print("feito")
+    
     return nlp
