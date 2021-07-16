@@ -111,8 +111,36 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
     dfdados = organizaDados(dfdados)
     
     return dfdados
+ 
+def descarteDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test):
 
-def getConjuntoDeDadosClassificacaoKFold(model_args):  
+    # Define o tamanho máximo para os tokens.
+    tamanho_maximo = model_args.max_seq_len
+
+    # Tokenize a codifica as setenças para o BERT.     
+    dfdados_train['input_ids'] = dfdados_train['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+        
+    dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len)<tamanho_maximo]
+    
+    print('Tamanho do dataset de treino: {}'.format(len(dfdados_train)))
+
+    # Remove as colunas desnecessárias.
+    dfdados_train = dfdados_train.drop(columns=['input_ids'])
+
+    # Tokenize a codifica as setenças para o BERT.     
+    dfdados_test['input_ids'] = dfdados_test['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+
+    # Corta os inputs para o tamanho máximo 512.
+    dfdados_test = dfdados_test[dfdados_test['input_ids'].apply(len)<tamanho_maximo]
+
+    print('Tamanho do dataset de teste: {}'.format(len(dfdados_test)))
+  
+    # Remove as colunas desnecessárias.
+    dfdados_test = dfdados_test.drop(columns=['input_ids'])
+
+    return dfdados_train, dfdados_test
+
+def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer):  
     '''    
     Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
     '''
@@ -144,4 +172,7 @@ def getConjuntoDeDadosClassificacaoKFold(model_args):
     dfdados_test = pd.read_csv(ARQUIVO_TESTE, sep=';')
     print('Qtde de dados de teste: {}'.format(len(dfdados_test)))
 
+    # Remove os documentos muito grandes
+    dfdados_train, dfdados_test = descarteDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test):
+    
     return dfdados_train, dfdados_test        
