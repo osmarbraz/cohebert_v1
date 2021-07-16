@@ -9,6 +9,7 @@ from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
 
+# ============================
 def downloadCSTNewsICMC():  
     '''    
     Download dos arquivos do conjunto de dados do CSTNews do site do ICMC.
@@ -62,7 +63,8 @@ def downloadCSTNewsICMC():
 
     # Apaga o arquivo compactado
     os.remove(NOME_ARQUIVO_EXPERIMENTO)  
-  
+
+# ============================    
 def downloadCSTNewsOnDrive():
   
     '''    
@@ -115,7 +117,7 @@ def downloadCSTNewsOnDrive():
     # Apaga o arquivo compactado
     os.remove(NOME_ARQUIVO_EXPERIMENTO)  
 
-    
+# ============================
 def carregaArquivosOriginaisCSTNews():  
     '''    
     Carrega os arquivos originais dos arquivos do CSTNews.
@@ -148,6 +150,7 @@ def carregaArquivosOriginaisCSTNews():
 
     return lista_documentos_originais
 
+# ============================
 def carregaArquivosPermutadosCSTNews():  
     '''    
     Carrega os arquivos permutados dos arquivos do CSTNews.
@@ -180,6 +183,7 @@ def carregaArquivosPermutadosCSTNews():
 
     return lista_documentos_permutados
 
+# ============================
 def carregaParesDocumentosCSTNews():
     '''    
     Carrega os arquivos e gera os pares de documentos em uma lista.
@@ -225,7 +229,8 @@ def carregaParesDocumentosCSTNews():
     print ('Geraçao de pares de documentos concluído:', len(lista_documentos))
     
     return lista_documentos
-    
+
+# ============================
 def downloadConjuntoDeDados(ORIGEM): 
     '''    
     Verifica de onde será realizado o download dos arquivos de dados.
@@ -237,7 +242,8 @@ def downloadConjuntoDeDados(ORIGEM):
     else:
         print("Realizando o download do meu OneDrive.")
         downloadCSTNewsOnDrive()
-    
+
+# ============================
 def converteListaParesDocumentos(lista_documentos):
     '''    
     Converte a lista de pares de documentos em um dataframe.
@@ -253,8 +259,9 @@ def converteListaParesDocumentos(lista_documentos):
     # Converte a lista em um dataframe.
     dfdados = pd.DataFrame.from_records(lista_documentos, columns=['idOriginal','sentencasOriginais','documentoOriginal','idPermutado','sentencasPermutadas','documentoPermutado'])
 
-    return dfdados    
-    
+    return dfdados
+
+# ============================   
 def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
     '''    
     Remove os documentos que extrapolam 512 tokens.
@@ -286,6 +293,7 @@ def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
 
     return dfdadosretorno  
 
+# ============================
 def getListasDocumentosMedidas(model_args, ORIGEM):  
     '''    
     Carrega os arquivos de documentos originais e permutados do CSTNews e retorna suas listas preenchidas.
@@ -301,7 +309,8 @@ def getListasDocumentosMedidas(model_args, ORIGEM):
     lista_documentos_permutados = carregaArquivosPermutadosCSTNews()
             
     return lista_documentos_originais, lista_documentos_permutados
-      
+
+# ============================
 def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):  
     '''    
     Carrega os dados do CSTNews para o cálculo de medida e retorna um dataframe.
