@@ -56,7 +56,9 @@ def downloadCSTNewsKFoldGithub():
     '''    
     Download dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
     '''
-  
+
+    print("Download do Github")  
+
     # Diretório dos arquivos de dados.
     DIRETORIO = "/content/validacao_kfold"
     
@@ -91,7 +93,9 @@ def copiaCSTNewsKFoldGithub():
     '''    
     Copia dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
     '''
-  
+    
+    print("Copiando do checkout do Github")
+
     # Diretório dos arquivos de dados.
     DIRETORIO = "/content/validacao_kfold"
     
@@ -116,7 +120,7 @@ def copiaCSTNewsKFoldGithub():
     
     # Copia o arquivo de dados  
     shutil.copy(DIRETORIO_FONTE_ARQUIVO, DIRETORIO_DESTINO_ARQUIVO) 
-    
+        
     # Descompacta o arquivo na pasta de descompactação.                
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)           
@@ -186,7 +190,7 @@ def downloadCSTNewsKFold(ORIGEM):
         downloadCSTNewsKFoldGithub()
     else:
         # Copia do diretório do github do checkout
-        copiaCSTNewsKFoldGithub():  
+        copiaCSTNewsKFoldGithub()
             
 # ============================
 def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM)
