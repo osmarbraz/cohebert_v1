@@ -11,6 +11,7 @@ from spacynlp.spacymodulo import *
 
 from medidor.medidas import *
 
+# ============================
 def getDocumentoLista(listaSentencas):
     '''
     Recebe uma lista de sentenças e faz a concatenação em uma string.
@@ -23,6 +24,7 @@ def getDocumentoLista(listaSentencas):
     for sentenca in listaSentencas:                
         stringDocumento = stringDocumento + sentenca
 
+# ============================
 def getListaSentencasDocumento(documento, nlp):
     '''
     Retorna uma lista com as sentenças de um documento. Utiliza o spacy para dividir o documento em sentenças.
@@ -44,6 +46,7 @@ def getListaSentencasDocumento(documento, nlp):
 
     return lista
 
+# ============================
 def encontrarIndiceSubLista(lista, sublista):
     '''
     Localiza os índices de início e fim de uma sublista em uma lista.
@@ -68,6 +71,7 @@ def encontrarIndiceSubLista(lista, sublista):
             return indiceInicio, indiceFim
     return -1, -1
 
+# ============================
 def removeStopWord(texto, stopwords):
     '''
     Remove as stopwords de um texto.
@@ -85,6 +89,7 @@ def removeStopWord(texto, stopwords):
     # Retorna o texto
     return textoLimpo
 
+# ============================
 def retornaPalavraRelevante(texto, nlp, tipo_palavra_relevante='NOUN'):
     '''
     Retorna somente os palavras do texto ou sentença do tipo especificado.
@@ -102,6 +107,7 @@ def retornaPalavraRelevante(texto, nlp, tipo_palavra_relevante='NOUN'):
     # Retorna o texto
     return textoComRelevantesConcatenado
 
+# ============================
 def getDocumentoTokenizado(documento, tokenizador):
 
     '''
@@ -117,7 +123,9 @@ def getDocumentoTokenizado(documento, tokenizador):
 
     return documentoTokenizado
 
+# ============================
 # Constantes para padronizar o acesso aos dados do modelo do BERT.
+
 TEXTO_TOKENIZADO = 0
 INPUT_IDS = 1
 ATTENTION_MASK = 2
@@ -127,6 +135,7 @@ OUTPUTS_LAST_HIDDEN_STATE = 0
 OUTPUTS_POOLER_OUTPUT = 1
 OUTPUTS_HIDDEN_STATES = 2
  
+# ============================
 def getEmbeddingsTodasCamadas(documento, modelo, tokenizador):    
     '''   
     Retorna os embeddings de todas as camadas de um documento.
@@ -181,10 +190,12 @@ def getEmbeddingsTodasCamadas(documento, modelo, tokenizador):
         # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
     return documentoTokenizado, input_ids, attention_mask, token_type_ids, outputs
 
+# ============================
 # getEmbeddingsTodasCamadasBuffer
 # Cria um buffer com os embeddings de sentenças para economizar no processamento.
 buffer_embeddings = {}
 
+# ============================
 def getEmbeddingsTodasCamadasBuffer(S, modelo, tokenizador):
     '''
     Retorna os embeddings de uma sentença de um buffer ou do modelo..
@@ -198,13 +209,14 @@ def getEmbeddingsTodasCamadasBuffer(S, modelo, tokenizador):
         buffer_embeddings.update({S: totalCamada})
         return totalCamada
 
+# ============================
 def limpaBufferEmbedding():
     '''
     Esvazia o buffer de embeddings das sentenças.
     '''
     buffer_embeddings.clear()
 
-
+# ============================
 def getEmbeddingPrimeiraCamada(sentencaEmbedding):
     '''
     Retorna os embeddings da primeira camada.
@@ -224,6 +236,7 @@ def getEmbeddingPrimeiraCamada(sentencaEmbedding):
 
     return resultado
 
+# ============================
 def getEmbeddingPenultimaCamada(sentencaEmbedding):
     '''
     Retorna os embeddings da penúltima camada.
@@ -243,6 +256,7 @@ def getEmbeddingPenultimaCamada(sentencaEmbedding):
 
     return resultado
 
+# ============================
 def getEmbeddingUltimaCamada(sentencaEmbedding):
     '''
     Retorna os embeddings da última camada.
@@ -262,6 +276,7 @@ def getEmbeddingUltimaCamada(sentencaEmbedding):
   
     return resultado    
 
+# ============================
 def getEmbeddingSoma4UltimasCamadas(sentencaEmbedding):
     '''
     Retorna os embeddings da soma das 4 últimas camadas.
@@ -293,6 +308,7 @@ def getEmbeddingSoma4UltimasCamadas(sentencaEmbedding):
 
     return resultado
 
+# ============================
 def getEmbeddingConcat4UltimasCamadas(sentencaEmbedding):
     '''
     Retorna os embeddings da concatenação das 4 últimas camadas.
@@ -323,6 +339,7 @@ def getEmbeddingConcat4UltimasCamadas(sentencaEmbedding):
   
     return resultado   
 
+# ============================
 def getEmbeddingSomaTodasAsCamada(sentencaEmbedding):
     '''
     Retorna os embeddings da soma de todas as camadas.
@@ -354,9 +371,13 @@ def getEmbeddingSomaTodasAsCamada(sentencaEmbedding):
   
     return resultado
 
+# ============================
 def getResultadoEmbeddings(sentencaEmbedding, camada):
     '''
     Retorna o resultado da operação sobre os embeddings das camadas de acordo com tipo de camada especificada.
+    Parâmetros:
+       `sentencaEmbedding` - Embeddings da stentença.
+       `camada` - Camada dos embeddings.
     '''
 
     # Cada elemento do vetor sentencaEmbedding é formado por:  
@@ -406,16 +427,18 @@ def getResultadoEmbeddings(sentencaEmbedding, camada):
     # Retorna o resultados dos embeddings dos tokens da sentença  
     return resultadoEmbeddingCamadas
 
+# ============================
 def getMedidasSentencasEmbeddingMEAN(embeddingSi, embeddingSj):
     '''
     Retorna as medidas de duas sentenças Si e Sj utilizando a estratégia MEAN.
-    - Entrada
-        - embeddingSi - os embeddings da primeira sentença
-        - embeddingSj - os embeddings da segunda sentença
-    - Saída
-        - Scos - Similaridade do coseno - usando a média dos embeddings Si e Sj das camadas especificadas
-        - Seuc - Distância euclidiana - usando a média dos embeddings Si e Sj das camadas especificadas
-        - Sman - Distância de manhattan - usando a média dos embeddings Si e Sj das camadas especificadas
+    Parâmetros:
+       `embeddingSi` - Embeddings da primeira sentença.
+       `embeddingSj` - Embeddings da segunda sentença.
+    
+    Saída:
+       `Scos` - Similaridade do cosseno - usando a média dos embeddings Si e Sj das camadas especificadas.
+       `Seuc` - Distância euclidiana - usando a média dos embeddings Si e Sj das camadas especificadas.
+       `Sman` - Distância de manhattan - usando a média dos embeddings Si e Sj das camadas especificadas.
     '''
 
     #print('embeddingSi=', embeddingSi.shape) 
@@ -454,17 +477,18 @@ def getMedidasSentencasEmbeddingMEAN(embeddingSi, embeddingSj):
     # Retorno das medidas das sentenças  
     return mediaEmbeddingSi, mediaEmbeddingSj, Scos, Seuc, Sman
 
-
+# ============================
 def getMedidasSentencasEmbeddingMAX(embeddingSi, embeddingSj):
     '''
     Retorna as medidas de duas sentenças Si e Sj utilizando a estratégia MAX.
-    - Entrada
-       - embeddingSi - os embeddings da primeira sentença
-       - embeddingSj - os embeddings da segunda sentença
-    - Saída
-       - Scos - Similaridade do coseno - usando o maior dos embeddings Si e Sj das camadas especificadas
-       - Seuc - Distância euclidiana - usando o maior dos embeddings Si e Sj das camadas especificadas
-       - Sman - Distância de manhattan - usando o maior dos embeddings Si e Sj das camadas especificadas
+    Parâmetros:
+       `embeddingSi` - Embeddings da primeira sentença.
+       `embeddingSj` - Embeddings da segunda sentença.
+       
+    Saída:
+       `Scos` - Similaridade do cosseno - usando o maior dos embeddings Si e Sj das camadas especificadas.
+       `Seuc` - Distância euclidiana - usando o maior dos embeddings Si e Sj das camadas especificadas.
+       `Sman` - Distância de manhattan - usando o maior dos embeddings Si e Sj das camadas especificadas.
     '''
 
     #print('embeddingSi=', embeddingSi.shape) 
@@ -503,10 +527,14 @@ def getMedidasSentencasEmbeddingMAX(embeddingSi, embeddingSj):
     # Retorno das medidas das sentenças
     return maiorEmbeddingSi, maiorEmbeddingSj, Scos, Seuc, Sman
 
-
+# ============================
 def getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategia_pooling):
     '''
     Realiza o cálculo da medida do documento de acordo com a estratégia de pooling(MAX ou MEAN).
+    Parâmetros:
+       `embeddingSi` - Embeddings da primeira sentença.
+       `embeddingSj` - Embeddings da segunda sentença.
+       `estrategia_pooling` - Estratégia de pooling a ser utilizada.       
     '''
 
     if estrategia_pooling == 0:
@@ -514,10 +542,11 @@ def getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategia_pooling):
     else:
         return getMedidasSentencasEmbeddingMAX(embeddingSi, embeddingSj)
 
-
+# ============================
 def getEmbeddingSentencaEmbeddingDocumentoALL(embeddingDocumento, documento, sentenca, tokenizador):
     '''
     Retorna os embeddings de uma sentença com todas as palavras(ALL) a partir dos embeddings do documento.
+    
     '''
         
     # Tokeniza o documento
@@ -543,6 +572,7 @@ def getEmbeddingSentencaEmbeddingDocumentoALL(embeddingDocumento, documento, sen
     # Retorna o embedding da sentença no documento
     return embeddingSentenca
 
+# ============================
 def getEmbeddingSentencaEmbeddingDocumentoCLEAN(embeddingDocumento, documento, sentenca, tokenizador, stopwords):
     '''
     Retorna os embeddings de uma sentença sem stopwords(CLEAN) a partir dos embeddings do documento.
@@ -601,6 +631,7 @@ def getEmbeddingSentencaEmbeddingDocumentoCLEAN(embeddingDocumento, documento, s
     # Retorna o embedding da sentença no documento
     return embeddingSentencaSemStopWord
 
+# ============================
 def getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipo_palavra_relevante='NOUN'):
     '''
     Retorna os embeddings de uma sentença somente com as palavras relevantes(NOUN) de um tipo a partir dos embeddings do documento.
@@ -658,6 +689,7 @@ def getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, se
     # Retorna o embedding da sentença do documento
     return embeddingSentencaComSubstantivo
 
+# ============================
 def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, sentenca, tokenizador, nlp, palavra_relevante=0):
     '''
     Retorna os embeddings de uma sentença considerando a relevância das palavras (ALL, CLEAN ou NOUN) a partir dos embeddings do documento.    
@@ -673,7 +705,7 @@ def getEmbeddingSentencaEmbeddingDocumento(embeddingDocumento, documento, senten
             if palavra_relevante == 2:
                 return getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, sentenca, tokenizador, nlp, tipo_palavra_relevante='NOUN')
 
-
+# ============================
 def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, nlp, camada, tipoDocumento='p', estrategia_pooling=0, palavra_relevante=0):
     '''
     Retorna as medidas de coerência do documento.
@@ -774,7 +806,7 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, nlp, camada, ti
 
     return Ccos, Ceuc, Cman
 
-
+# ============================
 # listaTipoCamadas
 # Define uma lista com as camadas a serem analisadas nos teste.
 # Cada elemento da lista 'listaTipoCamadas' é chamado de camada sendo formado por:
@@ -826,7 +858,7 @@ listaTipoCamadas = [
 # 4 - Concat 4 últimas    listaTipoCamadas[CONCAT_4_ULTIMAS_CAMADAS]
 # 5 - Todas               listaTipoCamadas[TODAS_AS_CAMADAS]
 
-
+# ============================
 def comparaMedidasCamadasSentencas(Si, Sj, modelo, tokenizador, camada):
     '''
     Facilita a exibição dos valores de comparação de duas orações.
