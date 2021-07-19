@@ -14,7 +14,7 @@ Classificação e mensuração de coerência textual utilizando o MCL BERT.
 **Download**
 
 ```
-!git clone https://github.com/osmarbraz/coebert.git
+!git clone https://github.com/osmarbraz/coebert_v1.git
 ```
 
 **Execução**
