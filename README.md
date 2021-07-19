@@ -8,6 +8,7 @@ Classificação e mensuração de coerência textual utilizando o MCL BERT.
 
 * Python 3.6.9+
 * Transformer Huggingface 4.5.1
+* PyTorch 1.8.1
 * Spacy 2.3.5
 * Wandb
 
