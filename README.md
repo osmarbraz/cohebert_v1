@@ -28,7 +28,7 @@ sys.path.append('./coebert_v1/coebert')
 ```
 
 ## **Diretórios**
-* **coebert_v1** - Código fonte do coeberb v 1.0
+* **coebert** - Código fonte do coeberb v 1.0
 * **conjuntodedados** - Diretório com os conjuntos de dados.
   * **cstnews** - Arquivos do conjunto de dados do CSTNews.
   * **onlineeduc1.0** - Arquivos do conjunto de dados do OnlineEduc 1.0 (**Não disponibilizado**).
@@ -49,10 +49,4 @@ sys.path.append('./coebert_v1/coebert')
     * **AjusteFinoCSTNews_v1_C_SB_KFold_Todos.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado para todos os folds para uma parâmetrização.
     * **AjusteFinoCSTNews_AvaliacaoOnlineeduc1.0_v1_C_SB.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado com o CSTNews e a avaliação com o OnlineEduc 1.0.
     * **CorrelacaoCSTNews_ClassificadorCalculo_v1.ipynb** - Realiza o análise de correção do classificador e o cálculo de medidas.
-  * **onlineeduc1.0** - Notebooks para classificação e mensuração da coerência no conjunto de dados OnlineEduc 1.0. Utiliza o BERTimbau e o BERTMultilingual para classificar e medir a coerência de textos. 
-    * **GerarDadosValidacaoKfold_OnlineEduc1.0_v1.ipynb** - Gera os dados para validação cruzada do conjunto de dados.
-    * **AnaliseDadosOnlineEduc1.0_v1.ipynb** - Realiza a análise do conjunto de dados.
-    * **MedidaCoerenciaOnlineEduc1.0_v1_pretreinado.ipynb** - Realiza os cálculos de medida de (in)coerência.
-    * **AjusteFinoOnlineEduc1.0_v1_C_SB_KFold_Todos.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado para todos os folds para uma parâmetrização.
-    * **AjusteFinoOnlineEduc1.0_AvaliacaoMoodle_v1_C_SB.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado e a avaliação com o CSTNews.
-    * **CorrelacaoOnlineEduc1.0_ClassificadorCalculo_v1.ipynb** - Realiza o análise de correção do classificador e o cálculo de medidas.
+ 
