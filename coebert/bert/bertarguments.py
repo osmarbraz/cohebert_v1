@@ -8,7 +8,7 @@ from typing import List
 class ModeloArgumentosMedida:
         
     '''
-    Classe(ModeloArgumentosMedida) de definição dos parâmetros do modelo para o cálculo de medidas.
+    Classe(ModeloArgumentosMedida) de definição dos parâmetros do modelo BERT para o cálculo de medidas de coerência.
     '''
  
     max_seq_len: Optional[int] = field(
@@ -73,7 +73,7 @@ class ModeloArgumentosMedida:
 class ModeloArgumentosClassificacao:
         
     '''
-    Classe(ModeloArgumentosClassificacao) de definição dos parâmetros do modelo para a classificação.
+    Classe(ModeloArgumentosClassificacao) de definição dos parâmetros do modelo BERT para a classificação de coerência.
     '''
  
     max_seq_len: Optional[int] = field(
