@@ -27,14 +27,13 @@ def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
     '''
     
     # Divide o total de iterações pelo número desejado de atualizações. Provavelmente
-    # este será um número feio.
+    # este será um número ruim.
     intervalo_exato = total_iteracoes / numero_atualizacoes
 
-    # A função `arredondar` tem a capacidade de arredondar um número para, por exemplo, o
+    # A função `arredondar` tem a capacidade de arredondar um número, por exemplo, o
     # milésimo mais próximo: round (intervalo_exato, -3)
     #
-    # Para determinar a magnitude para arredondar, encontre a magnitude do total,
-    # e então vá uma magnitude abaixo disso.
+    # Para determinar a magnitude para arredondar, encontre a magnitude do total, e então vá uma magnitude abaixo disso.
     
     # Obtenha a ordem de magnitude do total.
     ordem_magnitude = len(str(total_iteracoes)) - 1
@@ -42,7 +41,7 @@ def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
     # Nosso intervalo de atualização deve ser arredondado para uma ordem de magnitude menor.
     magnitude_arrendonda = ordem_magnitude - 1
 
-    # Arredonde para baixo e lance para um int.
+    # Arredonde para baixo e transforme em um int.
     intervalo_atualizacao = int(round(intervalo_exato, -magnitude_arrendonda))
 
     # Não permite que o intervalo seja zero!
@@ -61,7 +60,12 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
        `documentos` - Lista dos documentos a serem colocados nos lotes inteligentes.
        `classes` - Lista das classes dos documentos a serem colocados nos lotes inteligentes.
        `documentosis` - Lista dos ids dos documentos a serem colocados nos lotes inteligentes.
-       `tamanho_lote` - Tamanho do lotes inteligente.       
+       `tamanho_lote` - Tamanho do lotes inteligente.
+    Saída:
+        `py_input_ids` - Tensores Pytorh com os ids dos tokens.
+        `py_attention_masks`- Tensores Pytorh com a máscara de atenção. 
+        `py_labels` - Tensores Pytorh com as classes dos documentos.
+        `list_documentoids` Ids dos documentos.
     '''
     #print('Criando Lotes Inteligentes de {:,} amostras com tamanho de lote {:,}...\n'.format(len(documentos), tamanho_lote))
     
@@ -197,7 +201,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         py_labels.append(torch.tensor(batch_labels))
         list_documentoids.append(batch_documentoids)
     
-    # Retorna o conjunto de dados em lotes inteligentes!
+    # Retorna o conjunto de dados em lotes inteligentes.
     return (py_input_ids, py_attention_masks, py_labels, list_documentoids)
 
 # ============================
@@ -381,7 +385,7 @@ def verificaModelo(model_args):
 # ============================
 def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     ''' 
-    Carrega o tokenizador do MODELO.
+    Carrega o tokenizador do DIRETORIO_MODELO.
     O tokenizador utiliza WordPiece.
     Carregando o tokenizador da pasta '/content/modelo/' do diretório padrão se variável `DIRETORIO_MODELO` setada.
     Caso contrário carrega da comunidade
