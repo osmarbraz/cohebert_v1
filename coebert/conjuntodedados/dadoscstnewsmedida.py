@@ -18,13 +18,13 @@ def downloadCSTNewsICMC():
     Este arquivo descompactado possui duas pastas de interesse, uma chamada 'Sumarios_Humanos' e outra 'Sumrios_Humanos_Permutados'. 
     '''
   
-    # Nome do arquivo a ser criado.
+    # Nome do arquivo a ser recuperado
     NOME_ARQUIVO = 'Summarycoherencemodels.zip'
 
     if os.path.isfile(NOME_ARQUIVO):
        os.remove(NOME_ARQUIVO)
 
-    # Realiza o download do arquivo do ICMC.
+    # Realiza o download do arquivo do ICMC
     URL_ARQUIVO = 'https://sites.icmc.usp.br/taspardo/Summary coherence models.zip'  
 
     # Realiza o download do arquivo dos experimentos    
@@ -48,7 +48,7 @@ def downloadCSTNewsICMC():
         
     # Apaga o diretório 'Modelo de Relações Discursivas' e seus arquivos
     if os.path.exists('Modelo de Relacoaes Discursivas'):
-        # Apaga a pasta e os arquivos existentes                     
+        # Apaga a pasta e os arquivos existentes                    
         shutil.rmtree('Modelo de Relacoaes Discursivas')
 
     # Descompacta o arquivo do experimento               
@@ -70,13 +70,13 @@ def downloadCSTNewsOnDrive():
     Download dos arquivos do conjunto de dados do CSTNews de uma pasta compartilhada do One Drive.
     '''
   
-    # Nome do arquivo a ser criado.
+    # Nome do arquivo a ser recuperado
     NOME_ARQUIVO = 'Summarycoherencemodels.zip'
 
     if os.path.isfile(NOME_ARQUIVO):
        os.remove(NOME_ARQUIVO)
 
-    # Realiza o download do arquivo do OneDrive.
+    # Realiza o download do arquivo do OneDrive
     URL_ARQUIVO = 'https://udesc-my.sharepoint.com/:u:/g/personal/91269423991_udesc_br/EQfOLQ6Vg_1Hs4JSwg0aO4wBnxY2ym8tua1XIQB00kczOg?e=hBAqpE&download=1'
 
     # Realiza o download do arquivo dos experimentos    
@@ -125,24 +125,32 @@ def carregaArquivosOriginaisCSTNews():
     Os documentos permutados estão na pasta 'Sumarios_Humanos_Permutados' e cada linha representa uma sentença do documento. 
     O nome de cada arquivo de documento permutado é formado um caracter 'C_', um número que identifica o conteúdo, o literal 'Extrato_', um número que identifica o sumário, o literal 'Perm_' e um número que indica a permutação.
     '''
-  
+    
+    # Lista dos documentos originais
     lista_documentos_originais = []
 
-    arquivos = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/') #Entrada (Input) - diretório de sumários humanos e permutados
+    # Lista dos arquivos do diretório
+    arquivos = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/') 
 
+    # Apaga arquivos desnecessários da lista
     if '.DS_Store' in arquivos:
       arquivos.remove('.DS_Store')
 
+    # Percorre a lista de arquivos
     for i in range(len(arquivos)):
         # Recupera a posição do ponto no nome do arquivo
         ponto = arquivos[i].find('.')
+        
         # Recupera o nome do arquivo até a posição do ponto
         nomeArquivo = arquivos[i][:ponto]
         
+        # Carrega o documento
         documento = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivos[i])
         
+        # Carrega as sentenças do documento em uma lista        
         sentencas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivos[i])
-
+        
+        # Adiciona o documento e as sentenças a lista
         lista_documentos_originais.append([arquivos[i], sentencas, documento])
 
     print ('Carregamento de documento originais concluído: ', len(lista_documentos_originais))    
@@ -159,23 +167,32 @@ def carregaArquivosPermutadosCSTNews():
     O nome de cada arquivo de documento permutado é formado um caracter 'C_', um número que identifica o conteúdo, o literal 'Extrato_', um número que identifica o sumário, o literal 'Perm_' e um número que indica a permutação.
     '''
   
+    # Lista dos documentos permutados
     lista_documentos_permutados = []
 
+    # Lista dos arquivos do diretório
     arquivos = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/') #Entrada (Input) - diretório de sumários humanos e permutados
 
+    # Apaga arquivos desnecessários da lista
     if '.DS_Store' in arquivos:
         arquivos.remove('.DS_Store')
-
+    
+    # Percorre a lista de arquivos
     for i in range(len(arquivos)):
+        
         # Recupera a posição do ponto no nome do arquivo
         ponto = arquivos[i].find('.')
+        
         # Recupera o nome do arquivo até a posição do ponto
         nomeArquivo = arquivos[i][:ponto]
 
+        # Carrega o documento
         documento = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
         
+        # Carrega as sentenças do documento em uma lista
         sentencas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
 
+        # Adiciona o documento e as sentenças a lista
         lista_documentos_permutados.append([arquivos[i], sentencas, documento])
 
     print ('Carregamento de documento permutados concluído: ', len(lista_documentos_permutados)) 
@@ -195,21 +212,26 @@ def carregaParesDocumentosCSTNews():
     # Lista dos documentos originais e permutados 
     lista_documentos = []
 
+    # Lista dos arquivos do diretório
     arquivosOriginais = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/') #Entrada (Input) - diretório de sumários humanos e permutados
     
+    # Apaga arquivos desnecessários da lista
     if '.DS_Store' in arquivosOriginais:
         arquivosOriginais.remove('.DS_Store')
 
+    # Percorre a lista de arquivos
     for i in range(len(arquivosOriginais)):
 
         # Recupera a posição do ponto no nome do arquivo.
         ponto = arquivosOriginais[i].find('.')
+        
         # Recupera o nome do arquivo até a posição do ponto.
         arquivoOriginal = arquivosOriginais[i][:ponto]
 
         # Carrega o documento original.
         # Carrega como parágrafo
         documentoOriginal = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivosOriginais[i])
+        
         # Carrega uma lista das sentenças
         sentencasOriginais = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivosOriginais[i])
 
