@@ -12,7 +12,8 @@ from util.utilarquivo import *
 # ============================
 def downloadOnlineEducGoogleDrive():
     '''    
-    Download dos arquivos do conjunto de dados do OnlineEduc 1.0 do google drive.
+    Download dos arquivos do conjunto de dados do OnlineEduc 1.0 do Google Drive.
+    Depende de mapeamento no Google Drive.
     '''
     
     # Nome do arquivo
@@ -99,7 +100,7 @@ def carregaParesDocumentosOnlineEduc():
     # Lista dos documentos originais e permutados 
     lista_documentos = []
 
-    arquivosOriginais = os.listdir('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/') #Entrada (Input)
+    arquivosOriginais = os.listdir('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/') 
 
     for i in range(len(arquivosOriginais)):
 
