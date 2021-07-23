@@ -16,7 +16,7 @@ def getDocumentoLista(listaSentencas):
     '''
     Recebe uma lista de sentenças e faz a concatenação em uma string.
     Parâmetros:
-       `listaDocumento` - Uma lista contendo diversas sentenças.           
+        `listaDocumento` - Uma lista contendo diversas sentenças.           
     '''
 
     stringDocumento = ''  
@@ -29,8 +29,8 @@ def getListaSentencasDocumento(documento, nlp):
     '''
     Retorna uma lista com as sentenças de um documento. Utiliza o spacy para dividir o documento em sentenças.
     Parâmetros:
-       `documento` - Um documento a ser convertido em uma lista de sentenças.           
-       `nlp` - Um objeto de sentenciação de textos.           
+        `documento` - Um documento a ser convertido em uma lista de sentenças.           
+        `nlp` - Um objeto de sentenciação de textos.           
        
     '''
 
@@ -51,8 +51,8 @@ def encontrarIndiceSubLista(lista, sublista):
     '''
     Localiza os índices de início e fim de uma sublista em uma lista.
     Parâmetros:
-       `lista` - Uma lista.
-       `sublista` - Uma sublista a ser localizada na lista.
+        `lista` - Uma lista.
+        `sublista` - Uma sublista a ser localizada na lista.
     '''
     
     # https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm
@@ -76,8 +76,8 @@ def removeStopWord(texto, stopwords):
     '''
     Remove as stopwords de um texto.
     Parâmetros:
-       `texto` - Um texto com stopwords.
-       `stopwords` - Uma lista com as stopwords.
+        `texto` - Um texto com stopwords.
+        `stopwords` - Uma lista com as stopwords.
     '''
 
     # Remoção das stop words do texto
@@ -200,6 +200,7 @@ def getEmbeddingsTodasCamadasBuffer(S, modelo, tokenizador):
     '''
     Retorna os embeddings de uma sentença de um buffer ou do modelo..
     '''
+    
     # Se está no dicionário retorna o embedding
     if S in buffer_embeddings:
         return buffer_embeddings.get(S)
@@ -376,8 +377,8 @@ def getResultadoEmbeddings(sentencaEmbedding, camada):
     '''
     Retorna o resultado da operação sobre os embeddings das camadas de acordo com tipo de camada especificada.
     Parâmetros:
-       `sentencaEmbedding` - Embeddings da stentença.
-       `camada` - Camada dos embeddings.
+        `sentencaEmbedding` - Embeddings da stentença.
+        `camada` - Camada dos embeddings.
     '''
 
     # Cada elemento do vetor sentencaEmbedding é formado por:  
@@ -432,13 +433,13 @@ def getMedidasSentencasEmbeddingMEAN(embeddingSi, embeddingSj):
     '''
     Retorna as medidas de duas sentenças Si e Sj utilizando a estratégia MEAN.
     Parâmetros:
-       `embeddingSi` - Embeddings da primeira sentença.
-       `embeddingSj` - Embeddings da segunda sentença.
+        `embeddingSi` - Embeddings da primeira sentença.
+        `embeddingSj` - Embeddings da segunda sentença.
     
     Saída:
-       `Scos` - Similaridade do cosseno - usando a média dos embeddings Si e Sj das camadas especificadas.
-       `Seuc` - Distância euclidiana - usando a média dos embeddings Si e Sj das camadas especificadas.
-       `Sman` - Distância de manhattan - usando a média dos embeddings Si e Sj das camadas especificadas.
+        `Scos` - Similaridade do cosseno - usando a média dos embeddings Si e Sj das camadas especificadas.
+        `Seuc` - Distância euclidiana - usando a média dos embeddings Si e Sj das camadas especificadas.
+        `Sman` - Distância de manhattan - usando a média dos embeddings Si e Sj das camadas especificadas.
     '''
 
     #print('embeddingSi=', embeddingSi.shape) 
@@ -482,13 +483,13 @@ def getMedidasSentencasEmbeddingMAX(embeddingSi, embeddingSj):
     '''
     Retorna as medidas de duas sentenças Si e Sj utilizando a estratégia MAX.
     Parâmetros:
-       `embeddingSi` - Embeddings da primeira sentença.
-       `embeddingSj` - Embeddings da segunda sentença.
+        `embeddingSi` - Embeddings da primeira sentença.
+        `embeddingSj` - Embeddings da segunda sentença.
        
     Saída:
-       `Scos` - Similaridade do cosseno - usando o maior dos embeddings Si e Sj das camadas especificadas.
-       `Seuc` - Distância euclidiana - usando o maior dos embeddings Si e Sj das camadas especificadas.
-       `Sman` - Distância de manhattan - usando o maior dos embeddings Si e Sj das camadas especificadas.
+        `Scos` - Similaridade do cosseno - usando o maior dos embeddings Si e Sj das camadas especificadas.
+        `Seuc` - Distância euclidiana - usando o maior dos embeddings Si e Sj das camadas especificadas.
+        `Sman` - Distância de manhattan - usando o maior dos embeddings Si e Sj das camadas especificadas.
     '''
 
     #print('embeddingSi=', embeddingSi.shape) 
@@ -532,9 +533,9 @@ def getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategia_pooling):
     '''
     Realiza o cálculo da medida do documento de acordo com a estratégia de pooling(MAX ou MEAN).
     Parâmetros:
-       `embeddingSi` - Embeddings da primeira sentença.
-       `embeddingSj` - Embeddings da segunda sentença.
-       `estrategia_pooling` - Estratégia de pooling a ser utilizada.       
+        `embeddingSi` - Embeddings da primeira sentença.
+        `embeddingSj` - Embeddings da segunda sentença.
+        `estrategia_pooling` - Estratégia de pooling a ser utilizada.       
     '''
 
     if estrategia_pooling == 0:
