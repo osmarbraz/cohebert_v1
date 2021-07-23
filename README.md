@@ -30,7 +30,7 @@ sys.path.append('./coebert_v1/coebert')
 **Exemplos de execução são apresentados nos notebooks**
 
 ## **Diretórios**
-* **coebert** - Código fonte do coeberb v 1.0
+* **coebert** - Código fonte do Coeberb versão 1.0
 * **conjuntodedados** - Diretório com os conjuntos de dados.
   * **cstnews** - Arquivos do conjunto de dados do CSTNews.
   * **onlineeduc1.0** - Arquivos do conjunto de dados do OnlineEduc 1.0 (**Não disponibilizado**).
