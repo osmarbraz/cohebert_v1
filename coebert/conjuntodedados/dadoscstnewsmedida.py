@@ -255,6 +255,8 @@ def carregaParesDocumentosCSTNews():
 def downloadConjuntoDeDados(ORIGEM): 
     '''    
     Verifica de onde será realizado o download dos arquivos de dados.
+    Parâmetros:        
+        `ORIGEM` - Se a variável for setada indica de onde fazer o download.     
     '''
   
     if ORIGEM:
@@ -276,9 +278,10 @@ def converteListaParesDocumentos(lista_documentos):
         4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado.
         5. 'documentoPermutado' - Documento permutado.
         
-     Parâmetros:
-       `lista_documentos` - Lista de pares de documentos. 
-        
+    Parâmetros:
+        `lista_documentos` - Lista de pares de documentos. 
+    Saída:
+        `dfdados` - Um dataframe com os dados carregados.    
     '''
 
     # Converte a lista em um dataframe.
@@ -294,6 +297,12 @@ def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
     No nosso caso vamos utilizar o modelo BERT, que tem 512 tokens de tamanho limite de documento. 
     O tokenizador gera quantidades diferentes tokens para cada modelo pré-treinado. 
     Portanto é necessário especificar o tokenizador para descatar os documentos que ultrapassam o limite de tokens de entrada do BERT.
+    Parâmetros:      
+        `dfdados` - Dataframe com os documentos a serem analisados.   
+        `model_args` - Objeto com os argumentos do modelo.    
+        `tokenizer` - Tokenizador BERT.
+    Saída:
+        `dfdadosretorno` - Um dataframe sem os documentos grandes.
     '''
   
     # Tokenize a codifica os documentos para o BERT.     
@@ -322,6 +331,11 @@ def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
 def getListasDocumentosMedidas(ORIGEM):  
     '''    
     Carrega os arquivos de documentos originais e permutados do CSTNews e retorna suas listas preenchidas.
+    Parâmetros:        
+        `ORIGEM` - Se a variável for setada indica de onde fazer o download. 
+    Saída:
+        `lista_documentos_originais` - Lista com os documentos originais.
+        `lista_documentos_permutados` - Lista com os documentos permutados.
     '''
     
     # Realiza o download do conjunto de dados
@@ -339,6 +353,12 @@ def getListasDocumentosMedidas(ORIGEM):
 def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):  
     '''    
     Carrega os dados do CSTNews para o cálculo de medida e retorna um dataframe.
+    Parâmetros:        
+        `model_args` - Objeto com os argumentos do modelo.    
+        `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
+        `tokenizer` - Tokenizador BERT.
+    Saída:
+        `dfdados` - Um dataframe com os dados carregados.
     '''
     
     # Realiza o download do conjunto de dados
