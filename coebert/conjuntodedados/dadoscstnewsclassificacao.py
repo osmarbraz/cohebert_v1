@@ -95,6 +95,7 @@ def downloadCSTNewsKFoldGithub():
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)       
 
+# ============================
 def copiaCSTNewsKFoldGithub():  
     '''    
     Copia dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
@@ -161,13 +162,14 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
 # ============================
 def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test):
     '''
-    Descarta os documentos maiores que o tamanho máximo.
+    Descarta os documentos que possuem mais tokens que o tamanho máximo em model_args(max_seq_len). 
     Parâmetros:
        `tokenizer` - Tokenizador BERT.
        `model_args` - Objeto com os argumentos do modelo.
        `dfdados_train` - Dataframe com os dados de treinamento.
        `dfdados_test` - Dataframe com os dados de teste.       
     '''    
+    
     if tokenizer != None:
         
         # Define o tamanho máximo para os tokens.
@@ -203,7 +205,7 @@ def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_t
 # ============================
 def downloadCSTNewsKFold(ORIGEM):
     '''
-    Realiza o download o arquivo KFold do CSTNews.
+    Realiza o download o arquivo KFold do CSTNews de uma determiada origem(ORIGEM).
     Parâmetros:
        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.       
     '''    
