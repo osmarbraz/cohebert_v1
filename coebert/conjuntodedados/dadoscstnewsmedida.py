@@ -319,7 +319,7 @@ def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
     return dfdadosretorno  
 
 # ============================
-def getListasDocumentosMedidas( ORIGEM):  
+def getListasDocumentosMedidas(ORIGEM):  
     '''    
     Carrega os arquivos de documentos originais e permutados do CSTNews e retorna suas listas preenchidas.
     '''
