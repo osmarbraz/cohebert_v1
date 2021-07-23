@@ -37,7 +37,9 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
 # ============================
 def organizaDados(dfdados):
     '''
-    Organiza osdados do CSTNews para classificação e retorna um dataframe.
+    Organiza osdados do CSTNews para classificação e retorna um dataframe. 
+    Coloca os dados dos pares de documento um após o outro. 
+    Primeiro adiciona o original e rotula como 1 e depois coloca o permutado rotulando como 0.
     Parâmetros:
        `dfdados` - Dataframe com os dados a serem organizados para classificação.    
     '''
@@ -65,7 +67,7 @@ def downloadCSTNewsKFoldGithub():
 
     print("Download do Github")  
 
-    # Diretório dos arquivos de dados.
+    # Diretório dos arquivos de dados
     DIRETORIO = "/content/validacao_kfold"
     
     # Verifica se o diretório existe
@@ -85,13 +87,13 @@ def downloadCSTNewsKFoldGithub():
     if os.path.isfile(NOME_ARQUIVO):
        os.remove(NOME_ARQUIVO)
     
-    # Realiza o download do arquivo do OneDrive.
+    # Realiza o download do arquivo do OneDrive
     URL_ARQUIVO = 'https://github.com/osmarbraz/coebert/blob/main/conjuntodedados/'+ NOME_ARQUIVO + '?raw=true'
 
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
     
-    # Descompacta o arquivo na pasta de descompactação.                
+    # Descompacta o arquivo na pasta de descompactação                
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)       
 
@@ -121,11 +123,11 @@ def copiaCSTNewsKFoldGithub():
     DIRETORIO_FONTE_ARQUIVO = "/content/coebert_v1/conjuntodedados/cstnews/" + NOME_ARQUIVO
     DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
     
-    # Apaga o arquivo.    
+    # Apaga o arquivo    
     if os.path.isfile(NOME_ARQUIVO):
        os.remove(NOME_ARQUIVO)
     
-    # Copia o arquivo de dados  
+    # Copia o arquivo de dados do diretório fonte para o diretório de destino
     shutil.copy(DIRETORIO_FONTE_ARQUIVO, DIRETORIO_DESTINO_ARQUIVO) 
         
     # Descompacta o arquivo na pasta de descompactação.                
@@ -170,32 +172,33 @@ def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_t
        `dfdados_test` - Dataframe com os dados de teste.       
     '''    
     
+    # Verifica se o tokenizador foi carregado
     if tokenizer != None:
         
-        # Define o tamanho máximo para os tokens.
+        # Define o tamanho máximo para os tokens
         tamanho_maximo = model_args.max_seq_len
         
         print("Removendo documentos grandes, acima de ", tamanho_maximo, " tokens.")
 
-        # Tokenize a codifica as setenças para o BERT.     
+        # Tokenize a codifica as setenças para o BERT     
         dfdados_train['input_ids'] = dfdados_train['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len)<tamanho_maximo]
 
         print('Tamanho do dataset de treino: {}'.format(len(dfdados_train)))
 
-        # Remove as colunas desnecessárias.
+        # Remove as colunas desnecessárias
         dfdados_train = dfdados_train.drop(columns=['input_ids'])
 
         # Tokenize a codifica as setenças para o BERT.     
         dfdados_test['input_ids'] = dfdados_test['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
-        # Corta os inputs para o tamanho máximo 512.
+        # Corta os inputs para o tamanho máximo 512
         dfdados_test = dfdados_test[dfdados_test['input_ids'].apply(len)<tamanho_maximo]
 
         print('Tamanho do dataset de teste: {}'.format(len(dfdados_test)))
 
-        # Remove as colunas desnecessárias.
+        # Remove as colunas desnecessárias
         dfdados_test = dfdados_test.drop(columns=['input_ids'])
     else:
         print("Tokenizador não definido.")        
@@ -227,7 +230,7 @@ def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM):
        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.       
     '''
     
-    # Fold a ser carregado
+    # Fold de dados a ser carregado
     fold = model_args.fold
     
     # Diretório dos arquivos de dados dos folds.
