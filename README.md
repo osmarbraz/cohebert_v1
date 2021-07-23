@@ -1,4 +1,4 @@
-# coebert_v1 - Classificação e mensuração de coerência textual usando BERT
+# Coebert 1.0 - Classificação e mensuração de coerência textual usando BERT
 Classificação e mensuração de coerência textual utilizando o MCL BERT.
 
 
