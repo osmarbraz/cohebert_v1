@@ -65,8 +65,7 @@ def downloadCSTNewsICMC():
     os.remove(NOME_ARQUIVO_EXPERIMENTO)  
 
 # ============================    
-def downloadCSTNewsOnDrive():
-  
+def downloadCSTNewsOnDrive():  
     '''    
     Download dos arquivos do conjunto de dados do CSTNews de uma pasta compartilhada do One Drive.
     '''
@@ -246,14 +245,18 @@ def downloadConjuntoDeDados(ORIGEM):
 # ============================
 def converteListaParesDocumentos(lista_documentos):
     '''    
-    Converte a lista de pares de documentos em um dataframe.
+    Converte a lista de pares(lista_documentos) de documentos em um dataframe.
     Atributos do dataframe:
-        0. 'idOriginal' - Nome do arquivo original
-        1. 'sentencasOriginais' - Lista das sentenças do documento original
-        2. 'documentoOriginal' - Documento original
-        3. 'idPermutado' - Nome do arquivo permutado
-        4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado
-        5. 'documentoPermutado' - Documento permutado
+        0. 'idOriginal' - Nome do arquivo original.
+        1. 'sentencasOriginais' - Lista das sentenças do documento original.
+        2. 'documentoOriginal' - Documento original.
+        3. 'idPermutado' - Nome do arquivo permutado.
+        4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado.
+        5. 'documentoPermutado' - Documento permutado.
+        
+     Parâmetros:
+       `lista_documentos` - Lista de pares de documentos. 
+        
     '''
 
     # Converte a lista em um dataframe.
