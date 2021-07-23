@@ -142,8 +142,20 @@ def downloadConjuntoDeDados():
     
 # ============================    
 def converteListaParesDocumentos(lista_documentos):
-    '''    
-    Converte a lista de pares de documentos em um dataframe.
+    ''' 
+    Converte a lista de pares(lista_documentos) de documentos em um dataframe.
+    Atributos do dataframe:
+        0. 'idOriginal' - Nome do arquivo original.
+        1. 'sentencasOriginais' - Lista das sentenças do documento original.
+        2. 'documentoOriginal' - Documento original.
+        3. 'idPermutado' - Nome do arquivo permutado.
+        4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado.
+        5. 'documentoPermutado' - Documento permutado.
+        
+    Parâmetros:
+        `lista_documentos` - Lista de pares de documentos. 
+    Saída:
+        `dfdados` - Um dataframe com os dados carregados.    
     '''
 
     # Converte a lista em um dataframe.
@@ -155,6 +167,16 @@ def converteListaParesDocumentos(lista_documentos):
 def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     '''    
     Remove os documentos que extrapolam 512 tokens.
+    Você pode definir o tamanho de documento que quiser no BERT, mas o modelo pré-treinado vem com um tamanho pré-definido. 
+    No nosso caso vamos utilizar o modelo BERT, que tem 512 tokens de tamanho limite de documento. 
+    O tokenizador gera quantidades diferentes tokens para cada modelo pré-treinado. 
+    Portanto é necessário especificar o tokenizador para descatar os documentos que ultrapassam o limite de tokens de entrada do BERT.
+    Parâmetros:      
+        `dfdados` - Dataframe com os documentos a serem analisados.   
+        `model_args` - Objeto com os argumentos do modelo.    
+        `tokenizer` - Tokenizador BERT.
+    Saída:
+        `dfdadosretorno` - Um dataframe sem os documentos grandes.
     '''
   
     # Tokenize a codifica os documentos para o BERT.     
@@ -182,7 +204,12 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
 # ============================    
 def getConjuntoDeDadosMedida(model_args, tokenizer): 
     '''    
-    Carrega os dados do OnlineEduc 1.0 para o cálculo de medida  e retorna um dataframe.
+    Carrega os dados do OnlineEduc 1.0 para o cálculo de medida  e retorna um dataframe.    
+    Parâmetros:        
+        `model_args` - Objeto com os argumentos do modelo.
+        `tokenizer` - Tokenizador BERT.
+    Saída:
+        `dfdados` - Um dataframe com os dados carregados.
     '''
     
     # Realiza o download do conjunto de dados
