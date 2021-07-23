@@ -17,9 +17,12 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
     '''    
     Divide o conjunto de dados em treino e teste utilizando um percentual de divisão.
     Parâmetros:
-       `dfdados` - Dataframe com os dados a serem divididos.  
-       `percentualDivisao` - Percentual de divisão dos dados.
-       `classeStratify` - Faz uma divisão de forma que a proporção dos valores na amostra produzida seja a mesma que a proporção dos valores fornecidos.         
+        `dfdados` - Dataframe com os dados a serem divididos.  
+        `percentualDivisao` - Percentual de divisão dos dados.
+        `classeStratify` - Faz uma divisão de forma que a proporção dos valores na amostra produzida seja a mesma que a proporção dos valores fornecidos.
+    Saída:
+        `dfdados_train` - Dataframe com os dados de treinamento.
+        `dfdados_test` - Dataframe com os dados de teste.
     '''
         
     # Quantidade de elementos de teste considerando o percentual
@@ -41,7 +44,7 @@ def organizaDados(dfdados):
     Coloca os dados dos pares de documento um após o outro. 
     Primeiro adiciona o original e rotula como 1 e depois coloca o permutado rotulando como 0.
     Parâmetros:
-       `dfdados` - Dataframe com os dados a serem organizados para classificação.    
+        `dfdados` - Dataframe com os dados a serem organizados para classificação.    
     '''
     
     # Organiza os dados
@@ -139,9 +142,11 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
     '''    
     Carrega os dados do CSTNews e retorna um dataframe para classificação.
     Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.    
-       `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
-       `tokenizer` - Tokenizador BERT.
+        `model_args` - Objeto com os argumentos do modelo.    
+        `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
+        `tokenizer` - Tokenizador BERT.
+    Saída:
+        `dfdados` - Um dataframe com os dados carregados.
     '''
     
     # Realiza o download do conjunto de dados
@@ -166,10 +171,13 @@ def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_t
     '''
     Descarta os documentos que possuem mais tokens que o tamanho máximo em model_args(max_seq_len). 
     Parâmetros:
-       `tokenizer` - Tokenizador BERT.
-       `model_args` - Objeto com os argumentos do modelo.
-       `dfdados_train` - Dataframe com os dados de treinamento.
-       `dfdados_test` - Dataframe com os dados de teste.       
+        `tokenizer` - Tokenizador BERT.
+        `model_args` - Objeto com os argumentos do modelo.
+        `dfdados_train` - Dataframe com os dados de treinamento.
+        `dfdados_test` - Dataframe com os dados de teste.
+    Saída:
+        `dfdados_train` - Dataframe com os dados de treinamento sem documentos grandes.
+        `dfdados_test` - Dataframe com os dados de teste sem documentos grandes.
     '''    
     
     # Verifica se o tokenizador foi carregado
@@ -210,7 +218,7 @@ def downloadCSTNewsKFold(ORIGEM):
     '''
     Realiza o download o arquivo KFold do CSTNews de uma determiada origem(ORIGEM).
     Parâmetros:
-       `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.       
+        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.       
     '''    
     
     if ORIGEM:
@@ -225,9 +233,12 @@ def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM):
     '''    
     Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
     Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.  
-       `tokenizer` -Tokenizador do BERT para descartar documentos grandes.  
-       `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.       
+        `model_args` - Objeto com os argumentos do modelo.  
+        `tokenizer` -Tokenizador do BERT para descartar documentos grandes.  
+        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.    
+    Saída:
+        `dfdados_train` - Dataframe com os dados de treinamento.
+        `dfdados_test` - Dataframe com os dados de teste.
     '''
     
     # Fold de dados a ser carregado
