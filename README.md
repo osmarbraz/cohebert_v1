@@ -18,7 +18,7 @@ Classificação e mensuração de coerência textual utilizando o MCL BERT.
 !git clone https://github.com/osmarbraz/coebert_v1.git
 ```
 
-**Execução**
+**Utilização bibliotecas de funções**
 
 Mudar o diretório corrente para a pasta clonada
 ```python
@@ -26,6 +26,8 @@ import sys
 
 sys.path.append('./coebert_v1/coebert')
 ```
+
+**Exemplos de execução são apresentados nos notebooks**
 
 ## **Diretórios**
 * **coebert** - Código fonte do coeberb v 1.0
