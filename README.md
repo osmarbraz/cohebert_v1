@@ -18,7 +18,7 @@ Classificação e mensuração de coerência textual utilizando o MCL BERT.
 !git clone https://github.com/osmarbraz/coebert_v1.git
 ```
 
-**Utilização bibliotecas de funções**
+**Utilização da biblioteca de funções**
 
 Mudar o diretório corrente para a pasta clonada
 ```python
