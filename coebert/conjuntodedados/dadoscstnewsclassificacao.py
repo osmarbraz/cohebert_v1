@@ -69,7 +69,7 @@ def downloadCSTNewsKFoldGithub():
     Download dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
     '''
 
-    print("Download do Github")  
+    logging.info("Download do Github")  
 
     # Diretório dos arquivos de dados
     DIRETORIO = "/content/validacao_kfold"
