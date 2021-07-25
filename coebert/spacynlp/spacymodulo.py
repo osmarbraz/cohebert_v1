@@ -83,9 +83,9 @@ def carregaSpacy(model_args):
     if 'spacy' not in sys.modules.keys(): 
         logging.info("spaCy não está instalado.")
     else:
-        if model_args.versao_spacy != spacy.__version__:
+        if '2.3.5' != spacy.__version__:
             logging.info("A versão do spaCy não é a correta.")
-            logging.info("Execute: !pip install -U spacy==" + model_args.versao_spacy + ".")            
+            logging.info("Execute: !pip install -U spacy==2.3.5.")            
         else:    
             # Realiza o carregamento do spaCy
                 
