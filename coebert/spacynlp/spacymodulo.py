@@ -78,6 +78,11 @@ def carregaSpacy(model_args):
         `model_args` - Objeto com os argumentos do modelo.           
     '''
     
+    import sys
+
+    if not 'spacy' in sys.modules.keys():
+        logging.info("spaCy não foi instalado.")
+    
     # Nome arquivo spacy
     ARQUIVO_MODELO_SPACY = model_args.modelo_spacy
     # Versão spaCy
