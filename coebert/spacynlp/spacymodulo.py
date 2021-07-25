@@ -97,7 +97,6 @@ def carregaSpacy(model_args):
     
     # Carrega o spaCy. Necessário somente 'tagger' para encontrar os substantivos
     nlp = spacy.load(DIRETORIO_MODELO_SPACY, disable=['tokenizer', 'lemmatizer', 'ner', 'parser', 'textcat', 'custom'])
-    #print("spaCy carregado.")
     logging.info("spaCy carregado.")
     
     return nlp
