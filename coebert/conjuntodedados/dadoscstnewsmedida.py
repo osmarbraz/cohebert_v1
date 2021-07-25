@@ -1,4 +1,5 @@
 # Import das bibliotecas.
+import logging  # Biblioteca de logging
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
@@ -153,7 +154,7 @@ def carregaArquivosOriginaisCSTNews():
         # Adiciona o documento e as sentenças a lista
         lista_documentos_originais.append([arquivos[i], sentencas, documento])
 
-    print ('Carregamento de documento originais concluído: ', len(lista_documentos_originais))    
+    logging.info ('Carregamento de documento originais concluído: ', len(lista_documentos_originais))    
 
     return lista_documentos_originais
 
@@ -195,7 +196,7 @@ def carregaArquivosPermutadosCSTNews():
         # Adiciona o documento e as sentenças a lista
         lista_documentos_permutados.append([arquivos[i], sentencas, documento])
 
-    print ('Carregamento de documento permutados concluído: ', len(lista_documentos_permutados)) 
+    logging.info('Carregamento de documento permutados concluído: ', len(lista_documentos_permutados)) 
 
     return lista_documentos_permutados
 
@@ -247,7 +248,7 @@ def carregaParesDocumentosCSTNews():
             # Adiciona o par original e sua versão permutada.
             lista_documentos.append([arquivosOriginais[i], sentencasOriginais, documentoOriginal, arquivoPermutado, sentencasPermutadas, documentoPermutado])
     
-    print ('Geraçao de pares de documentos concluído:', len(lista_documentos))
+    logging.info('Geraçao de pares de documentos concluído:', len(lista_documentos))
     
     return lista_documentos
 
@@ -260,10 +261,10 @@ def downloadConjuntoDeDados(ORIGEM):
     '''
   
     if ORIGEM:
-        print("Realizando o download do site do ICMC.")
+        logging.info("Realizando o download do site do ICMC.")
         downloadCSTNewsICMC()
     else:
-        print("Realizando o download do meu OneDrive.")
+        logging.info("Realizando o download do meu OneDrive.")
         downloadCSTNewsOnDrive()
 
 # ============================
@@ -315,15 +316,15 @@ def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
     dfdadosAnterior = dfdados.drop(columns=['input_ids'])
     dfdadosretorno = dfdados_512.drop(columns=['input_ids'])
 
-    #print('Quantidade de dados anterior: {}'.format(len(dfdadosAnterior)))
-    #print('Nova quantidade de dados    : {}'.format(len(dfdadosretorno)))
+    logging.info('Quantidade de dados anterior: {}'.format(len(dfdadosAnterior)))
+    logging.info('Nova quantidade de dados    : {}'.format(len(dfdadosretorno)))
 
     # Mostra a quantidade registros removidos
     dfdadosSemLista =  dfdadosretorno.drop(columns=['sentencasOriginais','sentencasPermutadas'])
     dfdados512SemLista =  dfdadosAnterior.drop(columns=['sentencasOriginais','sentencasPermutadas'])
 
     df = dfdados512SemLista.merge(dfdadosSemLista, how = 'outer' ,indicator=True).loc[lambda x : x['_merge']=='left_only']
-    #print('Quantidade de registros removidos: {}'.format(len(df)))
+    logging.info('Quantidade de registros removidos: {}'.format(len(df)))
 
     return dfdadosretorno  
 
