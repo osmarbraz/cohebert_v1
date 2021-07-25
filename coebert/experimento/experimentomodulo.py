@@ -1,4 +1,5 @@
 # Import das bibliotecas.
+import logging  # Biblioteca de logging
 import os
 import pandas as pd
 
@@ -30,16 +31,16 @@ def carregaMedidasCSTNews(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PA
     
       # Verifica se o arquivo existe.
       if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
-          print("Carregando arquivo:", NOME_ARQUIVO_MEDICAO)
+          logging.info("Carregando arquivo:", NOME_ARQUIVO_MEDICAO)
           # Carrega os dados do arquivo  
           dfMedida = pd.read_csv(NOME_ARQUIVO_MEDICAO_COMPLETO, sep=';')
       
       else:
-          print('Arquivo com as medições não encontrado')        
+          logging.info('Arquivo com as medições não encontrado')        
 
   else:
-      print('Diretório com as medições não encontrado')
+      logging.info('Diretório com as medições não encontrado')
 
-  print('Medidas carregadas: ', len(dfMedida))
+  logging.info('Medidas carregadas: ', len(dfMedida))
 
   return dfMedida
