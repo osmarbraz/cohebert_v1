@@ -138,7 +138,7 @@ def downloadConjuntoDeDados():
     Verifica de onde será realizado o download dos arquivos de dados.
     '''
     
-    print("Realizando o download do Google Drive.")
+    logging.info("Realizando o download do Google Drive.")
     downloadOnlineEducGoogleDrive()
     
 # ============================    
