@@ -1,6 +1,7 @@
 # Import das bibliotecas.
-import re # Biblioteca para expressão regular
-import unicodedata # Biblioteca para tratar codificação de caracteres
+import logging  # Biblioteca de logging
+import re # Biblioteca de expressão regular
+import unicodedata # Biblioteca de codificação de caracteres
 
 # ============================  
 def removeAcentos(texto):   
