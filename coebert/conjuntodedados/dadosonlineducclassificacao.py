@@ -1,4 +1,5 @@
 # Import das bibliotecas.
+import logging  # Biblioteca de logging
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
@@ -30,9 +31,9 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
     # Divide o conjunto
     dfdados_train, dfdados_test = train_test_split(dfdados, test_size=test_qtde, random_state=42, stratify=dfdados[classeStratify])
 
-    print("Conjunto total:", len(dfdados))
-    print("  Treino:", len(dfdados_train))
-    print("  Teste :", len(dfdados_test))
+    logging.info("Conjunto total:", len(dfdados))
+    logging.info("  Treino:", len(dfdados_train))
+    logging.info("  Teste :", len(dfdados_test))
 
     return dfdados_train, dfdados_test
 
