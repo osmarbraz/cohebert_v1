@@ -1,9 +1,9 @@
 # Import das bibliotecas.
 import logging  # Biblioteca de logging
-import zipfile # Biblioteca para descompactar.
-import os # Biblioteca para apagar arquivos.
-import shutil # Biblioteca para mover arquivos.
-import torch # Biblioteca para manipular os tensores.
+import zipfile # Biblioteca para descompactar
+import os # Biblioteca de manipulação de arquivos
+import shutil # iblioteca de manipulação arquivos de alto nível
+import torch # Biblioteca para manipular os tensores
 from transformers import BertModel # Importando as bibliotecas do Modelo BERT.
 from transformers import BertForSequenceClassification # Importando as bibliotecas do Modelo BERT.
 from transformers import BertTokenizer # Importando as bibliotecas do tokenizador BERT.
@@ -497,7 +497,7 @@ def carregaBERT(model_args):
             - Se model_args = ModeloArgumentosClassificacao deve ser carregado o BERT para classificação(BertForSequenceClassification).
             - Se model_args = ModeloArgumentosMedida deve ser carregado o BERT para cálculo de medida(BertModel).
     ''' 
-    
+            
     # Verifica a origem do modelo
     DIRETORIO_MODELO = verificaModelo(model_args)
     
