@@ -3,6 +3,7 @@ import logging  # Biblioteca de logging
 import requests # Biblioteca de download
 import tarfile # Biblioteca de descompactação
 import os # Biblioteca de manipulação de arquivos
+import sys # Biblioteca do sistema
 import shutil # Biblioteca de manipulação arquivos de alto nível
 import spacy # Biblioteca do spaCy
 
@@ -78,30 +79,42 @@ def carregaSpacy(model_args):
         `model_args` - Objeto com os argumentos do modelo.           
     '''
     
-    import sys
+    # Verifica se existe argumento
+    if model_args != None:
+        logging.info("Não foi especificado os argumentos do carregamento do spaCy.")
+    else:
+        # Verifica se o spacy foi instalado com a versão correta
+        if 'spacy' not in sys.modules.keys(): 
+            logging.info("spaCy não está instalado.")
+        else:
+            if model_args.versao_spacy != spacy.__version__:
+                logging.info("A versão do spaCy não é a correta.")
+                logging.info("Execute: !pip install -U spacy==" + model_args.versao_spacy + ".")            
+            else:    
+                # Realiza o carregamento do spaCy
+                
+                # Nome arquivo spacy
+                ARQUIVO_MODELO_SPACY = model_args.modelo_spacy
+                # Versão spaCy
+                VERSAO_SPACY = "-" + model_args.versao_spacy
+                # Caminho raoz do modelo do spaCy
+                DIRETORIO_MODELO_SPACY = '/content/' + ARQUIVO_MODELO_SPACY + VERSAO_SPACY
 
-    if not 'spacy' in sys.modules.keys():
-        logging.info("spaCy não foi instalado.")
-    
-    # Nome arquivo spacy
-    ARQUIVO_MODELO_SPACY = model_args.modelo_spacy
-    # Versão spaCy
-    VERSAO_SPACY = "-" + model_args.versao_spacy
-    # Caminho raoz do modelo do spaCy
-    DIRETORIO_MODELO_SPACY = '/content/' + ARQUIVO_MODELO_SPACY + VERSAO_SPACY
+                 # Verifica se o diretório existe
+                if os.path.exists(DIRETORIO_MODELO_SPACY) == False:
+                    # Realiza o download do arquivo modelo do spaCy
+                    downloadSpacy(model_args)
+                    # Descompacta o spaCy
+                    descompactaSpacy(model_args)
 
-     # Verifica se o diretório existe
-    if os.path.exists(DIRETORIO_MODELO_SPACY) == False:
-        # Realiza o download do arquivo modelo do spaCy
-        downloadSpacy(model_args)
-        # Descompacta o spaCy
-        descompactaSpacy(model_args)
-    
-    # Diretório completo do spaCy
-    DIRETORIO_MODELO_SPACY = '/content/' + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + '/' + ARQUIVO_MODELO_SPACY + '/' + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + '/'
-    
-    # Carrega o spaCy. Necessário somente 'tagger' para encontrar os substantivos
-    nlp = spacy.load(DIRETORIO_MODELO_SPACY, disable=['tokenizer', 'lemmatizer', 'ner', 'parser', 'textcat', 'custom'])
-    logging.info("spaCy carregado.")
-    
-    return nlp
+                # Diretório completo do spaCy
+                DIRETORIO_MODELO_SPACY = '/content/' + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + '/' + ARQUIVO_MODELO_SPACY + '/' + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + '/'
+
+                # Carrega o spaCy. Necessário somente 'tagger' para encontrar os substantivos
+                nlp = spacy.load(DIRETORIO_MODELO_SPACY, disable=['tokenizer', 'lemmatizer', 'ner', 'parser', 'textcat', 'custom'])
+                logging.info("spaCy carregado.")
+
+                # Retorna o spacy carregado
+                return nlp
+        
+    return None
