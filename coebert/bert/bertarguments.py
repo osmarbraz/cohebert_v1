@@ -1,5 +1,5 @@
 # Import das bibliotecas.
-import logging
+import logging  # Biblioteca de logging
 from dataclasses import dataclass, field
 from typing import Dict
 from typing import Optional
