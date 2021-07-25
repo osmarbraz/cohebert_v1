@@ -1,5 +1,6 @@
 # Import das bibliotecas.
-import requests # Biblioteca para download
+import logging  # Biblioteca de logging
+import requests # Biblioteca de download
 
 # Import de bibliotecas próprias
 from util.utilmodulo import *
