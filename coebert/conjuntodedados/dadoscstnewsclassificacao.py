@@ -107,7 +107,7 @@ def copiaCSTNewsKFoldGithub():
     Copia dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
     '''
     
-    print("Copiando do checkout do Github")
+    logging.info("Copiando do checkout do Github")
 
     # Diretório dos arquivos de dados.
     DIRETORIO = "/content/validacao_kfold"
@@ -187,7 +187,7 @@ def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_t
         # Define o tamanho máximo para os tokens
         tamanho_maximo = model_args.max_seq_len
         
-        print("Removendo documentos grandes, acima de ", tamanho_maximo, " tokens.")
+        logging.info("Removendo documentos grandes, acima de ", tamanho_maximo, " tokens.")
 
         # Tokenize a codifica as setenças para o BERT     
         dfdados_train['input_ids'] = dfdados_train['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
