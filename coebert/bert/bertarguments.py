@@ -1,6 +1,8 @@
 # Import das bibliotecas.
+import logging
 from dataclasses import dataclass, field
-from typing import Dict, Optional
+from typing import Dict
+from typing import Optional
 from typing import List
 
 # ============================
