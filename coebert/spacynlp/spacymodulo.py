@@ -80,7 +80,7 @@ def carregaSpacy(model_args):
     '''
     
     # Verifica se existe argumento
-    if model_args != None:
+    if model_args == None:
         logging.info("Não foi especificado os argumentos do carregamento do spaCy.")
     else:
         # Verifica se o spacy foi instalado com a versão correta
