@@ -1,4 +1,5 @@
 # Import das bibliotecas.
+import logging  # Biblioteca de logging
 from cmath import rect, phase
 from math import radians, degrees
   
