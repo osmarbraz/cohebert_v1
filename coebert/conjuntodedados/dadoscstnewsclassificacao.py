@@ -1,4 +1,5 @@
 # Import das bibliotecas.
+import logging  # Biblioteca de logging
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
@@ -31,9 +32,9 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
     # Divide o conjunto
     dfdados_train, dfdados_test = dfdados, test_size=test_qtde, random_state=42, stratify=dfdados[classeStratify])
 
-    print("Conjunto total:", len(dfdados))
-    print("  Treino:", len(dfdados_train))
-    print("  Teste :", len(dfdados_test))
+    logging.info("Conjunto total:", len(dfdados))
+    logging.info("  Treino:", len(dfdados_train))
+    logging.info("  Teste :", len(dfdados_test))
 
     return dfdados_train, dfdados_test
 
@@ -77,9 +78,9 @@ def downloadCSTNewsKFoldGithub():
     if not os.path.exists(DIRETORIO):  
         # Cria o diretório
         os.makedirs(DIRETORIO)
-        print('Diretório criado: {}'.format(DIRETORIO))
+        logging.info('Diretório criado: {}'.format(DIRETORIO))
     else:
-        print('Diretório já existe: {}'.format(DIRETORIO))
+        logging.info('Diretório já existe: {}'.format(DIRETORIO))
         
     # Download do arquivo de dados  
     
@@ -115,9 +116,9 @@ def copiaCSTNewsKFoldGithub():
     if not os.path.exists(DIRETORIO):  
         # Cria o diretório
         os.makedirs(DIRETORIO)
-        print('Diretório criado: {}'.format(DIRETORIO))
+        logging.info('Diretório criado: {}'.format(DIRETORIO))
     else:
-        print('Diretório já existe: {}'.format(DIRETORIO))
+        logging.info('Diretório já existe: {}'.format(DIRETORIO))
         
     # Nome do arquivo a ser criado.
     NOME_ARQUIVO = "CSTNEWS_MD_KFOLD_10.zip"
@@ -193,7 +194,7 @@ def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_t
 
         dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len)<tamanho_maximo]
 
-        print('Tamanho do dataset de treino: {}'.format(len(dfdados_train)))
+        logging.info('Tamanho do dataset de treino: {}'.format(len(dfdados_train)))
 
         # Remove as colunas desnecessárias
         dfdados_train = dfdados_train.drop(columns=['input_ids'])
@@ -204,12 +205,12 @@ def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_t
         # Corta os inputs para o tamanho máximo 512
         dfdados_test = dfdados_test[dfdados_test['input_ids'].apply(len)<tamanho_maximo]
 
-        print('Tamanho do dataset de teste: {}'.format(len(dfdados_test)))
+        logging.info('Tamanho do dataset de teste: {}'.format(len(dfdados_test)))
 
         # Remove as colunas desnecessárias
         dfdados_test = dfdados_test.drop(columns=['input_ids'])
     else:
-        print("Tokenizador não definido.")        
+        logging.info("Tokenizador não definido.")        
 
     return dfdados_train, dfdados_test
 
@@ -259,14 +260,14 @@ def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM):
     ARQUIVO_TREINO = DIRETORIO + "/" + PREFIXO_NOME_ARQUIVO_TREINO + str(fold) + ".csv"
     ARQUIVO_TESTE = DIRETORIO + "/" + PREFIXO_NOME_ARQUIVO_TESTE + str(fold) + ".csv" 
 
-    print("Carregando arquivo de treino: {}".format(ARQUIVO_TREINO))
-    print("Carregando arquivo de teste: {}".format(ARQUIVO_TESTE))
+    logging.info("Carregando arquivo de treino: {}".format(ARQUIVO_TREINO))
+    logging.info("Carregando arquivo de teste: {}".format(ARQUIVO_TESTE))
 
     # Carrega o dataset de treino e teste.
     dfdados_train = pd.read_csv(ARQUIVO_TREINO, sep=';')
-    print('Qtde de dados de treino: {}'.format(len(dfdados_train)))
+    logging.info('Qtde de dados de treino: {}'.format(len(dfdados_train)))
     dfdados_test = pd.read_csv(ARQUIVO_TESTE, sep=';')
-    print('Qtde de dados de teste: {}'.format(len(dfdados_test)))
+    logging.info('Qtde de dados de teste: {}'.format(len(dfdados_test)))
 
     # Remove os documentos muito grandes
     dfdados_train, dfdados_test = descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test)
