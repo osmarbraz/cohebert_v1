@@ -1,8 +1,9 @@
 # Import das bibliotecas.
-import requests # Biblioteca para download
+import logging  # Biblioteca de logging
+import requests # Biblioteca de download
 import tarfile # Biblioteca de descompactação
-import os # Biblioteca para apagar arquivos
-import shutil # Biblioteca para mover arquivos
+import os # Biblioteca de manipulação de arquivos
+import shutil # Biblioteca de manipulação arquivos de alto nível
 import spacy # Biblioteca do spaCy
 
 # Import de bibliotecas próprias
@@ -96,6 +97,7 @@ def carregaSpacy(model_args):
     
     # Carrega o spaCy. Necessário somente 'tagger' para encontrar os substantivos
     nlp = spacy.load(DIRETORIO_MODELO_SPACY, disable=['tokenizer', 'lemmatizer', 'ner', 'parser', 'textcat', 'custom'])
-    print("spaCy carregado.")
+    #print("spaCy carregado.")
+    logging.info("spaCy carregado.")
     
     return nlp
