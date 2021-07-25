@@ -870,7 +870,7 @@ def comparaMedidasCamadasSentencas(Si, Sj, modelo, tokenizador, camada):
     # Recupera os embeddings da sentença 1 e sentença 2
     embeddingSi, embeddingSj, Scos, Seuc, Sman = getMedidasCamadasSentencas(Si, Sj, modelo, tokenizador, camada)
 
-    print('  ->Mostra comparação da ' + camada[LISTATIPOCAMADA_NOME]+ ' camada(s)')    
-    print('   Cosseno(SixSj)     = %.8f' % Scos)
-    print('   Euclidiana(SixSj)  = %.8f' % Seuc)
-    print('   Manhattan(SixSj)   = %.8f' % Sman)
+    logging.info('  ->Mostra comparação da ' + camada[LISTATIPOCAMADA_NOME]+ ' camada(s)')    
+    logging.info('   Cosseno(SixSj)     = %.8f' % Scos)
+    logging.info('   Euclidiana(SixSj)  = %.8f' % Seuc)
+    logging.info('   Manhattan(SixSj)   = %.8f' % Sman)
