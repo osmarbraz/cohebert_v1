@@ -1,4 +1,5 @@
 # Import das bibliotecas.
+import logging  # Biblioteca de logging
 import zipfile # Biblioteca para descompactar.
 import os # Biblioteca para apagar arquivos.
 import shutil # Biblioteca para mover arquivos.
@@ -76,7 +77,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
     input_ids_completos = []
     
     # Tokeniza todas as amostras de treinamento
-    #print('Tokenizando {:,} amostra...'.format(len(classes)))
+    logging.info('Tokenizando {:,} amostra...'.format(len(classes)))
     
     # Escolha o intervalo que o progresso será atualizado.
     #intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(classes), numero_atualizacoes=10)
@@ -98,8 +99,8 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         # Adicione o resultado tokenizado à nossa lista.
         input_ids_completos.append(input_ids)
         
-    #print('FEITO.')
-    #print('{:>10,} amostras\n'.format(len(input_ids_completos)))
+    logging.info('Tokeização concluída.')
+    logging.info('{:>10,} amostras\n'.format(len(input_ids_completos)))
 
     # =========================
     #      Seleciona os Lotes
@@ -108,7 +109,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
     # Classifique as duas listas pelo comprimento da sequência de entrada.
     amostras = sorted(zip(input_ids_completos, classes, documentoids), key=lambda x: len(x[0]))
 
-    #print('{:>10,} amostras após classificação\n'.format(len(amostras)))
+    logging.info('{:>10,} amostras após classificação\n'.format(len(amostras)))
 
     import random
 
@@ -117,7 +118,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
     batch_ordered_classes = []
     batch_ordered_documentoids = []
 
-    #print('Criando lotes de tamanho {:}...'.format(tamanho_lote))
+    logging.info('Criando lotes de tamanho {:}...'.format(tamanho_lote))
 
     # Escolha um intervalo no qual imprimir atualizações de progresso.
     intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(amostras), numero_atualizacoes=10)
@@ -152,7 +153,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         # Remova a amostra da lista
         del amostras[select:select + to_take]
 
-    #print('\n  FEITO - Selecionado {:,} lotes.\n'.format(len(batch_ordered_documentos)))
+    logging.info('\n  Lote criado - Selecionado {:,} lotes.\n'.format(len(batch_ordered_documentos)))
 
     # =========================
     #        Adicionando o preenchimento
@@ -216,13 +217,13 @@ def getDeviceGPU():
         # Diz ao PyTorch para usar GPU.    
         device = torch.device("cuda")
 
-        print('Existem {} GPU(s) disponíveis.'.format(torch.cuda.device_count()))
+        logging.info('Existem {} GPU(s) disponíveis.'.format(torch.cuda.device_count()))
 
-        print('Iremos usar a GPU: {}'.format(torch.cuda.get_device_name(0)))
+        logging.info('Iremos usar a GPU: {}'.format(torch.cuda.get_device_name(0)))
 
     # Se não...
     else:
-        print('Sem GPU disponível, usando CPU.')
+        logging.info('Sem GPU disponível, usando CPU.')
         device = torch.device("cpu")
         
     return device
@@ -242,10 +243,10 @@ def conectaGPU(model, device):
     # Se existe GPU disponível.
     if torch.cuda.is_available():    
         # Diga ao pytorch para rodar este modelo na GPU.
-        print("Pytorch rodando o modelo na GPU")
+        logging.info("Pytorch rodando o modelo na GPU")
         model.cuda()
     else:
-        print("Pytorch rodando sem GPU")
+        logging.info("Pytorch rodando sem GPU")
 
     return model
 
@@ -259,6 +260,7 @@ def getNomeModeloBERT(model_args):
 
     # Verifica o nome do modelo(default SEM_MODELO_BERT)
     MODELO_BERT = 'SEM_MODELO_BERT'
+    
     if 'neuralmind' in model_args.pretrained_model_name_or_path:
         MODELO_BERT = '_BERTimbau'
     else:
@@ -277,6 +279,7 @@ def getTamanhoBERT(model_args):
     
     # Verifica o tamanho do modelo(default large)
     TAMANHO_BERT = '_large'
+    
     if 'base' in model_args.pretrained_model_name_or_path:
         TAMANHO_BERT = '_base'
         
@@ -289,7 +292,8 @@ def downloadModeloPretreinado(model_args):
     Parâmetros:
        `model_args` - Objeto com os argumentos do modelo.       
     ''' 
-
+    
+    # Recupera o nome ou caminho do modelo
     MODELO = model_args.pretrained_model_name_or_path
 
     # Variável para setar o arquivo.
@@ -315,7 +319,7 @@ def downloadModeloPretreinado(model_args):
 
         # Verifica se a pasta de descompactação existe na pasta corrente
         if os.path.exists(DIRETORIO_MODELO):
-            print('Apagando diretório existente do modelo!')
+            logging.info('Apagando diretório existente do modelo!')
             # Apaga a pasta e os arquivos existentes                     
             shutil.rmtree(DIRETORIO_MODELO)
 
@@ -335,11 +339,11 @@ def downloadModeloPretreinado(model_args):
         # Apaga o arquivo compactado
         os.remove(NOME_ARQUIVO)
 
-        print('Pasta do {} pronta!'.format(DIRETORIO_MODELO))
+        logging.info('Pasta do {} pronta!'.format(DIRETORIO_MODELO))
 
     else:
         DIRETORIO_MODELO = MODELO
-        print('Variável URL_MODELO não setada!')
+        logging.info('Variável URL_MODELO não setada!')
 
     return DIRETORIO_MODELO
 
@@ -358,7 +362,7 @@ def copiaModeloAjustado():
     # Copia o arquivo do modelo para o diretório no Google Drive.
     shutil.copytree(DIRETORIO_REMOTO_MODELO_AJUSTADO, DIRETORIO_LOCAL_MODELO_AJUSTADO) 
    
-    print('Modelo copiado!')
+    logging.info('Modelo copiado!')
 
     return DIRETORIO_LOCAL_MODELO_AJUSTADO
 
@@ -374,11 +378,11 @@ def verificaModelo(model_args):
     
     if model_args.usar_mcl_ajustado == True:
         DIRETORIO_MODELO = copiaModeloAjustado()
-        print('Usando modelo ajustado')
+        logging.info('Usando modelo ajustado')
         
     else:
         DIRETORIO_MODELO = downloadModeloPretreinado(model_args)
-        print('Usando modelo pré-treinado de download ou comunidade')
+        logging.info('Usando modelo pré-treinado de download ou comunidade')
         
     return DIRETORIO_MODELO
 
@@ -401,14 +405,14 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     if DIRETORIO_MODELO:
 
         # Carregando o Tokenizador.
-        print('Carregando o tokenizador BERT do diretório {}...'.format(DIRETORIO_MODELO))
+        logging.info('Carregando o tokenizador BERT do diretório {}...'.format(DIRETORIO_MODELO))
 
         tokenizer = BertTokenizer.from_pretrained(DIRETORIO_MODELO, 
                                                   do_lower_case=model_args.do_lower_case)
 
     else:
         # Carregando o Tokenizador da comunidade.
-        print('Carregando o tokenizador da comunidade...')
+        logging.info('Carregando o tokenizador da comunidade...')
 
         tokenizer = BertTokenizer.from_pretrained(model_args.pretrained_model_name_or_path, 
                                                   do_lower_case=model_args.do_lower_case)
@@ -433,14 +437,14 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
     # Se a variável URL_MODELO foi setada
     if URL_MODELO:
         # Carregando o Modelo BERT
-        print('Carregando o modelo BERT do diretório {} pára classificação.'.format(DIRETORIO_MODELO))
+        logging.info('Carregando o modelo BERT do diretório {} pára classificação.'.format(DIRETORIO_MODELO))
 
         model = BertModel.from_pretrained(DIRETORIO_MODELO,
                                           output_attentions = model_args.output_attentions,
                                           output_hidden_states = model_args.output_hidden_states)
     else:
         # Carregando o Modelo BERT da comunidade
-        print('Carregando o modelo BERT da comunidade para cálculo de medida.')
+        logging.info('Carregando o modelo BERT da comunidade para cálculo de medida.')
 
         model = BertModel.from_pretrained(model_args.pretrained_model_name_or_path,
                                           output_attentions = model_args.output_attentions,
@@ -466,7 +470,7 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
     # Se a variável URL_MODELO foi setada
     if URL_MODELO:
         # Carregando o Modelo BERT
-        print('Carregando o modelo BERT do diretório {} para classificação.'.format(DIRETORIO_MODELO))
+        logging.info('Carregando o modelo BERT do diretório {} para classificação.'.format(DIRETORIO_MODELO))
 
         model = BertForSequenceClassification.from_pretrained(DIRETORIO_MODELO, 
                                                               num_labels = model_args.num_labels,
@@ -475,7 +479,7 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
             
     else:
         # Carregando o Modelo BERT da comunidade
-        print('Carregando o modelo BERT da comunidade para classificação.')
+        logging.info('Carregando o modelo BERT da comunidade para classificação.')
 
         model = BertForSequenceClassification.from_pretrained(model_args.pretrained_model_name_or_path,
                                                               num_labels = model_args.num_labels,
