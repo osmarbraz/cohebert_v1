@@ -61,7 +61,7 @@ def descompactaSpacy(model_args):
     # Nome do arquivo a ser descompactado
     NOME_ARQUIVO_MODELO_COMPACTADO = ARQUIVO_MODELO_SPACY + VERSAO_SPACY + ".tar.gz"
     
-    logging.info(("Descompactando o arquivo do modelo do spaCy.")
+    logging.info("Descompactando o arquivo do modelo do spaCy.")
     arquivoTar = tarfile.open(NOME_ARQUIVO_MODELO_COMPACTADO, "r:gz")    
     arquivoTar.extractall()    
     arquivoTar.close()
