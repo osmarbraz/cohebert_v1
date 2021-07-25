@@ -1,4 +1,5 @@
 # Import das bibliotecas.
+import logging  # Biblioteca de logging
 import numpy as np
 import torch
 
@@ -69,6 +70,7 @@ def encontrarIndiceSubLista(lista, sublista):
             indiceInicio = i - n + 1
             indiceFim = indiceInicio + len(sublista)-1
             return indiceInicio, indiceFim
+        
     return -1, -1
 
 # ============================
