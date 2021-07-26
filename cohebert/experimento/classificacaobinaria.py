@@ -12,7 +12,7 @@ def carregaOtimizador(training_args):
     '''
     # Nota: AdamW é uma classe da biblioteca huggingface (ao contrário de pytorch).
     # Eu acredito que o 'W' significa 'Correção de redução de peso "
-    optimizer = AdamW(model.parameters(),
+    otimizador = AdamW(model.parameters(),
                   lr = training_args.learning_rate, # (ou alfa) A taxa de aprendizado a ser usada. - default é 3e-5
                   # betas = (0.9, 0.999), # (beta1, beta2) - default é (0.9, 0.999)
                     # beta1 é taxa de decaimento exponencial para as estimativas do primeiro momento. 
@@ -23,8 +23,7 @@ def carregaOtimizador(training_args):
                   # correct_bias = True #  Se não deve corrigir o viés(bias) no Adam mudar para False.- default é True
                 )
   
-    return optimizer
-
+    return otimizador
   
   
 # ============================
