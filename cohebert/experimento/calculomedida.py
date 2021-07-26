@@ -415,17 +415,17 @@ def carregaMedidas(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_R
     
         # Verifica se o arquivo existe.
         if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
-            logging.info("Carregando arquivo:", NOME_ARQUIVO_MEDICAO)
+            logging.info("Carregando arquivo: {}.".format(NOME_ARQUIVO_MEDICAO))
             
             # Carrega os dados do arquivo  
             dfMedida = pd.read_csv(NOME_ARQUIVO_MEDICAO_COMPLETO, sep=';')
             
-            logging.info('Medidas carregadas: ', len(dfMedida))
+            logging.info("Medidas carregadas: {}.".format(len(dfMedida)))
       
         else:
-            logging.info('Arquivo com as medições não encontrado!')        
+            logging.info("Arquivo com as medições não encontrado!")        
 
     else:
-        logging.info('Diretório com as medições não encontrado!')
+        logging.info("Diretório com as medições não encontrado!")
 
     return dfMedida
