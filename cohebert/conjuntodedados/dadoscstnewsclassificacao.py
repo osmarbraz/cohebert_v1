@@ -16,11 +16,12 @@ from util.utilarquivo import *
 from conjuntodedados.dadoscstnewsmedida import *
 
 # ============================
-def analiseArquivosKFold(DIRETORIO_BASE, model_args):
+def analiseArquivosKFold(DIRETORIO_BASE, tokenizer, model_args):
     '''    
     Analisa os dados dos arquivos para Kfolds.
     Parâmetros:
         `DIRETORIO_BASE` - Diretório onde salvar os dados.  
+        `tokenizer` - Tokenizador BERT.
         `model_args` - Objeto com os argumentos do modelo.    
     '''
   
