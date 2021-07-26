@@ -30,8 +30,8 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
     test_qtde = int(percentualDivisao*dfdados.shape[0])
     
     # Divide o conjunto
-    dfdados_train, dfdados_test = dfdados, test_size=test_qtde, random_state=42, stratify=dfdados[classeStratify])
-
+    dfdados_train, dfdados_test = train_test_split(dfdados, test_size=test_qtde, random_state=42, stratify=dfdados[classeStratify])
+    
     logging.info("Conjunto total:", len(dfdados))
     logging.info("  Treino:", len(dfdados_train))
     logging.info("  Teste :", len(dfdados_test))
