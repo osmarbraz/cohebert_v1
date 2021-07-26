@@ -437,7 +437,7 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
     # Se a variável URL_MODELO foi setada
     if URL_MODELO:
         # Carregando o Modelo BERT
-        logging.info('Carregando o modelo BERT do diretório {} pára classificação.'.format(DIRETORIO_MODELO))
+        logging.info('Carregando o modelo BERT do diretório {} para classificação.'.format(DIRETORIO_MODELO))
 
         model = BertModel.from_pretrained(DIRETORIO_MODELO,
                                           output_attentions = model_args.output_attentions,
