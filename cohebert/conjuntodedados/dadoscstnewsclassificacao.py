@@ -16,6 +16,85 @@ from util.utilarquivo import *
 from conjuntodedados.dadoscstnewsmedida import *
 
 # ============================
+def analiseArquivosKFold(DIRETORIO_BASE, model_args):
+    '''    
+    Analisa os dados dos arquivos para Kfolds.
+    Parâmetros:
+        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
+        `model_args` - Objeto com os argumentos do modelo.    
+    '''
+  
+    print("Análise dos dados dos KFolds do diretório: {}.".format(DIRETORIO_BASE))
+
+    # Lista para armazenar os dados
+    lista_dadostrain_folds = []
+    lista_dadostest_folds = []
+
+    # Define o prefixo do nome dos arquivos dos folds
+    PREFIXO_NOME_ARQUIVO_TREINO = DIRETORIO_BASE + "/cstnews_md_train_f"
+    PREFIXO_NOME_ARQUIVO_TESTE = DIRETORIO_BASE + "/cstnews_md_test_f"
+
+    # Quantidade de folds a ser gerado
+    QTDE_FOLDS = model_args.fold
+
+    for x in range(QTDE_FOLDS):
+  
+        dadostrain = pd.read_csv(PREFIXO_NOME_ARQUIVO_TREINO+str(x+1)+".csv", sep=';')
+        print('Dados treino do fold {}: {}'.format(x+1,len(dadostrain)))
+
+        dadostest = pd.read_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(x+1)+".csv", sep=';')
+        print('Dados teste do fold {}: {}'.format(x+1,len(dadostest)))
+
+        lista_dadostrain_folds.append([x,dadostrain.tipo.sum(), len(dadostrain.tipo)-dadostrain.tipo.sum()])
+        lista_dadostest_folds.append([x,dadostest.tipo.sum(), len(dadostest.tipo)-dadostest.tipo.sum()])
+
+        # Pega as listas de documentos e seus rótulos.
+        documentos = dadostrain.documento.values
+        maior_tamanho_documento_treino = 0
+
+        # Para cada documento no conjunto de treino.
+        for documento in documentos:
+            # Tokeniza o texto e adiciona os tokens `[CLS]` e `[SEP]`.
+            input_ids = tokenizer.encode(documento, add_special_tokens=True)
+            # Atualiza o tamanho máximo de documento.
+            maior_tamanho_documento_treino = max(maior_tamanho_documento_treino, len(input_ids))
+            
+        print('Máximo de tokens no conjunto de dados de treino: {}'.format(maior_tamanho_documento_treino))
+
+        # Pega as listas de documentos e seus rótulos.
+        documentos = dadostest.documento.values
+        maior_tamanho_documento_teste = 0    
+        # Para cada documento no conjunto de treino.  
+        for documento in documentos:
+            # Tokeniza o texto e adiciona os tokens `[CLS]` e `[SEP]`.
+            input_ids = tokenizer.encode(documento, add_special_tokens=True)
+            # Atualiza o tamanho máximo de documento.
+            maior_tamanho_documento_teste = max(maior_tamanho_documento_teste, len(input_ids))
+            
+        print('Máximo de token no conjunto de dados de teste: {}'.format(maior_tamanho_documento_teste))
+
+        print('Fold {} Treino positivos: {} of {} ({:.2f}%)'.format(x+1, 
+                                                                  dadostrain.tipo.sum(), 
+                                                                  len(dadostrain.tipo), 
+                                                                  (dadostrain.tipo.sum() / len(dadostrain.tipo) * 100.0)
+                                                                  ))
+
+        print('Fold {} Treino negativos: {} of {} ({:.2f}%)'.format(x+1, 
+                                                                  len(dadostrain.tipo)-dadostrain.tipo.sum(), 
+                                                                  len(dadostrain.tipo), 
+                                                                  ((len(dadostrain.tipo)-dadostrain.tipo.sum()) / len(dadostrain.tipo) * 100.0)))
+
+        print('Fold {} Teste positivos: {} of {} ({:.2f}%)'.format(x+1, 
+                                                                  dadostest.tipo.sum(), 
+                                                                  len(dadostest.tipo), 
+                                                                  (dadostest.tipo.sum() / len(dadostest.tipo) * 100.0)))
+        print('Fold {} Teste negativos: {} of {} ({:.2f}%)'.format(x+1, 
+                                                                  len(dadostest.tipo)-dadostest.tipo.sum(), 
+                                                                  len(dadostest.tipo), 
+                                                                  ((len(dadostest.tipo)-dadostest.tipo.sum()) / len(dadostest.tipo) * 100.0)))                               
+        print('')
+
+# ============================
 def gerarArquivosKFold(DIRETORIO_BASE, dfdados, model_args):
     '''    
     Divide o conjunto de dados em arquivos de treino e teste para Kfolds.
