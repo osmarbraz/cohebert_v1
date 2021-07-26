@@ -134,7 +134,7 @@ def acertosMedidaDistanciaPermutado(medida, dfListaParesDocumentosMedidas):
     return acertosOriginal, acertosPermutado, percentualOriginal, percentualPermutado  
 
 # ============================
-def acertosMedidaDistanciaOriginal(medidam dfListaParesDocumentosMedidas):
+def acertosMedidaDistanciaOriginal(medida, dfListaParesDocumentosMedidas):
     '''
     Conta os acerto de uma medida de distância(DO <= permDO) com base em documentos originais. 
     
