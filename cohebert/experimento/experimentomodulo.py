@@ -1,7 +1,112 @@
 # Import das bibliotecas.
 import logging  # Biblioteca de logging
+from tqdm.notebook import tqdm as tqdm_notebook # Biblioteca da barra de progresso
 import os
 import pandas as pd
+
+# Import de bibliotecas próprias
+from medidor.medidor import *
+
+# ============================
+def calculaMedidasDocumentosConjuntoDeDados(dfdados, model, tokenizer, nlp, model_args, wandb):
+    '''
+    Cálcula a medida de todos os documentos do conjunto.
+    Parâmetros:
+        `dfdados` - Datafrane dos documentos.
+        `model` - Modelo BERT.
+        `tokenizer` - Tokenizador BERT.
+        `nlp` - Objeto spaCy.
+        `model_args` - Objeto com os argumentos do modelo. 
+        `wandg` - Wandb para log do experimento.  
+        
+    Saída:     
+        `lista_medidas_documentos_salvar` - Lista com as medidas dos documentos para salvamento.
+        `conta` - Quantidade de pares de documentos.
+        `percentualCcos` - Percentual de acertos para a medida Ccos.
+        `contaCcos` - Quantidade de acertos para a medida Ccos.
+        `percentualCeuc` - Percentual de acertos para a medida Ceuc
+        `contaCeuc` - Quantidade de acertos para a medida Ceuc
+        `percentualCman` - Percentual de acertos para a medida Cman
+        `contaCman` - Quantidade de acertos para a medida Cman
+                
+    '''  
+    
+    # Contadores de ocorrência de coerência
+    contaCcos = 0
+    contaCeuc = 0
+    contaCman = 0
+    conta = 0
+
+    # Lista para o salvamento das medidas
+    lista_medidas_documentos_salvar = []
+
+    # Barras de progresso.    
+    dfdado_bar = tqdm_notebook(dfdados.iterrows(), desc=f'Pares documentos', unit=f'par', total=len(dfdados))
+
+    # Percorre as pares de documento carregadas do arquivo
+    for (i, linha) in dfdado_bar:
+   
+        # Conta os pares
+        conta = conta + 1
+
+        # Calcula as medidas do documento original    
+        original = linha['sentencasOriginais']    
+        Ccos, Ceuc, Cman = getMedidasCoerenciaDocumento(original, modelo=model, tokenizador=tokenizer, nlp=nlp, camada=listaTipoCamadas[4], tipoDocumento='o', estrategia_pooling=model_args.estrategia_pooling, palavra_relevante=model_args.palavra_relevante)
+                      
+        # Calcula a smedidas do documento permutado
+        permutado = linha['sentencasPermutadas']
+        Ccosp, Ceucp, Cmanp = getMedidasCoerenciaDocumento(permutado, modelo=model, tokenizador=tokenizer, nlp=nlp, camada=listaTipoCamadas[4], tipoDocumento='p', estrategia_pooling=model_args.estrategia_pooling, palavra_relevante=model_args.palavra_relevante)
+      
+        # Verifica a medida de coerência Scos(similaridade do cosseno) das sentenças do documento original com as sentenças do documento permutado.
+        # Quanto maior o valor de Scos mais as orações do documentos são coerentes
+        if Ccos >= Ccosp:
+            contaCcos = contaCcos + 1
+
+        # Verifica a medida de incoerência Seuc(distância euclidiana) das sentenças do documento original com as sentenças do documento permutado.
+        # Quanto maior o valor de Scos mais as orações do documentos são coerentes
+        if Ceuc <= Ceucp:
+            contaCeuc = contaCeuc + 1
+
+        # Verifica a medida de incoerência Sman(distância de manhattan) das sentenças do documento original com as sentenças do documento permutado.
+        # Quanto maior o valor de Scos mais as orações do documentos são coerentes
+        if Cman <= Cmanp:
+            contaCman = contaCman + 1        
+
+        # Guarda as medidas em uma lista para salvar em arquivo
+        # Guarda as medidas dos documentos originais
+        lista_medidas_documentos_salvar.append([linha[0], Ccos,  Ceuc,  Cman])
+        # Guarda as medidas dos documentos permutados
+        lista_medidas_documentos_salvar.append([linha[3], Ccosp, Ceucp, Cmanp])
+
+    logging.info("Total de Pares: {}.".format(conta))
+    
+    if model_args.use_wandb:
+        wandb.log({'pares_doc': conta})
+
+    logging.info("Pares Corretos Ccos: {}.".format(contaCcos))
+    percentualCcos = float(contaCcos)/float(conta)
+    logging.info("Percentual acertos Ccos: {}.".format(percentualCcos*100))
+
+    if model_args.use_wandb:
+        wandb.log({'acuracia_ccos': acuraciaCcos})
+
+    logging.info("Pares Corretos Ceuc: {}.".format(contaCeuc))
+    percentualCeuc = float(contaCeuc)/float(conta)
+    logging.info("Percentual acertos Ceuc: {}.".format(percentualCeuc*100))
+
+    if model_args.use_wandb:
+        wandb.log({'acuracia_ceuc': acuraciaCeuc})  
+
+    logging.info("Pares Corretos Cman:",str(contaCman))
+    percentualCman = float(contaCman)/float(conta)
+    logging.info("Percentual acertos Cman: {}.".format(percentualCman*100))
+
+    if model_args.use_wandb:
+        wandb.log({'acuracia_cman': acuraciaCman})  
+
+    logging.info("Cálculo de medida de documentos terminado!")
+
+    return lista_medidas_documentos_salvar, conta, percentualCcos, contaCcos, percentualCeuc, contaCeuc, percentualCman, contaCman
 
 # ============================
 def organizaParesDocumentosCSTNews(dfOriginalMedida, dfPermutadoMedida):
