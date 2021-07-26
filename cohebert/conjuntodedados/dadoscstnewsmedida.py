@@ -154,7 +154,7 @@ def carregaArquivosOriginaisCSTNews():
         # Adiciona o documento e as sentenças a lista
         lista_documentos_originais.append([arquivos[i], sentencas, documento])
 
-    logging.info ('Carregamento de documento originais concluído: ', len(lista_documentos_originais))    
+    logging.info ("Carregamento de documento originais concluído: ", len(lista_documentos_originais))    
 
     return lista_documentos_originais
 
@@ -196,7 +196,7 @@ def carregaArquivosPermutadosCSTNews():
         # Adiciona o documento e as sentenças a lista
         lista_documentos_permutados.append([arquivos[i], sentencas, documento])
 
-    logging.info('Carregamento de documento permutados concluído: ', len(lista_documentos_permutados)) 
+    logging.info("Carregamento de documento permutados concluído: ", len(lista_documentos_permutados)) 
 
     return lista_documentos_permutados
 
@@ -248,7 +248,7 @@ def carregaParesDocumentosCSTNews():
             # Adiciona o par original e sua versão permutada.
             lista_documentos.append([arquivosOriginais[i], sentencasOriginais, documentoOriginal, arquivoPermutado, sentencasPermutadas, documentoPermutado])
     
-    logging.info('Geraçao de pares de documentos concluído:', len(lista_documentos))
+    logging.info("Geraçâo de pares de documentos concluído: ", len(lista_documentos))
     
     return lista_documentos
 
