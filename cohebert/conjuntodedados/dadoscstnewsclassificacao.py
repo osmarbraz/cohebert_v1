@@ -92,7 +92,7 @@ def downloadCSTNewsKFoldGithub():
        os.remove(NOME_ARQUIVO)
     
     # Realiza o download do arquivo do OneDrive
-    URL_ARQUIVO = 'https://github.com/osmarbraz/coebert/blob/main/conjuntodedados/'+ NOME_ARQUIVO + '?raw=true'
+    URL_ARQUIVO = 'https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/'+ NOME_ARQUIVO + '?raw=true'
 
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
@@ -124,7 +124,7 @@ def copiaCSTNewsKFoldGithub():
     NOME_ARQUIVO = "CSTNEWS_MD_KFOLD_10.zip"
     
     # Diretórios dos arquivos
-    DIRETORIO_FONTE_ARQUIVO = "/content/coebert_v1/conjuntodedados/cstnews/" + NOME_ARQUIVO
+    DIRETORIO_FONTE_ARQUIVO = "/content/cohebert_v1/conjuntodedados/cstnews/" + NOME_ARQUIVO
     DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
     
     # Apaga o arquivo    
