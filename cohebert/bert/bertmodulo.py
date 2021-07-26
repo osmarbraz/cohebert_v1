@@ -339,7 +339,7 @@ def downloadModeloPretreinado(model_args):
         # Apaga o arquivo compactado
         os.remove(NOME_ARQUIVO)
 
-        logging.info('Pasta do {} pronta!'.format(DIRETORIO_MODELO))
+        logging.info('Pasta {} do modelo BERT pronta!'.format(DIRETORIO_MODELO))
 
     else:
         DIRETORIO_MODELO = MODELO
@@ -362,7 +362,7 @@ def copiaModeloAjustado():
     # Copia o arquivo do modelo para o diretório no Google Drive.
     shutil.copytree(DIRETORIO_REMOTO_MODELO_AJUSTADO, DIRETORIO_LOCAL_MODELO_AJUSTADO) 
    
-    logging.info('Modelo copiado!')
+    logging.info('Modelo BERT copiado!')
 
     return DIRETORIO_LOCAL_MODELO_AJUSTADO
 
@@ -378,11 +378,11 @@ def verificaModelo(model_args):
     
     if model_args.usar_mcl_ajustado == True:
         DIRETORIO_MODELO = copiaModeloAjustado()
-        logging.info('Usando modelo ajustado')
+        logging.info('Usando modelo BERT ajustado')
         
     else:
         DIRETORIO_MODELO = downloadModeloPretreinado(model_args)
-        logging.info('Usando modelo pré-treinado de download ou comunidade')
+        logging.info('Usando modelo BERT pré-treinado')        
         
     return DIRETORIO_MODELO
 
@@ -506,6 +506,7 @@ def carregaBERT(model_args):
     if type(model_args) == ModeloArgumentosMedida:
         # Carrega o modelo para cálculo da medida
         model = carregaModeloMedida(DIRETORIO_MODELO, model_args)
+        
     else:
         # Carrega o modelo para classificação
         model = carregaModeloClassifica(DIRETORIO_MODELO, model_args)
