@@ -7,6 +7,44 @@ import pandas as pd # Biblioteca para manipulação e análise de dados
 # Import de bibliotecas próprias
 from medidor.medidor import *
 
+# ============================
+def getSomatorioDiferencaAbsolutaOrdenada(listaMedida1, listaMedida2):
+    '''
+    Calcula o somatório da diferença absoluta entre a lista ordenada de duas medidas.
+    
+    Parâmetros:
+        `listaMedida1` - Lista 1 com medidas.
+        `listaMedida2` - Lista 2 com medidas.
+        
+    Saída:  
+        `soma` - Somátorio da diferença absoluta.
+    '''  
+    lista1 = sorted(listaMedida1)
+    lista2 = sorted(listaMedida2)
+    soma = 0
+    for i, linha in enumerate(lista1): 
+        diferenca = abs(lista2[i] - lista1[i])
+        soma = soma + diferenca
+    return soma
+
+# ============================
+def getSomatorioDiferencaAbsoluta(listaMedida1, listaMedida2):
+    '''
+    Calcula o somatório da diferença absoluta entre a lista de duas medidas.
+    
+    Parâmetros:
+        `listaMedida1` - Lista 1 com medidas.
+        `listaMedida2` - Lista 2 com medidas.
+        
+    Saída:  
+        `soma` - Somátorio da diferença absoluta.
+    '''  
+    
+    soma = 0
+    for i, linha in enumerate(listaMedida1): 
+        diferenca = abs(listaMedida2[i] - listaMedida1[i])
+        soma = soma + diferenca
+    return soma
 
 # ============================
 def acertosMedidaSimilaridadePermutado(medida, dfListaParesDocumentosMedidas):
