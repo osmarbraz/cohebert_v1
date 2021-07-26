@@ -43,9 +43,6 @@ def gerarArquivosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args):
     PREFIXO_NOME_ARQUIVO_TREINO = DIRETORIO_BASE + "/cstnews_md_train_f"
     PREFIXO_NOME_ARQUIVO_TESTE = DIRETORIO_BASE + "/cstnews_md_test_f"
 
-    # Registra o tempo inícial.
-    t0 = time.time()
-
     # Preparação do conjunto de dados.
     X =  np.array(dfdados)
 
@@ -55,6 +52,7 @@ def gerarArquivosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args):
     kf = KFold(n_splits=QTDE_FOLDS,  random_state=True, shuffle=True)
     
     CONTAFOLD = 1
+    
     # Percorre os indices do conjunto de dados.
     for train_index, test_index in kf.split(X):
       logging.info("\nExecutando divisão do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
@@ -103,13 +101,8 @@ def gerarArquivosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args):
 
       # Avança o contador de testes.
       CONTAFOLD = CONTAFOLD + 1
-
-      # Medida de quanto tempo levou a execução da validação.
-      teste_time = formataTempo(time.time() - t0)
-
-      logging.info("  Tempo gasto: {:}".format(teste_time))
-
-
+        
+        
 # ============================
 def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
     '''    
