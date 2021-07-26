@@ -99,8 +99,8 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         # Adicione o resultado tokenizado à nossa lista.
         input_ids_completos.append(input_ids)
         
-    logging.info('Tokeização concluída.')
-    logging.info('{:>10,} amostras\n'.format(len(input_ids_completos)))
+    logging.info('Tokenização concluída.')
+    logging.info('{:>10,} amostras.'.format(len(input_ids_completos)))
 
     # =========================
     #      Seleciona os Lotes
@@ -109,7 +109,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
     # Classifique as duas listas pelo comprimento da sequência de entrada.
     amostras = sorted(zip(input_ids_completos, classes, documentoids), key=lambda x: len(x[0]))
 
-    logging.info('{:>10,} amostras após classificação\n'.format(len(amostras)))
+    logging.info('{:>10,} amostras após classificação.'.format(len(amostras)))
 
     import random
 
