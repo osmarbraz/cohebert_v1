@@ -310,7 +310,7 @@ def calculaMedidasDocumentosConjuntoDeDados(dfdados, model, tokenizer, nlp, mode
     if model_args.use_wandb:
         wandb.log({'acuracia_ceuc': acuraciaCeuc})  
 
-    logging.info("Pares Corretos Cman:",str(contaCman))
+    logging.info("Pares Corretos Cman: {}.".format(contaCman))
     percentualCman = float(contaCman)/float(conta)
     logging.info("Percentual acertos Cman: {}.".format(percentualCman*100))
 
