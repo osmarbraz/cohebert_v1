@@ -317,7 +317,7 @@ def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
     dfdadosretorno = dfdados_512.drop(columns=['input_ids'])
 
     logging.info("Quantidade de dados anterior: {}".format(len(dfdadosAnterior)))
-    logging.info("Nova quantidade de dados    : {}"format(len(dfdadosretorno)))
+    logging.info("Nova quantidade de dados    : {}".format(len(dfdadosretorno)))
 
     # Mostra a quantidade registros removidos
     dfdadosSemLista =  dfdadosretorno.drop(columns=['sentencasOriginais','sentencasPermutadas'])
