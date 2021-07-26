@@ -55,7 +55,7 @@ def gerarArquivosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args):
     
     # Percorre os indices do conjunto de dados.
     for train_index, test_index in kf.split(X):
-      logging.info("\nExecutando divisão do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
+      logging.info("Executando divisão do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
       logging.info("Treino: {}, Teste: {}".format(len(train_index), len(test_index)))
 
       #print("Índices de treino:", len(train_index), " - ", train_index[0], " - ", train_index[len(train_index)-1])  
@@ -97,11 +97,10 @@ def gerarArquivosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args):
       pddata_tuples_test = pd.DataFrame(documentos_test_organizada, columns=["id","documento","tipo"])  
   
       # Salva o arquivo de teste do fold.
-      pddata_tuples_test.to_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(TESTE)+".csv", index = False, sep=';')
+      pddata_tuples_test.to_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(CONTAFOLD)+".csv", index = False, sep=';')
 
       # Avança o contador de testes.
-      CONTAFOLD = CONTAFOLD + 1
-        
+      CONTAFOLD = CONTAFOLD + 1        
         
 # ============================
 def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
