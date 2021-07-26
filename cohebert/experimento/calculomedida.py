@@ -178,10 +178,10 @@ def organizaParesDocumentos(dfOriginalMedida, dfPermutadoMedida):
                                                     linha2['ceuc'], 
                                                     linha2['cman'] ],)
 
-    logging.info("Registros antes:", len(listaParesDocumentosMedidas))
+    logging.info("Registros antes: {}.".format(len(listaParesDocumentosMedidas)))
 
     dfListaParesDocumentosMedidas = pd.DataFrame(listaParesDocumentosMedidas, columns=('dataDO', 'idDO', 'ccosDO', 'ceucDO', 'cmanDO', 'dataPerm', 'idPerm', 'ccosPerm', 'ceucPerm', 'cmanPerm'))   
-    logging.info("Registros depois:", len(dfListaParesDocumentosMedidas))
+    logging.info("Registros depois: {}.".format(len(dfListaParesDocumentosMedidas)))
 
     return dfListaParesDocumentosMedidas
 
@@ -200,14 +200,14 @@ def separaDocumentos(dadosMedida):
     dfOriginalMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==False]
     # Remove os duplicados
     dfOriginalMedida = dfOriginalMedida.drop_duplicates(subset=['arquivo'])
-    logging.info("Registros: ", len(dfOriginalMedida))
+    logging.info("Registros: {}.".format(len(dfOriginalMedida)))
 
     # Separa os permutados
     dfPermutadoMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==True]
     # Remove os duplicados
     dfPermutadoMedida = dfPermutadoMedida.drop_duplicates(subset=['arquivo'])
     
-    logging.info("Registros: ", len(dfPermutadoMedida))
+    logging.info("Registros: {}.".format(len(dfPermutadoMedida)))
 
     return dfOriginalMedida, dfPermutadoMedida
 
