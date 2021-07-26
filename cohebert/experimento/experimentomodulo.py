@@ -17,30 +17,29 @@ def carregaMedidasCSTNews(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PA
         
     Saída:
         `dfMedida` - Um dataframe com os dados carregados.
-  '''
-  
-  NOME_BASE = 'MedicaoCoerenciaCSTNews_v1'
-
-  NOME_ARQUIVO_MEDICAO = NOME_BASE + TIPO_MODELO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
-                                             
-  # Verifica se o diretório dos resultados existem.
-  if os.path.exists(DIRETORIO_MEDIDAS):
-      arquivos = os.listdir(DIRETORIO_MEDIDAS)     
-
-      NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDIDAS + NOME_ARQUIVO_MEDICAO
+    '''
+    NOME_BASE = "MedicaoCoerenciaCSTNews_v1"
     
-      # Verifica se o arquivo existe.
-      if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
-          logging.info("Carregando arquivo:", NOME_ARQUIVO_MEDICAO)
-          # Carrega os dados do arquivo  
-          dfMedida = pd.read_csv(NOME_ARQUIVO_MEDICAO_COMPLETO, sep=';')
+    NOME_ARQUIVO_MEDICAO = NOME_BASE + TIPO_MODELO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
+                                             
+    # Verifica se o diretório dos resultados existem.
+    if os.path.exists(DIRETORIO_MEDIDAS):
+        arquivos = os.listdir(DIRETORIO_MEDIDAS)     
+
+        NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDIDAS + NOME_ARQUIVO_MEDICAO
+    
+        # Verifica se o arquivo existe.
+        if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
+            logging.info("Carregando arquivo:", NOME_ARQUIVO_MEDICAO)
+            # Carrega os dados do arquivo  
+            dfMedida = pd.read_csv(NOME_ARQUIVO_MEDICAO_COMPLETO, sep=';')
       
-      else:
-          logging.info('Arquivo com as medições não encontrado')        
+        else:
+            logging.info('Arquivo com as medições não encontrado')        
 
-  else:
-      logging.info('Diretório com as medições não encontrado')
+    else:
+        logging.info('Diretório com as medições não encontrado')
 
-  logging.info('Medidas carregadas: ', len(dfMedida))
+    logging.info('Medidas carregadas: ', len(dfMedida))
 
-  return dfMedida
+    return dfMedida
