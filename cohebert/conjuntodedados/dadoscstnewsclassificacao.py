@@ -24,7 +24,7 @@ def analiseArquivosKFold(DIRETORIO_BASE, model_args):
         `model_args` - Objeto com os argumentos do modelo.    
     '''
   
-    print("Análise dos dados dos KFolds do diretório: {}.".format(DIRETORIO_BASE))
+    print("Análise dos dados dos arquivos dos KFolds do diretório: {}.".format(DIRETORIO_BASE))
 
     # Lista para armazenar os dados
     lista_dadostrain_folds = []
