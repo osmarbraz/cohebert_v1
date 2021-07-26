@@ -7,6 +7,44 @@ import pandas as pd # Biblioteca para manipulação e análise de dados
 # Import de bibliotecas próprias
 from medidor.medidor import *
 
+
+# ============================
+def geraEstatisticasMedidasDocumentos(dfdadosMedidasDocumentos):
+    '''
+    Gera as estatísticas dos pares dos documentos e suas medidas.
+    Parâmetros:
+        `dfdadosMedidasDocumentos` - Datafrane dos documentos e suas medidas.
+        
+    Saída:     
+        `stats_medidas_documentos` - Lista com as estatísticas.        
+    '''        
+
+    # Lista das estatísticas das medidas
+    stats_medidas_documentos = []
+
+    for i, linha in dfdadosMedidasDocumentos.iterrows():
+      
+        # Registra as estatística da comparação
+        stats_medidas_documentos.append(
+            {  
+              'documento': i,                  
+              'original ccos': linha['ccosDO'],
+              'permutado ccos': linha['ccosPerm'],
+              'dif ccos' : linha['ccosDO'] - linha['ccosPerm'],
+              'difabs ccos' : abs(linha['ccosDO'] - linha['ccosPerm']),
+              'original ceuc': linha['ceucDO'],
+              'permutado ceuc': linha['ceucPerm'],
+              'dif ceuc' : linha['ceucDO'] - linha['ceucPerm'],
+              'difabs ceuc' : abs(linha['ceucDO'] - linha['ceucPerm']),
+              'original cman': linha['cmanDO'],
+              'permutado cman': linha['cmanPerm'],
+              'dif cman' : linha['cmanDO'] - linha['cmanPerm'],
+              'difabs cman' : abs(linha['cmanDO'] - linha['cmanPerm']),
+            }
+        )     
+        
+    return stats_medidas_documentos
+
 # ============================
 def calculaMedidasDocumentosConjuntoDeDados(dfdados, model, tokenizer, nlp, model_args, wandb):
     '''
