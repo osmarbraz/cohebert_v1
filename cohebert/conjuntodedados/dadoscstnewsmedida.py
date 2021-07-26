@@ -248,7 +248,7 @@ def carregaParesDocumentosCSTNews():
             # Adiciona o par original e sua versão permutada.
             lista_documentos.append([arquivosOriginais[i], sentencasOriginais, documentoOriginal, arquivoPermutado, sentencasPermutadas, documentoPermutado])
         
-    logging.info("Geraçâo de pares de documentos concluído: {}".format(len(lista_documentos)))
+    logging.info("Geração de pares de documentos concluído: {}".format(len(lista_documentos)))
     
     return lista_documentos
 
