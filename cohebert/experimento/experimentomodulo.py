@@ -3,6 +3,44 @@ import logging  # Biblioteca de logging
 import os
 import pandas as pd
 
+# ============================
+def organizaParesDocumentosCSTNews(dfOriginalMedida, dfPermutadoMedida):
+    '''
+    Organiza as medidas do.
+    Parâmetros:
+        `dfOriginalMedida` - Dados de medidas de documentos originais.
+        `dfPermutadoMedida` - Dados de medidas de documentos permutados.
+        
+    Saída:
+        `dfListaParesDocumentosMedidas` - Dataframe com as medidas de documentos originais seguidos das medidas de documentos permutados.
+    '''  
+
+    listaParesDocumentosMedidas = []
+    # Refaz os pares de documentos
+    for i, linha1 in dfOriginalMedida.iterrows():
+        ponto = linha1['arquivo'].find('.')
+        nomeArquivo = linha1['arquivo'][:ponto]
+        for i, linha2 in dfPermutadoMedida.iterrows():
+            if nomeArquivo in linha2['arquivo']:
+                listaParesDocumentosMedidas.append(
+                                                    [linha1['data'], 
+                                                    linha1['arquivo'],	
+                                                    linha1['ccos'], 
+                                                    linha1['ceuc'], 
+                                                    linha1['cman'],
+                                       
+                                                    linha2['data'], 
+                                                    linha2['arquivo'],	
+                                                    linha2['ccos'], 
+                                                    linha2['ceuc'], 
+                                                    linha2['cman'] ],)
+
+    logging.info("Registros antes:", len(listaParesDocumentosMedidas))
+
+    dfListaParesDocumentosMedidas = pd.DataFrame(listaParesDocumentosMedidas, columns=('dataDO', 'idDO', 'ccosDO', 'ceucDO', 'cmanDO', 'dataPerm', 'idPerm', 'ccosPerm', 'ceucPerm', 'cmanPerm'))   
+    logging.info("Registros depois:", len(dfListaParesDocumentosMedidas))
+
+    return dfListaParesDocumentosMedidas
 
 # ============================
 def separaDocumentosCSTNews(dadosMedida):
