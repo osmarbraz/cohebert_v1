@@ -15,9 +15,8 @@ from util.utilarquivo import *
 
 from conjuntodedados.dadoscstnewsmedida import *
 
-
 # ============================
-def gerarArquivosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args)
+def gerarArquivosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args):
     '''    
     Divide o conjunto de dados em Kfolds.
     Parâmetros:
