@@ -18,9 +18,9 @@ from conjuntodedados.dadoscstnewsmedida import *
 # ============================
 def gerarArquivosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args):
     '''    
-    Divide o conjunto de dados em Kfolds.
+    Divide o conjunto de dados em arquivos de treino e teste para Kfolds.
     Parâmetros:
-        `DIRETORIO_BASE` - Diretório onnde salvar os dados.  
+        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
         `dfdados` - Dataframe com os dados a serem divididos. 
         `model_args` - Objeto com os argumentos do modelo.    
         
