@@ -8,7 +8,7 @@ import pandas as pd # Biblioteca para manipulação e análise de dados
 from medidor.medidor import *
 
 # ============================
-def recuperaListaDeMedidas(medida, dfListaParesDocumentosMedidas):
+def recuperaListasDeMedidas(medida, dfListaParesDocumentosMedidas):
     '''
     Divide o dataframe uma lista de documentos originais e uma lista de documentos permutados para uma medida.
     Parâmetros:
