@@ -8,6 +8,35 @@ import pandas as pd # Biblioteca para manipulação e análise de dados
 from medidor.medidor import *
 
 # ============================
+def acertosMedidaDistanciaOriginal(medidam dfListaParesDocumentosMedidas):
+    '''
+    Conta os documentos originais com menor incoerencia, ou seja a menor distância média entre as sentenças.
+    
+    Parâmetros:
+        `medida` - Medida a ser contado.
+        `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
+        
+    Saída:  
+        `acertosOriginal` - Quantidade de acertos do documento original para a medida.
+        `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
+        `percentualOriginal` - Percentual de acertos do documento original para a medida.
+        `percentualPermutado` - Percentual de acertos do documento original para a medida.        
+    '''  
+  acertosOriginal  = 0  
+  acertosPermutado  = 0  
+    
+  for i, linha in dfListaParesDocumentosMedidas.iterrows():
+    if linha[medida + 'DO'] <= linha[ medida + 'Perm']:
+      acertosOriginal = acertosOriginal + 1
+    else:
+      acertosPermutado = acertosPermutado + 1
+
+  percentualOriginal = acertosOriginal / len(dfListaParesDocumentosMedidas)
+  percentualPermutado = acertosPermutado / len(dfListaParesDocumentosMedidas)
+
+  return acertosOriginal, acertosPermutado, percentualOriginal, percentualPermutado
+
+# ============================
 def recuperaListasDeMedidas(medida, dfListaParesDocumentosMedidas):
     '''
     Divide o dataframe uma lista de documentos originais e uma lista de documentos permutados para uma medida.
