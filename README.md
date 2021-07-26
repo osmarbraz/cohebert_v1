@@ -1,4 +1,4 @@
-# Coebert 1.0 - Classificação e mensuração de coerência textual usando BERT
+# Cohebert 1.0 - Classificação e mensuração de coerência textual usando BERT
 Classificação e mensuração de coerência textual utilizando o MCL BERT.
 
 
@@ -15,7 +15,7 @@ Classificação e mensuração de coerência textual utilizando o MCL BERT.
 **Download**
 
 ```
-!git clone https://github.com/osmarbraz/coebert_v1.git
+!git clone https://github.com/osmarbraz/cohebert_v1.git
 ```
 
 **Utilização da biblioteca de funções**
@@ -30,7 +30,7 @@ sys.path.append('./coebert_v1/coebert')
 **Exemplos de execução são apresentados nos notebooks**
 
 ## **Diretórios**
-* **coebert** - Código fonte do Coeberb versão 1.0
+* **cohebert** - Código fonte do Coheberb versão 1.0
 * **conjuntodedados** - Diretório com os conjuntos de dados.
   * **cstnews** - Arquivos do conjunto de dados do CSTNews.
   * **onlineeduc1.0** - Arquivos do conjunto de dados do OnlineEduc 1.0 (**Não disponibilizado**).
