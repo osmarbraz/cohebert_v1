@@ -5,13 +5,111 @@ import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
 import pandas as pd # Biblioteca pandas
 from sklearn.model_selection import train_test_split # Biblioteca de divisão
-    
+import numpy as np
+from sklearn.model_selection import KFold
+
 # Import de bibliotecas próprias
 from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
 
 from conjuntodedados.dadoscstnewsmedida import *
+
+
+# ============================
+def gerarDadosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args)
+    '''    
+    Divide o conjunto de dados em Kfolds.
+    Parâmetros:
+        `DIRETORIO_BASE` - Diretório onnde salvar os dados.  
+        `dfdados` - Dataframe com os dados a serem divididos. 
+        `model_args` - Objeto com os argumentos do modelo.    
+        
+    Saída:
+        Arquivos dos KFolds salvos no diretório base.
+    '''
+
+    # Cria o diretório para receber os folds    
+    if not os.path.exists(DIRETORIO_BASE):  
+        # Cria o diretório
+        os.makedirs(DIRETORIO_BASE)    
+        logging.info('Diretório criado: {}'.format(DIRETORIO_BASE))
+    else:    
+        logging.info('Diretório já existe: {}'.format(DIRETORIO_BASE))
+
+    # Quantidade de folds a ser gerado
+    QTDE_FOLDS = model_args.fold
+
+    # Define o prefixo do nome dos arquivos dos folds
+    PREFIXO_NOME_ARQUIVO_TREINO = DIRETORIO_BASE + "/cstnews_md_train_f"
+    PREFIXO_NOME_ARQUIVO_TESTE = DIRETORIO_BASE + "/cstnews_md_test_f"
+
+    # Registra o tempo inícial.
+    t0 = time.time()
+
+    # Preparação do conjunto de dados.
+    X =  np.array(dfdados)
+
+    # Divisão em k folds(n_splits).
+    # shuffle, embaralha cada amostra.
+    # Quando shuffle igual True, random_state afeta a ordem dos índices, que controla a aleatoriedade de cada dobra.
+    kf = KFold(n_splits=QTDE_FOLDS,  random_state=True, shuffle=True)
+    
+    CONTAFOLD = 1
+    # Percorre os indices do conjunto de dados.
+    for train_index, test_index in kf.split(X):
+      logging.info("\nExecutando divisão do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
+      logging.info("Treino: {}, Teste: {}".format(len(train_index), len(test_index)))
+
+      #print("Índices de treino:", len(train_index), " - ", train_index[0], " - ", train_index[len(train_index)-1])  
+      #print(train_index)
+      #print("Índices de teste :", len(test_index), "  - ", test_index[0], " - ", test_index[len(test_index)-1])
+      #print(test_index)
+
+      # Recupera os dados das documentos para treino e teste.
+      documentos_train = X[train_index]
+      documentos_test  = X[test_index]  
+
+      # Organiza dados de treino.
+      documentos_train_organizada = []
+
+      # Adiciona a documento incoerente logo após a coerente para treino.
+      for linha in documentos_train:     
+          # 1 para o documento original
+          documentos_train_organizada.append((linha[0], linha[2], 1))  
+          # 0 para o documento permutado  
+          documentos_train_organizada.append((linha[3], linha[5], 0))
+    
+          # Cria um dataframe com os dados de treinamento.
+          pddata_tuples_train = pd.DataFrame(documentos_train_organizada, columns=["id","documento","tipo"])
+    
+      # Salva o arquivo de treino do fold.
+      pddata_tuples_train.to_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(CONTAFOLD)+".csv", index = False, sep=';')
+
+      # Organiza dados de teste.
+      documentos_test_organizada = []
+
+      # Adiciona a documento incoerente logo após a coerente para teste.
+      for linha in documentos_test:    
+          # 1 Para coerente.
+          documentos_test_organizada.append((linha[0], linha[2], 1))
+          # 0 para uma permutação como incoerente.
+          documentos_test_organizada.append((linha[3], linha[5], 0))
+    
+      # Cria um dataframe com os dados de teste.
+      pddata_tuples_test = pd.DataFrame(documentos_test_organizada, columns=["id","documento","tipo"])  
+  
+      # Salva o arquivo de teste do fold.
+      pddata_tuples_test.to_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(TESTE)+".csv", index = False, sep=';')
+
+      # Avança o contador de testes.
+      CONTAFOLD = CONTAFOLD + 1
+
+      # Medida de quanto tempo levou a execução da validação.
+      teste_time = formataTempo(time.time() - t0)
+
+      logging.info("  Tempo gasto: {:}".format(teste_time))
+
 
 # ============================
 def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
@@ -32,9 +130,9 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
     # Divide o conjunto
     dfdados_train, dfdados_test = train_test_split(dfdados, test_size=test_qtde, random_state=42, stratify=dfdados[classeStratify])
     
-    logging.info("Conjunto total:", len(dfdados))
-    logging.info("  Treino:", len(dfdados_train))
-    logging.info("  Teste :", len(dfdados_test))
+    logging.info("Conjunto total: {}.".format(len(dfdados)))
+    logging.info("  Treino: {}.".format(len(dfdados_train)))
+    logging.info("  Teste : {}.".format(len(dfdados_test)))
 
     return dfdados_train, dfdados_test
 
