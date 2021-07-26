@@ -40,9 +40,9 @@ def carregaMedidasCSTNews(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PA
             logging.info('Medidas carregadas: ', len(dfMedida))
       
         else:
-            logging.info('Arquivo com as medições não encontrado')        
+            logging.info('Arquivo com as medições não encontrado!')        
 
     else:
-        logging.info('Diretório com as medições não encontrado')
+        logging.info('Diretório com as medições não encontrado!')
 
     return dfMedida
