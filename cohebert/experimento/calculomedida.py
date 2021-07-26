@@ -7,10 +7,40 @@ import pandas as pd # Biblioteca para manipulação e análise de dados
 # Import de bibliotecas próprias
 from medidor.medidor import *
 
+
+# ============================
+def acertosMedidaDistanciaPermutado(medida, dfListaParesDocumentosMedidas):
+    '''
+    Conta os acerto de uma medida de distância com base em documentos permutados. 
+    
+    Parâmetros:
+        `medida` - Medida a ser contada.
+        `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
+        
+    Saída:  
+        `acertosOriginal` - Quantidade de acertos do documento original para a medida.
+        `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
+        `percentualOriginal` - Percentual de acertos do documento original para a medida.
+        `percentualPermutado` - Percentual de acertos do documento original para a medida.        
+    '''  
+    
+    acertosOriginal  = 0  
+    acertosPermutado  = 0  
+    for i, linha in dfListaParesDocumentosMedidas.iterrows():
+        if linha[medida + 'DO'] < linha[ medida + 'Perm']:      
+            acertosPermutado = acertosPermutado + 1
+        else:
+            acertosOriginal = acertosOriginal + 1
+      
+    percentualOriginal = acertosOriginal / len(dfListaParesDocumentosMedidas)
+    percentualPermutado = acertosPermutado / len(dfListaParesDocumentosMedidas)
+
+    return acertosOriginal, acertosPermutado, percentualOriginal, percentualPermutado  
+
 # ============================
 def acertosMedidaDistanciaOriginal(medidam dfListaParesDocumentosMedidas):
     '''
-    Conta os documentos originais com menor incoerencia, ou seja a menor distância média entre as sentenças.
+    Conta os acerto de uma medida de distância com base em documentos originais. 
     
     Parâmetros:
         `medida` - Medida a ser contado.
@@ -22,19 +52,19 @@ def acertosMedidaDistanciaOriginal(medidam dfListaParesDocumentosMedidas):
         `percentualOriginal` - Percentual de acertos do documento original para a medida.
         `percentualPermutado` - Percentual de acertos do documento original para a medida.        
     '''  
-  acertosOriginal  = 0  
-  acertosPermutado  = 0  
+    acertosOriginal  = 0  
+    acertosPermutado  = 0  
     
-  for i, linha in dfListaParesDocumentosMedidas.iterrows():
-    if linha[medida + 'DO'] <= linha[ medida + 'Perm']:
-      acertosOriginal = acertosOriginal + 1
-    else:
-      acertosPermutado = acertosPermutado + 1
+    for i, linha in dfListaParesDocumentosMedidas.iterrows():
+        if linha[medida + 'DO'] <= linha[ medida + 'Perm']:
+            acertosOriginal = acertosOriginal + 1
+        else:
+            acertosPermutado = acertosPermutado + 1
 
-  percentualOriginal = acertosOriginal / len(dfListaParesDocumentosMedidas)
-  percentualPermutado = acertosPermutado / len(dfListaParesDocumentosMedidas)
+    percentualOriginal = acertosOriginal / len(dfListaParesDocumentosMedidas)
+    percentualPermutado = acertosPermutado / len(dfListaParesDocumentosMedidas)
 
-  return acertosOriginal, acertosPermutado, percentualOriginal, percentualPermutado
+    return acertosOriginal, acertosPermutado, percentualOriginal, percentualPermutado
 
 # ============================
 def recuperaListasDeMedidas(medida, dfListaParesDocumentosMedidas):
