@@ -99,8 +99,8 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         # Adicione o resultado tokenizado à nossa lista.
         input_ids_completos.append(input_ids)
         
-    logging.info('Tokenização concluída.')
-    logging.info('{:>10,} amostras.'.format(len(input_ids_completos)))
+    logging.info("Tokenização concluída.")
+    logging.info("{:>10,} amostras.".format(len(input_ids_completos)))
 
     # =========================
     #      Seleciona os Lotes
@@ -109,7 +109,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
     # Classifique as duas listas pelo comprimento da sequência de entrada.
     amostras = sorted(zip(input_ids_completos, classes, documentoids), key=lambda x: len(x[0]))
 
-    logging.info('{:>10,} amostras após classificação.'.format(len(amostras)))
+    logging.info("{:>10,} amostras após classificação.".format(len(amostras)))
 
     import random
 
@@ -118,12 +118,12 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
     batch_ordered_classes = []
     batch_ordered_documentoids = []
 
-    logging.info('Criando lotes de tamanho {:}...'.format(tamanho_lote))
+    logging.info("Criando lotes de tamanho {:}.".format(tamanho_lote))
 
     # Escolha um intervalo no qual imprimir atualizações de progresso.
     intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(amostras), numero_atualizacoes=10)
         
-    # Faça um loop em todas as amostras de entrada ... 
+    # Faça um loop em todas as amostras de entrada.
     while len(amostras) > 0:
         
         # Mostra o progresso.
@@ -139,10 +139,10 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         select = random.randint(0, len(amostras) - to_take)
 
         # Selecione um lote contíguo de amostras começando em `select`.
-        #print ("Selecionando lote de {:} a {:}".format(select, select+to_take))
+        logging.info("Selecionando lote de {:} a {:}".format(select, select+to_take))
         batch = amostras[select:(select + to_take)]
 
-        #print("Tamanho do lote:", len(batch))
+        logging.info("Tamanho do lote: {}.".format(len(batch)))
         
         # Cada amostra é uma tupla --divida para criar uma lista separada de
         # sequências e uma lista de rótulos para este lote.
@@ -153,7 +153,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         # Remova a amostra da lista
         del amostras[select:select + to_take]
 
-    logging.info('\n  Lote criado - Selecionado {:,} lotes.\n'.format(len(batch_ordered_documentos)))
+    logging.info('Lote criado - Selecionado {:,} lotes.'.format(len(batch_ordered_documentos)))
 
     # =========================
     #        Adicionando o preenchimento
