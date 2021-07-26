@@ -109,7 +109,7 @@ def calculaMedidasDocumentosConjuntoDeDados(dfdados, model, tokenizer, nlp, mode
     return lista_medidas_documentos_salvar, conta, percentualCcos, contaCcos, percentualCeuc, contaCeuc, percentualCman, contaCman
 
 # ============================
-def organizaParesDocumentosCSTNews(dfOriginalMedida, dfPermutadoMedida):
+def organizaParesDocumentos(dfOriginalMedida, dfPermutadoMedida):
     '''
     Organiza as medidas do.
     Parâmetros:
@@ -148,7 +148,7 @@ def organizaParesDocumentosCSTNews(dfOriginalMedida, dfPermutadoMedida):
     return dfListaParesDocumentosMedidas
 
 # ============================
-def separaDocumentosCSTNews(dadosMedida):
+def separaDocumentos(dadosMedida):
     '''
     Separa os dados do dataframe em originais e permutados.
     Parâmetros:
@@ -174,7 +174,7 @@ def separaDocumentosCSTNews(dadosMedida):
     return dfOriginalMedida, dfPermutadoMedida
 
 # ============================
-def carregaMedidasCSTNews(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
+def carregaMedidas(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
     '''
     Carrega as medidas de coerência de um diretório e retorna um dataframe.
     Parâmetros:
