@@ -23,7 +23,7 @@ def carregaMedidasCSTNews(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PA
     NOME_ARQUIVO_MEDICAO = NOME_BASE + TIPO_MODELO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
 
     dfMedida = None
-    
+     
     # Verifica se o diretório dos resultados existem.
     if os.path.exists(DIRETORIO_MEDIDAS):
         arquivos = os.listdir(DIRETORIO_MEDIDAS)     
