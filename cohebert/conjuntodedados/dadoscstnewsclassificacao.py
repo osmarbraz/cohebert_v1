@@ -16,7 +16,7 @@ from util.utilarquivo import *
 from conjuntodedados.dadoscstnewsmedida import *
 
 # ============================
-def gerarArquivosKFoldCSTNews(DIRETORIO_BASE, dfdados, model_args):
+def gerarArquivosKFold(DIRETORIO_BASE, dfdados, model_args):
     '''    
     Divide o conjunto de dados em arquivos de treino e teste para Kfolds.
     Parâmetros:
