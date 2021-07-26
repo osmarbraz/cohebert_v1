@@ -7,6 +7,26 @@ import pandas as pd # Biblioteca para manipulação e análise de dados
 # Import de bibliotecas próprias
 from medidor.medidor import *
 
+# ============================
+def recuperaListaDeMedidas(medida, dfListaParesDocumentosMedidas):
+    '''
+    Divide o dataframe uma lista de documentos originais e uma lista de documentos permutados para uma medida.
+    Parâmetros:
+        `medida` - Medida a ser recuperada.
+        `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
+        
+    Saída:     
+        `lista_medida_original` - Lista com os documentos originais da medida.
+        `lista_medida_permutado` - Lista com os documentos permutados da medida.
+    '''        
+
+  # Medida do documento original 
+  lista_medida_original = [linha[medida + 'DO'] for i, linha in dfListaParesDocumentosMedidas.iterrows()]
+    
+  # Medida do documento permutado
+  lista_medida_permutado = [linha[medida + 'Perm'] for i, linha in dfListaParesDocumentosMedidas.iterrows()]
+
+  return lista_medida_original, lista_medida_permutado
 
 # ============================
 def geraEstatisticasMedidasDocumentos(dfdadosMedidasDocumentos):
