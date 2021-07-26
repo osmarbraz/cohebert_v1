@@ -175,13 +175,13 @@ def recuperaListasDeMedidas(medida, dfListaParesDocumentosMedidas):
         `lista_medida_permutado` - Lista com os documentos permutados da medida.
     '''        
 
-  # Medida do documento original 
-  lista_medida_original = [linha[medida + 'DO'] for i, linha in dfListaParesDocumentosMedidas.iterrows()]
+    # Medida do documento original 
+    lista_medida_original = [linha[medida + 'DO'] for i, linha in dfListaParesDocumentosMedidas.iterrows()]
     
-  # Medida do documento permutado
-  lista_medida_permutado = [linha[medida + 'Perm'] for i, linha in dfListaParesDocumentosMedidas.iterrows()]
+    # Medida do documento permutado
+    lista_medida_permutado = [linha[medida + 'Perm'] for i, linha in dfListaParesDocumentosMedidas.iterrows()]
 
-  return lista_medida_original, lista_medida_permutado
+    return lista_medida_original, lista_medida_permutado
 
 # ============================
 def geraEstatisticasMedidasDocumentos(dfdadosMedidasDocumentos):
