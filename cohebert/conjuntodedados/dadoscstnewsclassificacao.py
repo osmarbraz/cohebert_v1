@@ -187,14 +187,14 @@ def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_t
         # Define o tamanho máximo para os tokens
         tamanho_maximo = model_args.max_seq_len
         
-        logging.info("Removendo documentos grandes, acima de ", tamanho_maximo, " tokens.")
+        logging.info("Removendo documentos grandes, acima de " + tamanho_maximo + " tokens.")
 
         # Tokenize a codifica as setenças para o BERT     
         dfdados_train['input_ids'] = dfdados_train['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len)<tamanho_maximo]
 
-        logging.info('Tamanho do dataset de treino: {}'.format(len(dfdados_train)))
+        logging.info("Tamanho do dataset de treino: " + len(dfdados_train) + ".")
 
         # Remove as colunas desnecessárias
         dfdados_train = dfdados_train.drop(columns=['input_ids'])
