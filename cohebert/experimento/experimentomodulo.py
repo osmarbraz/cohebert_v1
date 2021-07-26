@@ -3,6 +3,33 @@ import logging  # Biblioteca de logging
 import os
 import pandas as pd
 
+
+# ============================
+def separaDocumentosCSTNews(dadosMedida):
+    '''
+    Separa os dados do dataframe em originais e permutados.
+    Parâmetros:
+        `dadosMedida` - Dados a serem separados em originais e permutados.    
+        
+    Saída:
+        `dfOriginalMedida` - Dataframe com os dados de documentos originais.        
+        `dfPermutadoMedida` - Dataframe com os dados de documentos permutados.
+    '''        
+    # Separa os originais
+    dfOriginalMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==False]
+    # Remove os duplicados
+    dfOriginalMedida = dfOriginalMedida.drop_duplicates(subset=['arquivo'])
+    logging.info("Registros: ", len(dfOriginalMedida))
+
+    # Separa os permutados
+    dfPermutadoMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==True]
+    # Remove os duplicados
+    dfPermutadoMedida = dfPermutadoMedida.drop_duplicates(subset=['arquivo'])
+    
+    logging.info("Registros: ", len(dfPermutadoMedida))
+
+    return dfOriginalMedida, dfPermutadoMedida
+
 # ============================
 def carregaMedidasCSTNews(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
     '''
