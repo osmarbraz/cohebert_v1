@@ -153,8 +153,8 @@ def carregaArquivosOriginaisCSTNews():
         
         # Adiciona o documento e as sentenças a lista
         lista_documentos_originais.append([arquivos[i], sentencas, documento])
-
-    logging.info ("Carregamento de documento originais concluído: ", len(lista_documentos_originais))    
+    
+    logging.info("Carregamento de documento originais concluído: {}".format(len(lista_documentos_originais)))
 
     return lista_documentos_originais
 
@@ -195,9 +195,9 @@ def carregaArquivosPermutadosCSTNews():
 
         # Adiciona o documento e as sentenças a lista
         lista_documentos_permutados.append([arquivos[i], sentencas, documento])
-
-    logging.info("Carregamento de documento permutados concluído: ", len(lista_documentos_permutados)) 
-
+    
+    logging.info("Carregamento de documento permutados concluído: {}".format(len(lista_documentos_permutados)))
+    
     return lista_documentos_permutados
 
 # ============================
@@ -247,8 +247,8 @@ def carregaParesDocumentosCSTNews():
 
             # Adiciona o par original e sua versão permutada.
             lista_documentos.append([arquivosOriginais[i], sentencasOriginais, documentoOriginal, arquivoPermutado, sentencasPermutadas, documentoPermutado])
-    
-    logging.info("Geraçâo de pares de documentos concluído: ", len(lista_documentos))
+        
+    logging.info("Geraçâo de pares de documentos concluído: {}".format(len(lista_documentos)))
     
     return lista_documentos
 
@@ -316,15 +316,16 @@ def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
     dfdadosAnterior = dfdados.drop(columns=['input_ids'])
     dfdadosretorno = dfdados_512.drop(columns=['input_ids'])
 
-    logging.info('Quantidade de dados anterior: {}'.format(len(dfdadosAnterior)))
-    logging.info('Nova quantidade de dados    : {}'.format(len(dfdadosretorno)))
+    logging.info("Quantidade de dados anterior: {}".format(len(dfdadosAnterior)))
+    logging.info("Nova quantidade de dados    : {}"format(len(dfdadosretorno)))
 
     # Mostra a quantidade registros removidos
     dfdadosSemLista =  dfdadosretorno.drop(columns=['sentencasOriginais','sentencasPermutadas'])
     dfdados512SemLista =  dfdadosAnterior.drop(columns=['sentencasOriginais','sentencasPermutadas'])
 
     df = dfdados512SemLista.merge(dfdadosSemLista, how = 'outer' ,indicator=True).loc[lambda x : x['_merge']=='left_only']
-    logging.info('Quantidade de registros removidos: {}'.format(len(df)))
+    
+    logging.info("Quantidade de registros removidos: {}".format(len(df)))
 
     return dfdadosretorno  
 
