@@ -45,7 +45,7 @@ def carregaArquivosOriginaisOnlineEduc():
   
     lista_documentos_originais = []
 
-    arquivos = os.listdir('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/') 
+    arquivos = os.listdir("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/") 
 
     # Percorre a lista de arquivos do diretório
     for i in range(len(arquivos)):
@@ -55,8 +55,8 @@ def carregaArquivosOriginaisOnlineEduc():
         nomeArquivo = arquivos[i][:ponto]
 
         # Carrega o arquivo de nome x[i] do diretório
-        documento = carregar('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/' + arquivos[i])
-        sentencas = carregarLista('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/' + arquivos[i])
+        documento = carregar("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/" + arquivos[i])
+        sentencas = carregarLista("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/" + arquivos[i])
 
         lista_documentos_originais.append([nomeArquivo, sentencas, documento])
     
@@ -72,7 +72,7 @@ def carregaArquivosPermutadosOnlineEduc():
 
     lista_documentos_permutados = []
 
-    arquivos = os.listdir('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/') #Entrada (Input)
+    arquivos = os.listdir("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/") #Entrada (Input)
 
     # Percorre a lista de arquivos do diretório
     for i in range(len(arquivos)):
@@ -82,8 +82,8 @@ def carregaArquivosPermutadosOnlineEduc():
         nomeArquivo = arquivos[i][:ponto]
 
         # Carrega o arquivo de nome x[i] do diretório
-        documento = carregar('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/' + arquivos[i])
-        sentencas = carregarLista('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/' + arquivos[i])
+        documento = carregar("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/" + arquivos[i])
+        sentencas = carregarLista("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/" + arquivos[i])
 
         # Adiciona a lista o conteúdo do arquivo
         lista_documentos_permutados.append([nomeArquivo, sentencas, documento])
@@ -101,7 +101,7 @@ def carregaParesDocumentosOnlineEduc():
     # Lista dos documentos originais e permutados 
     lista_documentos = []
 
-    arquivosOriginais = os.listdir('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/') 
+    arquivosOriginais = os.listdir("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/") 
 
     for i in range(len(arquivosOriginais)):
 
