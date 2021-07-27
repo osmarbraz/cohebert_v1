@@ -114,7 +114,7 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
 
         # Verifica o tamanho do modelo(default large)
         TAMANHO_BERT =  getTamanhoBERT(model_args)
-
+        
         # Nome arquivo resultado
         NOME_ARQUIVO_CLASSIFICACAO = training_args.output_dir + MODELO_BERT + TAMANHO_BERT
   
@@ -126,37 +126,28 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
         else:
             logging.info("Diretório já existe: {}.".format(DIRETORIO_CLASSIFICACAO))
 
+        # Recupera os arquivos .csv do diretorio    
+        arquivos = [f for f in os.listdir(DIRETORIO_CLASSIFICACAO) if f.endswith('.csv')]            
+        
+        indiceArquivo = len(arquivos) + 1
+            
         # Nome do arquivo a ser aberto.
-        NOME_ARQUIVO_CLASSIFICACAO_COMPLETO = DIRETORIO_CLASSIFICACAO + NOME_ARQUIVO_CLASSIFICACAO + ".csv"
+        NOME_ARQUIVO_CLASSIFICACAO_COMPLETO = DIRETORIO_CLASSIFICACAO + NOME_ARQUIVO_CLASSIFICACAO  + "_" + str(indiceArquivo) + ".csv"
+        
+        # Cabeçalho do arquivo csv
+        CABECALHO_ARQUIVO = "data;id;classe;predicao"
 
         # Gera todo o conteúdo a ser salvo no arquivo
         novoConteudo = ""        
         for resultado in lista_resultado_avaliacao:      
             novoConteudo = novoConteudo + data_e_hora.strftime("%d/%m/%Y %H:%M") + ";" + str(resultado[0]) + ";" + str(resultado[1]) + ";" + str(resultado[2]) + "\n"
 
-        # Verifica se o arquivo existe.
-        if os.path.isfile(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO):
-            logging.info("Atualizando arquivo classificação: {}.".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
-            # Abre o arquivo para leitura.
-            arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'r')
-            # Leitura de todas as linhas do arquivo.
-            conteudo = arquivo.readlines()
-            # Conteúdo a ser adicionado.
-            conteudo.append(novoConteudo)
-
-            # Abre novamente o arquivo (escrita).
-            arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
-            # escreva o conteúdo criado anteriormente nele.
-            arquivo.writelines(conteudo)  
-            # Fecha o arquivo.
-            arquivo.close()
-        else:
-            logging.info("Criando arquivo classificação: {}.".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
-            # Abre novamente o arquivo (escrita).
-            arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
-            arquivo.writelines('data;id;classe;predicao\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
-            # Fecha o arquivo.
-            arquivo.close()            
+        logging.info("Criando arquivo classificação: {}.".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
+        # Abre novamente o arquivo (escrita).
+        arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
+        arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+        # Fecha o arquivo.
+        arquivo.close()            
             
 # ============================        
 def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc, rec, pre, f1, vp_s, vn_s, fp_s, fn_s):
@@ -182,6 +173,9 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
 
         # Nome arquivo resultado
         NOME_ARQUIVO_AVALIACAO = training_args.output_dir + MODELO_BERT + TAMANHO_BERT
+        
+        # Cabeçalho do arquivo csv
+        CABECALHO_ARQUIVO = "arquivo;data;tempo;acuracia;vp;vn;fp;fn"
 
         # Verifica se o diretório existe
         if not os.path.exists(DIRETORIO_AVALIACAO):  
@@ -217,6 +211,6 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
             logging.info("Criando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
             arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
-            arquivo.writelines('arquivo;data;tempo;acuracia;vp;vn;fp;fn\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+            arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
             # Fecha o arquivo.
             arquivo.close()                      
