@@ -266,11 +266,12 @@ def carregaAgendador(training_args, otimizador, tamanho_conjunto):
     return agendador  
 
 # ============================
-def realizaAvaliacao(model_args, model, tokenizer, documentos_teste, classes_teste, documentoids_teste, wandb):
+def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_teste, classes_teste, documentoids_teste, wandb):
     '''
     Realiza a avaliação do modelo BERT ajustado com conjunto de dados de teste.    
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo. 
+        `model_args` - Objeto com os argumentos do modelo.
+        `training_args` - Objeto com os argumentos do treinamento. 
         `model` - Modelo BERT. 
         `tokenizer` - Tokenizador BERT. 
         `documentos_teste` - Lista dos documentos de teste. 
