@@ -194,7 +194,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
       arquivo.close()
         
 # ============================
-def carregaOtimizador(training_args):
+def carregaOtimizador(training_args, model):
     '''
     Esta função carrega o otimizador utilizado no agendador de aprendizado.
     Parâmetros:
