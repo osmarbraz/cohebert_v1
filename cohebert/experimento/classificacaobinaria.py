@@ -15,12 +15,18 @@ from transformers import get_linear_schedule_with_warmup # Biblioteca do agendad
 from bert.bertmodulo  import *
 
 # ============================
-def carregaResultadoAvaliacao(training_args, DIRETORIO_AVALIACAO):
+def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
     # Acumuladores.
     somaAcuracia = 0
     listaTempo = []
     contaFolds = 0
 
+    # Verifica o nome do modelo BERT a ser utilizado
+    MODELO_BERT = getNomeModeloBERT(model_args)
+
+    # Verifica o tamanho do modelo(default large)
+    TAMANHO_BERT =  getTamanhoBERT(model_args)
+    
     # Nome arquivo resultado avaliação
     NOME_ARQUIVO_AVALIACAO = training_args.output_dir
 
