@@ -85,16 +85,16 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
                 contaFolds = contaFolds + 1
     
         # Mostra a soma da acurácia . 
-        logging.info('Total acurácia                                       : {:.8f}'.format(somaAcuracia))
+        logging.info("Total acurácia                                       : {:.8f}.".format(somaAcuracia))
         # Mostra a quantidade de folds.
-        logging.info('Quantidade de folds                                  : {}'.format(contaFolds))  
+        logging.info("Quantidade de folds                                  : {}.".format(contaFolds))  
         # Calcula a média.
         media = somaAcuracia/contaFolds
-        logging.info('A média da acurácia de {:2d} folds é                    : {:.8f}'.format(contaFolds, media))
-        logging.info('O tempo gasto na execução do treinamentoa {:2d} folds é : {}'.format(contaFolds, somaTempo(listaTempo)))
-        logging.info('A média de tempo de execução de {:2d} folds é           : {}'.format(contaFolds, mediaTempo(listaTempo)))
+        logging.info("A média da acurácia de {:2d} folds é                    : {:.8f}.".format(contaFolds, media))
+        logging.info("O tempo gasto na execução do treinamentoa {:2d} folds é : {}.".format(contaFolds, somaTempo(listaTempo)))
+        logging.info("A média de tempo de execução de {:2d} folds é           : {}.".format(contaFolds, mediaTempo(listaTempo)))
     else:
-        logging.info('Diretório com os resultados não encontrado')
+        logging.info('Diretório com os resultados não encontrado.')
 
 # ============================        
 def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resultado_avaliacao):
@@ -237,10 +237,11 @@ def carregaOtimizador(training_args, model):
                   # A redução da taxa de aprendizagem também pode ser usada com Adam. A taxa de decaimento é atualizada a cada época para a demonstração da regressão logística.
                   # correct_bias = True #  Se não deve corrigir o viés(bias) no Adam mudar para False.- default é True
                 )
+    
+    logging.info("Otimizador carregado.")
   
     return otimizador
-  
-  
+    
 # ============================
 def carregaAgendador(training_args, otimizador, tamanho_conjunto):
     '''
@@ -260,8 +261,7 @@ def carregaAgendador(training_args, otimizador, tamanho_conjunto):
                                             num_warmup_steps = 0, # O número de etapas para a fase de aquecimento. Valor default value em run_glue.py
                                             num_training_steps = total_etapas) # O número total de etapas de treinamento.
 
-
-    logging.info("Total de etapas: {}".format(total_etapas))
+    logging.info("Total de etapas do agendador: {}.".format(total_etapas))
 
     return agendador  
 
@@ -371,11 +371,12 @@ def realizaAvaliacao(model_args, model, tokenizer, documentos_teste, classes_tes
 
         # Adiciona o documento de teste, o rótulo e a classificação realizada a lista de resultado
         for lote in range(len(d_labels)):
-                    
+            # Adiciona o documento de teste a lista        
             lista_resultado_avaliacao.append([d_documentoids[lote],
                                     d_labels[lote].cpu().item(), 
                                     classificacao[lote].cpu().item()])
-
+        
+        # Apaga o objeto de saída
         del outputs
 
     # Soma as classificações realizadas
@@ -415,6 +416,7 @@ def realizaAvaliacao(model_args, model, tokenizer, documentos_teste, classes_tes
         wandb.log({"fn": fn_s})
         wandb.log({"media_test_loss": media_test_loss})
 
+    # Apaga objetos não utilizados    
     del py_input_ids
     del py_attention_masks
     del py_labels
@@ -586,7 +588,8 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
                            
             # Atualize a taxa de aprendizagem.
             agendador.step()
-
+            
+            # Apaga objeto de saída
             del outputs
 
         # Média da perda do treinamento de todos os lotes da época.
@@ -605,6 +608,7 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
         logging.info("  Tempo de treinamento da época             : {:}".format(treinamento_epoca_total))    
         logging.info("  Tempo parcial do treinamento              : {:} (h:mm:ss)".format(formataTempo(time.time()-treinamento_t0)))
 
+        # Apaga objetos não utilizados
         del py_input_ids
         del py_attention_masks
         del py_labels
@@ -617,8 +621,9 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
     if model_args.use_wandb:
         wandb.log({"media_train_loss": media_train_loss})   
 
-    logging.info("  Média perda(loss) treinamento : {0:.8f}".format(media_train_loss))
+    logging.info("  Média perda(loss) treinamento : {0:.8f}.".format(media_train_loss))
 
+    # Apaga objetos não utilizados
     del train_losses
     del epoca_bar
     del otimizador
