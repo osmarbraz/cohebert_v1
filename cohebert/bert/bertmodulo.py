@@ -223,7 +223,7 @@ def getDeviceGPU():
 
     # Se não...
     else:
-        logging.info('Sem GPU disponível, usando CPU.')
+        logging.info("Sem GPU disponível, usando CPU.")
         device = torch.device("cpu")
         
     return device
@@ -259,13 +259,13 @@ def getNomeModeloBERT(model_args):
     '''
 
     # Verifica o nome do modelo(default SEM_MODELO_BERT)
-    MODELO_BERT = 'SEM_MODELO_BERT'
+    MODELO_BERT = "SEM_MODELO_BERT"
     
     if 'neuralmind' in model_args.pretrained_model_name_or_path:
-        MODELO_BERT = '_BERTimbau'
+        MODELO_BERT = "_BERTimbau"
     else:
         if 'multilingual' in model_args.pretrained_model_name_or_path:
-            MODELO_BERT = '_BERTmultilingual'
+            MODELO_BERT = "_BERTmultilingual"
             
     return MODELO_BERT
 
@@ -278,10 +278,10 @@ def getTamanhoBERT(model_args):
     '''
     
     # Verifica o tamanho do modelo(default large)
-    TAMANHO_BERT = '_large'
+    TAMANHO_BERT = "_large"
     
     if 'base' in model_args.pretrained_model_name_or_path:
-        TAMANHO_BERT = '_base'
+        TAMANHO_BERT = "_base"
         
     return TAMANHO_BERT  
 
@@ -299,14 +299,14 @@ def downloadModeloPretreinado(model_args):
     # Variável para setar o arquivo.
     URL_MODELO = None
 
-    if 'http' in MODELO:
+    if "http" in MODELO:
         URL_MODELO = MODELO
 
     # Se a variável foi setada.
     if URL_MODELO:
 
         # Diretório descompactação.
-        DIRETORIO_MODELO = '/content/modelo'
+        DIRETORIO_MODELO = "/content/modelo"
 
         # Recupera o nome do arquivo do modelo da url.
         NOME_ARQUIVO = URL_MODELO.split('/')[-1]
@@ -339,11 +339,11 @@ def downloadModeloPretreinado(model_args):
         # Apaga o arquivo compactado
         os.remove(NOME_ARQUIVO)
 
-        logging.info('Pasta {} do modelo BERT pronta!'.format(DIRETORIO_MODELO))
+        logging.info("Pasta {} do modelo BERT pronta!".format(DIRETORIO_MODELO))
 
     else:
         DIRETORIO_MODELO = MODELO
-        logging.info('Variável URL_MODELO não setada!')
+        logging.info("Variável URL_MODELO não setada!")
 
     return DIRETORIO_MODELO
 
@@ -470,7 +470,7 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
     # Se a variável URL_MODELO foi setada
     if URL_MODELO:
         # Carregando o Modelo BERT
-        logging.info('Carregando o modelo BERT do diretório {} para classificação.'.format(DIRETORIO_MODELO))
+        logging.info("Carregando o modelo BERT do diretório {} para classificação.".format(DIRETORIO_MODELO))
 
         model = BertForSequenceClassification.from_pretrained(DIRETORIO_MODELO, 
                                                               num_labels = model_args.num_labels,
@@ -479,7 +479,7 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
             
     else:
         # Carregando o Modelo BERT da comunidade
-        logging.info('Carregando o modelo BERT da comunidade para classificação.')
+        logging.info("Carregando o modelo BERT da comunidade para classificação.")
 
         model = BertForSequenceClassification.from_pretrained(model_args.pretrained_model_name_or_path,
                                                               num_labels = model_args.num_labels,
@@ -501,9 +501,10 @@ def carregaBERT(model_args):
     # Verifica a origem do modelo
     DIRETORIO_MODELO = verificaModelo(model_args)
     
-    # Verifica o tipo do modelo em model_args    
+    # Variável para conter o modelo
     model = None
     
+    # Verifica o tipo do modelo em model_args    
     if type(model_args) == ModeloArgumentosMedida:
         # Carrega o modelo para cálculo da medida
         model = carregaModeloMedida(DIRETORIO_MODELO, model_args)
