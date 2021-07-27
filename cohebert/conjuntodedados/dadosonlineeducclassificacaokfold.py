@@ -40,14 +40,14 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
 
     for x in range(QTDE_FOLDS):
   
-        dadostrain = pd.read_csv(PREFIXO_NOME_ARQUIVO_TREINO+str(x+1)+".csv", sep=';')
-        logging.info("Dados treino do fold {}: {}.".format(x+1,len(dadostrain)))
+        dadostrain = pd.read_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(x+1) + ".csv", sep=';')
+        logging.info("Dados treino do fold {}: {}.".format(x+1, len(dadostrain)))
 
         dadostest = pd.read_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(x+1)+".csv", sep=';')
         logging.info("Dados teste do fold {}: {}.".format(x+1,len(dadostest)))
 
-        lista_dadostrain_folds.append([x,dadostrain.tipo.sum(), len(dadostrain.tipo)-dadostrain.tipo.sum()])
-        lista_dadostest_folds.append([x,dadostest.tipo.sum(), len(dadostest.tipo)-dadostest.tipo.sum()])
+        lista_dadostrain_folds.append([x,dadostrain.tipo.sum(), len(dadostrain.tipo) - dadostrain.tipo.sum()])
+        lista_dadostest_folds.append([x,dadostest.tipo.sum(), len(dadostest.tipo) - dadostest.tipo.sum()])
 
         # Pega as listas de documentos e seus rótulos.
         documentos = dadostrain.documento.values
@@ -74,22 +74,22 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
             
         logging.info("Máximo de token no conjunto de dados de teste: {}.".format(maior_tamanho_documento_teste))
 
-        logging.info("Fold {} Treino positivos: {} of {} ({:.2f}%)".format(x+1, 
+        logging.info("Fold {} Treino positivos: {} de {} ({:.2f}%).".format(x + 1, 
                                                                   dadostrain.tipo.sum(), 
                                                                   len(dadostrain.tipo), 
                                                                   (dadostrain.tipo.sum() / len(dadostrain.tipo) * 100.0)
                                                                   ))
 
-        logging.info("Fold {} Treino negativos: {} of {} ({:.2f}%)".format(x+1, 
+        logging.info("Fold {} Treino negativos: {} de {} ({:.2f}%).".format(x+1, 
                                                                   len(dadostrain.tipo)-dadostrain.tipo.sum(), 
                                                                   len(dadostrain.tipo), 
                                                                   ((len(dadostrain.tipo)-dadostrain.tipo.sum()) / len(dadostrain.tipo) * 100.0)))
 
-        logging.info("Fold {} Teste positivos: {} of {} ({:.2f}%)".format(x+1, 
+        logging.info("Fold {} Teste positivos: {} de {} ({:.2f}%).".format(x+1, 
                                                                   dadostest.tipo.sum(), 
                                                                   len(dadostest.tipo), 
                                                                   (dadostest.tipo.sum() / len(dadostest.tipo) * 100.0)))
-        logging.info("Fold {} Teste negativos: {} of {} ({:.2f}%)".format(x+1, 
+        logging.info("Fold {} Teste negativos: {} de {} ({:.2f}%).".format(x+1, 
                                                                   len(dadostest.tipo)-dadostest.tipo.sum(), 
                                                                   len(dadostest.tipo), 
                                                                   ((len(dadostest.tipo)-dadostest.tipo.sum()) / len(dadostest.tipo) * 100.0)))                               
