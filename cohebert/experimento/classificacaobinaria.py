@@ -391,6 +391,9 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
     '''
     Realiza o treinamento do modelo BERT com o conjunto de dados de treino.
     '''
+    
+    # Recupera o dispotivo da GPU 
+    device = getDeviceGPU()
                        
     #training_args.num_train_epochs
     logging.info("Realizando Treinamento fold: {}".format(model_args.fold))
