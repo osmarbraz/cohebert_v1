@@ -219,7 +219,7 @@ def getDeviceGPU():
 
         logging.info("Existem {} GPU(s) disponíveis.".format(torch.cuda.device_count()))
 
-        logging.info("Iremos usar a GPU: {}".format(torch.cuda.get_device_name(0)))
+        logging.info("Iremos usar a GPU: {}.".format(torch.cuda.get_device_name(0)))
 
     # Se não...
     else:
@@ -243,10 +243,10 @@ def conectaGPU(model, device):
     # Se existe GPU disponível.
     if torch.cuda.is_available():    
         # Diga ao pytorch para rodar este modelo na GPU.
-        logging.info("Pytorch rodando o modelo na GPU")
+        logging.info("Pytorch rodando o modelo na GPU.")
         model.cuda()
     else:
-        logging.info("Pytorch rodando sem GPU")
+        logging.info("Pytorch rodando sem GPU.")
 
     return model
 
