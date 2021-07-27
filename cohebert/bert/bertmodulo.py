@@ -348,21 +348,28 @@ def downloadModeloPretreinado(model_args):
     return DIRETORIO_MODELO
 
 # ============================
-def copiaModeloAjustado():
+def copiaModeloAjustado(model_args):
     ''' 
     Copia o modelo ajustado BERT do GoogleDrive para o projeto.
+    Parâmetros:
+       `model_args` - Objeto com os argumentos do modelo.       
     ''' 
+    # Verifica o nome do modelo BERT a ser utilizado
+    MODELO_BERT = getNomeModeloBERT(model_args)
+
+    # Verifica o tamanho do modelo(default large)
+    TAMANHO_BERT =  getTamanhoBERT(model_args)
 
     # Diretório local de salvamento do modelo.
-    DIRETORIO_LOCAL_MODELO_AJUSTADO = '/content/modelo_ajustado/'
+    DIRETORIO_LOCAL_MODELO_AJUSTADO = "/content/modelo_ajustado/"
 
     # Diretório remoto de salvamento do modelo.
-    DIRETORIO_REMOTO_MODELO_AJUSTADO = '/content/drive/MyDrive/Colab Notebooks/Data/CSTNEWS/validacao_classificacao/holdout/modelo/modelo' + MODELO_BERT + TAMANHO_BERT
+    DIRETORIO_REMOTO_MODELO_AJUSTADO = "/content/drive/MyDrive/Colab Notebooks/Data/CSTNEWS/validacao_classificacao/holdout/modelo/modelo" + MODELO_BERT + TAMANHO_BERT
 
     # Copia o arquivo do modelo para o diretório no Google Drive.
     shutil.copytree(DIRETORIO_REMOTO_MODELO_AJUSTADO, DIRETORIO_LOCAL_MODELO_AJUSTADO) 
    
-    logging.info('Modelo BERT copiado!')
+    logging.info("Modelo BERT ajustado copiado!")
 
     return DIRETORIO_LOCAL_MODELO_AJUSTADO
 
@@ -378,11 +385,11 @@ def verificaModelo(model_args):
     
     if model_args.usar_mcl_ajustado == True:
         DIRETORIO_MODELO = copiaModeloAjustado()
-        logging.info('Usando modelo BERT ajustado')
+        logging.info("Usando modelo BERT ajustado.")
         
     else:
         DIRETORIO_MODELO = downloadModeloPretreinado(model_args)
-        logging.info('Usando modelo BERT pré-treinado')        
+        logging.info("Usando modelo BERT pré-treinado.")        
         
     return DIRETORIO_MODELO
 
@@ -405,14 +412,14 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     if DIRETORIO_MODELO:
 
         # Carregando o Tokenizador.
-        logging.info('Carregando o tokenizador BERT do diretório {}...'.format(DIRETORIO_MODELO))
+        logging.info("Carregando o tokenizador BERT do diretório {}.".format(DIRETORIO_MODELO))
 
         tokenizer = BertTokenizer.from_pretrained(DIRETORIO_MODELO, 
                                                   do_lower_case=model_args.do_lower_case)
 
     else:
         # Carregando o Tokenizador da comunidade.
-        logging.info('Carregando o tokenizador da comunidade...')
+        logging.info("Carregando o tokenizador BERT da comunidade.")
 
         tokenizer = BertTokenizer.from_pretrained(model_args.pretrained_model_name_or_path, 
                                                   do_lower_case=model_args.do_lower_case)
@@ -444,7 +451,7 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
                                           output_hidden_states = model_args.output_hidden_states)
     else:
         # Carregando o Modelo BERT da comunidade
-        logging.info('Carregando o modelo BERT da comunidade para cálculo de medida.')
+        logging.info("Carregando o modelo BERT da comunidade para cálculo de medida.")
 
         model = BertModel.from_pretrained(model_args.pretrained_model_name_or_path,
                                           output_attentions = model_args.output_attentions,
