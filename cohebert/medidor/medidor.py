@@ -1,7 +1,7 @@
 # Import das bibliotecas.
 import logging  # Biblioteca de logging
-import numpy as np
-import torch
+import numpy as np # Biblioteca para manipulação e análise de dados
+import torch # Biblioteca de aprendizado de máquina
 
 # Import de bibliotecas próprias
 from util.utilmodulo import *
