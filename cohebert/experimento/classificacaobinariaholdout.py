@@ -28,7 +28,7 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
     listaTempo = []
     contaExecucoes = 0
     
-     # Verifica o nome do modelo BERT a ser utilizado
+    # Verifica o nome do modelo BERT a ser utilizado
     MODELO_BERT = getNomeModeloBERT(model_args)
 
     # Verifica o tamanho do modelo(default large)
@@ -93,7 +93,7 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
         
 
 # ============================               
-def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resultado_avaliacao):
+def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICACAO, lista_resultado_avaliacao):
     '''
     Salva os dados da avaliação. 
     
@@ -101,12 +101,19 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
         `model_args` - Objeto com os argumentos do modelo. 
         `training_args` - Objeto com os argumentos do treinamento. 
         `DIRETORIO_AVALIACAO` - Diretório para salvar os dados da avaliação.        .        
+        `lista_resultado_avaliacao` - Lista com os dados da avaliação.        .        
     '''          
 
     if model_args.salvar_classificacao:
 
         # Recupera a hora do sistema.
         data_e_hora = datetime.datetime.now()
+        
+        # Verifica o nome do modelo BERT a ser utilizado
+        MODELO_BERT = getNomeModeloBERT(model_args)
+
+        # Verifica o tamanho do modelo(default large)
+        TAMANHO_BERT =  getTamanhoBERT(model_args)
 
         # Nome arquivo resultado
         NOME_ARQUIVO_CLASSIFICACAO = training_args.output_dir + MODELO_BERT + TAMANHO_BERT
@@ -166,6 +173,12 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
 
         # Recupera a hora do sistema.
         data_e_hora = datetime.datetime.now()
+        
+        # Verifica o nome do modelo BERT a ser utilizado
+        MODELO_BERT = getNomeModeloBERT(model_args)
+
+        # Verifica o tamanho do modelo(default large)
+        TAMANHO_BERT =  getTamanhoBERT(model_args)
 
         # Nome arquivo resultado
         NOME_ARQUIVO_AVALIACAO = training_args.output_dir + MODELO_BERT + TAMANHO_BERT
