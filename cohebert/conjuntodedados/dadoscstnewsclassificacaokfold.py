@@ -3,12 +3,12 @@ import logging  # Biblioteca de logging
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
-import pandas as pd # Biblioteca para manipulaÃ§Ã£o e anÃ¡lise de dados
-from sklearn.model_selection import train_test_split # Biblioteca de divisÃ£o
-import numpy as np # Biblioteca para manipulaÃ§Ã£o de arrays e matrizes multidimensionais
-from sklearn.model_selection import KFold # Biblioteca de divisÃ£o Kfold
+import pandas as pd # Biblioteca para manipulação e análise de dados
+from sklearn.model_selection import train_test_split # Biblioteca de divisão
+import numpy as np # Biblioteca para manipulação de arrays e matrizes multidimensionais
+from sklearn.model_selection import KFold # Biblioteca de divisão Kfold
 
-# Import de bibliotecas prÃ³prias
+# Import de bibliotecas próprias
 from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
@@ -19,13 +19,13 @@ from conjuntodedados.dadoscstnewsmedida import *
 def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
     '''    
     Analisa os dados dos arquivos para Kfolds.
-    ParÃ¢metros:
+    Parâmetros:
         `model_args` - Objeto com os argumentos do modelo.    
-        `DIRETORIO_BASE` - DiretÃ³rio onde salvar os dados.  
+        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
         `tokenizer` - Tokenizador BERT.        
     '''
   
-    logging.info("AnÃ¡lise dos dados dos arquivos dos KFolds do diretÃ³rio: {}.".format(DIRETORIO_BASE))
+    logging.info("Análise dos dados dos arquivos dos KFolds do diretório: {}.".format(DIRETORIO_BASE))
 
     # Lista para armazenar os dados
     lista_dadostrain_folds = []
@@ -49,7 +49,7 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
         lista_dadostrain_folds.append([x,dadostrain.tipo.sum(), len(dadostrain.tipo)-dadostrain.tipo.sum()])
         lista_dadostest_folds.append([x,dadostest.tipo.sum(), len(dadostest.tipo)-dadostest.tipo.sum()])
 
-        # Pega as listas de documentos e seus rÃ³tulos.
+        # Pega as listas de documentos e seus rótulos.
         documentos = dadostrain.documento.values
         maior_tamanho_documento_treino = 0
 
@@ -57,22 +57,22 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
         for documento in documentos:
             # Tokeniza o texto e adiciona os tokens `[CLS]` e `[SEP]`.
             input_ids = tokenizer.encode(documento, add_special_tokens=True)
-            # Atualiza o tamanho mÃ¡ximo de documento.
+            # Atualiza o tamanho máximo de documento.
             maior_tamanho_documento_treino = max(maior_tamanho_documento_treino, len(input_ids))
             
-        print('MÃ¡ximo de tokens no conjunto de dados de treino: {}'.format(maior_tamanho_documento_treino))
+        print("Máximo de tokens no conjunto de dados de treino: {}.".format(maior_tamanho_documento_treino))
 
-        # Pega as listas de documentos e seus rÃ³tulos.
+        # Pega as listas de documentos e seus rótulos.
         documentos = dadostest.documento.values
         maior_tamanho_documento_teste = 0    
         # Para cada documento no conjunto de treino.  
         for documento in documentos:
             # Tokeniza o texto e adiciona os tokens `[CLS]` e `[SEP]`.
             input_ids = tokenizer.encode(documento, add_special_tokens=True)
-            # Atualiza o tamanho mÃ¡ximo de documento.
+            # Atualiza o tamanho máximo de documento.
             maior_tamanho_documento_teste = max(maior_tamanho_documento_teste, len(input_ids))
             
-        logging.info("MÃ¡ximo de token no conjunto de dados de teste: {}".format(maior_tamanho_documento_teste))
+        logging.info("Máximo de token no conjunto de dados de teste: {}.".format(maior_tamanho_documento_teste))
 
         logging.info("Fold {} Treino positivos: {} of {} ({:.2f}%)".format(x+1, 
                                                                   dadostrain.tipo.sum(), 
@@ -104,7 +104,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         `DIRETORIO_BASE` - Diretório onde salvar os dados.  
         `dfdados` - Dataframe com os dados a serem divididos.        
         
-    SaÃ­da:
+    Saída:
         Arquivos dos KFolds salvos no diretório base.
     '''
 
@@ -135,12 +135,12 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     
     # Percorre os indices do conjunto de dados.
     for train_index, test_index in kf.split(X):
-        logging.info("Executando divisÃ£o do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
+        logging.info("Executando divisão do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
         logging.info("Treino: {}, Teste: {}".format(len(train_index), len(test_index)))
 
-        #print("Ã?ndices de treino:", len(train_index), " - ", train_index[0], " - ", train_index[len(train_index)-1])  
+        #print("Índices de treino:", len(train_index), " - ", train_index[0], " - ", train_index[len(train_index)-1])  
         #print(train_index)
-        #print("Ã?ndices de teste :", len(test_index), "  - ", test_index[0], " - ", test_index[len(test_index)-1])
+        #print("Índices de teste :", len(test_index), "  - ", test_index[0], " - ", test_index[len(test_index)-1])
         #print(test_index)
 
         # Recupera os dados das documentos para treino e teste.
@@ -150,7 +150,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         # Organiza dados de treino.
         documentos_train_organizada = []
 
-        # Adiciona a documento incoerente logo apÃ³s a coerente para treino.
+        # Adiciona a documento incoerente logo após a coerente para treino.
         for linha in documentos_train:     
             # 1 para o documento original
             documentos_train_organizada.append((linha[0], linha[2], 1))  
@@ -281,7 +281,7 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
     # Descarta os documentos muito grandes. (Que geram mais de 512 tokens)
     dfdados = descartandoDocumentosGrandes(model_args, tokenizer, dfdados)
     
-    # Organiza os dados para classificaÃ§Ã£o
+    # Organiza os dados para classificação
     dfdados = organizaDados(dfdados)
     
     return dfdados
