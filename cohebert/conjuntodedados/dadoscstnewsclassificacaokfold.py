@@ -138,9 +138,9 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
       logging.info("Executando divisão do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
       logging.info("Treino: {}, Teste: {}".format(len(train_index), len(test_index)))
 
-      #print("Índices de treino:", len(train_index), " - ", train_index[0], " - ", train_index[len(train_index)-1])  
+      #print("�?ndices de treino:", len(train_index), " - ", train_index[0], " - ", train_index[len(train_index)-1])  
       #print(train_index)
-      #print("Índices de teste :", len(test_index), "  - ", test_index[0], " - ", test_index[len(test_index)-1])
+      #print("�?ndices de teste :", len(test_index), "  - ", test_index[0], " - ", test_index[len(test_index)-1])
       #print(test_index)
 
       # Recupera os dados das documentos para treino e teste.
@@ -181,59 +181,46 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
 
       # Avança o contador de testes.
       CONTAFOLD = CONTAFOLD + 1        
-        
+
 # ============================
-def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
+def copiaCSTNewsGithub():  
     '''    
-    Divide o conjunto de dados em treino e teste utilizando um percentual de divisão.
-    Parâmetros:
-        `dfdados` - Dataframe com os dados a serem divididos.  
-        `percentualDivisao` - Percentual de divisão dos dados.
-        `classeStratify` - Faz uma divisão de forma que a proporção dos valores na amostra produzida seja a mesma que a proporção dos valores fornecidos.
-    Saída:
-        `dfdados_train` - Dataframe com os dados de treinamento.
-        `dfdados_test` - Dataframe com os dados de teste.
+    Copia dos arquivos do conjunto de dados do CSTNews para classifica��o KFold do Github.
     '''
+    
+    logging.info("Copiando do CSTNews do checkout do Github")
+
+    # Diret�rio dos arquivos de dados.
+    DIRETORIO = "/content/validacao_kfold"
+    
+    # Verifica se o diret�rio existe
+    if not os.path.exists(DIRETORIO):  
+        # Cria o diret�rio
+        os.makedirs(DIRETORIO)
+        logging.info("Diret�rio criado: {}.".format(DIRETORIO))
+    else:
+        logging.info("Diret�rio j� existe: {}.".format(DIRETORIO))
         
-    # Quantidade de elementos de teste considerando o percentual
-    test_qtde = int(percentualDivisao*dfdados.shape[0])
+    # Nome do arquivo a ser criado.
+    NOME_ARQUIVO = "CSTNEWS_MD_KFOLD_10.zip"
     
-    # Divide o conjunto
-    dfdados_train, dfdados_test = train_test_split(dfdados, test_size=test_qtde, random_state=42, stratify=dfdados[classeStratify])
+    # Diret�rios dos arquivos
+    DIRETORIO_FONTE_ARQUIVO = "/content/cohebert_v1/conjuntodedados/cstnews/" + NOME_ARQUIVO
+    DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
     
-    logging.info("Conjunto total: {}.".format(len(dfdados)))
-    logging.info("  Treino: {}.".format(len(dfdados_train)))
-    logging.info("  Teste : {}.".format(len(dfdados_test)))
-
-    return dfdados_train, dfdados_test
+    # Apaga o arquivo    
+    if os.path.isfile(NOME_ARQUIVO):
+       os.remove(NOME_ARQUIVO)
+    
+    # Copia o arquivo de dados do diret�rio fonte para o diret�rio de destino
+    shutil.copy(DIRETORIO_FONTE_ARQUIVO, DIRETORIO_DESTINO_ARQUIVO) 
+        
+    # Descompacta o arquivo na pasta de descompacta��o.                
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip.extractall(DIRETORIO)     
 
 # ============================
-def organizaDados(dfdados):
-    '''
-    Organiza osdados do CSTNews para classificação e retorna um dataframe. 
-    Coloca os dados dos pares de documento um após o outro. 
-    Primeiro adiciona o original e rotula como 1 e depois coloca o permutado rotulando como 0.
-    Parâmetros:
-        `dfdados` - Dataframe com os dados a serem organizados para classificação.    
-    '''
-    
-    # Organiza os dados
-    dados_organizados = []
-
-    # Coloca o par um embaixo do outro.
-    for index, linha in dfdados.iterrows():        
-        # 1 Para original
-        dados_organizados.append((linha['idOriginal'],linha['documentoOriginal'],1))    
-        # 0 para uma permutação 
-        dados_organizados.append((linha['idPermutado'],linha['documentoPermutado'],0))
-
-    # Cria um dataframe com os dados
-    dfdados = pd.DataFrame(dados_organizados, columns=["id","documento","classe"])      
-    
-    return dfdados 
-
-# ============================
-def downloadCSTNewsKFoldGithub():  
+def downloadCSTNewsGithub():  
     '''    
     Download dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
     '''
@@ -271,43 +258,6 @@ def downloadCSTNewsKFoldGithub():
     arquivoZip.extractall(DIRETORIO)       
 
 # ============================
-def copiaCSTNewsKFoldGithub():  
-    '''    
-    Copia dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
-    '''
-    
-    logging.info("Copiando do CSTNews do checkout do Github")
-
-    # Diretório dos arquivos de dados.
-    DIRETORIO = "/content/validacao_kfold"
-    
-    # Verifica se o diretório existe
-    if not os.path.exists(DIRETORIO):  
-        # Cria o diretório
-        os.makedirs(DIRETORIO)
-        logging.info("Diretório criado: {}.".format(DIRETORIO))
-    else:
-        logging.info("Diretório já existe: {}.".format(DIRETORIO))
-        
-    # Nome do arquivo a ser criado.
-    NOME_ARQUIVO = "CSTNEWS_MD_KFOLD_10.zip"
-    
-    # Diretórios dos arquivos
-    DIRETORIO_FONTE_ARQUIVO = "/content/cohebert_v1/conjuntodedados/cstnews/" + NOME_ARQUIVO
-    DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
-    
-    # Apaga o arquivo    
-    if os.path.isfile(NOME_ARQUIVO):
-       os.remove(NOME_ARQUIVO)
-    
-    # Copia o arquivo de dados do diretório fonte para o diretório de destino
-    shutil.copy(DIRETORIO_FONTE_ARQUIVO, DIRETORIO_DESTINO_ARQUIVO) 
-        
-    # Descompacta o arquivo na pasta de descompactação.                
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
-    arquivoZip.extractall(DIRETORIO)           
-    
-# ============================
 def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):  
     '''    
     Carrega os dados do CSTNews e retorna um dataframe para classificação.
@@ -337,54 +287,7 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
     return dfdados
 
 # ============================
-def descartandoDocumentosGrandesTreinoTeste(model_args, tokenizer, dfdados_train, dfdados_test):
-    '''
-    Descarta os documentos que possuem mais tokens que o tamanho máximo em model_args(max_seq_len). 
-    Parâmetros:        
-        `model_args` - Objeto com os argumentos do modelo.
-        `tokenizer` - Tokenizador BERT.
-        `dfdados_train` - Dataframe com os dados de treinamento.
-        `dfdados_test` - Dataframe com os dados de teste.
-    Saída:
-        `dfdados_train` - Dataframe com os dados de treinamento sem documentos grandes.
-        `dfdados_test` - Dataframe com os dados de teste sem documentos grandes.
-    '''    
-    
-    # Verifica se o tokenizador foi carregado
-    if tokenizer != None:
-        
-        # Define o tamanho máximo para os tokens
-        tamanho_maximo = model_args.max_seq_len
-
-        logging.info("Removendo documentos grandes, acima de {} tokens.".format(tamanho_maximo))
-
-        # Tokenize a codifica as setenças para o BERT     
-        dfdados_train['input_ids'] = dfdados_train['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
-
-        dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len)<tamanho_maximo]
-
-        logging.info("Tamanho do dataset de treino: {}.".format(len(dfdados_train)))
-
-        # Remove as colunas desnecessárias
-        dfdados_train = dfdados_train.drop(columns=['input_ids'])
-
-        # Tokenize a codifica as setenças para o BERT.     
-        dfdados_test['input_ids'] = dfdados_test['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
-
-        # Corta os inputs para o tamanho máximo 512
-        dfdados_test = dfdados_test[dfdados_test['input_ids'].apply(len)<tamanho_maximo]
-
-        logging.info("Tamanho do dataset de teste: {}".format(len(dfdados_test)))
-
-        # Remove as colunas desnecessárias
-        dfdados_test = dfdados_test.drop(columns=['input_ids'])
-    else:
-        logging.info("Tokenizador não definido.")        
-
-    return dfdados_train, dfdados_test
-
-# ============================
-def downloadCSTNewsKFold(ORIGEM):
+def downloadCSTNews(ORIGEM):
     '''
     Realiza o download o arquivo KFold do CSTNews de uma determiada origem(ORIGEM).
     Parâmetros:
@@ -393,13 +296,13 @@ def downloadCSTNewsKFold(ORIGEM):
     
     if ORIGEM:
         # Realiza o download do conjunto de dados dos folds
-        downloadCSTNewsKFoldGithub()
+        downloadCSTNewsGithub()
     else:
         # Copia do diretório do github do checkout
-        copiaCSTNewsKFoldGithub()
+        copiaCSTNewsGithub()
             
 # ============================
-def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM):
+def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     '''    
     Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
     Parâmetros:
@@ -419,7 +322,7 @@ def getConjuntoDeDadosClassificacaoKFold(model_args, tokenizer, ORIGEM):
     
     # Verifica se o diretório existe
     if os.path.exists(DIRETORIO) == False:
-        downloadCSTNewsKFold(ORIGEM)
+        downloadCSTNews(ORIGEM)
   
     # Define o prefixo do nome dos arquivos dos folds
     PREFIXO_NOME_ARQUIVO_TREINO = "cstnews_md_train_f"
