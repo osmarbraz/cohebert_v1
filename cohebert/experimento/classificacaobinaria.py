@@ -17,6 +17,15 @@ from bert.bertmodulo  import *
 
 # ============================
 def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
+    '''
+    Carrega e mostra os dados da avaliação. 
+    
+    Parâmetros:
+        `model_args` - Objeto com os argumentos do modelo. 
+        `training_args` - Objeto com os argumentos do treinamento. 
+        `DIRETORIO_AVALIACAO` - Diretório com os dados da avaliação.        .        
+    '''      
+    
     # Acumuladores.
     somaAcuracia = 0
     listaTempo = []
@@ -31,7 +40,7 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
     # Nome arquivo resultado avaliação
     NOME_ARQUIVO_AVALIACAO = training_args.output_dir
 
-    logging.info("Média dos arquivos: {} X {}.".format(NOME_ARQUIVO_AVALIACAO,TAMANHO_BERT))
+    logging.info("Média dos arquivos: {} X {}.".format(NOME_ARQUIVO_AVALIACAO, TAMANHO_BERT))
 
     # Verifica se o diretório dos resultados existem.
     if os.path.exists(DIRETORIO_AVALIACAO):
@@ -89,6 +98,14 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
 
 # ============================        
 def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resultado_avaliacao):
+    '''
+    Salva o resultado da classificação. 
+    
+    Parâmetros:
+        `model_args` - Objeto com os argumentos do modelo.         
+        `DIRETORIO_CLASSIFICACAO` - Diretório para salvar os dados da classificação.
+        `lista_resultado_avaliacao` - Lista com os dados da avaliação da classificação. 
+    '''  
 
     if model_args.salvar_classificacao:
         
@@ -103,6 +120,7 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
             # Cria o diretório
             os.makedirs(DIRETORIO_CLASSIFICACAO)
             logging.info("Diretório criado: {}.".format(DIRETORIO_CLASSIFICACAO))
+            
         else:
             logging.info("Diretório já existe: {}.".format(DIRETORIO_CLASSIFICACAO))
 
@@ -130,6 +148,7 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
             arquivo.writelines(conteudo)  
             # Fecha o arquivo.
             arquivo.close()
+            
         else:
             logging.info("Criando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
@@ -139,7 +158,15 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
             arquivo.close()        
 
 # ============================        
-def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
+def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc, rec, pre, f1, vp_s, vn_s, fp_s, fn_s):
+    '''
+    Salva os dados da avaliação. 
+    
+    Parâmetros:
+        `model_args` - Objeto com os argumentos do modelo. 
+        `training_args` - Objeto com os argumentos do treinamento. 
+        `DIRETORIO_AVALIACAO` - Diretório para salvar os dados da avaliação.        .        
+    '''      
 
     if model_args.salvar_avaliacao:
 
@@ -154,6 +181,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
             # Cria o diretório
             os.makedirs(DIRETORIO_AVALIACAO)
             logging.info("Diretório criado: {}.".format(DIRETORIO_AVALIACAO))
+            
         else:
             logging.info("Diretório já existe: {}.".format(DIRETORIO_AVALIACAO))
 
@@ -162,7 +190,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
 
         # Conteúdo a ser adicionado.
         novoConteudo = NOME_ARQUIVO_AVALIACAO + ";" +  data_e_hora.strftime("%d/%m/%Y %H:%M") + ";"  + treinamento_total + ";"  + str(acc) + ";"  +  str(vp_s) + ";"  +  str(vn_s) + ";" +  str(fp_s) + ";" +  str(fn_s) + "\n"
-
+        
         # Verifica se o arquivo existe.
         if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
             logging.info("Atualizando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
@@ -179,6 +207,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
             arquivo.writelines(conteudo)  
             # Fecha o arquivo.
             arquivo.close()
+            
         else:
             logging.info("Criando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
@@ -238,7 +267,14 @@ def carregaAgendador(training_args, otimizador, tamanho_conjunto):
 # ============================
 def realizaAvaliacao(model_args, model, tokenizer, documentos_teste, classes_teste, documentoids_teste, wandb):
     '''
-    Realiza a avaliação do modelo BERT ajustado com conjunto de dados de teste.
+    Realiza a avaliação do modelo BERT ajustado com conjunto de dados de teste.    
+    Parâmetros:
+        `model_args` - Objeto com os argumentos do modelo. 
+        `model` - Modelo BERT. 
+        `tokenizer` - Tokenizador BERT. 
+        `documentos_teste` - Lista dos documentos de teste. 
+        `classes_teste` - Lista das classes dos documentos de teste. 
+        `documentoids_teste` - Lista dos ids dos documentos de teste.     
     '''
 
     # Recupera o dispotivo da GPU 
@@ -390,6 +426,16 @@ def realizaAvaliacao(model_args, model, tokenizer, documentos_teste, classes_tes
 def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_treino, classes_treino, documentoids_treino, wandb):
     '''
     Realiza o treinamento do modelo BERT com o conjunto de dados de treino.
+    Parâmetros:
+        `model_args` - Objeto com os argumentos do modelo. 
+        `training_args` - Objeto com os argumentos do treinamento. 
+        `model` - Modelo pré-treinado BERT. 
+        `tokenizer` - Tokenizador BERT. 
+        `documentos_treino` - Lista dos documentos de treino. 
+        `classes_treino` - Lista das classes dos documentos de treino. 
+        `documentoids_treino` - Lista dos ids dos documentos de treino.     
+    Saída:  
+        `model` - Modelo BERT ajustado.
     '''
     
     # Recupera o dispotivo da GPU 
