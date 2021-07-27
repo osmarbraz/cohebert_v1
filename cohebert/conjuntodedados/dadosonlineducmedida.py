@@ -77,9 +77,9 @@ def carregaArquivosPermutadosOnlineEduc():
     # Percorre a lista de arquivos do diretório
     for i in range(len(arquivos)):
         # Recupera a posição do ponto no nome do arquivo
-        w = arquivos[i].find('.')
+        ponto = arquivos[i].find('.')
         # Recupera o nome do arquivo até a posição do ponto
-        nomeArquivo = arquivos[i][:w]
+        nomeArquivo = arquivos[i][:ponto]
 
         # Carrega o arquivo de nome x[i] do diretório
         documento = carregar('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/' + arquivos[i])
