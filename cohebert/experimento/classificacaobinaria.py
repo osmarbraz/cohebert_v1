@@ -17,6 +17,7 @@ def listaOriginalClassificadoIncorretamente(dfDadosClassificacao):
     '''
     Lista de documento originais classificados incorretamente(incoerente).
     '''
+    
     listaRetorno = []  
     for index, linha in dfDadosClassificacao.iterrows():
         if linha['classe'] == 1 and linha['predicao'] == 0:
@@ -28,6 +29,7 @@ def listaOriginalClassificadoCorretamente(dfDadosClassificacao):
     '''
     Lista de documento originais classificados corretamente(coerente).
     '''
+    
     listaRetorno = []  
     for index, linha in dfDadosClassificacao.iterrows():
         if linha['classe'] == 1 and linha['predicao'] == 1:
@@ -39,6 +41,7 @@ def listaClassificadoIncorretamente(dfDadosClassificacao):
     '''
     Listas de pares de documentos originais e permutados classificados incorretamente.
     '''
+    
     listaRetorno = []  
     for index, linha in dfDadosClassificacao.iterrows():
         if linha['classe'] == 1 and linha['predicao'] == 0:
@@ -52,6 +55,7 @@ def listaClassificadoCorretamente(dfDadosClassificacao):
     '''
     Listas de pares de documentos originais e permutados classificados corretamente.
     '''
+    
     listaRetorno = []  
     for index, linha in dfDadosClassificacao.iterrows():
         #if index < 20:    
@@ -64,8 +68,9 @@ def listaClassificadoCorretamente(dfDadosClassificacao):
 # ============================
 def avaliaClassificacao(dfDadosClassificacao):
     '''
-    Avaliação uma classificação.
+    Avaliação uma a acurácia, revocação, precisão e f1 de uma classificação.
     '''
+    
     vp_s = 0
     vn_s = 0
     fp_s = 0
