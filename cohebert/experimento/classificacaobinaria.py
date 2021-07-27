@@ -31,7 +31,7 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
     # Nome arquivo resultado avaliação
     NOME_ARQUIVO_AVALIACAO = training_args.output_dir
 
-    print("Média dos arquivos: ", NOME_ARQUIVO_AVALIACAO + "X" + TAMANHO_BERT)
+    logging.info("Média dos arquivos: {} X {}.".format(NOME_ARQUIVO_AVALIACAO,TAMANHO_BERT))
 
     # Verifica se o diretório dos resultados existem.
     if os.path.exists(DIRETORIO_AVALIACAO):
@@ -48,6 +48,7 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
         
                     # Cálculo das estatísticas
                     acc = (linha['vp']+linha['vn'])/(linha['vp']+linha['vn']+linha['fp']+linha['fn'])
+                
                     if (linha['vp']+linha['fn']) != 0:
                         rec = (linha['vp'])/(linha['vp']+linha['fn'])
                     else:
@@ -63,7 +64,7 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
                     
                     qtdeTestes = linha['vp']+linha['vn']+linha['fp']+linha['fn']
                     
-                    print('Arquivo: {}, Data: {}, Tempo: {}, QtdeTeste: {:3d}, Acc: {:.8f}, Rec: {:.8f}, Pre: {:.8f}, F1:{:.8f}, vp: {:4d}; vn: {:4d}; fp: {:4d}; fn: {:4d}'.format(
+                    logging.info("Arquivo: {}, Data: {}, Tempo: {}, QtdeTeste: {:3d}, Acc: {:.8f}, Rec: {:.8f}, Pre: {:.8f}, F1:{:.8f}, vp: {:4d}; vn: {:4d}; fp: {:4d}; fn: {:4d}".format(
                         linha['arquivo'], linha['data'], linha['tempo'], qtdeTestes, acc, rec, pre, f1, linha['vp'], linha['vn'], linha['fp'], linha['fn']))    
            
                     # Guarda o tempo.
@@ -75,16 +76,16 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
                 contaFolds = contaFolds + 1
     
         # Mostra a soma da acurácia . 
-        print('Total acurácia                                       : {:.8f}'.format(somaAcuracia))
+        logging.info('Total acurácia                                       : {:.8f}'.format(somaAcuracia))
         # Mostra a quantidade de folds.
-        print('Quantidade de folds                                  : {}'.format(contaFolds))  
+        logging.info('Quantidade de folds                                  : {}'.format(contaFolds))  
         # Calcula a média.
         media = somaAcuracia/contaFolds
-        print('A média da acurácia de {:2d} folds é                    : {:.8f}'.format(contaFolds, media))
-        print('O tempo gasto na execução do treinamentoa {:2d} folds é : {}'.format(contaFolds, somaTempo(listaTempo)))
-        print('A média de tempo de execução de {:2d} folds é           : {}'.format(contaFolds, mediaTempo(listaTempo)))
+        logging.info('A média da acurácia de {:2d} folds é                    : {:.8f}'.format(contaFolds, media))
+        logging.info('O tempo gasto na execução do treinamentoa {:2d} folds é : {}'.format(contaFolds, somaTempo(listaTempo)))
+        logging.info('A média de tempo de execução de {:2d} folds é           : {}'.format(contaFolds, mediaTempo(listaTempo)))
     else:
-        print('Diretório com os resultados não encontrado')
+        logging.info('Diretório com os resultados não encontrado')
 
 # ============================        
 def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resultado_avaliacao):
@@ -101,9 +102,9 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
         if not os.path.exists(DIRETORIO_CLASSIFICACAO):  
             # Cria o diretório
             os.makedirs(DIRETORIO_CLASSIFICACAO)
-            print('Diretório criado: {}'.format(DIRETORIO_CLASSIFICACAO))
+            logging.info("Diretório criado: {}.".format(DIRETORIO_CLASSIFICACAO))
         else:
-            print('Diretório já existe: {}'.format(DIRETORIO_CLASSIFICACAO))
+            logging.info("Diretório já existe: {}.".format(DIRETORIO_CLASSIFICACAO))
 
         # Nome do arquivo a ser aberto.
         NOME_ARQUIVO_CLASSIFICACAO_COMPLETO = DIRETORIO_CLASSIFICACAO + NOME_ARQUIVO_CLASSIFICACAO + ".csv"
@@ -115,7 +116,7 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
 
         # Verifica se o arquivo existe.
         if os.path.isfile(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO):
-            print("Atualizando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
+            logging.info("Atualizando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
             # Abre o arquivo para leitura.
             arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'r')
             # Leitura de todas as linhas do arquivo.
@@ -130,7 +131,7 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
             # Fecha o arquivo.
             arquivo.close()
         else:
-            print("Criando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
+            logging.info("Criando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
             arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
             arquivo.writelines('data;id;classe;predicao\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
@@ -152,9 +153,9 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
         if not os.path.exists(DIRETORIO_AVALIACAO):  
             # Cria o diretório
             os.makedirs(DIRETORIO_AVALIACAO)
-            print('Diretório criado: {}'.format(DIRETORIO_AVALIACAO))
+            logging.info("Diretório criado: {}.".format(DIRETORIO_AVALIACAO))
         else:
-            print('Diretório já existe: {}'.format(DIRETORIO_AVALIACAO))
+            logging.info("Diretório já existe: {}.".format(DIRETORIO_AVALIACAO))
 
         # Nome do arquivo a ser aberto.
         NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + ".csv"
@@ -164,7 +165,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
 
         # Verifica se o arquivo existe.
         if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
-            print("Atualizando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+            logging.info("Atualizando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre o arquivo para leitura.
             arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'r')
             # Leitura de todas as linhas do arquivo.
@@ -179,7 +180,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
             # Fecha o arquivo.
             arquivo.close()
         else:
-            print("Criando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+            logging.info("Criando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
             arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
             arquivo.writelines('arquivo;data;tempo;acuracia;vp;vn;fp;fn\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
@@ -193,16 +194,17 @@ def carregaOtimizador(training_args, model):
     Parâmetros:
         `training_args` - Objeto com os argumentos do treinamento. 
     '''
+    
     # Nota: AdamW é uma classe da biblioteca huggingface (ao contrário de pytorch).
     # Eu acredito que o 'W' significa 'Correção de redução de peso "
     otimizador = AdamW(model.parameters(),
                   lr = training_args.learning_rate, # (ou alfa) A taxa de aprendizado a ser usada. - default é 3e-5
                   # betas = (0.9, 0.999), # (beta1, beta2) - default é (0.9, 0.999)
-                    # beta1 é taxa de decaimento exponencial para as estimativas do primeiro momento. 
-                    # beta2 é taxa de decaimento exponencial para as estimativas do segundo momento. Este valor deve ser definido próximo a 1,0 em problemas com gradiente esparso (por exemplo, PNL e problemas de visão de computacional)
+                  # beta1 é taxa de decaimento exponencial para as estimativas do primeiro momento. 
+                  # beta2 é taxa de decaimento exponencial para as estimativas do segundo momento. Este valor deve ser definido próximo a 1,0 em problemas com gradiente esparso (por exemplo, PNL e problemas de visão de computacional)
                   # eps = 1e-6, #  É um número muito pequeno para evitar qualquer divisão por zero na implementação - default é 1e-6.
                   # weight_decay = 0.0, # Correção de redução de peso. - default é 0.0
-                    # A redução da taxa de aprendizagem também pode ser usada com Adam. A taxa de decaimento é atualizada a cada época para a demonstração da regressão logística.
+                  # A redução da taxa de aprendizagem também pode ser usada com Adam. A taxa de decaimento é atualizada a cada época para a demonstração da regressão logística.
                   # correct_bias = True #  Se não deve corrigir o viés(bias) no Adam mudar para False.- default é True
                 )
   
@@ -211,7 +213,6 @@ def carregaOtimizador(training_args, model):
   
 # ============================
 def carregaAgendador(training_args, otimizador):
-
     '''
     Esta função carrega o agendador com um taxa de aprendizado que diminua linearmente até 0.
     Parâmetros:
