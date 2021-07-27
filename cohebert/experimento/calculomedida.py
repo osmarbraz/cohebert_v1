@@ -2,6 +2,8 @@
 import logging  # Biblioteca de logging
 from tqdm.notebook import tqdm as tqdm_notebook # Biblioteca da barra de progresso
 import os  # Biblioteca para apagar arquivos
+import time  # Biblioteca de hora
+import datetime # Biblioteca de data e hora
 import pandas as pd # Biblioteca para manipulação e análise de dados
 
 # Import de bibliotecas próprias
@@ -221,15 +223,226 @@ def geraEstatisticasMedidasDocumentos(dfdadosMedidasDocumentos):
     return stats_medidas_documentos
 
 # ============================
-def calculaMedidasDocumentosConjuntoDeDados(dfdados, model, tokenizer, nlp, model_args, wandb):
+def separaDocumentos(dadosMedida):
+    '''
+    Separa os dados do dataframe em originais e permutados.
+    Parâmetros:
+        `dadosMedida` - Dados a serem separados em originais e permutados.    
+        
+    Saída:
+        `dfOriginalMedida` - Dataframe com os dados de documentos originais.        
+        `dfPermutadoMedida` - Dataframe com os dados de documentos permutados.
+    '''        
+    # Separa os originais
+    dfOriginalMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==False]
+    # Remove os duplicados
+    dfOriginalMedida = dfOriginalMedida.drop_duplicates(subset=['arquivo'])
+    logging.info("Registros: {}.".format(len(dfOriginalMedida)))
+
+    # Separa os permutados
+    dfPermutadoMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==True]
+    # Remove os duplicados
+    dfPermutadoMedida = dfPermutadoMedida.drop_duplicates(subset=['arquivo'])
+    
+    logging.info("Registros: {}.".format(len(dfPermutadoMedida)))
+
+    return dfOriginalMedida, dfPermutadoMedida
+
+# ============================
+def salvaResultadoMedicao(model_args, DIRETORIO_MEDICAO, lista_medidas_documentos_salvar):
+
+  if model_args.salvar_medicao:
+
+    # Recupera a hora do sistema.
+    data_e_hora = datetime.datetime.now()
+
+    AJUSTADO = '_pretreinado'
+    if model_args.usar_mcl_ajustado == True:
+        AJUSTADO = '_ajustado'
+
+    ESTRATEGIA_POOLING = '_mean'
+    if model_args.estrategia_pooling == 1:
+      ESTRATEGIA_POOLING = '_max'
+
+    PALAVRA_RELEVANTE = '_tap'
+    if model_args.palavra_relevante == 1:
+      PALAVRA_RELEVANTE = '_ssw'       
+    else:
+      if model_args.palavra_relevante == 2:
+        PALAVRA_RELEVANTE = '_ssb'   
+
+    # Nome arquivo resultado
+    NOME_ARQUIVO_MEDICAO = 'MedicaoCoerenciaCSTNews_v1' + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
+
+    # Verifica se o diretório existe
+    if not os.path.exists(DIRETORIO_MEDICAO):  
+      # Cria o diretório
+      os.makedirs(DIRETORIO_MEDICAO)
+      print('Diretório criado: {}'.format(DIRETORIO_MEDICAO))
+    else:
+      print('Diretório já existe: {}'.format(DIRETORIO_MEDICAO))
+
+    # Nome do arquivo a ser aberto.
+    NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDICAO + NOME_ARQUIVO_MEDICAO + '.csv'
+
+    # Verifica se o diretório existe
+    if not os.path.exists(DIRETORIO_MEDICAO):  
+      # Cria o diretório
+      os.makedirs(DIRETORIO_MEDICAO)
+      print('Diretório criado: {}'.format(DIRETORIO_MEDICAO))
+    else:
+      print('Diretório já existe: {}'.format(DIRETORIO_MEDICAO))
+
+    # Nome do arquivo a ser aberto.
+    NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDICAO + NOME_ARQUIVO_MEDICAO + '.csv'
+
+    # Gera todo o conteúdo a ser salvo no arquivo
+    novoConteudo = ''        
+    for resultado in lista_medidas_documentos_salvar:            
+      novoConteudo = novoConteudo + data_e_hora.strftime('%d/%m/%Y %H:%M') + ';' + str(resultado[0]) + ';' + str(resultado[1]) + ';'  + str(resultado[2]) + ';'  + str(resultado[3]) + '\n'
+
+    # Verifica se o arquivo existe.
+    if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
+      print('Atualizando arquivo medição: {}'.format(NOME_ARQUIVO_MEDICAO_COMPLETO))
+      # Abre o arquivo para leitura.
+      arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO,'r')
+      # Leitura de todas as linhas do arquivo.
+      conteudo = arquivo.readlines()
+      # Conteúdo a ser adicionado.
+      conteudo.append(novoConteudo)
+
+      # Abre novamente o arquivo (escrita).
+      arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO,'w')
+      # escreva o conteúdo criado anteriormente nele.
+      arquivo.writelines(conteudo)  
+      # Fecha o arquivo.
+      arquivo.close()
+    else:
+      print('Criando arquivo medição: {}'.format(NOME_ARQUIVO_MEDICAO_COMPLETO))
+      # Abre novamente o arquivo (escrita).
+      arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO,'w')
+      arquivo.writelines('data;arquivo;ccos;ceuc;cman\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+      # Fecha o arquivo.
+      arquivo.close()
+
+# ============================        
+def salvaResultadoAvaliacao(model_args, DIRETORIO_AVALIACAO, tempoTotalProcessamento, conta, acuraciaCcos, contaCcos, acuraciaCeuc, contaCeuc, acuraciaCman, contaCman):
+
+  if model_args.salvar_avaliacao:
+
+    # Recupera a hora do sistema.
+    data_e_hora = datetime.datetime.now()
+
+    AJUSTADO = '_pretreinado'
+    if model_args.usar_mcl_ajustado == True:
+        AJUSTADO = '_ajustado'
+
+    ESTRATEGIA_POOLING = '_mean'
+    if model_args.estrategia_pooling == 1:
+      ESTRATEGIA_POOLING = '_max'
+
+    PALAVRA_RELEVANTE = '_tap'
+    if model_args.palavra_relevante == 1:
+        PALAVRA_RELEVANTE = '_ssw'       
+    else:
+      if model_args.palavra_relevante == 2:
+        PALAVRA_RELEVANTE = '_ssb' 
+    
+    # Nome arquivo resultado
+    NOME_ARQUIVO_AVALIACAO = 'MedicaoCoerenciaCSTNews_v1' + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
+
+    # Verifica se o diretório existe
+    if not os.path.exists(DIRETORIO_AVALIACAO):  
+      # Cria o diretório
+      os.makedirs(DIRETORIO_AVALIACAO)
+      print('Diretório criado: {}'.format(DIRETORIO_AVALIACAO))
+    else:
+      print('Diretório já existe: {}'.format(DIRETORIO_AVALIACAO))
+
+    # Nome do arquivo a ser aberto.
+    NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + '.csv'
+
+    # Conteúdo a ser adicionado.
+    novoConteudo = NOME_ARQUIVO_AVALIACAO + ';' + data_e_hora.strftime('%d/%m/%Y %H:%M') + ';' + tempoTotalProcessamento + ';'  + str(conta) + ';'  + str(acuraciaCcos) + ';' + str(contaCcos) + ';' + str(acuraciaCeuc) + ';' + str(contaCeuc) + ';' + str(acuraciaCman) + ';' + str(contaCman) + '\n'
+
+    # Verifica se o arquivo existe.
+    if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
+      print('Atualizando arquivo resultado avaliação: {}'.format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+      # Abre o arquivo para leitura.
+      arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'r')
+      # Leitura de todas as linhas do arquivo.
+      conteudo = arquivo.readlines()
+      # Conteúdo a ser adicionado.
+      conteudo.append(novoConteudo)
+
+      # Abre novamente o arquivo (escrita).
+      arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
+      # escreva o conteúdo criado anteriormente nele.
+      arquivo.writelines(conteudo)  
+      # Fecha o arquivo.
+      arquivo.close()
+    else:
+      print('Criando arquivo resultado avaliação: {}'.format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+      # Abre novamente o arquivo (escrita).
+      arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
+      arquivo.writelines('arquivo;data;tempo;conta;ccos;contaccos;ceuc;contaceuc;cman;contacman\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+      # Fecha o arquivo.
+      arquivo.close()
+
+# ============================
+def carregaMedidas(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
+    '''
+    Carrega as medidas de coerência de um diretório e retorna um dataframe.
+    Parâmetros:
+        `DIRETORIO_MEDIDAS` - Diretório com os arquivos das medidas.    
+        `TIPO_MODELO` - Tipo do modelo(pretreinado ou ajustado) a ser carregado.  
+        `ESTRATEGIA_POOLING` - Nome da estratégia de pooling(MEAN ou MAX).
+        `PALAVRA_RELEVANTE` - Nome da estratégia de relevância(ALL, CLEAN ou NOUN).
+        `NOME_MODELO_BERT` - Nome do modelo(BERTimbau ou BERT) a ser carregado.  
+        `TAMANHO_BERT` - Tamanho do modelo(Base ou Large) a ser carregado. 
+        
+    Saída:
+        `dfMedida` - Um dataframe com os dados carregados.
+    '''
+    NOME_BASE = "MedicaoCoerenciaCSTNews_v1"
+    
+    NOME_ARQUIVO_MEDICAO = NOME_BASE + TIPO_MODELO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
+
+    dfMedida = None
+     
+    # Verifica se o diretório dos resultados existem.
+    if os.path.exists(DIRETORIO_MEDIDAS):
+        arquivos = os.listdir(DIRETORIO_MEDIDAS)     
+
+        NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDIDAS + NOME_ARQUIVO_MEDICAO
+    
+        # Verifica se o arquivo existe.
+        if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
+            logging.info("Carregando arquivo: {}.".format(NOME_ARQUIVO_MEDICAO))
+            
+            # Carrega os dados do arquivo  
+            dfMedida = pd.read_csv(NOME_ARQUIVO_MEDICAO_COMPLETO, sep=';')
+            
+            logging.info("Medidas carregadas: {}.".format(len(dfMedida)))
+      
+        else:
+            logging.info("Arquivo com as medições não encontrado!")        
+
+    else:
+        logging.info("Diretório com as medições não encontrado!")
+
+    return dfMedida
+
+# ============================
+def calculaMedidasDocumentosConjuntoDeDados(model_args, dfdados, model, tokenizer, nlp, wandb):
     '''
     Cálcula a medida de todos os documentos do conjunto.
     Parâmetros:
+        `model_args` - Objeto com os argumentos do modelo. 
         `dfdados` - Datafrane dos documentos.
         `model` - Modelo BERT.
         `tokenizer` - Tokenizador BERT.
-        `nlp` - Objeto spaCy.
-        `model_args` - Objeto com os argumentos do modelo. 
+        `nlp` - Objeto spaCy.        
         `wandg` - Wandb para log do experimento.  
         
     Saída:     
@@ -359,73 +572,3 @@ def organizaParesDocumentos(dfOriginalMedida, dfPermutadoMedida):
     logging.info("Registros depois: {}.".format(len(dfListaParesDocumentosMedidas)))
 
     return dfListaParesDocumentosMedidas
-
-# ============================
-def separaDocumentos(dadosMedida):
-    '''
-    Separa os dados do dataframe em originais e permutados.
-    Parâmetros:
-        `dadosMedida` - Dados a serem separados em originais e permutados.    
-        
-    Saída:
-        `dfOriginalMedida` - Dataframe com os dados de documentos originais.        
-        `dfPermutadoMedida` - Dataframe com os dados de documentos permutados.
-    '''        
-    # Separa os originais
-    dfOriginalMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==False]
-    # Remove os duplicados
-    dfOriginalMedida = dfOriginalMedida.drop_duplicates(subset=['arquivo'])
-    logging.info("Registros: {}.".format(len(dfOriginalMedida)))
-
-    # Separa os permutados
-    dfPermutadoMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==True]
-    # Remove os duplicados
-    dfPermutadoMedida = dfPermutadoMedida.drop_duplicates(subset=['arquivo'])
-    
-    logging.info("Registros: {}.".format(len(dfPermutadoMedida)))
-
-    return dfOriginalMedida, dfPermutadoMedida
-
-# ============================
-def carregaMedidas(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
-    '''
-    Carrega as medidas de coerência de um diretório e retorna um dataframe.
-    Parâmetros:
-        `DIRETORIO_MEDIDAS` - Diretório com os arquivos das medidas.    
-        `TIPO_MODELO` - Tipo do modelo(pretreinado ou ajustado) a ser carregado.  
-        `ESTRATEGIA_POOLING` - Nome da estratégia de pooling(MEAN ou MAX).
-        `PALAVRA_RELEVANTE` - Nome da estratégia de relevância(ALL, CLEAN ou NOUN).
-        `NOME_MODELO_BERT` - Nome do modelo(BERTimbau ou BERT) a ser carregado.  
-        `TAMANHO_BERT` - Tamanho do modelo(Base ou Large) a ser carregado. 
-        
-    Saída:
-        `dfMedida` - Um dataframe com os dados carregados.
-    '''
-    NOME_BASE = "MedicaoCoerenciaCSTNews_v1"
-    
-    NOME_ARQUIVO_MEDICAO = NOME_BASE + TIPO_MODELO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
-
-    dfMedida = None
-     
-    # Verifica se o diretório dos resultados existem.
-    if os.path.exists(DIRETORIO_MEDIDAS):
-        arquivos = os.listdir(DIRETORIO_MEDIDAS)     
-
-        NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDIDAS + NOME_ARQUIVO_MEDICAO
-    
-        # Verifica se o arquivo existe.
-        if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
-            logging.info("Carregando arquivo: {}.".format(NOME_ARQUIVO_MEDICAO))
-            
-            # Carrega os dados do arquivo  
-            dfMedida = pd.read_csv(NOME_ARQUIVO_MEDICAO_COMPLETO, sep=';')
-            
-            logging.info("Medidas carregadas: {}.".format(len(dfMedida)))
-      
-        else:
-            logging.info("Arquivo com as medições não encontrado!")        
-
-    else:
-        logging.info("Diretório com as medições não encontrado!")
-
-    return dfMedida
