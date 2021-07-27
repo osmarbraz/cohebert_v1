@@ -126,7 +126,7 @@ def carregaClassificacoes(NOME_BASE, DIRETORIO_CLASSIFICACAO, EPOCA, TAXA_APREND
     # Verifica se o diretório dos resultados existem.
     if os.path.exists(DIRETORIO_CLASSIFICACAO):
         arquivos = os.listdir(DIRETORIO_CLASSIFICACAO)     
-        logging.info("Modelo: {} Tamanho: {} Epoca: {} Taxa Aprendizagem: {}".format(NOME_MODELO_BERT, TAMANHO_BERT, EPOCA, TAXA_APRENDIZAGEM))
+        logging.info("Modelo: {} Tamanho: {} Epoca: {} Taxa Aprendizagem: {}.".format(NOME_MODELO_BERT, TAMANHO_BERT, EPOCA, TAXA_APRENDIZAGEM))
         
         # Acumuladores.
         contaFolds = 0 
@@ -150,11 +150,11 @@ def carregaClassificacoes(NOME_BASE, DIRETORIO_CLASSIFICACAO, EPOCA, TAXA_APREND
 
                 contaReg = contaReg + len(dados)
             else:
-                logging.info("Arquivo de classificação não encontrado!")
+                logging.info("Arquivo de classificação não encontrado.")
             
         logging.info("Folds carregados: {} Registros: {}".format(contaFolds, contaReg))        
     else:
-        logging.info("Diretório com as classificações não encontrado")
+        logging.info("Diretório com as classificações não encontrado.")
 
     return dfDadosClassificacao
             
@@ -178,7 +178,7 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
     # Armazena o resultado da avaliação executada
     lista_resultado_avaliacao = []
 
-    logging.info("Realizando Avaliação fold: {}".format(model_args.fold))
+    logging.info("Realizando Avaliação fold: {}.".format(model_args.fold))
 
     # Predição no conjunto de teste no modelo.
     logging.info("Predizendo rótulos para {:,} documentos de teste.".format(len(documentos_teste)))
