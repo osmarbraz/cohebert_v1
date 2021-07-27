@@ -328,11 +328,8 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
     # Converte em um dataframe
     dfdados = converteListaParesDocumentos(lista_documentos)
     
-    # Divide o conjunto de dados
-    dfdados_train, dfdados_test = divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
-        
     # Descarta os documentos muito grandes. (Que geram mais de 512 tokens)
-    dfdados = descartandoDocumentosGrandesTreinoTeste(model_args, tokenizer, dfdados_train, dfdados_test)
+    dfdados = descartandoDocumentosGrandes(model_args, tokenizer, dfdados)
     
     # Organiza os dados para classificação
     dfdados = organizaDados(dfdados)
