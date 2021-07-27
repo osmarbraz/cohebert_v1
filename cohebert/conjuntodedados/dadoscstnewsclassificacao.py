@@ -327,9 +327,12 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
         
     # Converte em um dataframe
     dfdados = converteListaParesDocumentos(lista_documentos)
+    
+    # Divide o conjunto de dados
+    dfdados_train, dfdados_test = divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
         
     # Descarta os documentos muito grandes. (Que geram mais de 512 tokens)
-    dfdados = descartandoDocumentosGrandes(dfdados, model_args, tokenizer)
+    dfdados = descartandoDocumentosGrandesTreinoTeste(model_args, tokenizer, dfdados_train, dfdados_test)
     
     # Organiza os dados para classificação
     dfdados = organizaDados(dfdados)
@@ -337,12 +340,12 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
     return dfdados
 
 # ============================
-def descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test):
+def descartandoDocumentosGrandesTreinoTeste(model_args, tokenizer, dfdados_train, dfdados_test):
     '''
     Descarta os documentos que possuem mais tokens que o tamanho máximo em model_args(max_seq_len). 
-    Parâmetros:
-        `tokenizer` - Tokenizador BERT.
+    Parâmetros:        
         `model_args` - Objeto com os argumentos do modelo.
+        `tokenizer` - Tokenizador BERT.
         `dfdados_train` - Dataframe com os dados de treinamento.
         `dfdados_test` - Dataframe com os dados de teste.
     Saída:
