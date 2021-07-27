@@ -1,7 +1,8 @@
 # Import das bibliotecas.
 import logging  # Biblioteca de logging
 import os  # Biblioteca para apagar arquivos
-import time  # Biblioteca de tempo
+import time  # Biblioteca de hora
+import datetime # Biblioteca de data e hora
 import random # Biblioteca para números aleatórios
 import pandas as pd # Biblioteca para manipulação e análise de dados
 import numpy as np # Biblioteca para manipulação e análise de dados
@@ -88,110 +89,102 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
 # ============================        
 def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resultado_avaliacao):
 
-  if model_args.salvar_classificacao:
+    if model_args.salvar_classificacao:
+        
+        # Recupera a hora do sistema.
+        data_e_hora = datetime.datetime.now()
 
-    # Import das bibliotecas.
-    import os
-    import datetime
-
-    # Recupera a hora do sistema.
-    data_e_hora = datetime.datetime.now()
-
-    # Nome arquivo resultado
-    NOME_ARQUIVO_CLASSIFICACAO = training_args.output_dir + str(model_args.fold) + MODELO_BERT + TAMANHO_BERT 
+        # Nome arquivo resultado
+        NOME_ARQUIVO_CLASSIFICACAO = training_args.output_dir + str(model_args.fold) + MODELO_BERT + TAMANHO_BERT 
       
-    # Verifica se o diretório existe
-    if not os.path.exists(DIRETORIO_CLASSIFICACAO):  
-      # Cria o diretório
-      os.makedirs(DIRETORIO_CLASSIFICACAO)
-      print('Diretório criado: {}'.format(DIRETORIO_CLASSIFICACAO))
-    else:
-      print('Diretório já existe: {}'.format(DIRETORIO_CLASSIFICACAO))
+        # Verifica se o diretório existe
+        if not os.path.exists(DIRETORIO_CLASSIFICACAO):  
+            # Cria o diretório
+            os.makedirs(DIRETORIO_CLASSIFICACAO)
+            print('Diretório criado: {}'.format(DIRETORIO_CLASSIFICACAO))
+        else:
+            print('Diretório já existe: {}'.format(DIRETORIO_CLASSIFICACAO))
 
-    # Nome do arquivo a ser aberto.
-    NOME_ARQUIVO_CLASSIFICACAO_COMPLETO = DIRETORIO_CLASSIFICACAO + NOME_ARQUIVO_CLASSIFICACAO + ".csv"
+        # Nome do arquivo a ser aberto.
+        NOME_ARQUIVO_CLASSIFICACAO_COMPLETO = DIRETORIO_CLASSIFICACAO + NOME_ARQUIVO_CLASSIFICACAO + ".csv"
 
-    # Gera todo o conteúdo a ser salvo no arquivo
-    novoConteudo = ""        
-    for resultado in lista_resultado_avaliacao:      
-      novoConteudo = novoConteudo + data_e_hora.strftime("%d/%m/%Y %H:%M") + ";" + str(resultado[0]) + ";" + str(resultado[1]) + ";" + str(resultado[2]) + "\n"
+        # Gera todo o conteúdo a ser salvo no arquivo
+        novoConteudo = ""        
+        for resultado in lista_resultado_avaliacao:      
+            novoConteudo = novoConteudo + data_e_hora.strftime("%d/%m/%Y %H:%M") + ";" + str(resultado[0]) + ";" + str(resultado[1]) + ";" + str(resultado[2]) + "\n"
 
-    # Verifica se o arquivo existe.
-    if os.path.isfile(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO):
-      print("Atualizando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
-      # Abre o arquivo para leitura.
-      arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'r')
-      # Leitura de todas as linhas do arquivo.
-      conteudo = arquivo.readlines()
-      # Conteúdo a ser adicionado.
-      conteudo.append(novoConteudo)
+        # Verifica se o arquivo existe.
+        if os.path.isfile(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO):
+            print("Atualizando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
+            # Abre o arquivo para leitura.
+            arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'r')
+            # Leitura de todas as linhas do arquivo.
+            conteudo = arquivo.readlines()
+            # Conteúdo a ser adicionado.
+            conteudo.append(novoConteudo)
 
-      # Abre novamente o arquivo (escrita).
-      arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
-      # escreva o conteúdo criado anteriormente nele.
-      arquivo.writelines(conteudo)  
-      # Fecha o arquivo.
-      arquivo.close()
-    else:
-      print("Criando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
-      # Abre novamente o arquivo (escrita).
-      arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
-      arquivo.writelines('data;id;classe;predicao\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
-      # Fecha o arquivo.
-      arquivo.close()        
+            # Abre novamente o arquivo (escrita).
+            arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
+            # escreva o conteúdo criado anteriormente nele.
+            arquivo.writelines(conteudo)  
+            # Fecha o arquivo.
+            arquivo.close()
+        else:
+            print("Criando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
+            # Abre novamente o arquivo (escrita).
+            arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
+            arquivo.writelines('data;id;classe;predicao\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+            # Fecha o arquivo.
+            arquivo.close()        
 
 # ============================        
 def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
 
-  if model_args.salvar_avaliacao:
+    if model_args.salvar_avaliacao:
 
-    # Import das bibliotecas.
-    import os
-    import datetime
+        # Recupera a hora do sistema.
+        data_e_hora = datetime.datetime.now()
 
-    # Recupera a hora do sistema.
-    data_e_hora = datetime.datetime.now()
+        # Nome arquivo resultado
+        NOME_ARQUIVO_AVALIACAO = training_args.output_dir + str(model_args.fold) + MODELO_BERT + TAMANHO_BERT 
 
-    # Nome arquivo resultado
-    NOME_ARQUIVO_AVALIACAO = training_args.output_dir + str(model_args.fold) + MODELO_BERT + TAMANHO_BERT 
+        # Verifica se o diretório existe
+        if not os.path.exists(DIRETORIO_AVALIACAO):  
+            # Cria o diretório
+            os.makedirs(DIRETORIO_AVALIACAO)
+            print('Diretório criado: {}'.format(DIRETORIO_AVALIACAO))
+        else:
+            print('Diretório já existe: {}'.format(DIRETORIO_AVALIACAO))
 
-    # Verifica se o diretório existe
-    if not os.path.exists(DIRETORIO_AVALIACAO):  
-      # Cria o diretório
-      os.makedirs(DIRETORIO_AVALIACAO)
-      print('Diretório criado: {}'.format(DIRETORIO_AVALIACAO))
-    else:
-      print('Diretório já existe: {}'.format(DIRETORIO_AVALIACAO))
+        # Nome do arquivo a ser aberto.
+        NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + ".csv"
 
-    # Nome do arquivo a ser aberto.
-    NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + ".csv"
+        # Conteúdo a ser adicionado.
+        novoConteudo = NOME_ARQUIVO_AVALIACAO + ";" +  data_e_hora.strftime("%d/%m/%Y %H:%M") + ";"  + treinamento_total + ";"  + str(acc) + ";"  +  str(vp_s) + ";"  +  str(vn_s) + ";" +  str(fp_s) + ";" +  str(fn_s) + "\n"
 
-    # Conteúdo a ser adicionado.
-    novoConteudo = NOME_ARQUIVO_AVALIACAO + ";" +  data_e_hora.strftime("%d/%m/%Y %H:%M") + ";"  + treinamento_total + ";"  + str(acc) + ";"  +  str(vp_s) + ";"  +  str(vn_s) + ";" +  str(fp_s) + ";" +  str(fn_s) + "\n"
+        # Verifica se o arquivo existe.
+        if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
+            print("Atualizando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+            # Abre o arquivo para leitura.
+            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'r')
+            # Leitura de todas as linhas do arquivo.
+            conteudo = arquivo.readlines()
+            # Conteúdo a ser adicionado.
+            conteudo.append(novoConteudo)
 
-    # Verifica se o arquivo existe.
-    if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
-      print("Atualizando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
-      # Abre o arquivo para leitura.
-      arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'r')
-      # Leitura de todas as linhas do arquivo.
-      conteudo = arquivo.readlines()
-      # Conteúdo a ser adicionado.
-      conteudo.append(novoConteudo)
-
-      # Abre novamente o arquivo (escrita).
-      arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
-      # escreva o conteúdo criado anteriormente nele.
-      arquivo.writelines(conteudo)  
-      # Fecha o arquivo.
-      arquivo.close()
-    else:
-      print("Criando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
-      # Abre novamente o arquivo (escrita).
-      arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
-      arquivo.writelines('arquivo;data;tempo;acuracia;vp;vn;fp;fn\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
-      # Fecha o arquivo.
-      arquivo.close()
+            # Abre novamente o arquivo (escrita).
+            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
+            # escreva o conteúdo criado anteriormente nele.
+            arquivo.writelines(conteudo)  
+            # Fecha o arquivo.
+            arquivo.close()
+        else:
+            print("Criando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+            # Abre novamente o arquivo (escrita).
+            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
+            arquivo.writelines('arquivo;data;tempo;acuracia;vp;vn;fp;fn\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+            # Fecha o arquivo.
+            arquivo.close()
         
 # ============================
 def carregaOtimizador(training_args, model):
