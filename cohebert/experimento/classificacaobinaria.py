@@ -212,18 +212,19 @@ def carregaOtimizador(training_args, model):
   
   
 # ============================
-def carregaAgendador(training_args, otimizador):
+def carregaAgendador(training_args, otimizador, tamanho_conjunto):
     '''
     Esta função carrega o agendador com um taxa de aprendizado que diminua linearmente até 0.
     Parâmetros:
         `training_args` - Objeto com os argumentos do treinamento. 
         `otimizador` - Objeto do otmizador do modelo. 
+        `tamanho_conjunto` - Tamanho do conjunto de dados de treino. 
     '''
 
     # O número total de etapas de ajuste fino é [número de lotes] x [número de épocas].
     # (Observe que este não é o mesmo que o número de amostras de ajuste fino).
-    total_etapas = len(documentos_treino) * training_args.num_train_epochs
-
+    total_etapas = tamanho_conjunto * training_args.num_train_epochs
+    
     #Cria o agendador de taxa de aprendizagem.
     agendador = get_linear_schedule_with_warmup(otimizador, # O otimizador para o qual agendar a taxa de aprendizado.
                                             num_warmup_steps = 0, # O número de etapas para a fase de aquecimento. Valor default value em run_glue.py
@@ -236,6 +237,9 @@ def carregaAgendador(training_args, otimizador):
 
 # ============================
 def realizaAvaliacao(model_args, model, documentos_teste, classes_teste, documentoids_teste, wandb):
+    '''
+    Realiza a avaliação do modelo BERT ajustado com conjunto de dados de teste.
+    '''
 
     # Armazena o resultado da avaliação executada
     lista_resultado_avaliacao = []
@@ -381,6 +385,9 @@ def realizaAvaliacao(model_args, model, documentos_teste, classes_teste, documen
 
 # ============================
 def realizaTreinamento(model_args, training_args, model, documentos_treino, classes_treino, documentoids_treino, wandb):
+    '''
+    Realiza o treinamento do modelo BERT com o conjunto de dados de treino.
+    '''
                        
     #training_args.num_train_epochs
     logging.info("Realizando Treinamento fold: {}".format(model_args.fold))
@@ -389,7 +396,7 @@ def realizaTreinamento(model_args, training_args, model, documentos_treino, clas
     otimizador = carregaOtimizador(training_args, model)
 
     # Carrega o agendador
-    agendador = carregaAgendador(training_args, otimizador)
+    agendador = carregaAgendador(training_args, otimizador, len(documentos_treino))
 
     # Defina o valor da semente em todos os lugares para torná-lo reproduzível.
     seed_val = training_args.seed
