@@ -241,6 +241,9 @@ def realizaAvaliacao(model_args, model, tokenizer, documentos_teste, classes_tes
     Realiza a avaliação do modelo BERT ajustado com conjunto de dados de teste.
     '''
 
+    # Recupera o dispotivo da GPU 
+    device = getDeviceGPU()
+    
     # Armazena o resultado da avaliação executada
     lista_resultado_avaliacao = []
 
