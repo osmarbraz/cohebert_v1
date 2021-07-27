@@ -11,6 +11,46 @@ from tqdm.notebook import tqdm as tqdm_notebook # Biblioteca para barra de progr
 
 # Import de bibliotecas próprias
 from bert.bertmodulo  import *
+
+# ============================
+def carregaClassificacoes(NOME_BASE, DIRETORIO_CLASSIFICACAO, EPOCA, TAXA_APRENDIZAGEM, NOME_MODELO_BERT, TAMANHO_BERT):
+
+    #Inicializa um dataframe vazio
+    dfDadosClassificacao = pd.DataFrame()
+
+    # Verifica se o diretório dos resultados existem.
+    if os.path.exists(DIRETORIO_CLASSIFICACAO):
+        arquivos = os.listdir(DIRETORIO_CLASSIFICACAO)     
+        logging.info("Modelo: {} Tamanho: {} Epoca: {} ' Taxa Aprendizagem: {}".format(NOME_MODELO_BERT, TAMANHO_BERT, EPOCA, TAXA_APRENDIZAGEM))
+        
+        # Acumuladores.
+        contaFolds = 0 
+        contaReg = 0
+        for fold in range(1,11):    
+            NOME_ARQUIVO_CLASSIFICAO = NOME_BASE + EPOCA + '_lr_' + TAXA_APRENDIZAGEM + '_b_4_8_f' + str(fold) + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
+            NOME_ARQUIVO_CLASSIFICACAO_COMPLETO = DIRETORIO_CLASSIFICACAO + NOME_ARQUIVO_CLASSIFICAO
+
+            # Verifica se o arquivo existe.
+            if os.path.isfile(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO):
+                # Carrega os dados do arquivo  
+                dados = pd.read_csv(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO, sep=';')
+        
+                dfDadosClassificacao = pd.concat([dfDadosClassificacao, dados], ignore_index=True)
+          
+                # Conta o número de folds.
+                contaFolds = contaFolds + 1
+
+                contaReg = contaReg + len(dados)
+            else:
+                logging.info("Arquivo de classificação não encontrado!")
+            
+        logging.info("Folds carregados: {} Registros: {}".format(contaFolds, contaReg))
+    else:
+        logging.info("Diretório com as classificações não encontrado")
+
+    logging.info("Registros: {}".format(len(dfDadosClassificacao)))
+    
+    return dfDadosClassificacao
             
 # ============================
 def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_teste, classes_teste, documentoids_teste, wandb):
