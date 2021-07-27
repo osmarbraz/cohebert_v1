@@ -13,6 +13,55 @@ from tqdm.notebook import tqdm as tqdm_notebook # Biblioteca para barra de progr
 from bert.bertmodulo  import *
 
 # ============================
+def listaOriginalClassificadoIncorretamente(dfDadosClassificacao):
+    '''
+    Lista de documento originais classificados incorretamente(incoerente).
+    '''
+    listaRetorno = []  
+    for index, linha in dfDadosClassificacao.iterrows():
+        if linha['classe'] == 1 and linha['predicao'] == 0:
+            listaRetorno.append(linha['id'])
+    return listaRetorno
+
+# ============================
+def listaOriginalClassificadoCorretamente(dfDadosClassificacao):
+    '''
+    Lista de documento originais classificados corretamente(coerente).
+    '''
+    listaRetorno = []  
+    for index, linha in dfDadosClassificacao.iterrows():
+        if linha['classe'] == 1 and linha['predicao'] == 1:
+            listaRetorno.append(linha['id'])
+        return listaRetorno
+
+# ============================
+def listaClassificadoIncorretamente(dfDadosClassificacao):
+    '''
+    Listas de pares de documentos originais e permutados classificados incorretamente.
+    '''
+    listaRetorno = []  
+    for index, linha in dfDadosClassificacao.iterrows():
+        if linha['classe'] == 1 and linha['predicao'] == 0:
+            listaRetorno.append(linha['id'])
+        if linha['classe'] == 0 and linha['predicao'] == 1:
+            listaRetorno.append(linha['id'])
+    return listaRetorno
+
+# ============================
+def listaClassificadoCorretamente(dfDadosClassificacao):
+    '''
+    Listas de pares de documentos originais e permutados classificados corretamente.
+    '''
+    listaRetorno = []  
+    for index, linha in dfDadosClassificacao.iterrows():
+        #if index < 20:    
+        if linha['classe'] == 1 and linha['predicao'] == 1:
+            listaRetorno.append(linha['id'])
+        if linha['classe'] == 0 and linha['predicao'] == 0:
+            listaRetorno.append(linha['id'])
+    return listaRetorno
+
+# ============================
 def avaliaClassificacao(dfDadosClassificacao):
     '''
     Avaliação uma classificação.
