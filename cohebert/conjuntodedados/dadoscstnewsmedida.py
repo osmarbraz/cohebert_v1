@@ -291,7 +291,7 @@ def converteListaParesDocumentos(lista_documentos):
     return dfdados
 
 # ============================   
-def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
+def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
     '''    
     Remove os documentos que extrapolam 512 tokens.
     Você pode definir o tamanho de documento que quiser no BERT, mas o modelo pré-treinado vem com um tamanho pré-definido. 
@@ -299,9 +299,10 @@ def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
     O tokenizador gera quantidades diferentes tokens para cada modelo pré-treinado. 
     Portanto é necessário especificar o tokenizador para descatar os documentos que ultrapassam o limite de tokens de entrada do BERT.
     Parâmetros:      
-        `dfdados` - Dataframe com os documentos a serem analisados.   
         `model_args` - Objeto com os argumentos do modelo.    
         `tokenizer` - Tokenizador BERT.
+        `dfdados` - Dataframe com os documentos a serem analisados.           
+        
     Saída:
         `dfdadosretorno` - Um dataframe sem os documentos grandes.
     '''
@@ -359,6 +360,7 @@ def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):
         `model_args` - Objeto com os argumentos do modelo.    
         `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
         `tokenizer` - Tokenizador BERT.
+        
     Saída:
         `dfdados` - Um dataframe com os dados carregados.
     '''
@@ -373,6 +375,6 @@ def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):
     dfdados = converteListaParesDocumentos(lista_documentos)
         
     # Descarta os documentos muito grandes. (Que geram mais de 512 tokens)
-    dfdados = descartandoDocumentosGrandes(dfdados, model_args, tokenizer)
+    dfdados = descartandoDocumentosGrandes(model_args, tokenizer, dfdados)
     
     return dfdados       
