@@ -392,7 +392,7 @@ def realizaTreinamento(model_args, training_args, model, documentos_treino, clas
     logging.info("Realizando Treinamento fold: {}".format(model_args.fold))
 
     # Carrega o otimizador
-    otimizador = carregaOtimizador(training_args)
+    otimizador = carregaOtimizador(training_args, model)
 
     # Carrega o agendador
     agendador = carregaAgendador(training_args, otimizador)
