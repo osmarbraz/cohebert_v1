@@ -355,7 +355,7 @@ def salvaResultadoAvaliacaoFold(model_args, training_args, DIRETORIO_AVALIACAO, 
             arquivo.close()
 
 def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc, rec, pre, f1, vp_s, vn_s, fp_s, fn_s):
-     '''
+    '''
     Salva os dados da avaliação. 
     
     Parâmetros:
