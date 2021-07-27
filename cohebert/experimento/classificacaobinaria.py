@@ -21,7 +21,7 @@ def carregaClassificacoes(NOME_BASE, DIRETORIO_CLASSIFICACAO, EPOCA, TAXA_APREND
     # Verifica se o diretório dos resultados existem.
     if os.path.exists(DIRETORIO_CLASSIFICACAO):
         arquivos = os.listdir(DIRETORIO_CLASSIFICACAO)     
-        logging.info("Modelo: {} Tamanho: {} Epoca: {} ' Taxa Aprendizagem: {}".format(NOME_MODELO_BERT, TAMANHO_BERT, EPOCA, TAXA_APRENDIZAGEM))
+        logging.info("Modelo: {} Tamanho: {} Epoca: {} Taxa Aprendizagem: {}".format(NOME_MODELO_BERT, TAMANHO_BERT, EPOCA, TAXA_APRENDIZAGEM))
         
         # Acumuladores.
         contaFolds = 0 
