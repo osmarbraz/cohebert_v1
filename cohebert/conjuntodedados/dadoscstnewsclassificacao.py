@@ -16,16 +16,16 @@ from util.utilarquivo import *
 from conjuntodedados.dadoscstnewsmedida import *
 
 # ============================
-def analiseArquivosKFold(DIRETORIO_BASE, tokenizer, model_args):
+def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
     '''    
     Analisa os dados dos arquivos para Kfolds.
     Parâmetros:
-        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
-        `tokenizer` - Tokenizador BERT.
         `model_args` - Objeto com os argumentos do modelo.    
+        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
+        `tokenizer` - Tokenizador BERT.        
     '''
   
-    print("Análise dos dados dos arquivos dos KFolds do diretório: {}.".format(DIRETORIO_BASE))
+    logging.info("Análise dos dados dos arquivos dos KFolds do diretório: {}.".format(DIRETORIO_BASE))
 
     # Lista para armazenar os dados
     lista_dadostrain_folds = []
@@ -41,10 +41,10 @@ def analiseArquivosKFold(DIRETORIO_BASE, tokenizer, model_args):
     for x in range(QTDE_FOLDS):
   
         dadostrain = pd.read_csv(PREFIXO_NOME_ARQUIVO_TREINO+str(x+1)+".csv", sep=';')
-        print('Dados treino do fold {}: {}'.format(x+1,len(dadostrain)))
+        logging.info("Dados treino do fold {}: {}.".format(x+1,len(dadostrain)))
 
         dadostest = pd.read_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(x+1)+".csv", sep=';')
-        print('Dados teste do fold {}: {}'.format(x+1,len(dadostest)))
+        logging.info("Dados teste do fold {}: {}.".format(x+1,len(dadostest)))
 
         lista_dadostrain_folds.append([x,dadostrain.tipo.sum(), len(dadostrain.tipo)-dadostrain.tipo.sum()])
         lista_dadostest_folds.append([x,dadostest.tipo.sum(), len(dadostest.tipo)-dadostest.tipo.sum()])
@@ -72,37 +72,37 @@ def analiseArquivosKFold(DIRETORIO_BASE, tokenizer, model_args):
             # Atualiza o tamanho máximo de documento.
             maior_tamanho_documento_teste = max(maior_tamanho_documento_teste, len(input_ids))
             
-        print('Máximo de token no conjunto de dados de teste: {}'.format(maior_tamanho_documento_teste))
+        logging.info("Máximo de token no conjunto de dados de teste: {}".format(maior_tamanho_documento_teste))
 
-        print('Fold {} Treino positivos: {} of {} ({:.2f}%)'.format(x+1, 
+        logging.info("Fold {} Treino positivos: {} of {} ({:.2f}%)".format(x+1, 
                                                                   dadostrain.tipo.sum(), 
                                                                   len(dadostrain.tipo), 
                                                                   (dadostrain.tipo.sum() / len(dadostrain.tipo) * 100.0)
                                                                   ))
 
-        print('Fold {} Treino negativos: {} of {} ({:.2f}%)'.format(x+1, 
+        logging.info("Fold {} Treino negativos: {} of {} ({:.2f}%)".format(x+1, 
                                                                   len(dadostrain.tipo)-dadostrain.tipo.sum(), 
                                                                   len(dadostrain.tipo), 
                                                                   ((len(dadostrain.tipo)-dadostrain.tipo.sum()) / len(dadostrain.tipo) * 100.0)))
 
-        print('Fold {} Teste positivos: {} of {} ({:.2f}%)'.format(x+1, 
+        logging.info("Fold {} Teste positivos: {} of {} ({:.2f}%)".format(x+1, 
                                                                   dadostest.tipo.sum(), 
                                                                   len(dadostest.tipo), 
                                                                   (dadostest.tipo.sum() / len(dadostest.tipo) * 100.0)))
-        print('Fold {} Teste negativos: {} of {} ({:.2f}%)'.format(x+1, 
+        logging.info("Fold {} Teste negativos: {} of {} ({:.2f}%)".format(x+1, 
                                                                   len(dadostest.tipo)-dadostest.tipo.sum(), 
                                                                   len(dadostest.tipo), 
                                                                   ((len(dadostest.tipo)-dadostest.tipo.sum()) / len(dadostest.tipo) * 100.0)))                               
-        print('')
+        logging.info("")
 
 # ============================
-def gerarArquivosKFold(DIRETORIO_BASE, dfdados, model_args):
+def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     '''    
     Divide o conjunto de dados em arquivos de treino e teste para Kfolds.
     Parâmetros:
-        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
-        `dfdados` - Dataframe com os dados a serem divididos. 
         `model_args` - Objeto com os argumentos do modelo.    
+        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
+        `dfdados` - Dataframe com os dados a serem divididos.        
         
     Saída:
         Arquivos dos KFolds salvos no diretório base.
@@ -112,9 +112,9 @@ def gerarArquivosKFold(DIRETORIO_BASE, dfdados, model_args):
     if not os.path.exists(DIRETORIO_BASE):  
         # Cria o diretório
         os.makedirs(DIRETORIO_BASE)    
-        logging.info('Diretório criado: {}'.format(DIRETORIO_BASE))
+        logging.info("Diretório criado: {}.".format(DIRETORIO_BASE))
     else:    
-        logging.info('Diretório já existe: {}'.format(DIRETORIO_BASE))
+        logging.info("Diretório já existe: {}.".format(DIRETORIO_BASE))
 
     # Quantidade de folds a ser gerado
     QTDE_FOLDS = model_args.fold
@@ -238,7 +238,7 @@ def downloadCSTNewsKFoldGithub():
     Download dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
     '''
 
-    logging.info("Download do Github")  
+    logging.info("Download do CSTNews do Github")  
 
     # Diretório dos arquivos de dados
     DIRETORIO = "/content/validacao_kfold"
@@ -276,7 +276,7 @@ def copiaCSTNewsKFoldGithub():
     Copia dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
     '''
     
-    logging.info("Copiando do checkout do Github")
+    logging.info("Copiando do CSTNews do checkout do Github")
 
     # Diretório dos arquivos de dados.
     DIRETORIO = "/content/validacao_kfold"
@@ -285,9 +285,9 @@ def copiaCSTNewsKFoldGithub():
     if not os.path.exists(DIRETORIO):  
         # Cria o diretório
         os.makedirs(DIRETORIO)
-        logging.info('Diretório criado: {}'.format(DIRETORIO))
+        logging.info("Diretório criado: {}.".format(DIRETORIO))
     else:
-        logging.info('Diretório já existe: {}'.format(DIRETORIO))
+        logging.info("Diretório já existe: {}.".format(DIRETORIO))
         
     # Nome do arquivo a ser criado.
     NOME_ARQUIVO = "CSTNEWS_MD_KFOLD_10.zip"
