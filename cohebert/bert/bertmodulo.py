@@ -77,7 +77,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
     input_ids_completos = []
     
     # Tokeniza todas as amostras de treinamento
-    logging.info('Tokenizando {:,} amostra...'.format(len(classes)))
+    logging.info("Tokenizando {:,} amostra.".format(len(classes)))
     
     # Escolha o intervalo que o progresso será atualizado.
     #intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(classes), numero_atualizacoes=10)
@@ -153,7 +153,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         # Remova a amostra da lista
         del amostras[select:select + to_take]
 
-    logging.info('Lote criado - Selecionado {:,} lotes.'.format(len(batch_ordered_documentos)))
+    logging.info("Lote criado - Selecionado {:,} lotes.".format(len(batch_ordered_documentos)))
 
     # =========================
     #        Adicionando o preenchimento
@@ -217,9 +217,9 @@ def getDeviceGPU():
         # Diz ao PyTorch para usar GPU.    
         device = torch.device("cuda")
 
-        logging.info('Existem {} GPU(s) disponíveis.'.format(torch.cuda.device_count()))
+        logging.info("Existem {} GPU(s) disponíveis.".format(torch.cuda.device_count()))
 
-        logging.info('Iremos usar a GPU: {}'.format(torch.cuda.get_device_name(0)))
+        logging.info("Iremos usar a GPU: {}".format(torch.cuda.get_device_name(0)))
 
     # Se não...
     else:
@@ -503,6 +503,7 @@ def carregaBERT(model_args):
     
     # Verifica o tipo do modelo em model_args    
     model = None
+    
     if type(model_args) == ModeloArgumentosMedida:
         # Carrega o modelo para cálculo da medida
         model = carregaModeloMedida(DIRETORIO_MODELO, model_args)
@@ -510,7 +511,13 @@ def carregaBERT(model_args):
     else:
         # Carrega o modelo para classificação
         model = carregaModeloClassifica(DIRETORIO_MODELO, model_args)
+        
+        # Recupera o dispotivo da GPU 
+        device = getDeviceGPU()
     
+        # Conecta o modelo a GPU
+        model = conectaGPU(model, device)
+       
     # Carrega o tokenizador. 
     # O tokenizador é o mesmo para o classificador e medidor.
     tokenizer = carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args)
