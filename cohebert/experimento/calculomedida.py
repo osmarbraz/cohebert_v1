@@ -284,6 +284,9 @@ def salvaResultadoMedicao(model_args, DIRETORIO_MEDICAO, lista_medidas_documento
 
     # Nome do arquivo a ser aberto.
     NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDICAO + NOME_ARQUIVO_MEDICAO + '.csv'
+    
+    # Cabeçalho do arquivo csv
+    CABECALHO_ARQUIVO = "data;arquivo;ccos;ceuc;cman"
 
     # Verifica se o diretório existe
     if not os.path.exists(DIRETORIO_MEDICAO):  
@@ -321,7 +324,7 @@ def salvaResultadoMedicao(model_args, DIRETORIO_MEDICAO, lista_medidas_documento
       print('Criando arquivo medição: {}'.format(NOME_ARQUIVO_MEDICAO_COMPLETO))
       # Abre novamente o arquivo (escrita).
       arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO,'w')
-      arquivo.writelines('data;arquivo;ccos;ceuc;cman\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+      arquivo.writelines( CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
       # Fecha o arquivo.
       arquivo.close()
 
@@ -361,6 +364,9 @@ def salvaResultadoAvaliacao(model_args, DIRETORIO_AVALIACAO, tempoTotalProcessam
 
     # Nome do arquivo a ser aberto.
     NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + '.csv'
+    
+    # Cabeçalho do arquivo csv
+    CABECALHO_ARQUIVO = "arquivo;data;tempo;conta;ccos;contaccos;ceuc;contaceuc;cman;contacman"
 
     # Conteúdo a ser adicionado.
     novoConteudo = NOME_ARQUIVO_AVALIACAO + ';' + data_e_hora.strftime('%d/%m/%Y %H:%M') + ';' + tempoTotalProcessamento + ';'  + str(conta) + ';'  + str(acuraciaCcos) + ';' + str(contaCcos) + ';' + str(acuraciaCeuc) + ';' + str(contaCeuc) + ';' + str(acuraciaCman) + ';' + str(contaCman) + '\n'
@@ -385,7 +391,7 @@ def salvaResultadoAvaliacao(model_args, DIRETORIO_AVALIACAO, tempoTotalProcessam
       print('Criando arquivo resultado avaliação: {}'.format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
       # Abre novamente o arquivo (escrita).
       arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
-      arquivo.writelines('arquivo;data;tempo;conta;ccos;contaccos;ceuc;contaceuc;cman;contacman\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+      arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
       # Fecha o arquivo.
       arquivo.close()
 
