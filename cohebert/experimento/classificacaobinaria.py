@@ -236,7 +236,7 @@ def carregaAgendador(training_args, otimizador, tamanho_conjunto):
     return agendador  
 
 # ============================
-def realizaAvaliacao(model_args, model, tokenizador, documentos_teste, classes_teste, documentoids_teste, wandb):
+def realizaAvaliacao(model_args, model, tokenizer, documentos_teste, classes_teste, documentoids_teste, wandb):
     '''
     Realiza a avaliação do modelo BERT ajustado com conjunto de dados de teste.
     '''
@@ -250,7 +250,7 @@ def realizaAvaliacao(model_args, model, tokenizador, documentos_teste, classes_t
     print('Predizendo rótulos para {:,} documentos de teste...'.format(len(documentos_teste)))
 
     # Use nossa nova função para preparar completamente nosso conjunto de dados.  
-    (py_input_ids, py_attention_masks, py_labels, documentoids) = cria_lotes_inteligentes(model_args, tokenizador, documentos_teste, classes_teste, documentoids_teste, training_args.per_device_eval_batch_size)
+    (py_input_ids, py_attention_masks, py_labels, documentoids) = cria_lotes_inteligentes(model_args, tokenizer, documentos_teste, classes_teste, documentoids_teste, training_args.per_device_eval_batch_size)
 
     # Escolha um intervalo para imprimir atualizações de progresso.
     intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(py_input_ids), numero_atualizacoes=10)
@@ -384,7 +384,7 @@ def realizaAvaliacao(model_args, model, tokenizador, documentos_teste, classes_t
     return media_test_loss, acc, rec, pre, f1, vp_s, vn_s, fp_s, fn_s, lista_resultado_avaliacao
 
 # ============================
-def realizaTreinamento(model_args, training_args, model, tokenizador, documentos_treino, classes_treino, documentoids_treino, wandb):
+def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_treino, classes_treino, documentoids_treino, wandb):
     '''
     Realiza o treinamento do modelo BERT com o conjunto de dados de treino.
     '''
@@ -438,7 +438,7 @@ def realizaTreinamento(model_args, training_args, model, tokenizador, documentos
         # Execute uma passada completa sobre o conjunto de treinamento.
 
         # Recupera o lote inteligente
-        (py_input_ids, py_attention_masks, py_labels, documentoids) = cria_lotes_inteligentes(model_args, tokenizador, documentos_treino, classes_treino, documentoids_treino, training_args.per_device_train_batch_size)
+        (py_input_ids, py_attention_masks, py_labels, documentoids) = cria_lotes_inteligentes(model_args, tokenizer, documentos_treino, classes_treino, documentoids_treino, training_args.per_device_train_batch_size)
                                                                       
         # Medida de quanto tempo leva o período de treinamento.
         treinamento_epoca_t0 = time.time()
