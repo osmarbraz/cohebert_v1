@@ -358,9 +358,9 @@ def salvaResultadoAvaliacao(model_args, NOME_BASE, DIRETORIO_AVALIACAO, tempoTot
     if not os.path.exists(DIRETORIO_AVALIACAO):  
       # Cria o diretório
       os.makedirs(DIRETORIO_AVALIACAO)
-      print('Diretório criado: {}'.format(DIRETORIO_AVALIACAO))
+      logging.info("Diretório criado: {}".format(DIRETORIO_AVALIACAO))
     else:
-      print('Diretório já existe: {}'.format(DIRETORIO_AVALIACAO))
+      logging.info("Diretório já existe: {}".format(DIRETORIO_AVALIACAO))
 
     # Nome do arquivo a ser aberto.
     NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + '.csv'
@@ -373,7 +373,7 @@ def salvaResultadoAvaliacao(model_args, NOME_BASE, DIRETORIO_AVALIACAO, tempoTot
 
     # Verifica se o arquivo existe.
     if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
-      print('Atualizando arquivo resultado avaliação: {}'.format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+      logging.info("Atualizando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
       # Abre o arquivo para leitura.
       arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'r')
       # Leitura de todas as linhas do arquivo.
@@ -388,7 +388,7 @@ def salvaResultadoAvaliacao(model_args, NOME_BASE, DIRETORIO_AVALIACAO, tempoTot
       # Fecha o arquivo.
       arquivo.close()
     else:
-      print('Criando arquivo resultado avaliação: {}'.format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+      logging.info("Criando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
       # Abre novamente o arquivo (escrita).
       arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
       arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
