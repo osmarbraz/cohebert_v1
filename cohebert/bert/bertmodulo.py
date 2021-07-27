@@ -139,10 +139,10 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
         select = random.randint(0, len(amostras) - to_take)
 
         # Selecione um lote contíguo de amostras começando em `select`.
-        logging.info("Selecionando lote de {:} a {:}".format(select, select+to_take))
+        #logging.info("Selecionando lote de {:} a {:}".format(select, select+to_take))
         batch = amostras[select:(select + to_take)]
 
-        logging.info("Tamanho do lote: {}.".format(len(batch)))
+        #logging.info("Tamanho do lote: {}.".format(len(batch)))
         
         # Cada amostra é uma tupla --divida para criar uma lista separada de
         # sequências e uma lista de rótulos para este lote.
