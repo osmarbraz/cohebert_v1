@@ -244,16 +244,16 @@ def realizaAvaliacao(model_args, model, tokenizer, documentos_teste, classes_tes
     # Armazena o resultado da avaliação executada
     lista_resultado_avaliacao = []
 
-    print("\nRealizando Avaliação fold: {}".format(model_args.fold))
+    logging.info("Realizando Avaliação fold: {}".format(model_args.fold))
 
     # Predição no conjunto de teste no modelo.
-    print('Predizendo rótulos para {:,} documentos de teste...'.format(len(documentos_teste)))
+    logging.info("Predizendo rótulos para {:,} documentos de teste.".format(len(documentos_teste)))
 
     # Use nossa nova função para preparar completamente nosso conjunto de dados.  
     (py_input_ids, py_attention_masks, py_labels, documentoids) = cria_lotes_inteligentes(model_args, tokenizer, documentos_teste, classes_teste, documentoids_teste, training_args.per_device_eval_batch_size)
 
     # Escolha um intervalo para imprimir atualizações de progresso.
-    intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(py_input_ids), numero_atualizacoes=10)
+    #intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(py_input_ids), numero_atualizacoes=10)
 
     # Coloque o modelo em modo de avaliação.
     model.eval()
@@ -276,17 +276,17 @@ def realizaAvaliacao(model_args, model, tokenizer, documentos_teste, classes_tes
     for index in lote_teste_bar:
 
         # Progresso é atualizado a cada lotes, por exemplo, 100 lotes.
-        if index % intervalo_atualizacao == 0 and not index == 0:        
-            # Calcula o tempo gasto em minutos.
-            tempoGasto = formataTempo(time.time() - avaliacao_t0)
+        #if index % intervalo_atualizacao == 0 and not index == 0:        
+        #    # Calcula o tempo gasto em minutos.
+        #    tempoGasto = formataTempo(time.time() - avaliacao_t0)
         
         # Calcula o tempo restante baseado no progresso.
-        passos_por_segundo = (time.time() - avaliacao_t0) / index
-        segundos_restantes = passos_por_segundo * (len(py_input_ids) - index)
-        tempoRestante = formataTempo(segundos_restantes)
+        #passos_por_segundo = (time.time() - avaliacao_t0) / index
+        #segundos_restantes = passos_por_segundo * (len(py_input_ids) - index)
+        #tempoRestante = formataTempo(segundos_restantes)
 
         # Mostra o progresso.
-        print('  Lote {:>7,}  de  {:>7,}.    Gasto: {:}.  Restando: {:}'.format(index, len(py_input_ids), tempoGasto, tempoRestante))
+        #print('  Lote {:>7,}  de  {:>7,}.    Gasto: {:}.  Restando: {:}'.format(index, len(py_input_ids), tempoGasto, tempoRestante))
     
         # Copia o lote para a GPU.
         d_input_ids = py_input_ids[index].to(device)
@@ -407,7 +407,7 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
     torch.cuda.manual_seed_all(seed_val)
 
     # Atualize todos os lotes ʻintervalo_atualizacao`.
-    intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(documentos_treino), numero_atualizacoes=10)
+    #intervalo_atualizacao = obter_intervalo_atualizacao(total_iteracoes=len(documentos_treino), numero_atualizacoes=10)
 
     # Medida do tempo total de treinamento.
     treinamento_t0 = time.time()
@@ -453,17 +453,17 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
         for index in lote_treino_bar:      
 
             # Progresso é atualizado a cada lotes, por exemplo, 100 lotes.
-            if index % intervalo_atualizacao == 0 and not index == 0:            
-                # Calcula gasto o tempo em minutos.
-                tempoGasto = formataTempo(time.time() - treinamento_epoca_t0)
+            #if index % intervalo_atualizacao == 0 and not index == 0:            
+            #    # Calcula gasto o tempo em minutos.
+            #    tempoGasto = formataTempo(time.time() - treinamento_epoca_t0)
                         
             # Calcule o tempo restante com base em nosso progresso.
-            passos_por_segundo = (time.time() - treinamento_epoca_t0) / index
-            segundos_restantes = passos_por_segundo * (len(py_input_ids) - index)
-            tempoRestante = formataTempo(segundos_restantes)
+            #passos_por_segundo = (time.time() - treinamento_epoca_t0) / index
+            #segundos_restantes = passos_por_segundo * (len(py_input_ids) - index)
+            #tempoRestante = formataTempo(segundos_restantes)
 
             # Mostra o progresso.
-            logging.info("  Lote {:>7,}  de  {:>7,}.    Gasto: {:}.  Restante: {:}".format(index, len(py_input_ids), tempoGasto, tempoRestante))
+            #logging.info("  Lote {:>7,}  de  {:>7,}.    Gasto: {:}.  Restante: {:}".format(index, len(py_input_ids), tempoGasto, tempoRestante))
 
             # Descompacte este lote de treinamento de nosso dataloader.
             #
