@@ -18,12 +18,12 @@ def downloadOnlineEducGoogleDrive():
     '''
     
     # Nome do arquivo
-    NOME_ARQUIVO_ORIGINAL = 'original.zip'
-    NOME_ARQUIVO_PERMUTADO = 'permutado.zip'
+    NOME_ARQUIVO_ORIGINAL = "original.zip"
+    NOME_ARQUIVO_PERMUTADO = "permutado.zip"
     
     # Define o caminho e nome do arquivo de dados
-    CAMINHO_ARQUIVO_ORIGINAL = '/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/' + NOME_ARQUIVO_ORIGINAL
-    CAMINHO_ARQUIVO_PERMUTADO = '/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/' + NOME_ARQUIVO_PERMUTADO
+    CAMINHO_ARQUIVO_ORIGINAL = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/" + NOME_ARQUIVO_ORIGINAL
+    CAMINHO_ARQUIVO_PERMUTADO = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/" + NOME_ARQUIVO_PERMUTADO
     
     # Copia o arquivo do modelo para o diretório no Google Drive.
     shutil.copy(CAMINHO_ARQUIVO_ORIGINAL, '.') 
@@ -60,7 +60,7 @@ def carregaArquivosOriginaisOnlineEduc():
 
         lista_documentos_originais.append([nomeArquivo, sentencas, documento])
     
-    logging.info("Carregamento de documento originais concluído: {}.".format(len(lista_documentos_originais)))
+    logging.info("Carregamento de documento originais do OnlineEduc 1.0 concluído: {}.".format(len(lista_documentos_originais)))
 
     return lista_documentos_originais
 
@@ -88,7 +88,7 @@ def carregaArquivosPermutadosOnlineEduc():
         # Adiciona a lista o conteúdo do arquivo
         lista_documentos_permutados.append([nomeArquivo, sentencas, documento])
     
-    logging.info("Carregamento de documento permutados concluído: {}.".format(len(lista_documentos_permutados)))
+    logging.info("Carregamento de documento permutados do OnlineEduc 1.0 concluído: {}.".format(len(lista_documentos_permutados)))
     
     return lista_documentos_permutados 
 
@@ -112,9 +112,9 @@ def carregaParesDocumentosOnlineEduc():
 
         # Carrega o documento original.
         # Carrega como parágrafo
-        documentoOriginal = carregar('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/' + arquivosOriginais[i])
+        documentoOriginal = carregar("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/" + arquivosOriginais[i])
         # Carrega uma lista das sentenças
-        sentencasOriginais = carregarLista('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/' + arquivosOriginais[i])
+        sentencasOriginais = carregarLista("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/original/" + arquivosOriginais[i])
 
         # Percorre as 20 permutações.
         for j in range(20):
@@ -122,8 +122,8 @@ def carregaParesDocumentosOnlineEduc():
             arquivoPermutado = arquivoOriginal + '_Perm_'+str(j) + '.txt'
 
             # Carrega o arquivo permutado.
-            documentoPermutado = carregar('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/' + arquivoPermutado)
-            sentencasPermutadas = carregarLista('/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/' + arquivoPermutado)
+            documentoPermutado = carregar("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/" + arquivoPermutado)
+            sentencasPermutadas = carregarLista("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/" + arquivoPermutado)
 
             # Adiciona o par original e sua versão permutada.
             lista_documentos.append([arquivosOriginais[i], sentencasOriginais, documentoOriginal, arquivoPermutado, sentencasPermutadas, documentoPermutado])
@@ -138,7 +138,7 @@ def downloadConjuntoDeDados():
     Verifica de onde será realizado o download dos arquivos de dados.
     '''
     
-    logging.info("Realizando o download do Google Drive.")
+    logging.info("Realizando o download do OnlineEduc 1.0 do Google Drive.")
     downloadOnlineEducGoogleDrive()
     
 # ============================    
