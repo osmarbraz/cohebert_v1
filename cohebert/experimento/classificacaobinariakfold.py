@@ -141,7 +141,7 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
 
         # Verifica se o arquivo existe.
         if os.path.isfile(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO):
-            logging.info("Atualizando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
+            logging.info("Atualizando arquivo classificação: {}.".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
             # Abre o arquivo para leitura.
             arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'r')
             # Leitura de todas as linhas do arquivo.
@@ -157,7 +157,7 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
             arquivo.close()
             
         else:
-            logging.info("Criando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
+            logging.info("Criando arquivo classificação: {}.".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
             arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
             arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
@@ -208,7 +208,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
         
         # Verifica se o arquivo existe.
         if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
-            logging.info("Atualizando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+            logging.info("Atualizando arquivo resultado: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre o arquivo para leitura.
             arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'r')
             # Leitura de todas as linhas do arquivo.
@@ -224,7 +224,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
             arquivo.close()
             
         else:
-            logging.info("Criando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+            logging.info("Criando arquivo resultado: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
             arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
             arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
