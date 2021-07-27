@@ -124,7 +124,10 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
         # Nome do arquivo a ser aberto.
         NOME_ARQUIVO_CLASSIFICACAO_COMPLETO = DIRETORIO_CLASSIFICACAO + NOME_ARQUIVO_CLASSIFICACAO + ".csv"
 
-        # Gera todo o conteúdo a ser salvo no arquivo
+        # Cabeçalho do arquivo csv
+        CABECALHO_ARQUIVO = "data;id;classe;predicao"
+        
+        # Gera todo o conteúdo a ser salvo no arquivo        
         novoConteudo = ""        
         for resultado in lista_resultado_avaliacao:      
             novoConteudo = novoConteudo + data_e_hora.strftime("%d/%m/%Y %H:%M") + ";" + str(resultado[0]) + ";" + str(resultado[1]) + ";" + str(resultado[2]) + "\n"
@@ -142,7 +145,7 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
             # Abre novamente o arquivo (escrita).
             arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
             # escreva o conteúdo criado anteriormente nele.
-            arquivo.writelines(conteudo)  
+            arquivo.writelines(CABECALHO_ARQUIVO + '\n' + conteudo)  
             # Fecha o arquivo.
             arquivo.close()
             
@@ -150,7 +153,7 @@ def salvaResultadoClassificacao(model_args, DIRETORIO_CLASSIFICACAO, lista_resul
             logging.info("Criando arquivo classificação: {}".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
             arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
-            arquivo.writelines('data;id;classe;predicao\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+            arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
             # Fecha o arquivo.
             arquivo.close()        
 
@@ -177,11 +180,13 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
         if not os.path.exists(DIRETORIO_AVALIACAO):  
             # Cria o diretório
             os.makedirs(DIRETORIO_AVALIACAO)
-            logging.info("Diretório criado: {}.".format(DIRETORIO_AVALIACAO))
-            
+            logging.info("Diretório criado: {}.".format(DIRETORIO_AVALIACAO))            
         else:
             logging.info("Diretório já existe: {}.".format(DIRETORIO_AVALIACAO))
 
+        # Cabeçalho do arquivo csv
+        CABECALHO_ARQUIVO = "arquivo;data;tempo;acuracia;vp;vn;fp;fn"
+            
         # Nome do arquivo a ser aberto.
         NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + ".csv"
 
@@ -209,6 +214,6 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
             logging.info("Criando arquivo resultado: {}".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
             arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
-            arquivo.writelines('arquivo;data;tempo;acuracia;vp;vn;fp;fn\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+            arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
             # Fecha o arquivo.
             arquivo.close()
