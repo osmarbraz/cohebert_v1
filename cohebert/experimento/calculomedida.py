@@ -249,7 +249,7 @@ def separaDocumentos(dadosMedida):
     return dfOriginalMedida, dfPermutadoMedida
 
 # ============================
-def salvaResultadoMedicao(model_args, DIRETORIO_MEDICAO, lista_medidas_documentos_salvar):
+def salvaResultadoMedicao(model_args, NOME_BASE, DIRETORIO_MEDICAO, lista_medidas_documentos_salvar):
 
   if model_args.salvar_medicao:
 
@@ -272,7 +272,7 @@ def salvaResultadoMedicao(model_args, DIRETORIO_MEDICAO, lista_medidas_documento
         PALAVRA_RELEVANTE = '_ssb'   
 
     # Nome arquivo resultado
-    NOME_ARQUIVO_MEDICAO = 'MedicaoCoerenciaCSTNews_v1' + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
+    NOME_ARQUIVO_MEDICAO = NOME_BASE + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
 
     # Verifica se o diretório existe
     if not os.path.exists(DIRETORIO_MEDICAO):  
@@ -329,7 +329,7 @@ def salvaResultadoMedicao(model_args, DIRETORIO_MEDICAO, lista_medidas_documento
       arquivo.close()
 
 # ============================        
-def salvaResultadoAvaliacao(model_args, DIRETORIO_AVALIACAO, tempoTotalProcessamento, conta, acuraciaCcos, contaCcos, acuraciaCeuc, contaCeuc, acuraciaCman, contaCman):
+def salvaResultadoAvaliacao(model_args, NOME_BASE, DIRETORIO_AVALIACAO, tempoTotalProcessamento, conta, acuraciaCcos, contaCcos, acuraciaCeuc, contaCeuc, acuraciaCman, contaCman):
 
   if model_args.salvar_avaliacao:
 
@@ -352,7 +352,7 @@ def salvaResultadoAvaliacao(model_args, DIRETORIO_AVALIACAO, tempoTotalProcessam
         PALAVRA_RELEVANTE = '_ssb' 
     
     # Nome arquivo resultado
-    NOME_ARQUIVO_AVALIACAO = 'MedicaoCoerenciaCSTNews_v1' + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
+    NOME_ARQUIVO_AVALIACAO = NOME_BASE + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
 
     # Verifica se o diretório existe
     if not os.path.exists(DIRETORIO_AVALIACAO):  
@@ -396,10 +396,11 @@ def salvaResultadoAvaliacao(model_args, DIRETORIO_AVALIACAO, tempoTotalProcessam
       arquivo.close()
 
 # ============================
-def carregaMedidas(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
+def carregaMedidas(NOME_BASE, DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
     '''
     Carrega as medidas de coerência de um diretório e retorna um dataframe.
     Parâmetros:
+        `NOME_BASE` - Nome base do arquivo de medidas.    
         `DIRETORIO_MEDIDAS` - Diretório com os arquivos das medidas.    
         `TIPO_MODELO` - Tipo do modelo(pretreinado ou ajustado) a ser carregado.  
         `ESTRATEGIA_POOLING` - Nome da estratégia de pooling(MEAN ou MAX).
@@ -410,8 +411,7 @@ def carregaMedidas(DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_R
     Saída:
         `dfMedida` - Um dataframe com os dados carregados.
     '''
-    NOME_BASE = "MedicaoCoerenciaCSTNews_v1"
-    
+        
     NOME_ARQUIVO_MEDICAO = NOME_BASE + TIPO_MODELO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
 
     dfMedida = None
