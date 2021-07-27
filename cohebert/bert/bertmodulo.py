@@ -417,7 +417,7 @@ def copiaModeloAjustado(model_args):
     DIRETORIO_LOCAL_MODELO_AJUSTADO = "/content/modelo_ajustado/"
 
     # Diretório remoto de salvamento do modelo.
-    DIRETORIO_REMOTO_MODELO_AJUSTADO = "/content/drive/MyDrive/Colab Notebooks/Data/CSTNEWS/validacao_classificacao/holdout/modelo/modelo" + MODELO_BERT + TAMANHO_BERT
+    DIRETORIO_REMOTO_MODELO_AJUSTADO = "/content/drive/MyDrive/Colab Notebooks/Data/CSTNEWS/validacao_classificacao/holdout/modelo/" + MODELO_BERT + TAMANHO_BERT
 
     # Copia o arquivo do modelo para o diretório no Google Drive.
     shutil.copytree(DIRETORIO_REMOTO_MODELO_AJUSTADO, DIRETORIO_LOCAL_MODELO_AJUSTADO) 
@@ -497,7 +497,7 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
     # Se a variável URL_MODELO foi setada
     if URL_MODELO:
         # Carregando o Modelo BERT
-        logging.info('Carregando o modelo BERT do diretório {} para classificação.'.format(DIRETORIO_MODELO))
+        logging.info("Carregando o modelo BERT do diretório {} para classificação.".format(DIRETORIO_MODELO))
 
         model = BertModel.from_pretrained(DIRETORIO_MODELO,
                                           output_attentions = model_args.output_attentions,
