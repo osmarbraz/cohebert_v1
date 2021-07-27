@@ -3,12 +3,12 @@ import logging  # Biblioteca de logging
 import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
-import pandas as pd # Biblioteca para manipulação e análise de dados
-from sklearn.model_selection import train_test_split # Biblioteca de divisão
-import numpy as np # Biblioteca para manipulação de arrays e matrizes multidimensionais
-from sklearn.model_selection import KFold # Biblioteca de divisão Kfold
+import pandas as pd # Biblioteca para manipulaÃ§Ã£o e anÃ¡lise de dados
+from sklearn.model_selection import train_test_split # Biblioteca de divisÃ£o
+import numpy as np # Biblioteca para manipulaÃ§Ã£o de arrays e matrizes multidimensionais
+from sklearn.model_selection import KFold # Biblioteca de divisÃ£o Kfold
 
-# Import de bibliotecas próprias
+# Import de bibliotecas prÃ³prias
 from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
@@ -19,13 +19,13 @@ from conjuntodedados.dadoscstnewsmedida import *
 def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
     '''    
     Analisa os dados dos arquivos para Kfolds.
-    Parâmetros:
+    ParÃ¢metros:
         `model_args` - Objeto com os argumentos do modelo.    
-        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
+        `DIRETORIO_BASE` - DiretÃ³rio onde salvar os dados.  
         `tokenizer` - Tokenizador BERT.        
     '''
   
-    logging.info("Análise dos dados dos arquivos dos KFolds do diretório: {}.".format(DIRETORIO_BASE))
+    logging.info("AnÃ¡lise dos dados dos arquivos dos KFolds do diretÃ³rio: {}.".format(DIRETORIO_BASE))
 
     # Lista para armazenar os dados
     lista_dadostrain_folds = []
@@ -49,7 +49,7 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
         lista_dadostrain_folds.append([x,dadostrain.tipo.sum(), len(dadostrain.tipo)-dadostrain.tipo.sum()])
         lista_dadostest_folds.append([x,dadostest.tipo.sum(), len(dadostest.tipo)-dadostest.tipo.sum()])
 
-        # Pega as listas de documentos e seus rótulos.
+        # Pega as listas de documentos e seus rÃ³tulos.
         documentos = dadostrain.documento.values
         maior_tamanho_documento_treino = 0
 
@@ -57,22 +57,22 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
         for documento in documentos:
             # Tokeniza o texto e adiciona os tokens `[CLS]` e `[SEP]`.
             input_ids = tokenizer.encode(documento, add_special_tokens=True)
-            # Atualiza o tamanho máximo de documento.
+            # Atualiza o tamanho mÃ¡ximo de documento.
             maior_tamanho_documento_treino = max(maior_tamanho_documento_treino, len(input_ids))
             
-        print('Máximo de tokens no conjunto de dados de treino: {}'.format(maior_tamanho_documento_treino))
+        print('MÃ¡ximo de tokens no conjunto de dados de treino: {}'.format(maior_tamanho_documento_treino))
 
-        # Pega as listas de documentos e seus rótulos.
+        # Pega as listas de documentos e seus rÃ³tulos.
         documentos = dadostest.documento.values
         maior_tamanho_documento_teste = 0    
         # Para cada documento no conjunto de treino.  
         for documento in documentos:
             # Tokeniza o texto e adiciona os tokens `[CLS]` e `[SEP]`.
             input_ids = tokenizer.encode(documento, add_special_tokens=True)
-            # Atualiza o tamanho máximo de documento.
+            # Atualiza o tamanho mÃ¡ximo de documento.
             maior_tamanho_documento_teste = max(maior_tamanho_documento_teste, len(input_ids))
             
-        logging.info("Máximo de token no conjunto de dados de teste: {}".format(maior_tamanho_documento_teste))
+        logging.info("MÃ¡ximo de token no conjunto de dados de teste: {}".format(maior_tamanho_documento_teste))
 
         logging.info("Fold {} Treino positivos: {} of {} ({:.2f}%)".format(x+1, 
                                                                   dadostrain.tipo.sum(), 
@@ -104,7 +104,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         `DIRETORIO_BASE` - Diretório onde salvar os dados.  
         `dfdados` - Dataframe com os dados a serem divididos.        
         
-    Saída:
+    SaÃ­da:
         Arquivos dos KFolds salvos no diretório base.
     '''
 
@@ -135,76 +135,76 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     
     # Percorre os indices do conjunto de dados.
     for train_index, test_index in kf.split(X):
-      logging.info("Executando divisão do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
-      logging.info("Treino: {}, Teste: {}".format(len(train_index), len(test_index)))
+        logging.info("Executando divisÃ£o do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
+        logging.info("Treino: {}, Teste: {}".format(len(train_index), len(test_index)))
 
-      #print("�?ndices de treino:", len(train_index), " - ", train_index[0], " - ", train_index[len(train_index)-1])  
-      #print(train_index)
-      #print("�?ndices de teste :", len(test_index), "  - ", test_index[0], " - ", test_index[len(test_index)-1])
-      #print(test_index)
+        #print("Ã?ndices de treino:", len(train_index), " - ", train_index[0], " - ", train_index[len(train_index)-1])  
+        #print(train_index)
+        #print("Ã?ndices de teste :", len(test_index), "  - ", test_index[0], " - ", test_index[len(test_index)-1])
+        #print(test_index)
 
-      # Recupera os dados das documentos para treino e teste.
-      documentos_train = X[train_index]
-      documentos_test  = X[test_index]  
+        # Recupera os dados das documentos para treino e teste.
+        documentos_train = X[train_index]
+        documentos_test  = X[test_index]  
 
-      # Organiza dados de treino.
-      documentos_train_organizada = []
+        # Organiza dados de treino.
+        documentos_train_organizada = []
 
-      # Adiciona a documento incoerente logo após a coerente para treino.
-      for linha in documentos_train:     
-          # 1 para o documento original
-          documentos_train_organizada.append((linha[0], linha[2], 1))  
-          # 0 para o documento permutado  
-          documentos_train_organizada.append((linha[3], linha[5], 0))
+        # Adiciona a documento incoerente logo apÃ³s a coerente para treino.
+        for linha in documentos_train:     
+            # 1 para o documento original
+            documentos_train_organizada.append((linha[0], linha[2], 1))  
+            # 0 para o documento permutado  
+            documentos_train_organizada.append((linha[3], linha[5], 0))
     
-          # Cria um dataframe com os dados de treinamento.
-          pddata_tuples_train = pd.DataFrame(documentos_train_organizada, columns=["id","documento","tipo"])
+        # Cria um dataframe com os dados de treinamento.
+        pddata_tuples_train = pd.DataFrame(documentos_train_organizada, columns=["id","documento","tipo"])
     
-      # Salva o arquivo de treino do fold.
-      pddata_tuples_train.to_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(CONTAFOLD)+".csv", index = False, sep=';')
+        # Salva o arquivo de treino do fold.
+        pddata_tuples_train.to_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(CONTAFOLD)+".csv", index = False, sep=';')
 
-      # Organiza dados de teste.
-      documentos_test_organizada = []
+        # Organiza dados de teste.
+        documentos_test_organizada = []
 
-      # Adiciona a documento incoerente logo após a coerente para teste.
-      for linha in documentos_test:    
-          # 1 Para coerente.
-          documentos_test_organizada.append((linha[0], linha[2], 1))
-          # 0 para uma permutação como incoerente.
-          documentos_test_organizada.append((linha[3], linha[5], 0))
+        # Adiciona a documento incoerente logo após a coerente para teste.
+        for linha in documentos_test:    
+            # 1 Para coerente.
+            documentos_test_organizada.append((linha[0], linha[2], 1))
+            # 0 para uma permutação como incoerente.
+            documentos_test_organizada.append((linha[3], linha[5], 0))
     
-      # Cria um dataframe com os dados de teste.
-      pddata_tuples_test = pd.DataFrame(documentos_test_organizada, columns=["id","documento","tipo"])  
+        # Cria um dataframe com os dados de teste.
+        pddata_tuples_test = pd.DataFrame(documentos_test_organizada, columns=["id","documento","tipo"])  
   
-      # Salva o arquivo de teste do fold.
-      pddata_tuples_test.to_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(CONTAFOLD)+".csv", index = False, sep=';')
+        # Salva o arquivo de teste do fold.
+        pddata_tuples_test.to_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(CONTAFOLD)+".csv", index = False, sep=';')
 
-      # Avança o contador de testes.
-      CONTAFOLD = CONTAFOLD + 1        
+        # Avança o contador de testes.
+        CONTAFOLD = CONTAFOLD + 1        
 
 # ============================
 def copiaCSTNewsGithub():  
     '''    
-    Copia dos arquivos do conjunto de dados do CSTNews para classifica��o KFold do Github.
+    Copia dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
     '''
     
     logging.info("Copiando do CSTNews do checkout do Github")
 
-    # Diret�rio dos arquivos de dados.
+    # Diretório dos arquivos de dados.
     DIRETORIO = "/content/validacao_kfold"
     
-    # Verifica se o diret�rio existe
+    # Verifica se o diretório existe
     if not os.path.exists(DIRETORIO):  
-        # Cria o diret�rio
+        # Cria o diretório
         os.makedirs(DIRETORIO)
-        logging.info("Diret�rio criado: {}.".format(DIRETORIO))
+        logging.info("Diretório criado: {}.".format(DIRETORIO))
     else:
-        logging.info("Diret�rio j� existe: {}.".format(DIRETORIO))
+        logging.info("Diretório já existe: {}.".format(DIRETORIO))
         
     # Nome do arquivo a ser criado.
     NOME_ARQUIVO = "CSTNEWS_MD_KFOLD_10.zip"
     
-    # Diret�rios dos arquivos
+    # Diretórios dos arquivos
     DIRETORIO_FONTE_ARQUIVO = "/content/cohebert_v1/conjuntodedados/cstnews/" + NOME_ARQUIVO
     DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
     
@@ -212,10 +212,10 @@ def copiaCSTNewsGithub():
     if os.path.isfile(NOME_ARQUIVO):
        os.remove(NOME_ARQUIVO)
     
-    # Copia o arquivo de dados do diret�rio fonte para o diret�rio de destino
+    # Copia o arquivo de dados do diretório fonte para o diretório de destino
     shutil.copy(DIRETORIO_FONTE_ARQUIVO, DIRETORIO_DESTINO_ARQUIVO) 
         
-    # Descompacta o arquivo na pasta de descompacta��o.                
+    # Descompacta o arquivo na pasta de descompactação.                
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)     
 
@@ -281,7 +281,7 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
     # Descarta os documentos muito grandes. (Que geram mais de 512 tokens)
     dfdados = descartandoDocumentosGrandes(model_args, tokenizer, dfdados)
     
-    # Organiza os dados para classificação
+    # Organiza os dados para classificaÃ§Ã£o
     dfdados = organizaDados(dfdados)
     
     return dfdados
@@ -289,26 +289,26 @@ def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):
 # ============================
 def downloadCSTNews(ORIGEM):
     '''
-    Realiza o download o arquivo KFold do CSTNews de uma determiada origem(ORIGEM).
+    Realiza o download o arquivo KFold do CSTNews de uma determinada origem(ORIGEM).
     Parâmetros:
-        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.       
+        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrório usar a copia do checkout.       
     '''    
     
     if ORIGEM:
         # Realiza o download do conjunto de dados dos folds
         downloadCSTNewsGithub()
     else:
-        # Copia do diretório do github do checkout
+        # Copia do diretÃ³rio do github do checkout
         copiaCSTNewsGithub()
             
 # ============================
 def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     '''    
-    Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
+    Carrega os dados do CSTNews de um fold e retorna um dataframe para classificaÃ§Ã£o.
     Parâmetros:
         `model_args` - Objeto com os argumentos do modelo.  
         `tokenizer` -Tokenizador do BERT para descartar documentos grandes.  
-        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.    
+        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrÃ¡rio usar a copia do checkout.    
     Saída:
         `dfdados_train` - Dataframe com os dados de treinamento.
         `dfdados_test` - Dataframe com os dados de teste.
