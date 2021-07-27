@@ -222,6 +222,7 @@ def carregaOtimizador(training_args, model):
     Esta função carrega o otimizador utilizado no agendador de aprendizado.
     Parâmetros:
         `training_args` - Objeto com os argumentos do treinamento. 
+        `model` - Modelo BERT. 
     '''
     
     # Nota: AdamW é uma classe da biblioteca huggingface (ao contrário de pytorch).
