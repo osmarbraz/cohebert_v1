@@ -20,13 +20,13 @@ def downloadCSTNewsICMC():
     '''
   
     # Nome do arquivo a ser recuperado
-    NOME_ARQUIVO = 'Summarycoherencemodels.zip'
+    NOME_ARQUIVO = "Summarycoherencemodels.zip"
 
     if os.path.isfile(NOME_ARQUIVO):
        os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do ICMC
-    URL_ARQUIVO = 'https://sites.icmc.usp.br/taspardo/Summary coherence models.zip'  
+    URL_ARQUIVO = "https://sites.icmc.usp.br/taspardo/Summary coherence models.zip"
 
     # Realiza o download do arquivo dos experimentos    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
@@ -45,12 +45,12 @@ def downloadCSTNewsICMC():
     os.remove(NOME_ARQUIVO)
 
     # Especifica o nome do arquivo do experimento
-    NOME_ARQUIVO_EXPERIMENTO = 'Modelo de Relaces Discursivas.zip'
+    NOME_ARQUIVO_EXPERIMENTO = "Modelo de Relaces Discursivas.zip"
         
     # Apaga o diretório 'Modelo de Relações Discursivas' e seus arquivos
-    if os.path.exists('Modelo de Relacoaes Discursivas'):
+    if os.path.exists("Modelo de Relacoaes Discursivas"):
         # Apaga a pasta e os arquivos existentes                    
-        shutil.rmtree('Modelo de Relacoaes Discursivas')
+        shutil.rmtree("Modelo de Relacoaes Discursivas")
 
     # Descompacta o arquivo do experimento               
     with zipfile.ZipFile(NOME_ARQUIVO_EXPERIMENTO, 'r') as arquivoCompactado:
@@ -72,13 +72,13 @@ def downloadCSTNewsOnDrive():
     '''
   
     # Nome do arquivo a ser recuperado
-    NOME_ARQUIVO = 'Summarycoherencemodels.zip'
+    NOME_ARQUIVO = "Summarycoherencemodels.zip"
 
     if os.path.isfile(NOME_ARQUIVO):
        os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do OneDrive
-    URL_ARQUIVO = 'https://udesc-my.sharepoint.com/:u:/g/personal/91269423991_udesc_br/EQfOLQ6Vg_1Hs4JSwg0aO4wBnxY2ym8tua1XIQB00kczOg?e=hBAqpE&download=1'
+    URL_ARQUIVO = "https://udesc-my.sharepoint.com/:u:/g/personal/91269423991_udesc_br/EQfOLQ6Vg_1Hs4JSwg0aO4wBnxY2ym8tua1XIQB00kczOg?e=hBAqpE&download=1"
 
     # Realiza o download do arquivo dos experimentos    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
@@ -97,12 +97,12 @@ def downloadCSTNewsOnDrive():
     os.remove(NOME_ARQUIVO)
 
     # Especifica o nome do arquivo do experimento
-    NOME_ARQUIVO_EXPERIMENTO = 'Modelo de Relaces Discursivas.zip'
+    NOME_ARQUIVO_EXPERIMENTO = "Modelo de Relaces Discursivas.zip"
         
     # Apaga o diretório 'Modelo de Relações Discursivas' e seus arquivos
-    if os.path.exists('Modelo de Relacoaes Discursivas'):
+    if os.path.exists("Modelo de Relacoaes Discursivas"):
         # Apaga a pasta e os arquivos existentes                     
-        shutil.rmtree('Modelo de Relacoaes Discursivas')
+        shutil.rmtree("Modelo de Relacoaes Discursivas")
 
     # Descompacta o arquivo do experimento               
     with zipfile.ZipFile(NOME_ARQUIVO_EXPERIMENTO, 'r') as arquivoCompactado:
@@ -131,7 +131,7 @@ def carregaArquivosOriginaisCSTNews():
     lista_documentos_originais = []
 
     # Lista dos arquivos do diretório
-    arquivos = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/') 
+    arquivos = os.listdir("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/")
 
     # Apaga arquivos desnecessários da lista
     if '.DS_Store' in arquivos:
@@ -146,15 +146,15 @@ def carregaArquivosOriginaisCSTNews():
         nomeArquivo = arquivos[i][:ponto]
         
         # Carrega o documento
-        documento = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivos[i])
+        documento = carregar("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/" + arquivos[i])
         
         # Carrega as sentenças do documento em uma lista        
-        sentencas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivos[i])
+        sentencas = carregarLista("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/" + arquivos[i])
         
         # Adiciona o documento e as sentenças a lista
         lista_documentos_originais.append([arquivos[i], sentencas, documento])
     
-    logging.info("Carregamento de documento originais concluído: {}".format(len(lista_documentos_originais)))
+    logging.info("Carregamento de documento originais concluído: {}.".format(len(lista_documentos_originais)))
 
     return lista_documentos_originais
 
@@ -172,7 +172,7 @@ def carregaArquivosPermutadosCSTNews():
     lista_documentos_permutados = []
 
     # Lista dos arquivos do diretório
-    arquivos = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/') #Entrada (Input) - diretório de sumários humanos e permutados
+    arquivos = os.listdir("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/") #Entrada (Input) - diretório de sumários humanos e permutados
 
     # Apaga arquivos desnecessários da lista
     if '.DS_Store' in arquivos:
@@ -188,15 +188,15 @@ def carregaArquivosPermutadosCSTNews():
         nomeArquivo = arquivos[i][:ponto]
 
         # Carrega o documento
-        documento = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
+        documento = carregar("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/" + arquivos[i])
         
         # Carrega as sentenças do documento em uma lista
-        sentencas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+arquivos[i])
+        sentencas = carregarLista("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/" + arquivos[i])
 
         # Adiciona o documento e as sentenças a lista
         lista_documentos_permutados.append([arquivos[i], sentencas, documento])
     
-    logging.info("Carregamento de documento permutados concluído: {}".format(len(lista_documentos_permutados)))
+    logging.info("Carregamento de documento permutados concluído: {}.".format(len(lista_documentos_permutados)))
     
     return lista_documentos_permutados
 
@@ -214,7 +214,7 @@ def carregaParesDocumentosCSTNews():
     lista_documentos = []
 
     # Lista dos arquivos do diretório
-    arquivosOriginais = os.listdir('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/') #Entrada (Input) - diretório de sumários humanos e permutados
+    arquivosOriginais = os.listdir("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/") #Entrada (Input) - diretório de sumários humanos e permutados
     
     # Apaga arquivos desnecessários da lista
     if '.DS_Store' in arquivosOriginais:
@@ -231,10 +231,10 @@ def carregaParesDocumentosCSTNews():
 
         # Carrega o documento original.
         # Carrega como parágrafo
-        documentoOriginal = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivosOriginais[i])
+        documentoOriginal = carregar("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/" + arquivosOriginais[i])
         
         # Carrega uma lista das sentenças
-        sentencasOriginais = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/'+arquivosOriginais[i])
+        sentencasOriginais = carregarLista("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos/" + arquivosOriginais[i])
 
         # Percorre as 20 permutações.
         for j in range(20):
@@ -242,13 +242,13 @@ def carregaParesDocumentosCSTNews():
             arquivoPermutado = arquivoOriginal + '_Perm_'+str(j) + '.txt'
 
             # Carrega o arquivo permutado.
-            documentoPermutado = carregar('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+ arquivoPermutado)
-            sentencasPermutadas = carregarLista('/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/'+ arquivoPermutado)
+            documentoPermutado = carregar("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/" + arquivoPermutado)
+            sentencasPermutadas = carregarLista("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/" + arquivoPermutado)
 
             # Adiciona o par original e sua versão permutada.
             lista_documentos.append([arquivosOriginais[i], sentencasOriginais, documentoOriginal, arquivoPermutado, sentencasPermutadas, documentoPermutado])
         
-    logging.info("Geração de pares de documentos concluído: {}".format(len(lista_documentos)))
+    logging.info("Geração de pares de documentos concluído: {}.".format(len(lista_documentos)))
     
     return lista_documentos
 
@@ -317,8 +317,8 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
     dfdadosAnterior = dfdados.drop(columns=['input_ids'])
     dfdadosretorno = dfdados_512.drop(columns=['input_ids'])
 
-    logging.info("Quantidade de dados anterior: {}".format(len(dfdadosAnterior)))
-    logging.info("Nova quantidade de dados    : {}".format(len(dfdadosretorno)))
+    logging.info("Quantidade de dados anterior: {}.".format(len(dfdadosAnterior)))
+    logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
 
     # Mostra a quantidade registros removidos
     dfdadosSemLista =  dfdadosretorno.drop(columns=['sentencasOriginais','sentencasPermutadas'])
@@ -326,7 +326,7 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
 
     df = dfdados512SemLista.merge(dfdadosSemLista, how = 'outer' ,indicator=True).loc[lambda x : x['_merge']=='left_only']
     
-    logging.info("Quantidade de registros removidos: {}".format(len(df)))
+    logging.info("Quantidade de registros removidos: {}.".format(len(df)))
 
     return dfdadosretorno  
 
