@@ -201,7 +201,29 @@ def descartandoDocumentosMuitoGrandes(dfdados, model_args, tokenizer):
     logging.info("Quantidade de registros removidos: {}.".format(len(df)))
 
     return dfdadosretorno  
-  
+
+# ============================
+def getListasDocumentosMedidas(ORIGEM):  
+    '''    
+    Carrega os arquivos de documentos originais e permutados do OnlineEduc 1.0 e retorna suas listas preenchidas.
+    Parâmetros:        
+        `ORIGEM` - Se a variável for setada indica de onde fazer o download. 
+    Saída:
+        `lista_documentos_originais` - Lista com os documentos originais.
+        `lista_documentos_permutados` - Lista com os documentos permutados.
+    '''
+    
+    # # Realiza o download do conjunto de dados
+    downloadConjuntoDeDados()
+        
+    # Carrega os documentos permutados dos arquivos
+    lista_documentos_originais = carregaArquivosOriginaisOnlineEduc()
+    
+    # Carrega os documentos permutados dos arquivos
+    lista_documentos_permutados = carregaArquivosPermutadosOnlineEduc()
+            
+    return lista_documentos_originais, lista_documentos_permutados
+
 # ============================    
 def getConjuntoDeDadosMedida(model_args, tokenizer): 
     '''    
