@@ -22,6 +22,7 @@ def listaOriginalClassificadoIncorretamente(dfDadosClassificacao):
     for index, linha in dfDadosClassificacao.iterrows():
         if linha['classe'] == 1 and linha['predicao'] == 0:
             listaRetorno.append(linha['id'])
+            
     return listaRetorno
 
 # ============================
@@ -34,7 +35,8 @@ def listaOriginalClassificadoCorretamente(dfDadosClassificacao):
     for index, linha in dfDadosClassificacao.iterrows():
         if linha['classe'] == 1 and linha['predicao'] == 1:
             listaRetorno.append(linha['id'])
-        return listaRetorno
+            
+    return listaRetorno
 
 # ============================
 def listaClassificadoIncorretamente(dfDadosClassificacao):
@@ -48,6 +50,7 @@ def listaClassificadoIncorretamente(dfDadosClassificacao):
             listaRetorno.append(linha['id'])
         if linha['classe'] == 0 and linha['predicao'] == 1:
             listaRetorno.append(linha['id'])
+            
     return listaRetorno
 
 # ============================
@@ -63,6 +66,7 @@ def listaClassificadoCorretamente(dfDadosClassificacao):
             listaRetorno.append(linha['id'])
         if linha['classe'] == 0 and linha['predicao'] == 0:
             listaRetorno.append(linha['id'])
+            
     return listaRetorno
 
 # ============================
@@ -494,9 +498,9 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
         # Medida de quanto tempo levou essa época.
         treinamento_epoca_total = formataTempo(time.time() - treinamento_epoca_t0)
 
-        logging.info("  Média perda(loss) do treinamento da época : {0:.8f}".format(media_train_epoca_loss))
-        logging.info("  Tempo de treinamento da época             : {:}".format(treinamento_epoca_total))    
-        logging.info("  Tempo parcial do treinamento              : {:} (h:mm:ss)".format(formataTempo(time.time()-treinamento_t0)))
+        logging.info("  Média perda(loss) do treinamento da época : {0:.8f}.".format(media_train_epoca_loss))
+        logging.info("  Tempo de treinamento da época             : {:}.".format(treinamento_epoca_total))    
+        logging.info("  Tempo parcial do treinamento              : {:} (h:mm:ss).".format(formataTempo(time.time()-treinamento_t0)))
 
         # Apaga objetos não utilizados
         del py_input_ids
