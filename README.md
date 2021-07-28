@@ -56,7 +56,7 @@ print('Ccos DO    :', CcosDO) #Ccos DO1    : 0.8178287347157797
 
 ## Modelos Pré-treinados do BERT
 
-Apesar de existir uma lista grande de [Modelos Pré-treinados] (https://huggingface.co/models) testamos somente três modelos: 
+Apesar de existir uma lista grande de [Modelos Pré-treinados](https://huggingface.co/models) testamos somente três modelos: 
 * 'neuralmind/bert-base-portuguese-cased' - BERTimbau base
 * 'neuralmind/bert-large-portuguese-cased - BERTimbau large
 * 'bert-base-multilingual-cased' - BERT Multilingual
