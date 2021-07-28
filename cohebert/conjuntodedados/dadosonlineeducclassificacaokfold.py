@@ -321,11 +321,11 @@ def downloadOnlineEduc(ORIGEM):
 # ============================
 def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     '''    
-    Carrega os dados do OnlineEduc 1.0 de um fold e retorna um dataframe para classificaÃ§Ã£o.
+    Carrega os dados do OnlineEduc 1.0 de um fold e retorna um dataframe para classificação.
     Parâmetros:
         `model_args` - Objeto com os argumentos do modelo.  
-        `tokenizer` -Tokenizador do BERT para descartar documentos grandes.  
-        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrÃ¡rio usar a copia do checkout.    
+        `tokenizer` - Tokenizador do BERT para descartar documentos grandes.  
+        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.    
     Saída:
         `dfdados_train` - Dataframe com os dados de treinamento.
         `dfdados_test` - Dataframe com os dados de teste.
