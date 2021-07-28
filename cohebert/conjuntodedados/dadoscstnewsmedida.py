@@ -16,7 +16,7 @@ def downloadCSTNewsICMC():
     Download dos arquivos do conjunto de dados do CSTNews do site do ICMC.
     É utilizando um arquivo de entrada compactado. Este arquivo compactado possui diversos arquivos contendo os experimentos realizados. 
     Iremos utilizar os arquivos do experimento ''Modelo de Relaces Discursivas.zip'. 
-    Este arquivo descompactado possui duas pastas de interesse, uma chamada 'Sumarios_Humanos' e outra 'Sumrios_Humanos_Permutados'. 
+    Este arquivo descompactado possui dois diretórios de interesse, uma chamada 'Sumarios_Humanos' e outra 'Sumrios_Humanos_Permutados'. 
     '''
   
     # Nome do arquivo a ser recuperado
@@ -49,7 +49,7 @@ def downloadCSTNewsICMC():
         
     # Apaga o diretório 'Modelo de Relações Discursivas' e seus arquivos
     if os.path.exists("Modelo de Relacoaes Discursivas"):
-        # Apaga a pasta e os arquivos existentes                    
+        # Apaga o diretório e os arquivos existentes                    
         shutil.rmtree("Modelo de Relacoaes Discursivas")
 
     # Descompacta o arquivo do experimento               
@@ -68,7 +68,7 @@ def downloadCSTNewsICMC():
 # ============================    
 def downloadCSTNewsOnDrive():  
     '''    
-    Download dos arquivos do conjunto de dados do CSTNews de uma pasta compartilhada do One Drive.
+    Download dos arquivos do conjunto de dados do CSTNews de um diretório compartilhado do OneDrive.
     '''
   
     # Nome do arquivo a ser recuperado
@@ -101,7 +101,7 @@ def downloadCSTNewsOnDrive():
         
     # Apaga o diretório 'Modelo de Relações Discursivas' e seus arquivos
     if os.path.exists("Modelo de Relacoaes Discursivas"):
-        # Apaga a pasta e os arquivos existentes                     
+        # Apaga o diretório e os arquivos existentes                     
         shutil.rmtree("Modelo de Relacoaes Discursivas")
 
     # Descompacta o arquivo do experimento               
@@ -121,9 +121,9 @@ def downloadCSTNewsOnDrive():
 def carregaArquivosOriginaisCSTNews():  
     '''    
     Carrega os arquivos originais dos arquivos do CSTNews.
-    A pasta 'Sumarios_Humanos' contêm os arquivos dos documentos originais onde cada linha representa uma sentença do documento. 
+    O diretório 'Sumarios_Humanos' contêm os arquivos dos documentos originais onde cada linha representa uma sentença do documento. 
     O nome de cada arquivo original é formado um caracter 'C_', um número que identifica o conteúdo, o literal 'Extrato_' e um número que identifica o sumário. 
-    Os documentos permutados estão na pasta 'Sumarios_Humanos_Permutados' e cada linha representa uma sentença do documento. 
+    Os documentos permutados estão no diretório 'Sumarios_Humanos_Permutados' e cada linha representa uma sentença do documento. 
     O nome de cada arquivo de documento permutado é formado um caracter 'C_', um número que identifica o conteúdo, o literal 'Extrato_', um número que identifica o sumário, o literal 'Perm_' e um número que indica a permutação.
     '''
     
@@ -162,9 +162,9 @@ def carregaArquivosOriginaisCSTNews():
 def carregaArquivosPermutadosCSTNews():  
     '''    
     Carrega os arquivos permutados dos arquivos do CSTNews.
-    A pasta 'Sumarios_Humanos' contêm os arquivos dos documentos originais onde cada linha representa uma sentença do documento. 
+    O diretório 'Sumarios_Humanos' contêm os arquivos dos documentos originais onde cada linha representa uma sentença do documento. 
     O nome de cada arquivo original é formado um caracter 'C_', um número que identifica o conteúdo, o literal 'Extrato_' e um número que identifica o sumário. 
-    Os documentos permutados estão na pasta 'Sumarios_Humanos_Permutados' e cada linha representa uma sentença do documento. 
+    Os documentos permutados estão no diretório 'Sumarios_Humanos_Permutados' e cada linha representa uma sentença do documento. 
     O nome de cada arquivo de documento permutado é formado um caracter 'C_', um número que identifica o conteúdo, o literal 'Extrato_', um número que identifica o sumário, o literal 'Perm_' e um número que indica a permutação.
     '''
   
@@ -204,9 +204,9 @@ def carregaArquivosPermutadosCSTNews():
 def carregaParesDocumentosCSTNews():
     '''    
     Carrega os arquivos e gera os pares de documentos em uma lista.
-    A pasta 'Sumarios_Humanos' contêm os arquivos dos documentos originais onde cada linha representa uma sentença do documento. 
+    O diretório 'Sumarios_Humanos' contêm os arquivos dos documentos originais onde cada linha representa uma sentença do documento. 
     O nome de cada arquivo original é formado um caracter 'C_', um número que identifica o conteúdo, o literal 'Extrato_' e um número que identifica o sumário. 
-    Os documentos permutados estão na pasta 'Sumarios_Humanos_Permutados' e cada linha representa uma sentença do documento. 
+    Os documentos permutados estão no diretório 'Sumarios_Humanos_Permutados' e cada linha representa uma sentença do documento. 
     O nome de cada arquivo de documento permutado é formado um caracter 'C_', um número que identifica o conteúdo, o literal 'Extrato_', um número que identifica o sumário, o literal 'Perm_' e um número que indica a permutação.
     '''
     
