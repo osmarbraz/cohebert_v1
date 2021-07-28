@@ -40,11 +40,11 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
 
     for x in range(QTDE_FOLDS):
   
-        dadostrain = pd.read_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(x+1) + ".csv", sep=';')
-        logging.info("Dados treino do fold {}: {}.".format(x+1, len(dadostrain)))
+        dadostrain = pd.read_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(x + 1) + ".csv", sep=';')
+        logging.info("Dados treino do fold {}: {}.".format(x + 1, len(dadostrain)))
 
-        dadostest = pd.read_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(x+1)+".csv", sep=';')
-        logging.info("Dados teste do fold {}: {}.".format(x+1,len(dadostest)))
+        dadostest = pd.read_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(x + 1)+".csv", sep=';')
+        logging.info("Dados teste do fold {}: {}.".format(x + 1,len(dadostest)))
 
         lista_dadostrain_folds.append([x,dadostrain.tipo.sum(), len(dadostrain.tipo) - dadostrain.tipo.sum()])
         lista_dadostest_folds.append([x,dadostest.tipo.sum(), len(dadostest.tipo) - dadostest.tipo.sum()])
@@ -80,16 +80,17 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
                                                                   (dadostrain.tipo.sum() / len(dadostrain.tipo) * 100.0)
                                                                   ))
 
-        logging.info("Fold {} Treino negativos: {} de {} ({:.2f}%).".format(x+1, 
+        logging.info("Fold {} Treino negativos: {} de {} ({:.2f}%).".format(x + 1, 
                                                                   len(dadostrain.tipo)-dadostrain.tipo.sum(), 
                                                                   len(dadostrain.tipo), 
                                                                   ((len(dadostrain.tipo)-dadostrain.tipo.sum()) / len(dadostrain.tipo) * 100.0)))
 
-        logging.info("Fold {} Teste positivos: {} de {} ({:.2f}%).".format(x+1, 
+        logging.info("Fold {} Teste positivos: {} de {} ({:.2f}%).".format(x + 1, 
                                                                   dadostest.tipo.sum(), 
                                                                   len(dadostest.tipo), 
                                                                   (dadostest.tipo.sum() / len(dadostest.tipo) * 100.0)))
-        logging.info("Fold {} Teste negativos: {} de {} ({:.2f}%).".format(x+1, 
+        
+        logging.info("Fold {} Teste negativos: {} de {} ({:.2f}%).".format(x + 1, 
                                                                   len(dadostest.tipo)-dadostest.tipo.sum(), 
                                                                   len(dadostest.tipo), 
                                                                   ((len(dadostest.tipo)-dadostest.tipo.sum()) / len(dadostest.tipo) * 100.0)))                               
@@ -135,7 +136,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     
     # Percorre os indices do conjunto de dados.
     for train_index, test_index in kf.split(X):
-        logging.info("Executando divisão do fold: {}, Total: {}".format(CONTAFOLD, len(train_index)+len(test_index)))
+        logging.info("Executando divisão do fold: {}, Total: {}".format(CONTAFOLD, len(train_index) + len(test_index)))
         logging.info("Treino: {}, Teste: {}".format(len(train_index), len(test_index)))
 
         #print("Índices de treino:", len(train_index), " - ", train_index[0], " - ", train_index[len(train_index)-1])  
@@ -161,7 +162,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         pddata_tuples_train = pd.DataFrame(documentos_train_organizada, columns=["id","documento","tipo"])
     
         # Salva o arquivo de treino do fold.
-        pddata_tuples_train.to_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(CONTAFOLD)+".csv", index = False, sep=';')
+        pddata_tuples_train.to_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(CONTAFOLD) + ".csv", index = False, sep=';')
 
         # Organiza dados de teste.
         documentos_test_organizada = []
@@ -177,7 +178,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         pddata_tuples_test = pd.DataFrame(documentos_test_organizada, columns=["id","documento","tipo"])  
   
         # Salva o arquivo de teste do fold.
-        pddata_tuples_test.to_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(CONTAFOLD)+".csv", index = False, sep=';')
+        pddata_tuples_test.to_csv(PREFIXO_NOME_ARQUIVO_TESTE+str(CONTAFOLD) + ".csv", index = False, sep=';')
 
         # Avança o contador de testes.
         CONTAFOLD = CONTAFOLD + 1        
