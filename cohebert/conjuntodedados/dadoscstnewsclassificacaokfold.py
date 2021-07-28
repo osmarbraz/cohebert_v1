@@ -248,7 +248,7 @@ def downloadCSTNewsGithub():
        os.remove(NOME_ARQUIVO)
     
     # Realiza o download do arquivo do OneDrive
-    URL_ARQUIVO = "https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/" + NOME_ARQUIVO + "?raw=true"
+    URL_ARQUIVO = "https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/cstnews/" + NOME_ARQUIVO + "?raw=true"
 
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
