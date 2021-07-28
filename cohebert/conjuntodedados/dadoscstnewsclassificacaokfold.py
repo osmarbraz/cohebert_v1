@@ -258,35 +258,6 @@ def downloadCSTNewsGithub():
     arquivoZip.extractall(DIRETORIO)       
 
 # ============================
-def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):  
-    '''    
-    Carrega os dados do CSTNews e retorna um dataframe para classificação.
-    Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo.    
-        `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
-        `tokenizer` - Tokenizador BERT.
-    Saída:
-        `dfdados` - Um dataframe com os dados carregados.
-    '''
-    
-    # Realiza o download do conjunto de dados
-    downloadConjuntoDeDados(ORIGEM)
-    
-    # Carrega os pares de documentos dos arquivos
-    lista_documentos = carregaParesDocumentosCSTNews()
-        
-    # Converte em um dataframe
-    dfdados = converteListaParesDocumentos(lista_documentos)
-    
-    # Descarta os documentos muito grandes. (Que geram mais de 512 tokens)
-    dfdados = descartandoDocumentosGrandes(model_args, tokenizer, dfdados)
-    
-    # Organiza os dados para classificação
-    dfdados = organizaDados(dfdados)
-    
-    return dfdados
-
-# ============================
 def downloadCSTNews(ORIGEM):
     '''
     Realiza o download o arquivo KFold do CSTNews de uma determinada origem(ORIGEM).
@@ -298,7 +269,7 @@ def downloadCSTNews(ORIGEM):
         # Realiza o download do conjunto de dados dos folds
         downloadCSTNewsGithub()
     else:
-        # Copia do diretÃ³rio do github do checkout
+        # Copia do diretório do github do checkout
         copiaCSTNewsGithub()
             
 # ============================
