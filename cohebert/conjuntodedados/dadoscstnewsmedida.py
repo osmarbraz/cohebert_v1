@@ -363,13 +363,13 @@ def getListasDocumentosMedidas(ORIGEM):
     return lista_documentos_originais, lista_documentos_permutados
 
 # ============================
-def getConjuntoDeDadosMedida(model_args, ORIGEM, tokenizer):  
+def getConjuntoDeDadosMedida(model_args, tokenizer, ORIGEM):  
     '''    
     Carrega os dados do CSTNews para o cálculo de medida e retorna um dataframe.
     Parâmetros:        
-        `model_args` - Objeto com os argumentos do modelo.    
-        `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
+        `model_args` - Objeto com os argumentos do modelo.            
         `tokenizer` - Tokenizador BERT.
+        `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
         
     Saída:
         `dfdados` - Um dataframe com os dados carregados.
