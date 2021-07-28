@@ -239,8 +239,6 @@ def downloadOnlineEducGithub():
     else:
         logging.info("Diretório já existe: {}.".format(DIRETORIO))
         
-    # Download do arquivo de dados  
-    
     # Nome do arquivo a ser criado.
     NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"
 
@@ -257,7 +255,39 @@ def downloadOnlineEducGithub():
     # Descompacta o arquivo na pasta de descompactação                
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)          
+
+# ============================
+def copiaOnlineEducGoogleDrive(): 
+    '''    
+    Copia dos arquivos do conjunto de dados do OnlineEduc para classificação KFold do Google Drive.
+    '''
+    logging.info("Copia do OnlineEduc do Gooogle Drive")  
+    
+    # Cria o diretório para receber os arquivos de dados
+    # Diretório dos arquivos de dados.
+    DIRETORIO = "/content/validacao_kfold"
+
+    # Verifica se o diretório existe
+    if not os.path.exists(DIRETORIO):  
+        # Cria o diretório
+        os.makedirs(DIRETORIO)
+        logging.info("Diretório criado: {}.".format(DIRETORIO))
+    else:
+        logging.info("Diretório já existe: {}.".format(DIRETORIO))
+
+    # Nome do arquivo a ser criado.
+    NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"        
+    
+    # Define o caminho e nome do arquivo de dados
+    CAMINHO_ARQUIVO = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/validacao_classificacao/kfold/" + NOME_ARQUIVO
         
+    #Copia o arquivo do modelo para o diretório no Google Drive.
+    shutil.copy(CAMINHO_ARQUIVO, '.') 
+    
+    # Descompacta o arquivo na pasta de descompactação.                
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip.extractall(DIRETORIO)
+    
 # ============================
 def downloadOnlineEduc(ORIGEM):
     '''
@@ -270,8 +300,8 @@ def downloadOnlineEduc(ORIGEM):
         # Realiza o download do conjunto de dados dos folds
         downloadOnlineEducGithub()
     else:
-        # Copia do diretório do github do checkout
-        copiaOnlineEducGithub()
+        ##copiaOnlineEducGithub()
+        copiaOnlineEducGoogleDrive()
             
 # ============================
 def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
