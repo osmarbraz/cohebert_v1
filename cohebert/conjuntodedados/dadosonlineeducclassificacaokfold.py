@@ -185,7 +185,8 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         
 # ============================
 def copiaOnlineEducGithub():  
-    '''    
+    '''
+    DADOS PRIVADOS, ARQUIVO DE DADOS NÃO DISPONÍVEL.
     Copia dos arquivos do conjunto de dados do OnlineEduc para classificação KFold do Github.
     '''
     
@@ -222,7 +223,8 @@ def copiaOnlineEducGithub():
 
 # ============================
 def downloadOnlineEducGithub():  
-    '''    
+    '''
+    DADOS PRIVADOS, ARQUIVO DE DADOS NÃO DISPONÍVEL.
     Download dos arquivos do conjunto de dados do OnlineEduc para classificação KFold do Github.
     '''
 
@@ -281,11 +283,11 @@ def copiaOnlineEducGoogleDrive():
     # Define o caminho e nome do arquivo de dados
     CAMINHO_ARQUIVO = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/validacao_classificacao/kfold/" + NOME_ARQUIVO
         
-    #Copia o arquivo do modelo para o diretório no Google Drive.
-    shutil.copy(CAMINHO_ARQUIVO, '.') 
+    # Copia o arquivo compactado do conjunto do diretório no Google Drive para o diretório kfold.
+    shutil.copy(CAMINHO_ARQUIVO, DIRETORIO) 
     
     # Descompacta o arquivo na pasta de descompactação.                
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip = zipfile.ZipFile(DIRETORIO + '/' + NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)
     
 # ============================
@@ -296,12 +298,14 @@ def downloadOnlineEduc(ORIGEM):
         `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrório usar a copia do checkout.       
     '''    
     
-    if ORIGEM:
-        # Realiza o download do conjunto de dados dos folds
-        downloadOnlineEducGithub()
-    else:
-        ##copiaOnlineEducGithub()
-        copiaOnlineEducGoogleDrive()
+    #if ORIGEM:
+        # Realiza o download do conjunto de dados dos folds 
+    #    downloadOnlineEducGithub()
+    #else:
+        #copiaOnlineEducGithub()
+    
+    # O arquivo é restrito e está disponível somente para o Google Drive 
+    copiaOnlineEducGoogleDrive()
             
 # ============================
 def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
