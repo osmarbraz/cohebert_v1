@@ -264,18 +264,17 @@ def getDeviceGPU():
     Retorna um dispositivo de GPU.
     '''
         
-    # Se existe GPU disponível...
-    if torch.cuda.is_available():    
-
+    # Se existe GPU disponível.
+    if torch.cuda.is_available():
+        
         # Diz ao PyTorch para usar GPU.    
         device = torch.device("cuda")
-
+        
         logging.info("Existem {} GPU(s) disponíveis.".format(torch.cuda.device_count()))
-
         logging.info("Iremos usar a GPU: {}.".format(torch.cuda.get_device_name(0)))
 
-    # Se não...
-    else:
+    # Se não.
+    else:        
         logging.info("Sem GPU disponível, usando CPU.")
         device = torch.device("cpu")
         
@@ -298,6 +297,7 @@ def conectaGPU(model, device):
         # Diga ao pytorch para rodar este modelo na GPU.
         logging.info("Pytorch rodando o modelo na GPU.")
         model.cuda()
+        
     else:
         logging.info("Pytorch rodando sem GPU.")
 
@@ -316,6 +316,7 @@ def getNomeModeloBERT(model_args):
     
     if 'neuralmind' in model_args.pretrained_model_name_or_path:
         MODELO_BERT = "_BERTimbau"
+        
     else:
         if 'multilingual' in model_args.pretrained_model_name_or_path:
             MODELO_BERT = "_BERTmultilingual"
@@ -436,8 +437,7 @@ def verificaModelo(model_args):
 
     DIRETORIO_MODELO = None
     
-    if model_args.usar_mcl_ajustado == True:
-        
+    if model_args.usar_mcl_ajustado == True:        
         # Diretório do modelo
         DIRETORIO_MODELO = copiaModeloAjustado()
         
@@ -468,7 +468,6 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     
     # Se a variável DIRETORIO_MODELO foi setada.
     if DIRETORIO_MODELO:
-
         # Carregando o Tokenizador.
         logging.info("Carregando o tokenizador BERT do diretório {}.".format(DIRETORIO_MODELO))
 
@@ -498,14 +497,14 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
         URL_MODELO = model_args.pretrained_model_name_or_path
 
     # Se a variável URL_MODELO foi setada
-    if URL_MODELO:
-        
+    if URL_MODELO:        
         # Carregando o Modelo BERT
         logging.info("Carregando o modelo BERT do diretório {} para cálculo de medidas.".format(DIRETORIO_MODELO))
 
         model = BertModel.from_pretrained(DIRETORIO_MODELO,
                                           output_attentions = model_args.output_attentions,
                                           output_hidden_states = model_args.output_hidden_states)
+        
     else:
         # Carregando o Modelo BERT da comunidade
         logging.info("Carregando o modelo BERT da comunidade {} para cálculo de medidas.".format(model_args.pretrained_model_name_or_path))
