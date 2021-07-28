@@ -66,13 +66,13 @@ def organizaDados(dfdados):
     return dfdados 
     
 # ============================
-def getConjuntoDeDadosClassificacao(model_args, ORIGEM, tokenizer):  
+def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):  
     '''    
     Carrega os dados do CSTNews e retorna um dataframe para classificação.
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo.    
-        `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
+        `model_args` - Objeto com os argumentos do modelo.            
         `tokenizer` - Tokenizador BERT.
+        `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
     Saída:
         `dfdados` - Um dataframe com os dados carregados.
     '''
