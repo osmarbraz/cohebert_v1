@@ -31,6 +31,7 @@ def getSomatorioDiferencaAbsolutaOrdenada(listaMedida1, listaMedida2):
     for i, linha in enumerate(lista1): 
         diferenca = abs(lista2[i] - lista1[i])
         soma = soma + diferenca
+        
     return soma
 
 # ============================
@@ -50,6 +51,7 @@ def getSomatorioDiferencaAbsoluta(listaMedida1, listaMedida2):
     for i, linha in enumerate(listaMedida1): 
         diferenca = abs(listaMedida2[i] - listaMedida1[i])
         soma = soma + diferenca
+        
     return soma
 
 # ============================
@@ -73,6 +75,7 @@ def acertosMedidaSimilaridadePermutado(medida, dfListaParesDocumentosMedidas):
     for i, linha in dfListaParesDocumentosMedidas.iterrows():
         if linha[medida + 'DO']  < linha[ medida + 'Perm']:
             acertosOriginal = acertosOriginal + 1
+            
         else:
             acertosPermutado = acertosPermutado + 1
 
@@ -102,6 +105,7 @@ def acertosMedidaSimilaridadeOriginal(medida, dfListaParesDocumentosMedidas):
     for i, linha in dfListaParesDocumentosMedidas.iterrows():
         if linha[medida + 'DO']  >= linha[ medida + 'Perm']:
             acertosOriginal = acertosOriginal + 1
+            
         else:
             acertosPermutado = acertosPermutado + 1
 
@@ -131,6 +135,7 @@ def acertosMedidaDistanciaPermutado(medida, dfListaParesDocumentosMedidas):
     for i, linha in dfListaParesDocumentosMedidas.iterrows():
         if linha[medida + 'DO'] < linha[ medida + 'Perm']:      
             acertosPermutado = acertosPermutado + 1
+            
         else:
             acertosOriginal = acertosOriginal + 1
       
@@ -160,6 +165,7 @@ def acertosMedidaDistanciaOriginal(medida, dfListaParesDocumentosMedidas):
     for i, linha in dfListaParesDocumentosMedidas.iterrows():
         if linha[medida + 'DO'] <= linha[ medida + 'Perm']:
             acertosOriginal = acertosOriginal + 1
+            
         else:
             acertosPermutado = acertosPermutado + 1
 
@@ -282,9 +288,10 @@ def salvaResultadoMedicao(model_args, NOME_BASE, DIRETORIO_MEDICAO, lista_medida
     if not os.path.exists(DIRETORIO_MEDICAO):  
       # Cria o diretório
       os.makedirs(DIRETORIO_MEDICAO)
-      print('Diretório criado: {}'.format(DIRETORIO_MEDICAO))
+      logging.info("Diretório criado: {}.".format(DIRETORIO_MEDICAO))
+    
     else:
-      print('Diretório já existe: {}'.format(DIRETORIO_MEDICAO))
+      logging.info("Diretório já existe: {}.".format(DIRETORIO_MEDICAO))
 
     # Nome do arquivo a ser aberto.
     NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDICAO + NOME_ARQUIVO_MEDICAO + '.csv'
@@ -296,9 +303,10 @@ def salvaResultadoMedicao(model_args, NOME_BASE, DIRETORIO_MEDICAO, lista_medida
     if not os.path.exists(DIRETORIO_MEDICAO):  
       # Cria o diretório
       os.makedirs(DIRETORIO_MEDICAO)
-      print('Diretório criado: {}'.format(DIRETORIO_MEDICAO))
+      logging.info("Diretório criado: {}.".format(DIRETORIO_MEDICAO))
+    
     else:
-      print('Diretório já existe: {}'.format(DIRETORIO_MEDICAO))
+      logging.info("Diretório já existe: {}.".format(DIRETORIO_MEDICAO))
 
     # Nome do arquivo a ser aberto.
     NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDICAO + NOME_ARQUIVO_MEDICAO + '.csv'
@@ -310,7 +318,7 @@ def salvaResultadoMedicao(model_args, NOME_BASE, DIRETORIO_MEDICAO, lista_medida
 
     # Verifica se o arquivo existe.
     if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
-      print('Atualizando arquivo medição: {}'.format(NOME_ARQUIVO_MEDICAO_COMPLETO))
+      logging.info("Atualizando arquivo medição: {}.".format(NOME_ARQUIVO_MEDICAO_COMPLETO))
       # Abre o arquivo para leitura.
       arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO,'r')
       # Leitura de todas as linhas do arquivo.
@@ -325,7 +333,8 @@ def salvaResultadoMedicao(model_args, NOME_BASE, DIRETORIO_MEDICAO, lista_medida
       # Fecha o arquivo.
       arquivo.close()
     else:
-      print('Criando arquivo medição: {}'.format(NOME_ARQUIVO_MEDICAO_COMPLETO))
+        
+      logging.info("Criando arquivo medição: {}.".format(NOME_ARQUIVO_MEDICAO_COMPLETO))
       # Abre novamente o arquivo (escrita).
       arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO,'w')
       arquivo.writelines( CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
@@ -391,6 +400,7 @@ def salvaResultadoAvaliacao(model_args, NOME_BASE, DIRETORIO_AVALIACAO, tempoTot
       arquivo.writelines(conteudo)  
       # Fecha o arquivo.
       arquivo.close()
+    
     else:
       logging.info("Criando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
       # Abre novamente o arquivo (escrita).
@@ -561,6 +571,7 @@ def organizaParesDocumentos(dfOriginalMedida, dfPermutadoMedida):
     for i, linha1 in dfOriginalMedida.iterrows():
         ponto = linha1['arquivo'].find('.')
         nomeArquivo = linha1['arquivo'][:ponto]
+        
         for i, linha2 in dfPermutadoMedida.iterrows():
             if nomeArquivo in linha2['arquivo']:
                 listaParesDocumentosMedidas.append(
