@@ -17,25 +17,37 @@ def downloadOnlineEducGoogleDrive():
     Depende de mapeamento no Google Drive.
     '''
     
-    # Nome do arquivo
-    NOME_ARQUIVO_ORIGINAL = "original.zip"
-    NOME_ARQUIVO_PERMUTADO = "permutado.zip"
-    
-    # Define o caminho e nome do arquivo de dados
-    CAMINHO_ARQUIVO_ORIGINAL = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/" + NOME_ARQUIVO_ORIGINAL
-    CAMINHO_ARQUIVO_PERMUTADO = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/" + NOME_ARQUIVO_PERMUTADO
-    
-    # Copia o arquivo do modelo para o diretório no Google Drive.
-    shutil.copy(CAMINHO_ARQUIVO_ORIGINAL, '.') 
-    shutil.copy(CAMINHO_ARQUIVO_PERMUTADO, '.') 
+    # Diretório do Google Drive
+    DIRETORIO_GOOGLEDRIVE = "/content/drive"
 
-    # Descompacta o arquivo na pasta de descompactação.                
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_ORIGINAL,"r")
-    arquivoZip.extractall()
+    # Verifica se o diretório do google drive foi montada
+    if os.path.exists(DIRETORIO_GOOGLEDRIVE): 
+        
+        logging.info("Realizando a cópia do arquivo de dados do OnlineEduc 1.0 do Google Drive.")
     
-    # Descompacta o arquivo na pasta de descompactação.                
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_PERMUTADO,"r")
-    arquivoZip.extractall()
+        # Nome do arquivo
+        NOME_ARQUIVO_ORIGINAL = "original.zip"
+        NOME_ARQUIVO_PERMUTADO = "permutado.zip"
+
+        # Define o caminho e nome do arquivo de dados
+        CAMINHO_ARQUIVO_ORIGINAL = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/" + NOME_ARQUIVO_ORIGINAL
+        CAMINHO_ARQUIVO_PERMUTADO = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/" + NOME_ARQUIVO_PERMUTADO
+
+        # Copia o arquivo do modelo para o diretório no Google Drive.
+        shutil.copy(CAMINHO_ARQUIVO_ORIGINAL, '.') 
+        shutil.copy(CAMINHO_ARQUIVO_PERMUTADO, '.') 
+
+        # Descompacta o arquivo na pasta de descompactação.                
+        arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_ORIGINAL,"r")
+        arquivoZip.extractall()
+
+        # Descompacta o arquivo na pasta de descompactação.                
+        arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_PERMUTADO,"r")
+        arquivoZip.extractall()
+        
+    else:        
+        logging.info("Diretório do google drive não foi montado: {}.".format(DIRETORIO_GOOGLEDRIVE))
+        
 
 # ============================    
 def carregaArquivosOriginaisOnlineEduc():    
@@ -137,8 +149,7 @@ def downloadConjuntoDeDados():
     '''    
     Verifica de onde será realizado o download dos arquivos de dados.
     '''
-    
-    logging.info("Realizando o download do OnlineEduc 1.0 do Google Drive.")
+        
     downloadOnlineEducGoogleDrive()
     
 # ============================    
