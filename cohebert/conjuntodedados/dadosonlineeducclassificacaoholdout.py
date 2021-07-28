@@ -10,7 +10,7 @@ from util.utilmodulo import *
 from util.utiltempo import *
 from util.utilarquivo import *
 
-from conjuntodedados.dadosonlineducmedida import *
+from conjuntodedados.dadosonlineeducmedida import *
 
 # ============================
 def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
@@ -31,9 +31,9 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
     # Divide o conjunto
     dfdados_train, dfdados_test = train_test_split(dfdados, test_size=test_qtde, random_state=42, stratify=dfdados[classeStratify])
 
-    logging.info("Conjunto total:", len(dfdados))
-    logging.info("  Treino:", len(dfdados_train))
-    logging.info("  Teste :", len(dfdados_test))
+    logging.info("Conjunto total: {}.".format(len(dfdados)))
+    logging.info("  Treino: {}.".format(len(dfdados_train)))
+    logging.info("  Teste : {}.".format(len(dfdados_test)))
 
     return dfdados_train, dfdados_test
 
