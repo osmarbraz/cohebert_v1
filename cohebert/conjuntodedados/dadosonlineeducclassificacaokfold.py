@@ -218,7 +218,7 @@ def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     
     # Verifica se o diretório existe
     if os.path.exists(DIRETORIO) == False:
-        downloadCSTNews(ORIGEM)
+        downloadOnlineEduc(ORIGEM)
   
     # Define o prefixo do nome dos arquivos dos folds
     PREFIXO_NOME_ARQUIVO_TREINO = "moodle_train_f"
