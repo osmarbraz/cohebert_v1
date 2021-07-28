@@ -12,6 +12,11 @@ from tqdm.notebook import tqdm as tqdm_notebook # Biblioteca para barra de progr
 # Import de bibliotecas próprias
 from bert.bertmodulo  import *
 
+# ===================================================================================
+# Módulo para agrupar as operações específicas de classificação binária para 
+# a validação cruzada Kfold.
+# ===================================================================================
+
 # ============================
 def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
     '''
