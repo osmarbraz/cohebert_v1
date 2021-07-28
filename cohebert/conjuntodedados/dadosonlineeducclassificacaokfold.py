@@ -182,6 +182,82 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         # Avança o contador de testes.
         CONTAFOLD = CONTAFOLD + 1        
 
+        
+# ============================
+def copiaOnlineEducGithub():  
+    '''    
+    Copia dos arquivos do conjunto de dados do OnlineEduc para classificação KFold do Github.
+    '''
+    
+    logging.info("Copiando do OnlineEduc do checkout do Github")
+
+    # Diretório dos arquivos de dados.
+    DIRETORIO = "/content/validacao_kfold"
+    
+    # Verifica se o diretório existe
+    if not os.path.exists(DIRETORIO):  
+        # Cria o diretório
+        os.makedirs(DIRETORIO)
+        logging.info("Diretório criado: {}.".format(DIRETORIO))
+    else:
+        logging.info("Diretório já existe: {}.".format(DIRETORIO))
+        
+    # Nome do arquivo a ser criado.
+    NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"
+    
+    # Diretórios dos arquivos
+    DIRETORIO_FONTE_ARQUIVO = "/content/cohebert_v1/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO
+    DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
+    
+    # Apaga o arquivo    
+    if os.path.isfile(NOME_ARQUIVO):
+       os.remove(NOME_ARQUIVO)
+    
+    # Copia o arquivo de dados do diretório fonte para o diretório de destino
+    shutil.copy(DIRETORIO_FONTE_ARQUIVO, DIRETORIO_DESTINO_ARQUIVO) 
+        
+    # Descompacta o arquivo na pasta de descompactação.                
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip.extractall(DIRETORIO)     
+
+# ============================
+def downloadOnlineEducGithub():  
+    '''    
+    Download dos arquivos do conjunto de dados do OnlineEduc para classificação KFold do Github.
+    '''
+
+    logging.info("Download do OnlineEduc do Github")  
+
+    # Diretório dos arquivos de dados
+    DIRETORIO = "/content/validacao_kfold"
+    
+    # Verifica se o diretório existe
+    if not os.path.exists(DIRETORIO):  
+        # Cria o diretório
+        os.makedirs(DIRETORIO)
+        logging.info("Diretório criado: {}.".format(DIRETORIO))
+    else:
+        logging.info("Diretório já existe: {}.".format(DIRETORIO))
+        
+    # Download do arquivo de dados  
+    
+    # Nome do arquivo a ser criado.
+    NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"
+
+    # Apaga o arquivo.    
+    if os.path.isfile(NOME_ARQUIVO):
+       os.remove(NOME_ARQUIVO)
+    
+    # Realiza o download do arquivo do OneDrive
+    URL_ARQUIVO = "https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO + "?raw=true"
+
+    # Realiza o download do arquivo do conjunto de dados    
+    downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
+    
+    # Descompacta o arquivo na pasta de descompactação                
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip.extractall(DIRETORIO)          
+        
 # ============================
 def downloadOnlineEduc(ORIGEM):
     '''
@@ -192,10 +268,10 @@ def downloadOnlineEduc(ORIGEM):
     
     if ORIGEM:
         # Realiza o download do conjunto de dados dos folds
-        downloadCSTNewsGithub()
+        downloadOnlineEducGithub()
     else:
         # Copia do diretório do github do checkout
-        copiaCSTNewsGithub()
+        copiaOnlineEducGithub()
             
 # ============================
 def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
