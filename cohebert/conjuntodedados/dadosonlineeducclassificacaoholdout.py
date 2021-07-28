@@ -83,7 +83,7 @@ def getConjuntoDeDadosClassificacao(model_args, tokenizer):
     dfdados = converteListaParesDocumentos(lista_documentos)
         
     # Descarta os documentos muito grandes. (Que geram mais de 512 tokens)
-    dfdados = descartandoDocumentosGrandes(dfdados, model_args, tokenizer)
+    dfdados = descartandoDocumentosGrandes(model_args, tokenizer, dfdados)
     
     # Organiza os dados para classificação
     dfdados = organizaDados(dfdados)
