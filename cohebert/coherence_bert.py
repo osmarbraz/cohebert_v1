@@ -80,8 +80,8 @@ class CoherenceBERT:
         Retorna as medidas de (in)coerência Ccos, Ceuc, Cman do texto.
         ''' 
 
-        defineEstrategiaPooling(estrategiaPooling)
-        definePalavraRelevante(palavraRelevante)
+        self.defineEstrategiaPooling(estrategiaPooling)
+        self.definePalavraRelevante(palavraRelevante)
 
         self.Ccos, self.Ceuc, self.Cman = getMedidasCoerenciaDocumento(texto, 
                                                     modelo=self.model, 
@@ -100,8 +100,8 @@ class CoherenceBERT:
         Retorna a medida de coerência do texto utilizando a medida de similaridade de cosseno.
         ''' 
         
-        defineEstrategiaPooling(estrategiaPooling)
-        definePalavraRelevante(palavraRelevante)
+        self.defineEstrategiaPooling(estrategiaPooling)
+        self.definePalavraRelevante(palavraRelevante)
 
         self.Ccos, self.Ceuc, self.Cman = getMedidasCoerenciaDocumento(texto, 
                                                     modelo=self.model, 
@@ -119,8 +119,8 @@ class CoherenceBERT:
         Retorna a medida de incoerência do texto utilizando a medida de distância de Euclidiana.
         ''' 
         
-        defineEstrategiaPooling(estrategiaPooling)
-        definePalavraRelevante(palavraRelevante)
+        self.defineEstrategiaPooling(estrategiaPooling)
+        self.definePalavraRelevante(palavraRelevante)
 
         self.Ccos, self.Ceuc, self.Cman = getMedidasCoerenciaDocumento(texto, 
                                                     modelo=self.model, 
@@ -138,8 +138,8 @@ class CoherenceBERT:
         Retorna a medida de incoerência do texto utilizando a medida de distância de Manhattan.
         ''' 
         
-        defineEstrategiaPooling(estrategiaPooling)
-        definePalavraRelevante(palavraRelevante)
+        self.defineEstrategiaPooling(estrategiaPooling)
+        self.definePalavraRelevante(palavraRelevante)
         
         self.Ccos, self.Ceuc, self.Cman = getMedidasCoerenciaDocumento(texto, 
                                                     modelo=self.model, 
