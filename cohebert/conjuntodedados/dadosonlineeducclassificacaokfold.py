@@ -194,7 +194,7 @@ def downloadOnlineEduc(ORIGEM):
         # Realiza o download do conjunto de dados dos folds
         downloadCSTNewsGithub()
     else:
-        # Copia do diretÃ³rio do github do checkout
+        # Copia do diretório do github do checkout
         copiaCSTNewsGithub()
             
 # ============================
