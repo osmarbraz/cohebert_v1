@@ -416,8 +416,8 @@ def getResultadoEmbeddings(sentencaEmbedding, camada):
                             resultadoEmbeddingCamadas = getEmbeddingSomaTodasAsCamada(sentencaEmbedding)
                             #print('resultadoEmbeddingCamadas5=',resultadoEmbeddingCamadas.size())
                             # Saída: <1> x <qtde_tokens> x <768 ou 1024>
-  
-    # Verifica se a primeira dimensão é 1 para remover
+      
+    # Verifica se a primeira dimensão é igual 1 para remover a dimensão de lote 'batches'
     # Entrada: <1> x <qtde_tokens> x <768 ou 1024>
     if resultadoEmbeddingCamadas.shape[0] == 1:
         # Remove a dimensão 0 caso seja de tamanho 1.
