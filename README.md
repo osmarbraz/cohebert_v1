@@ -27,6 +27,31 @@ import sys
 sys.path.append('./coebert_v1/coebert')
 ```
 
+## Começando
+
+
+[Este exemplo](https://github.com/UKPLab/sentence-transformers/tree/master/examples/applications/computing-embeddings/computing_embeddings.py) mostra como usar um modelo de BERT pré-treinado para medir a coerência de documentos.
+
+Primeiro realizamos o import das bibliotecas e instanciamos o Coherence BERT para download do modelo pré-treinado.
+````python
+from coherence_bert import CoherenceBERT
+
+cohebert = CoherenceBERT('neuralmind/bert-base-portuguese-cased') # BERTimbau base
+````
+
+Em seguida, forneça algumas sentenças ao modelo.
+````python
+DO = ['Bom Dia, professor.',
+      'Qual o conteúdo da prova?',
+      'Vai cair tudo na prova?',
+      'Aguardo uma resposta, João.']      
+
+# Recupera as medidas dos documentos
+CcosDO =  cohebert.getMedidaCoerenciaCosseno(DO)
+
+print('Ccos DO    :', CcosDO)
+````
+
 **Exemplos de execução são apresentados nos notebooks**
 
 ## **Diretórios**
