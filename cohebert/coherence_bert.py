@@ -28,30 +28,50 @@ class CoherenceBERT:
     
     # Construtor da classe
     def __init__(self, pretrained_model_name_or_path):
-        # parâmetro recebido
+        # Parâmetro recebido para o modelo BERT
         model_args.pretrained_model_name_or_path = pretrained_model_name_or_path
         
         # Carrega o modelo e tokenizador do BERT        
         self.model, self.tokenizer = carregaBERT(model_args)
-
+    
+    def verificaCarregamentoSpacy():
+        ''' 
+        Verifica se é necessário carregar o spacy.
+        Utilizado para as estratégias de palavras relevantes CLEAN e NOUN.
+        ''' 
+        
         if model_args.palavra_relevante != 0:
             # Carrega o modelo spacy
             self.nlp = carregaSpacy(model_args)
+            
         else:
             self.nlp = None
     
     def defineEstrategiaPooling(estrategiaPooling):
+        ''' 
+        Define a estratégia de pooling para os parâmetros do modelo.
+        ''' 
+        
         if estrategiaPooling == ESTRATEGIA_POOLING[1]:
             model_args.estrategia_pooling = 1
+            
         else:
             model_args.estrategia_pooling = 0
 
     def definePalavraRelevante(palavraRelevante):
+        ''' 
+        Define a estratégia de palavra relavante para os parâmetros do modelo.
+        ''' 
+        
         if palavraRelevante == PALAVRA_RELEVANTE[1]:
             model_args.palavra_relevante = 1
+            verificaCarregamentoSpacy()
+            
         else:
             if palavraRelevante == PALAVRA_RELEVANTE[2]:
                 model_args.palavra_relevante = 2
+                verificaCarregamentoSpacy()
+                
             else:
                 model_args.palavra_relevante = 0
 
@@ -76,10 +96,13 @@ class CoherenceBERT:
         return self.Ccos, self.Ceuc, self.Cman
 
     
-    def getMedidaCoerenciaCosseno(self, texto, palavraRelevante='ALL'):
+    def getMedidaCoerenciaCosseno(self, texto, estrategiaPooling = 'MEAN', palavraRelevante='ALL'):
         ''' 
         Retorna a medida de coerência do texto utilizando a medida de similaridade de cosseno.
         ''' 
+        
+        defineEstrategiaPooling(estrategiaPooling)
+        definePalavraRelevante(palavraRelevante)
 
         self.Ccos, self.Ceuc, self.Cman = getMedidasCoerenciaDocumento(texto, 
                                                     modelo=self.model, 
@@ -92,10 +115,13 @@ class CoherenceBERT:
           
         return self.Ccos
     
-    def getMedidaCoerenciaEuclediana(self, texto, palavraRelevante='ALL'):
+    def getMedidaCoerenciaEuclediana(self, texto, estrategiaPooling = 'MEAN', palavraRelevante='ALL'):
         ''' 
         Retorna a medida de incoerência do texto utilizando a medida de distância de Euclidiana.
         ''' 
+        
+        defineEstrategiaPooling(estrategiaPooling)
+        definePalavraRelevante(palavraRelevante)
 
         self.Ccos, self.Ceuc, self.Cman = getMedidasCoerenciaDocumento(texto, 
                                                     modelo=self.model, 
@@ -108,10 +134,14 @@ class CoherenceBERT:
           
         return self.Ceuc        
     
-    def getMedidaCoerenciaManhattan(self, texto, palavraRelevante='ALL'):
+    def getMedidaCoerenciaManhattan(self, texto, estrategiaPooling = 'MEAN', palavraRelevante='ALL'):
         ''' 
         Retorna a medida de incoerência do texto utilizando a medida de distância de Manhattan.
         ''' 
+        
+        defineEstrategiaPooling(estrategiaPooling)
+        definePalavraRelevante(palavraRelevante)
+        
         self.Ccos, self.Ceuc, self.Cman = getMedidasCoerenciaDocumento(texto, 
                                                     modelo=self.model, 
                                                     tokenizador=self.tokenizer, 
