@@ -23,7 +23,6 @@ model_args = ModeloArgumentosMedida(
 ESTRATEGIA_POOLING = ['MEAN','MAX']
 PALAVRA_RELEVANTE = ['ALL', 'CLEAN', 'NOUN']
 
-
 class CoherenceBERT:
     
     # Construtor da classe
