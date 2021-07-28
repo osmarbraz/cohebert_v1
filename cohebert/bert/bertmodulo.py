@@ -501,14 +501,14 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
     if URL_MODELO:
         
         # Carregando o Modelo BERT
-        logging.info("Carregando o modelo BERT do diretório {} para classificação.".format(DIRETORIO_MODELO))
+        logging.info("Carregando o modelo BERT do diretório {} para cálculo de medidas.".format(DIRETORIO_MODELO))
 
         model = BertModel.from_pretrained(DIRETORIO_MODELO,
                                           output_attentions = model_args.output_attentions,
                                           output_hidden_states = model_args.output_hidden_states)
     else:
         # Carregando o Modelo BERT da comunidade
-        logging.info("Carregando o modelo BERT da comunidade para cálculo de medida.")
+        logging.info("Carregando o modelo BERT da comunidade {} para cálculo de medidas.".format(model_args.pretrained_model_name_or_path))
 
         model = BertModel.from_pretrained(model_args.pretrained_model_name_or_path,
                                           output_attentions = model_args.output_attentions,
@@ -543,7 +543,7 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
             
     else:
         # Carregando o Modelo BERT da comunidade
-        logging.info("Carregando o modelo BERT da comunidade para classificação.")
+        logging.info("Carregando o modelo BERT da comunidade {} para classificação.".format(model_args.pretrained_model_name_or_path))
 
         model = BertForSequenceClassification.from_pretrained(model_args.pretrained_model_name_or_path,
                                                               num_labels = model_args.num_labels,
