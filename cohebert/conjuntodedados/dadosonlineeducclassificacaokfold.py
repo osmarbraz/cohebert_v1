@@ -229,66 +229,75 @@ def downloadOnlineEducGithub():
     '''
 
     logging.info("Download do OnlineEduc do Github")  
-
+   
     # Diretório dos arquivos de dados
     DIRETORIO = "/content/validacao_kfold"
-    
+
     # Verifica se o diretório existe
     if not os.path.exists(DIRETORIO):  
-        # Cria o diretório
+        # Cria o diretório para receber os arquivos de dados
         os.makedirs(DIRETORIO)
-        logging.info("Diretório criado: {}.".format(DIRETORIO))
+        logging.info("Diretório para receber os dados criado: {}.".format(DIRETORIO))
     else:
-        logging.info("Diretório já existe: {}.".format(DIRETORIO))
-        
+        logging.info("Diretório para receber os dados já existe: {}.".format(DIRETORIO))
+
     # Nome do arquivo a ser criado.
     NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"
 
     # Apaga o arquivo.    
     if os.path.isfile(NOME_ARQUIVO):
-       os.remove(NOME_ARQUIVO)
-    
+        os.remove(NOME_ARQUIVO)
+
     # Realiza o download do arquivo do OneDrive
     URL_ARQUIVO = "https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO + "?raw=true"
 
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
-    
+
     # Descompacta o arquivo na pasta de descompactação                
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
-    arquivoZip.extractall(DIRETORIO)          
-
+    arquivoZip.extractall(DIRETORIO)
+  
 # ============================
 def copiaOnlineEducGoogleDrive(): 
     '''    
     Copia dos arquivos do conjunto de dados do OnlineEduc para classificação KFold do Google Drive.
     '''
-    logging.info("Copia do OnlineEduc do Gooogle Drive")  
-    
-    # Cria o diretório para receber os arquivos de dados
-    # Diretório dos arquivos de dados.
-    DIRETORIO = "/content/validacao_kfold"
+    logging.info("Copia do OnlineEduc do Gooogle Drive")
 
-    # Verifica se o diretório existe
-    if not os.path.exists(DIRETORIO):  
-        # Cria o diretório
-        os.makedirs(DIRETORIO)
-        logging.info("Diretório criado: {}.".format(DIRETORIO))
+    # Diretório do Google Drive
+    DIRETORIO_GOOGLEDRIVE = "/content/drive"
+
+    # Verifica se o diretório do google drive foi montada
+    if os.path.exists(DIRETORIO_GOOGLEDRIVE):  
+    
+        # Cria o diretório para receber os arquivos de dados
+        # Diretório dos arquivos de dados.
+        DIRETORIO = "/content/validacao_kfold"
+
+        # Verifica se o diretório existe
+        if not os.path.exists(DIRETORIO):  
+            # Cria o diretório
+            os.makedirs(DIRETORIO)
+            logging.info("Diretório criado: {}.".format(DIRETORIO))
+        else:
+            logging.info("Diretório já existe: {}.".format(DIRETORIO))
+
+        # Nome do arquivo a ser criado.
+        NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"        
+
+        # Define o caminho e nome do arquivo de dados
+        CAMINHO_ARQUIVO = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/validacao_classificacao/kfold/" + NOME_ARQUIVO
+
+        # Copia o arquivo compactado do conjunto do diretório no Google Drive para o diretório kfold.
+        shutil.copy(CAMINHO_ARQUIVO, DIRETORIO) 
+
+        # Descompacta o arquivo na pasta de descompactação.                
+        arquivoZip = zipfile.ZipFile(DIRETORIO + '/' + NOME_ARQUIVO,"r")
+        arquivoZip.extractall(DIRETORIO)
+
     else:
-        logging.info("Diretório já existe: {}.".format(DIRETORIO))
-
-    # Nome do arquivo a ser criado.
-    NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"        
-    
-    # Define o caminho e nome do arquivo de dados
-    CAMINHO_ARQUIVO = "/content/drive/MyDrive/Colab Notebooks/Data/Moodle/dadosmoodle_documento_pergunta_sentenca_intervalo/validacao_classificacao/kfold/" + NOME_ARQUIVO
-        
-    # Copia o arquivo compactado do conjunto do diretório no Google Drive para o diretório kfold.
-    shutil.copy(CAMINHO_ARQUIVO, DIRETORIO) 
-    
-    # Descompacta o arquivo na pasta de descompactação.                
-    arquivoZip = zipfile.ZipFile(DIRETORIO + '/' + NOME_ARQUIVO,"r")
-    arquivoZip.extractall(DIRETORIO)
+        logging.info("Diretório do google drive não foi montado: {}.".format(DIRETORIO_GOOGLEDRIVE))
     
 # ============================
 def downloadOnlineEduc(ORIGEM):
