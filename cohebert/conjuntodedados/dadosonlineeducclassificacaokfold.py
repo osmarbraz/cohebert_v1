@@ -217,7 +217,7 @@ def copiaOnlineEducGithub():
     # Copia o arquivo de dados do diretório fonte para o diretório de destino
     shutil.copy(DIRETORIO_FONTE_ARQUIVO, DIRETORIO_DESTINO_ARQUIVO) 
         
-    # Descompacta o arquivo na pasta de descompactação.                
+    # Descompacta o arquivo no diretório de descompactação.                
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)
     
@@ -256,7 +256,7 @@ def downloadOnlineEducGithub():
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
 
-    # Descompacta o arquivo na pasta de descompactação                
+    # Descompacta o arquivo no diretório de descompactação                
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)
   
@@ -294,7 +294,7 @@ def copiaOnlineEducGoogleDrive():
         # Copia o arquivo compactado do conjunto do diretório no Google Drive para o diretório kfold.
         shutil.copy(CAMINHO_ARQUIVO, DIRETORIO) 
 
-        # Descompacta o arquivo na pasta de descompactação.                
+        # Descompacta o arquivo no diretório de descompactação.                
         arquivoZip = zipfile.ZipFile(DIRETORIO + '/' + NOME_ARQUIVO,"r")
         arquivoZip.extractall(DIRETORIO)
 
