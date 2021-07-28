@@ -30,7 +30,7 @@ sys.path.append('./coebert_v1/coebert')
 ## Começando
 
 
-[Este exemplo](https://github.com/UKPLab/sentence-transformers/tree/master/examples/applications/computing-embeddings/computing_embeddings.py) mostra como usar um modelo de BERT pré-treinado para medir a coerência de documentos.
+[Este exemplo](notebooks/ExemploCoherenceBERT.ipynb) mostra como usar um modelo de BERT pré-treinado para medir a coerência de documentos.
 
 Primeiro realizamos o import das bibliotecas e instanciamos o Coherence BERT para download do modelo pré-treinado.
 ````python
