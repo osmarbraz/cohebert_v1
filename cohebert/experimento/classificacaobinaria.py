@@ -12,6 +12,11 @@ from tqdm.notebook import tqdm as tqdm_notebook # Biblioteca para barra de progr
 # Import de bibliotecas próprias
 from bert.bertmodulo  import *
 
+# ===================================================================================
+# Módulo para agrupar as operações comuns de classificação binária para as validações
+# cruzada Holdout e Kfold.
+# ===================================================================================
+
 # ============================
 def listaOriginalClassificadoIncorretamente(dfDadosClassificacao):
     '''
