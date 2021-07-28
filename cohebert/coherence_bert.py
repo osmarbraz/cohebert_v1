@@ -4,12 +4,10 @@ from bert.bertarguments import ModeloArgumentosMedida
 from experimento.calculomedida import *
 from spacynlp.spacymodulo import *
 
-# Definição dos parâmetros do Modelo para o cálculo de Medida
+# Definição dos parâmetros do Modelo para os cálculos das Medidas
 model_args = ModeloArgumentosMedida(     
     max_seq_len = 512,
-    #pretrained_model_name_or_path = 'neuralmind/bert-large-portuguese-cased',
-    pretrained_model_name_or_path = 'neuralmind/bert-base-portuguese-cased',
-    #pretrained_model_name_or_path = 'bert-base-multilingual-cased',
+    pretrained_model_name_or_path = 'neuralmind/bert-base-portuguese-cased',    
     modelo_spacy = 'pt_core_news_lg',
     versao_spacy = '2.3.0',
     do_lower_case = False,   # default True
