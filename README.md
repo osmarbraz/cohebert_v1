@@ -49,7 +49,7 @@ DO = ['Bom Dia, professor.',
 # Recupera as medidas dos documentos
 CcosDO =  cohebert.getMedidaCoerenciaCosseno(DO)
 
-print('Ccos DO    :', CcosDO)
+print('Ccos DO    :', CcosDO) #Ccos DO1    : 0.8178287347157797
 ````
 
 **Exemplos de execução são apresentados nos notebooks**
