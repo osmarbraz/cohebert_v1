@@ -370,16 +370,16 @@ def downloadModeloPretreinado(model_args):
         # Caminho do arquivo na url.
         CAMINHO_ARQUIVO = URL_MODELO[0:len(URL_MODELO)-len(NOME_ARQUIVO)]
 
-        # Verifica se a pasta de descompactação existe na pasta corrente
+        # Verifica se o diretório de descompactação existe no diretório corrente
         if os.path.exists(DIRETORIO_MODELO):
             logging.info('Apagando diretório existente do modelo!')
-            # Apaga a pasta e os arquivos existentes                     
+            # Apaga o diretório e os arquivos existentes                     
             shutil.rmtree(DIRETORIO_MODELO)
 
         # Realiza o download do arquivo do modelo        
         downloadArquivo(URL_MODELO, NOME_ARQUIVO)
 
-        # Descompacta o arquivo na pasta de descompactação.                
+        # Descompacta o arquivo no diretório de descompactação.                
         arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
         arquivoZip.extractall(DIRETORIO_MODELO)
 
@@ -454,7 +454,7 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o tokenizador do DIRETORIO_MODELO.
     O tokenizador utiliza WordPiece.
-    Carregando o tokenizador da pasta '/content/modelo/' do diretório padrão se variável `DIRETORIO_MODELO` setada.
+    Carregando o tokenizador do diretório '/content/modelo/' do diretório padrão se variável `DIRETORIO_MODELO` setada.
     Caso contrário carrega da comunidade
     Por default(`do_lower_case=True`) todas as letras são colocadas para minúsculas. Para ignorar a conversão para minúsculo use o parâmetro `do_lower_case=False`. Esta opção também considera as letras acentuadas(ãçéí...), que são necessárias a língua portuguesa.
     O parâmetro `do_lower_case` interfere na quantidade tokens a ser gerado a partir de um texto. Quando igual a `False` reduz a quantidade de tokens gerados.
