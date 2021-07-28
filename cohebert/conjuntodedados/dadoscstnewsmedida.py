@@ -291,17 +291,17 @@ def converteListaParesDocumentos(lista_documentos):
     return dfdados
 
 # ============================   
-def descartandoDocumentosGrandes(dfdados, model_args, tokenizer):
+def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
     '''    
     Remove os documentos que extrapolam 512 tokens.
     Você pode definir o tamanho de documento que quiser no BERT, mas o modelo pré-treinado vem com um tamanho pré-definido. 
     No nosso caso vamos utilizar o modelo BERT, que tem 512 tokens de tamanho limite de documento. 
     O tokenizador gera quantidades diferentes tokens para cada modelo pré-treinado. 
     Portanto é necessário especificar o tokenizador para descatar os documentos que ultrapassam o limite de tokens de entrada do BERT.
-    Parâmetros:      
-        `dfdados` - Dataframe com os documentos a serem analisados.   
+    Parâmetros:              
         `model_args` - Objeto com os argumentos do modelo.    
         `tokenizer` - Tokenizador BERT.
+        `dfdados` - Dataframe com os documentos a serem analisados.   
     Saída:
         `dfdadosretorno` - Um dataframe sem os documentos grandes.
     '''
