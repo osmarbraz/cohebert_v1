@@ -392,7 +392,7 @@ def downloadModeloPretreinado(model_args):
         # Apaga o arquivo compactado
         os.remove(NOME_ARQUIVO)
 
-        logging.info("Pasta {} do modelo BERT pronta!".format(DIRETORIO_MODELO))
+        logging.info("Diretório {} do modelo BERT pronta!".format(DIRETORIO_MODELO))
 
     else:
         DIRETORIO_MODELO = MODELO
@@ -437,7 +437,10 @@ def verificaModelo(model_args):
     DIRETORIO_MODELO = None
     
     if model_args.usar_mcl_ajustado == True:
+        
+        # Diretório do modelo
         DIRETORIO_MODELO = copiaModeloAjustado()
+        
         logging.info("Usando modelo BERT ajustado.")
         
     else:
@@ -461,21 +464,21 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
        `model_args` - Objeto com os argumentos do modelo.       
     ''' 
 
+    tokenizer = None
+    
     # Se a variável DIRETORIO_MODELO foi setada.
     if DIRETORIO_MODELO:
 
         # Carregando o Tokenizador.
         logging.info("Carregando o tokenizador BERT do diretório {}.".format(DIRETORIO_MODELO))
 
-        tokenizer = BertTokenizer.from_pretrained(DIRETORIO_MODELO, 
-                                                  do_lower_case=model_args.do_lower_case)
+        tokenizer = BertTokenizer.from_pretrained(DIRETORIO_MODELO, do_lower_case=model_args.do_lower_case)
 
     else:
         # Carregando o Tokenizador da comunidade.
         logging.info("Carregando o tokenizador BERT da comunidade.")
 
-        tokenizer = BertTokenizer.from_pretrained(model_args.pretrained_model_name_or_path, 
-                                                  do_lower_case=model_args.do_lower_case)
+        tokenizer = BertTokenizer.from_pretrained(model_args.pretrained_model_name_or_path, do_lower_case=model_args.do_lower_case)
 
     return tokenizer
 
@@ -496,6 +499,7 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
 
     # Se a variável URL_MODELO foi setada
     if URL_MODELO:
+        
         # Carregando o Modelo BERT
         logging.info("Carregando o modelo BERT do diretório {} para classificação.".format(DIRETORIO_MODELO))
 
