@@ -37,11 +37,11 @@ def downloadOnlineEducGoogleDrive():
         shutil.copy(CAMINHO_ARQUIVO_ORIGINAL, '.') 
         shutil.copy(CAMINHO_ARQUIVO_PERMUTADO, '.') 
 
-        # Descompacta o arquivo na pasta de descompactação.                
+        # Descompacta o arquivo no diretório de descompactação.                
         arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_ORIGINAL,"r")
         arquivoZip.extractall()
 
-        # Descompacta o arquivo na pasta de descompactação.                
+        # Descompacta o arquivo no diretório de descompactação.                
         arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_PERMUTADO,"r")
         arquivoZip.extractall()
         
