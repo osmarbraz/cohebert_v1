@@ -33,7 +33,7 @@ class CoherenceBERT:
         # Carrega o modelo e tokenizador do BERT        
         self.model, self.tokenizer = carregaBERT(model_args)
     
-    def verificaCarregamentoSpacy():
+    def verificaCarregamentoSpacy(self):
         ''' 
         Verifica se é necessário carregar o spacy.
         Utilizado para as estratégias de palavras relevantes CLEAN e NOUN.
@@ -46,7 +46,7 @@ class CoherenceBERT:
         else:
             self.nlp = None
     
-    def defineEstrategiaPooling(estrategiaPooling):
+    def defineEstrategiaPooling(self, estrategiaPooling):
         ''' 
         Define a estratégia de pooling para os parâmetros do modelo.
         ''' 
@@ -57,7 +57,7 @@ class CoherenceBERT:
         else:
             model_args.estrategia_pooling = 0
 
-    def definePalavraRelevante(palavraRelevante):
+    def definePalavraRelevante(self, palavraRelevante):
         ''' 
         Define a estratégia de palavra relavante para os parâmetros do modelo.
         ''' 
