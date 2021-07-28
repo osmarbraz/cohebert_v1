@@ -199,9 +199,9 @@ def copiaOnlineEducGithub():
     if not os.path.exists(DIRETORIO):  
         # Cria o diretório
         os.makedirs(DIRETORIO)
-        logging.info("Diretório criado: {}.".format(DIRETORIO))
+        logging.info("Diretório para receber os dados criado: {}.".format(DIRETORIO))
     else:
-        logging.info("Diretório já existe: {}.".format(DIRETORIO))
+        logging.info("Diretório para receber os dados já existe: {}.".format(DIRETORIO))
         
     # Nome do arquivo a ser criado.
     NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"
@@ -219,7 +219,9 @@ def copiaOnlineEducGithub():
         
     # Descompacta o arquivo na pasta de descompactação.                
     arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
-    arquivoZip.extractall(DIRETORIO)     
+    arquivoZip.extractall(DIRETORIO)
+    
+    logging.info("Diretório com ")
 
 # ============================
 def downloadOnlineEducGithub():  
@@ -279,9 +281,9 @@ def copiaOnlineEducGoogleDrive():
         if not os.path.exists(DIRETORIO):  
             # Cria o diretório
             os.makedirs(DIRETORIO)
-            logging.info("Diretório criado: {}.".format(DIRETORIO))
+            logging.info("Diretório para receber os dados criado: {}.".format(DIRETORIO))
         else:
-            logging.info("Diretório já existe: {}.".format(DIRETORIO))
+            logging.info("Diretório para receber os dados já existe: {}.".format(DIRETORIO))
 
         # Nome do arquivo a ser criado.
         NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"        
