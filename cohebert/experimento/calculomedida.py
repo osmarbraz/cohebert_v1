@@ -9,6 +9,10 @@ import pandas as pd # Biblioteca para manipulação e análise de dados
 # Import de bibliotecas próprias
 from medidor.medidor import *
 
+# ===================================================================================
+# Módulo para agrupar as operações de calculo das medidas de (in)coerência.
+# ===================================================================================
+
 # ============================
 def getSomatorioDiferencaAbsolutaOrdenada(listaMedida1, listaMedida2):
     '''
