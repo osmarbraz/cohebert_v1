@@ -31,7 +31,7 @@ class CoherenceBERT:
         # Carrega o modelo e tokenizador do BERT        
         self.model, self.tokenizer = carregaBERT(model_args)
         
-        self.verificaCarregamentoSpacy(self)
+        self.verificaCarregamentoSpacy()
     
     def verificaCarregamentoSpacy(self):
         ''' 
