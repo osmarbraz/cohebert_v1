@@ -112,9 +112,9 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     if not os.path.exists(DIRETORIO_BASE):  
         # Cria o diretório
         os.makedirs(DIRETORIO_BASE)    
-        logging.info("Diretório criado: {}.".format(DIRETORIO_BASE))
-    else:    
-        logging.info("Diretório já existe: {}.".format(DIRETORIO_BASE))
+        logging.info("Diretório para receber os folds criado: {}.".format(DIRETORIO_BASE))
+    else:            
+        logging.info("Diretório para receber os folds já existe: {}.".format(DIRETORIO_BASE))
 
     # Quantidade de folds a ser gerado
     QTDE_FOLDS = model_args.fold
