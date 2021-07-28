@@ -63,10 +63,10 @@ Apesar de existir uma lista grande de [Modelos Pré-treinados](https://huggingfa
 
 ## Exemplos completos
 
-Exemplos de execução completos são mostrados nos [notebooks](notebooks/cstnews/).
+Exemplos de execução completos com o CoheBERT são mostrados nos [notebooks](notebooks/cstnews/).
 
 ## **Diretórios**
-* **cohebert** - Código fonte do Coheberb versão 1.0
+* **cohebert** - Código fonte do CoheBERT versão 1.0
 * **conjuntodedados** - Diretório com os conjuntos de dados.
   * **cstnews** - Arquivos do conjunto de dados do CSTNews.
   * **onlineeduc1.0** - Arquivos do conjunto de dados do OnlineEduc 1.0 (**Não disponibilizado**).
