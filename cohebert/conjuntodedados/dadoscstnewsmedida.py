@@ -261,10 +261,10 @@ def downloadConjuntoDeDados(ORIGEM):
     '''
   
     if ORIGEM:
-        logging.info("Realizando o download do site do ICMC.")
+        logging.info("Realizando o download do CSTNews do site do ICMC.")
         downloadCSTNewsICMC()
     else:
-        logging.info("Realizando o download do meu OneDrive.")
+        logging.info("Realizando o download do CSTNews meu OneDrive.")
         downloadCSTNewsOnDrive()
 
 # ============================
