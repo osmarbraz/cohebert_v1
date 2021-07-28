@@ -32,11 +32,13 @@ sys.path.append('./coebert_v1/coebert')
 
 [Este exemplo](notebooks/ExemploCoherenceBERT.ipynb) mostra como usar um modelo BERT pré-treinado para medir a coerência de documentos.
 
-Primeiro realizamos o import das bibliotecas e instanciamos o Coherence BERT para download do modelo pré-treinado.
+Depois de instalar os requisitos necessários podemos fazer uso da biblioteca CoheBERT.
+
+Realizamos o import das bibliotecas e instanciamos o Coherence BERT para seja realizado download do modelo pré-treinado do BERT.
 ````python
 from coherence_bert import CoherenceBERT
 
-cohebert = CoherenceBERT('neuralmind/bert-base-portuguese-cased') # BERTimbau base
+cohebert = CoherenceBERT('neuralmind/bert-large-portuguese-cased') # BERTimbau large
 ````
 
 Em seguida, forneça algumas sentenças ao modelo.
@@ -51,6 +53,13 @@ CcosDO =  cohebert.getMedidaCoerenciaCosseno(DO)
 
 print('Ccos DO    :', CcosDO) #Ccos DO1    : 0.8178287347157797
 ````
+
+## Modelos Pré-treinados do BERT
+
+Apesar de existir uma lista grande de [Modelos Pré-treinados] (https://huggingface.co/models) testamos somente três modelos: 
+* 'neuralmind/bert-base-portuguese-cased' - BERTimbau base
+* 'neuralmind/bert-large-portuguese-cased - BERTimbau large
+* 'bert-base-multilingual-cased' - BERT Multilingual
 
 **Exemplos de execução são apresentados nos notebooks**
 
