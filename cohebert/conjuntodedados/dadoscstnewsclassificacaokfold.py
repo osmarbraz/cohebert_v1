@@ -282,11 +282,11 @@ def copiaCSTNewsGoogleDrive():
     # Define o caminho e nome do arquivo de dados
     CAMINHO_ARQUIVO = "/content/drive/MyDrive/Colab Notebooks/Data/CSTNEWS/validacao_classificacao/kfold/" + NOME_ARQUIVO
         
-    #Copia o arquivo do modelo para o diretório no Google Drive.
-    shutil.copy(CAMINHO_ARQUIVO, '.') 
+    # Copia o arquivo compactado do conjunto do diretório no Google Drive para o diretório kfold.
+    shutil.copy(CAMINHO_ARQUIVO, DIRETORIO) 
     
     # Descompacta o arquivo na pasta de descompactação.                
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip = zipfile.ZipFile(DIRETORIO + '/' + NOME_ARQUIVO,"r")
     arquivoZip.extractall(DIRETORIO)    
     
 # ============================
