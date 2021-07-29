@@ -1,4 +1,4 @@
-# Cohebert 1.0 - Classificação e mensuração de coerência textual usando BERT
+# CoheBERT 1.0 - Classificação e mensuração de coerência textual usando BERT
 Classificação e mensuração de coerência textual utilizando o MCL BERT.
 
 
@@ -29,11 +29,11 @@ sys.path.append('./coebert_v1/coebert')
 
 ## Exemplo simples
 
-[Este exemplo simples](notebooks/ExemploCoherenceBERT.ipynb) mostra como utilizar o CoheBERT e um modelo BERT pré-treinado para medir a coerência de documentos.
+[Este exemplo simples](notebooks/ExemploCoherenceBERT.ipynb) mostra como utilizar o **CoheBERT** e um modelo BERT pré-treinado para medir a coerência de documentos.
 
-Depois de instalar as bibliotecas necessárias podemos fazer uso da biblioteca CoheBERT.
+Depois de instalar as bibliotecas necessárias podemos fazer uso da biblioteca **CoheBERT**.
 
-Realizamos o import das bibliotecas e instanciamos a classe CoherenceBERT para que seja realizado download do modelo pré-treinado.
+Realizamos o import das bibliotecas do **CoheBERT** e instanciamos a classe CoherenceBERT para que seja realizado download do modelo pré-treinado.
 
 ````python
 from coherence_bert import CoherenceBERT
@@ -41,7 +41,7 @@ from coherence_bert import CoherenceBERT
 cohebert = CoherenceBERT('neuralmind/bert-large-portuguese-cased') # BERTimbau large
 ````
 
-Em seguida, forneça algumas sentenças ao CoheBERT e recupere a medida.
+Em seguida, forneça algumas sentenças ao **CoheBERT** e recupere a medida.
 
 ````python
 DO = ['Bom Dia, professor.',
@@ -72,7 +72,7 @@ Apesar de existir uma lista grande de [Modelos Pré-treinados](https://huggingfa
 
 ## Exemplos completos
 
-Exemplos de execução completos com o CoheBERT são mostrados nos [notebooks](notebooks/cstnews/).
+Exemplos de execução completos com o **CoheBERT** são mostrados nos [notebooks](notebooks/cstnews/).
 
 ## **Diretórios**
 * **cohebert** - Código fonte do CoheBERT versão 1.0
