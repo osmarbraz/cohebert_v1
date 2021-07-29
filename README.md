@@ -44,6 +44,7 @@ cohebert = CoherenceBERT('neuralmind/bert-large-portuguese-cased') # BERTimbau l
 Em seguida, forneça algumas sentenças ao **CoheBERT** e recupere a medida.
 
 ````python
+# Documento e suas sentenças
 DO = ['Bom Dia, professor.',
       'Qual o conteúdo da prova?',
       'Vai cair tudo na prova?',
