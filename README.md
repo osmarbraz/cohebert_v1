@@ -53,6 +53,7 @@ DO = ['Bom Dia, professor.',
 # Recupera a medida Ccos do documento
 CcosDO =  cohebert.getMedidaCoerenciaCosseno(DO)
 
+# Mostra a medida recuperada
 print('Ccos DO    :', CcosDO) #Ccos DO    : 0.8178287347157797
 ````
 
