@@ -58,9 +58,9 @@ print('Ccos DO    :', CcosDO) #Ccos DO1    : 0.8178287347157797
 ## Medidas de (In)coerência
 O CoheBERT retorna a medida de coerência das sentenças utilizando as operações:
 
-* 'getMedidaCoerenciaCosseno' - Retorna a medida de coerência utilizando a similaridade cosseno das sentenças.
-* 'getMedidaCoerenciaEuclidiana' - Retorna a medida de coerência utilizando a distância de Euclidiana das sentenças.
-* 'getMedidaCoerenciaManhattan' - Retorna a medida de coerência utilizando a distância de Manhattan das sentenças.
+* '''getMedidaCoerenciaCosseno''' - Retorna a medida de coerência utilizando a similaridade cosseno das sentenças.
+* '''getMedidaCoerenciaEuclidiana''' - Retorna a medida de coerência utilizando a distância de Euclidiana das sentenças.
+* '''getMedidaCoerenciaManhattan''' - Retorna a medida de coerência utilizando a distância de Manhattan das sentenças.
 
 ## Modelos Pré-treinados do BERT
 
