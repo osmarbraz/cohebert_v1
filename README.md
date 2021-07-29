@@ -12,7 +12,7 @@ Classificação e mensuração de coerência textual utilizando o MCL BERT.
 * Spacy 2.3.5
 * Wandb
 
-**Download**
+**Download - Clone**
 
 ```
 !git clone https://github.com/osmarbraz/cohebert_v1.git
