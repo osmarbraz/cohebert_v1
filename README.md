@@ -33,14 +33,16 @@ sys.path.append('./coebert_v1/coebert')
 
 Depois de instalar as bibliotecas necessárias podemos fazer uso da biblioteca CoheBERT.
 
-Realizamos o import das bibliotecas e instanciamos o Coherence BERT para seja realizado download do modelo pré-treinado do BERT.
+Realizamos o import das bibliotecas e instanciamos a classe CoherenceBERT para que seja realizado download do modelo pré-treinado.
+
 ````python
 from coherence_bert import CoherenceBERT
 
 cohebert = CoherenceBERT('neuralmind/bert-large-portuguese-cased') # BERTimbau large
 ````
 
-Em seguida, forneça algumas sentenças ao CoheBERT.
+Em seguida, forneça algumas sentenças ao CoheBERT e recupere a medida.
+
 ````python
 DO = ['Bom Dia, professor.',
       'Qual o conteúdo da prova?',
@@ -52,6 +54,13 @@ CcosDO =  cohebert.getMedidaCoerenciaCosseno(DO)
 
 print('Ccos DO    :', CcosDO) #Ccos DO1    : 0.8178287347157797
 ````
+
+## Medidas de (In)coerência
+O CoheBERT retorna a medida de coerência das sentenças utilizando as operações:
+
+* 'getMedidaCoerenciaCosseno' - Retorna a medida de coerência utilizando a similaridade cosseno das sentenças.
+* 'getMedidaCoerenciaEuclidiana' - Retorna a medida de coerência utilizando a distância de Euclidiana das sentenças.
+* 'getMedidaCoerenciaManhattan' - Retorna a medida de coerência utilizando a distância de Manhattan das sentenças.
 
 ## Modelos Pré-treinados do BERT
 
