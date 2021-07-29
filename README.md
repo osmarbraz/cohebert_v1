@@ -56,7 +56,7 @@ print('Ccos DO    :', CcosDO) #Ccos DO1    : 0.8178287347157797
 ````
 
 ## Medidas de (In)coerência
-O CoheBERT retorna a medida de coerência das sentenças utilizando as operações:
+Para obter a medida de coerência das sentenças utilize as operações a seguir passando o texto como parâmetro:
 
 * ```getMedidaCoerenciaCosseno``` - Retorna a medida de coerência utilizando a similaridade cosseno das sentenças.
 * ```getMedidaCoerenciaEuclidiana``` - Retorna a medida de coerência utilizando a distância de Euclidiana das sentenças.
@@ -65,9 +65,9 @@ O CoheBERT retorna a medida de coerência das sentenças utilizando as operaçõ
 ## Modelos Pré-treinados do BERT
 
 Apesar de existir uma lista grande de [Modelos Pré-treinados](https://huggingface.co/models) testamos somente três modelos: 
-* 'neuralmind/bert-base-portuguese-cased' - BERTimbau base
-* 'neuralmind/bert-large-portuguese-cased - BERTimbau large
-* 'bert-base-multilingual-cased' - BERT Multilingual
+* ```neuralmind/bert-base-portuguese-cased``` - BERTimbau base
+* ```neuralmind/bert-large-portuguese-cased``` - BERTimbau large
+* ```bert-base-multilingual-cased``` - BERT Multilingual
 
 
 ## Exemplos completos
