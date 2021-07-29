@@ -55,7 +55,7 @@ CcosDO =  cohebert.getMedidaCoerenciaCosseno(DO)
 print('Ccos DO    :', CcosDO) #Ccos DO    : 0.8178287347157797
 ````
 
-## Medidas de (In)coerência
+## Medidas de (In)coerência **CoheBERT**
 Para obter a medida de coerência das sentenças utilize as operações a seguir passando o texto como parâmetro:
 
 * ```getMedidaCoerenciaCosseno``` - Retorna a medida de coerência utilizando a similaridade cosseno das sentenças.
