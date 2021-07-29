@@ -64,7 +64,7 @@ Para obter a medida de coerência das sentenças utilize as operações a seguir
 
 ## Modelos Pré-treinados do BERT
 
-Apesar de existir uma lista grande de [Modelos Pré-treinados](https://huggingface.co/models) testamos somente três modelos: 
+Apesar de existir uma lista grande de [Modelos Pré-treinados](https://huggingface.co/models) testamos no **CoheBERT** somente três modelos pré-treinados: 
 * ```neuralmind/bert-base-portuguese-cased``` - BERTimbau base
 * ```neuralmind/bert-large-portuguese-cased``` - BERTimbau large
 * ```bert-base-multilingual-cased``` - BERT Multilingual
@@ -94,6 +94,6 @@ Exemplos de execução completos com o **CoheBERT** são mostrados nos [notebook
     * **AnaliseDadosCSTNews_v1.ipynb** - Realiza a análise do conjunto de dados.
     * **MedidaCoerenciaCSTNews_v1_pretreinado.ipynb** - Realiza os cálculos de medida de (in)coerência.
     * **AjusteFinoCSTNews_v1_C_SB_KFold_Todos.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado para todos os folds de uma parâmetrização.
-    * **AjusteFinoCSTNews_AvaliacaoOnlineeduc1.0_v1_C_SB.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado com os dados do CSTNews e a avaliação com os dados do OnlineEduc 1.0.
+    * **AjusteFinoCSTNews_AvaliacaoOnlineEduc_v1_C_SB.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado com os dados do CSTNews e a avaliação com os dados do OnlineEduc 1.0.
     * **CorrelacaoCSTNews_ClassificadorCalculo_v1.ipynb** - Realiza o análise dos resultados do classificador e o cálculo das medidas de coerência.
  
