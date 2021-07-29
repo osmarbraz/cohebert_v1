@@ -52,7 +52,7 @@ DO = ['Bom Dia, professor.',
 # Recupera a medida Ccos do documento
 CcosDO =  cohebert.getMedidaCoerenciaCosseno(DO)
 
-print('Ccos DO    :', CcosDO) #Ccos DO1    : 0.8178287347157797
+print('Ccos DO    :', CcosDO) #Ccos DO    : 0.8178287347157797
 ````
 
 ## Medidas de (In)coerência
