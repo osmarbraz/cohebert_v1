@@ -99,3 +99,17 @@ Exemplos de execução completos com o **CoheBERT** são mostrados nos [notebook
     * **AjusteFinoCSTNews_AvaliacaoOnlineEduc_v1_C_SB.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado com os dados do CSTNews e a avaliação com os dados do OnlineEduc 1.0.
     * **CorrelacaoCSTNews_ClassificadorCalculo_v1.ipynb** - Realiza o análise dos resultados do classificador e o cálculo das medidas de coerência.
  
+
+## Citando & Autores
+Se achar este repositório útil, sinta-se à vontade para citar nossa publicação [CoheBERT: Coherence BERT](https://):
+
+```bibtex 
+@inproceedings{brazfileto-2021-cohebert,
+    title = "xxxx",
+    author = "Braz, Osmar and Fileto, Renato",
+    booktitle = "xxxxxx",
+    year = "2021",
+    publisher = "xxx",
+    url = "https://xxxxx",
+}
+```
