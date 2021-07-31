@@ -66,10 +66,10 @@ def listaClassificadoCorretamente(dfDadosClassificacao):
     listaRetorno = []  
     for index, linha in dfDadosClassificacao.iterrows():
         #if index < 20:    
-        if linha['classe'] == 1 and linha['predicao'] == 1:
-            listaRetorno.append(linha['id'])
-        if linha['classe'] == 0 and linha['predicao'] == 0:
-            listaRetorno.append(linha['id'])
+            if linha['classe'] == 1 and linha['predicao'] == 1:
+                listaRetorno.append(linha['id'])
+            if linha['classe'] == 0 and linha['predicao'] == 0:
+                listaRetorno.append(linha['id'])
             
     return listaRetorno
 
@@ -132,7 +132,7 @@ def carregaClassificacoes(NOME_BASE, DIRETORIO_CLASSIFICACAO, EPOCA, TAXA_APREND
         arquivos = os.listdir(DIRETORIO_CLASSIFICACAO)     
         logging.info("Modelo: {} Tamanho: {} Epoca: {} Taxa Aprendizagem: {}.".format(NOME_MODELO_BERT, TAMANHO_BERT, EPOCA, TAXA_APRENDIZAGEM))
         
-        # Acumuladores.
+        # Acumuladores
         contaFolds = 0 
         contaReg = 0
         
@@ -379,7 +379,7 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
         wandb.watch(model)
 
     # Barra de progresso da época.
-    epoca_bar = tqdm_notebook(range(training_args.num_train_epochs), desc=f'Épocas', unit=f'épocas')
+    epoca_bar = tqdm_notebook(range(training_args.num_train_epochs), desc=f"Épocas", unit=f"épocas")
 
     # Para cada época.
     for epoca_i in epoca_bar:

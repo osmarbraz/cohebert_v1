@@ -158,7 +158,7 @@ def getEmbeddingsTodasCamadas(documento, modelo, tokenizador):
                                             truncation=True, # Trunca o documento por max_length
                                             padding='max_length', # Preenche o documento até max_length
                                             return_attention_mask=True, # Constrói a máscara de atenção.
-                                            return_tensors='pt'           # Retorna os dados como tensores pytorch.
+                                            return_tensors='pt' # Retorna os dados como tensores pytorch.
                                             )
     
     # Ids dos tokens de entrada mapeados em seus índices do vocabuário.

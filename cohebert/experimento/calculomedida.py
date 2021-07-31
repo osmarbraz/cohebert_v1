@@ -486,7 +486,7 @@ def calculaMedidasDocumentosConjuntoDeDados(model_args, dfdados, model, tokenize
     lista_medidas_documentos_salvar = []
 
     # Barras de progresso.    
-    dfdado_bar = tqdm_notebook(dfdados.iterrows(), desc=f'Pares documentos', unit=f'par', total=len(dfdados))
+    dfdado_bar = tqdm_notebook(dfdados.iterrows(), desc=f"Pares documentos", unit=f"par", total=len(dfdados))
 
     # Percorre as pares de documento carregadas do arquivo
     for (i, linha) in dfdado_bar:

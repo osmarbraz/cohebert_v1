@@ -239,7 +239,7 @@ def carregaParesDocumentosCSTNews():
         # Percorre as 20 permutações.
         for j in range(20):
             # Recupera o nome do arquivo permutado.
-            arquivoPermutado = arquivoOriginal + '_Perm_' + str(j) + '.txt'
+            arquivoPermutado = arquivoOriginal + "_Perm_" + str(j) + ".txt"
 
             # Carrega o arquivo permutado.
             documentoPermutado = carregar("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/" + arquivoPermutado)

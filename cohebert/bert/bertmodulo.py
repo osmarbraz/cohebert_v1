@@ -147,7 +147,7 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
                                      add_special_tokens=True, # Adiciona os ttokens especiais.
                                      max_length=model_args.max_seq_len, # Tamanho do truncamento.
                                      truncation=True, # Faz o truncamento.
-                                     padding=False)                      # Não preenche.
+                                     padding=False) # Não preenche.
                 
         # Adicione o resultado tokenizado à nossa lista.
         input_ids_completos.append(input_ids)
