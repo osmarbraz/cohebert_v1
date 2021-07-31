@@ -24,7 +24,7 @@ Mudar o diretório corrente para a pasta clonada
 ```python
 import sys
 
-sys.path.append('./coebert_v1/coebert')
+sys.path.append("./coebert_v1/coebert")
 ```
 
 ## Exemplo simples
