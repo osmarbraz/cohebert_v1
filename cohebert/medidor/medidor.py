@@ -152,17 +152,17 @@ def getEmbeddingsTodasCamadas(documento, modelo, tokenizador):
 
     #tokeniza o documento e retorna os tensores.
     dicCodificado = tokenizador.encode_plus(
-                        documento,                      # Documento a ser codificado.
-                        add_special_tokens = True,      # Adiciona os tokens especiais '[CLS]' e '[SEP]'
-                        max_length = qtdeTokens,        # Define o tamanho máximo para preencheer ou truncar.
-                        truncation = True,              # Trunca o documento por max_length
-                        padding = 'max_length',         # Preenche o documento até max_length
-                        return_attention_mask = True,   # Constrói a máscara de atenção.
-                        return_tensors = 'pt'           # Retorna os dados como tensores pytorch.
-                   )
+                                            documento, # Documento a ser codificado.
+                                            add_special_tokens=True, # Adiciona os tokens especiais '[CLS]' e '[SEP]'
+                                            max_length=qtdeTokens, # Define o tamanho máximo para preencheer ou truncar.
+                                            truncation=True, # Trunca o documento por max_length
+                                            padding='max_length', # Preenche o documento até max_length
+                                            return_attention_mask=True, # Constrói a máscara de atenção.
+                                            return_tensors='pt'           # Retorna os dados como tensores pytorch.
+                                            )
     
     # Ids dos tokens de entrada mapeados em seus índices do vocabuário.
-    input_ids =  dicCodificado['input_ids']
+    input_ids = dicCodificado['input_ids']
 
     # Máscara de atenção de cada um dos tokens como pertencentes à sentença '1'.
     attention_mask = dicCodificado['attention_mask']
@@ -176,7 +176,7 @@ def getEmbeddingsTodasCamadas(documento, modelo, tokenizador):
 
         # Passe para a frente, calcule as previsões outputs.     
         outputs = modelo(input_ids=input_ids, 
-                        attention_mask=attention_mask)
+                         attention_mask=attention_mask)
 
         # A avaliação do modelo retorna um número de diferentes objetos com base em
         # como é configurado na chamada do método `from_pretrained` anterior. Nesse caso,
@@ -327,7 +327,7 @@ def getEmbeddingConcat4UltimasCamadas(sentencaEmbedding):
     # Lista com os tensores a serem concatenados
     listaConcat = []
     # Percorre os 4 últimos
-    for i in [-1,-2,-3,-4]:
+    for i in [-1, -2, -3, -4]:
         # Concatena da lista
         listaConcat.append(sentencaEmbedding[OUTPUTS][OUTPUTS_HIDDEN_STATES][i])
     # Saída: Entrada: List das camadas(4) (<1(lote)> x <qtde_tokens> <768 ou 1024>)  
@@ -564,11 +564,11 @@ def getEmbeddingSentencaEmbeddingDocumentoALL(embeddingDocumento, documento, sen
     #print(len(sentencaTokenizada))
 
     # Localiza os índices dos tokens da sentença no documento
-    inicio, fim = encontrarIndiceSubLista(documentoTokenizado,sentencaTokenizada)
+    inicio, fim = encontrarIndiceSubLista(documentoTokenizado, sentencaTokenizada)
     #print(inicio,fim) 
 
     # Recupera os embeddings dos tokens da sentença a partir dos embeddings do documento
-    embeddingSentenca = embeddingDocumento[inicio:fim+1]
+    embeddingSentenca = embeddingDocumento[inicio:fim + 1]
     #print('embeddingSentenca=', embeddingSentenca.shape)
 
     # Retorna o embedding da sentença no documento
@@ -606,11 +606,11 @@ def getEmbeddingSentencaEmbeddingDocumentoCLEAN(embeddingDocumento, documento, s
     #print(len(sentencaTokenizada))
 
     # Localiza os índices dos tokens da sentença no documento
-    inicio, fim = encontrarIndiceSubLista(documentoTokenizado,sentencaTokenizada)
+    inicio, fim = encontrarIndiceSubLista(documentoTokenizado, sentencaTokenizada)
     #print('Sentença inicia em:', inicio, 'até', fim) 
 
     # Recupera os embeddings dos tokens da sentença a partir dos embeddings do documento
-    embeddingSentenca = embeddingDocumento[inicio:fim+1]
+    embeddingSentenca = embeddingDocumento[inicio:fim + 1]
     #print('embeddingSentenca=', embeddingSentenca.shape)
 
     # Lista com os tensores selecionados
@@ -621,7 +621,7 @@ def getEmbeddingSentencaEmbeddingDocumentoCLEAN(embeddingDocumento, documento, s
         for tokenSentencaSemStopWord in sentencaTokenizadaSemStopWord: 
             if tokenSentença == tokenSentencaSemStopWord:
                 #embeddingSentencaSemStopWord = torch.cat((embeddingSentencaSemStopWord, embeddingSentenca[i:i+1]), dim=0)
-                listaTokensSelecionados.append(embeddingSentenca[i:i+1])
+                listaTokensSelecionados.append(embeddingSentenca[i:i + 1])
 
     embeddingSentencaSemStopWord = None
 
@@ -644,7 +644,7 @@ def getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, se
     #print(documentoTokenizado)
 
     # Retorna as palavras relevantes da sentença do tipo especificado
-    sentencaSomenteRelevante = retornaPalavraRelevante(sentenca,nlp, tipo_palavra_relevante)
+    sentencaSomenteRelevante = retornaPalavraRelevante(sentenca, nlp, tipo_palavra_relevante)
 
     # Tokeniza a sentença 
     sentencaTokenizadaSomenteRelevante = getDocumentoTokenizado(sentencaSomenteRelevante, tokenizador)
@@ -665,11 +665,11 @@ def getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, se
     #print(len(sentencaTokenizada))
 
     # Localiza os índices dos tokens da sentença no documento
-    inicio, fim = encontrarIndiceSubLista(documentoTokenizado,sentencaTokenizada)
+    inicio, fim = encontrarIndiceSubLista(documentoTokenizado, sentencaTokenizada)
     #print('Sentença inicia em:', inicio, 'até', fim) 
 
     # Recupera os embeddings dos tokens da sentença a partir dos embeddings do documento
-    embeddingSentenca = embeddingDocumento[inicio:fim+1]
+    embeddingSentenca = embeddingDocumento[inicio:fim + 1]
     #print('embeddingSentenca=', embeddingSentenca.shape)
 
     # Lista com os tensores selecionados
@@ -679,7 +679,7 @@ def getEmbeddingSentencaEmbeddingDocumentoNOUN(embeddingDocumento, documento, se
     for i, tokenSentenca in enumerate(sentencaTokenizada):
         for tokenSentencaSomenteRelevante in sentencaTokenizadaSomenteRelevante: 
             if tokenSentenca == tokenSentencaSomenteRelevante:        
-                listaTokensSelecionados.append(embeddingSentenca[i:i+1])
+                listaTokensSelecionados.append(embeddingSentenca[i:i + 1])
 
     embeddingSentencaComSubstantivo = None
 
@@ -735,13 +735,13 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, nlp, camada, ti
         # Retorna os embeddings de todas as camadas do documento
         # O embedding possui os seguintes valores        
         # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
-        totalCamadasDocumento =  getEmbeddingsTodasCamadasBuffer(stringDocumento, modelo, tokenizador)      
+        totalCamadasDocumento = getEmbeddingsTodasCamadasBuffer(stringDocumento, modelo, tokenizador)      
         # Saída: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> <768 ou 1024>) 
     else:
         # Retorna os embeddings de todas as camadas do documento
         # O embedding possui os seguintes valores        
         # 0-documento_tokenizado, 1-input_ids, 2-attention_mask, 3-token_type_ids, 4-outputs(0=last_hidden_state,1=pooler_output,2=hidden_states)
-        totalCamadasDocumento =  getEmbeddingsTodasCamadas(stringDocumento, modelo, tokenizador)      
+        totalCamadasDocumento = getEmbeddingsTodasCamadas(stringDocumento, modelo, tokenizador)      
         # Saída: List das camadas(13 ou 25) (<1(lote)> x <qtde_tokens> <768 ou 1024>) 
 
     # Recupera os embeddings dos tokens das camadas especificadas de acordo com a estratégia especificada para camada  
@@ -771,40 +771,40 @@ def getMedidasCoerenciaDocumento(documento, modelo, tokenizador, nlp, camada, ti
         # Verifica se os embeddings sentenças estão preenchidos
         if embeddingSi != None and embeddingSj != None:
 
-              # Recupera as medidas entre Si e Sj     
-              ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategia_pooling=estrategia_pooling)
+            # Recupera as medidas entre Si e Sj     
+            ajustadoEmbeddingSi, ajustadoEmbeddingSj, Scos, Seuc, Sman = getMedidasSentencasEmbedding(embeddingSi, embeddingSj, estrategia_pooling=estrategia_pooling)
 
-              # Acumula as medidas
-              somaScos = somaScos + Scos
-              somaSeuc = somaSeuc + Seuc
-              somaSman = somaSman + Sman
+            # Acumula as medidas
+            somaScos = somaScos + Scos
+            somaSeuc = somaSeuc + Seuc
+            somaSman = somaSman + Sman
 
-               # avança para o próximo par de sentenças
-              posSi = posSj
-              posSj = posSj + 1
+                # avança para o próximo par de sentenças
+            posSi = posSj
+            posSj = posSj + 1
         else:
-              # Reduz um da quantidade de sentenças pois uma delas está vazia
-              divisor = divisor - 1
-              # Se embeddingSi igual a None avanca pos1 e pos2
-              if embeddingSi == None:
-                    # Avança a posição da sentença posSi para a posSj
-                    posSi = posSj
-                    # Avança para a próxima sentença de posSj
-                    posSj = posSj + 1        
-              else:          
-                    # Se embeddingSj = None avança somente posJ para a próxima sentença
-                    if embeddingSj == None:
-                        posSj = posSj + 1
+            # Reduz um da quantidade de sentenças pois uma delas está vazia
+            divisor = divisor - 1
+            # Se embeddingSi igual a None avanca pos1 e pos2
+            if embeddingSi == None:
+                # Avança a posição da sentença posSi para a posSj
+                posSi = posSj
+                # Avança para a próxima sentença de posSj
+                posSj = posSj + 1        
+            else:          
+                # Se embeddingSj = None avança somente posJ para a próxima sentença
+                if embeddingSj == None:
+                    posSj = posSj + 1
 
     # Calcula a medida 
-    Ccos =  0
-    Ceuc =  0
-    Cman =  0
+    Ccos = 0
+    Ceuc = 0
+    Cman = 0
 
     if divisor != 0:
-          Ccos = float(somaScos)/float(divisor)
-          Ceuc = float(somaSeuc)/float(divisor)
-          Cman = float(somaSman)/float(divisor)
+        Ccos = float(somaScos) / float(divisor)
+        Ceuc = float(somaSeuc) / float(divisor)
+        Cman = float(somaSman) / float(divisor)
 
     return Ccos, Ceuc, Cman
 
@@ -844,13 +844,13 @@ LISTATIPOCAMADA_NOME = 3
 # O índice da camada com valor positivo indica uma camada específica
 # O índica com um valor negativo indica as camadas da posição com base no fim descontado o valor indice até o fim.
 listaTipoCamadas = [
-                      [ PRIMEIRA_CAMADA,           1, '-',      'Primeira'],                      
-                      [ PENULTIMA_CAMADA,         -2, '-',      'Penúltima'],
-                      [ ULTIMA_CAMADA,            -1, '-',      'Última'],
-                      [ SOMA_4_ULTIMAS_CAMADAS,   -4, 'SUM',    'Soma 4 últimas'],
-                      [ CONCAT_4_ULTIMAS_CAMADAS, -4, 'CONCAT', 'Concat 4 últimas'],                      
-                      [ TODAS_AS_CAMADAS,          24, 'SUM',    'Todas']
-                    ]
+    [PRIMEIRA_CAMADA, 1, '-', 'Primeira'], 
+    [PENULTIMA_CAMADA, -2, '-', 'Penúltima'],
+    [ULTIMA_CAMADA, -1, '-', 'Última'],
+    [SOMA_4_ULTIMAS_CAMADAS, -4, 'SUM', 'Soma 4 últimas'],
+    [CONCAT_4_ULTIMAS_CAMADAS, -4, 'CONCAT', 'Concat 4 últimas'], 
+    [TODAS_AS_CAMADAS, 24, 'SUM', 'Todas']
+]
 
 # listaTipoCamadas e suas referências:
 # 0 - Primeira            listaTipoCamadas[PRIMEIRA_CAMADA]
@@ -869,7 +869,7 @@ def comparaMedidasCamadasSentencas(Si, Sj, modelo, tokenizador, camada):
     # Recupera os embeddings da sentença 1 e sentença 2
     embeddingSi, embeddingSj, Scos, Seuc, Sman = getMedidasCamadasSentencas(Si, Sj, modelo, tokenizador, camada)
 
-    logging.info('  ->Mostra comparação da ' + camada[LISTATIPOCAMADA_NOME]+ ' camada(s)')    
+    logging.info('  ->Mostra comparação da ' + camada[LISTATIPOCAMADA_NOME] + ' camada(s)')    
     logging.info('   Cosseno(SixSj)     = %.8f' % Scos)
     logging.info('   Euclidiana(SixSj)  = %.8f' % Seuc)
     logging.info('   Manhattan(SixSj)   = %.8f' % Sman)

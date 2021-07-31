@@ -32,15 +32,15 @@ def carregaOtimizador(training_args, model):
     # Nota: AdamW é uma classe da biblioteca huggingface (ao contrário de pytorch).
     # Eu acredito que o 'W' significa 'Correção de redução de peso "
     otimizador = AdamW(model.parameters(),
-                  lr = training_args.learning_rate, # (ou alfa) A taxa de aprendizado a ser usada. - default é 3e-5
-                  # betas = (0.9, 0.999), # (beta1, beta2) - default é (0.9, 0.999)
-                  # beta1 é taxa de decaimento exponencial para as estimativas do primeiro momento. 
-                  # beta2 é taxa de decaimento exponencial para as estimativas do segundo momento. Este valor deve ser definido próximo a 1,0 em problemas com gradiente esparso (por exemplo, PNL e problemas de visão de computacional)
-                  # eps = 1e-6, #  É um número muito pequeno para evitar qualquer divisão por zero na implementação - default é 1e-6.
-                  # weight_decay = 0.0, # Correção de redução de peso. - default é 0.0
-                  # A redução da taxa de aprendizagem também pode ser usada com Adam. A taxa de decaimento é atualizada a cada época para a demonstração da regressão logística.
-                  # correct_bias = True #  Se não deve corrigir o viés(bias) no Adam mudar para False.- default é True
-                )
+                       lr=training_args.learning_rate, # (ou alfa) A taxa de aprendizado a ser usada. - default é 3e-5
+                       # betas = (0.9, 0.999), # (beta1, beta2) - default é (0.9, 0.999)
+                       # beta1 é taxa de decaimento exponencial para as estimativas do primeiro momento. 
+                       # beta2 é taxa de decaimento exponencial para as estimativas do segundo momento. Este valor deve ser definido próximo a 1,0 em problemas com gradiente esparso (por exemplo, PNL e problemas de visão de computacional)
+                       # eps = 1e-6, #  É um número muito pequeno para evitar qualquer divisão por zero na implementação - default é 1e-6.
+                       # weight_decay = 0.0, # Correção de redução de peso. - default é 0.0
+                       # A redução da taxa de aprendizagem também pode ser usada com Adam. A taxa de decaimento é atualizada a cada época para a demonstração da regressão logística.
+                       # correct_bias = True #  Se não deve corrigir o viés(bias) no Adam mudar para False.- default é True
+                       )
     
     logging.info("Otimizador carregado.")
   
@@ -62,8 +62,8 @@ def carregaAgendador(training_args, otimizador, tamanho_conjunto):
     
     #Cria o agendador de taxa de aprendizagem.
     agendador = get_linear_schedule_with_warmup(otimizador, # O otimizador para o qual agendar a taxa de aprendizado.
-                                            num_warmup_steps = 0, # O número de etapas para a fase de aquecimento. Valor default value em run_glue.py
-                                            num_training_steps = total_etapas) # O número total de etapas de treinamento.
+                                                num_warmup_steps=0, # O número de etapas para a fase de aquecimento. Valor default value em run_glue.py
+                                                num_training_steps=total_etapas) # O número total de etapas de treinamento.
 
     logging.info("Total de etapas do agendador: {}.".format(total_etapas))
 
@@ -143,11 +143,11 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
             #print('  Tokenizado {:,} amostras.'.format(len(input_ids_completos)))
 
         # Tokeniza a amostra.
-        input_ids = tokenizer.encode(text=documento,                    # Documento a ser codificado.
-                                    add_special_tokens=True,            # Adiciona os ttokens especiais.
-                                    max_length=model_args.max_seq_len,  # Tamanho do truncamento.
-                                    truncation=True,                    # Faz o truncamento.
-                                    padding=False)                      # Não preenche.
+        input_ids = tokenizer.encode(text=documento, # Documento a ser codificado.
+                                     add_special_tokens=True, # Adiciona os ttokens especiais.
+                                     max_length=model_args.max_seq_len, # Tamanho do truncamento.
+                                     truncation=True, # Faz o truncamento.
+                                     padding=False)                      # Não preenche.
                 
         # Adicione o resultado tokenizado à nossa lista.
         input_ids_completos.append(input_ids)
@@ -381,7 +381,7 @@ def downloadModeloPretreinado(model_args):
         downloadArquivo(URL_MODELO, NOME_ARQUIVO)
 
         # Descompacta o arquivo no diretório de descompactação.                
-        arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+        arquivoZip = zipfile.ZipFile(NOME_ARQUIVO, "r")
         arquivoZip.extractall(DIRETORIO_MODELO)
 
         # Baixa o arquivo do vocabulário.
@@ -412,7 +412,7 @@ def copiaModeloAjustado(model_args):
     MODELO_BERT = getNomeModeloBERT(model_args)
 
     # Verifica o tamanho do modelo(default large)
-    TAMANHO_BERT =  getTamanhoBERT(model_args)
+    TAMANHO_BERT = getTamanhoBERT(model_args)
 
     # Diretório local de salvamento do modelo.
     DIRETORIO_LOCAL_MODELO_AJUSTADO = "/content/modelo_ajustado/"
@@ -502,16 +502,16 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
         logging.info("Carregando o modelo BERT do diretório {} para cálculo de medidas.".format(DIRETORIO_MODELO))
 
         model = BertModel.from_pretrained(DIRETORIO_MODELO,
-                                          output_attentions = model_args.output_attentions,
-                                          output_hidden_states = model_args.output_hidden_states)
+                                          output_attentions=model_args.output_attentions,
+                                          output_hidden_states=model_args.output_hidden_states)
         
     else:
         # Carregando o Modelo BERT da comunidade
         logging.info("Carregando o modelo BERT da comunidade {} para cálculo de medidas.".format(model_args.pretrained_model_name_or_path))
 
         model = BertModel.from_pretrained(model_args.pretrained_model_name_or_path,
-                                          output_attentions = model_args.output_attentions,
-                                          output_hidden_states = model_args.output_hidden_states)
+                                          output_attentions=model_args.output_attentions,
+                                          output_hidden_states=model_args.output_hidden_states)
 
     return model
 
@@ -536,18 +536,18 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
         logging.info("Carregando o modelo BERT do diretório {} para classificação.".format(DIRETORIO_MODELO))
 
         model = BertForSequenceClassification.from_pretrained(DIRETORIO_MODELO, 
-                                                              num_labels = model_args.num_labels,
-                                                              output_attentions = model_args.output_attentions,
-                                                              output_hidden_states = model_args.output_hidden_states)
+                                                              num_labels=model_args.num_labels,
+                                                              output_attentions=model_args.output_attentions,
+                                                              output_hidden_states=model_args.output_hidden_states)
             
     else:
         # Carregando o Modelo BERT da comunidade
         logging.info("Carregando o modelo BERT da comunidade {} para classificação.".format(model_args.pretrained_model_name_or_path))
 
         model = BertForSequenceClassification.from_pretrained(model_args.pretrained_model_name_or_path,
-                                                              num_labels = model_args.num_labels,
-                                                              output_attentions = model_args.output_attentions,
-                                                              output_hidden_states = model_args.output_hidden_states)
+                                                              num_labels=model_args.num_labels,
+                                                              output_attentions=model_args.output_attentions,
+                                                              output_hidden_states=model_args.output_hidden_states)
     return model
 
 # ============================

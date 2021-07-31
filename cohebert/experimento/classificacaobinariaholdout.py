@@ -32,7 +32,7 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
     MODELO_BERT = getNomeModeloBERT(model_args)
 
     # Verifica o tamanho do modelo(default large)
-    TAMANHO_BERT =  getTamanhoBERT(model_args)
+    TAMANHO_BERT = getTamanhoBERT(model_args)
 
     # Nome arquivo resultado
     NOME_ARQUIVO_AVALIACAO = training_args.output_dir + MODELO_BERT + TAMANHO_BERT
@@ -50,23 +50,23 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
             for index, linha in dados.iterrows():
         
                 # Cálculo das estatísticas
-                acc = (linha['vp']+linha['vn'])/(linha['vp']+linha['vn']+linha['fp']+linha['fn'])
-                if (linha['vp']+linha['fn']) != 0:
-                    rec = (linha['vp'])/(linha['vp']+linha['fn'])
+                acc = (linha['vp'] + linha['vn']) / (linha['vp'] + linha['vn'] + linha['fp'] + linha['fn'])
+                if (linha['vp'] + linha['fn']) != 0:
+                    rec = (linha['vp']) / (linha['vp'] + linha['fn'])
                 else:
                     rec = 0
                 
-                if (linha['vp']+linha['fp']) != 0:
-                    pre = (linha['vp'])/(linha['vp']+linha['fp'])
+                if (linha['vp'] + linha['fp']) != 0:
+                    pre = (linha['vp']) / (linha['vp'] + linha['fp'])
                 else:  
                     pre = 0
                 if (pre + rec) != 0:  
-                    f1 = 2 * ((pre * rec)/(pre + rec))
+                    f1 = 2 * ((pre * rec) / (pre + rec))
                 else:
                     f1 = 0
-                qtdeTestes = linha['vp']+linha['vn']+linha['fp']+linha['fn']
+                qtdeTestes = linha['vp'] + linha['vn'] + linha['fp'] + linha['fn']
                 logging.info("Arquivo: {}, Data: {}, Tempo:{}, QtdeTeste: {:3d}, Acc: {:.8f}, Rec: {:.8f}, Pre: {:.8f}, F1:{:.8f}, vp: {:4d}; vn: {:4d}; fp: {:4d}; fn: {:4d}".format(
-                        linha['arquivo'], linha['data'], linha['tempo'], qtdeTestes, acc, rec, pre, f1, linha['vp'], linha['vn'], linha['fp'], linha['fn']))  
+                             linha['arquivo'], linha['data'], linha['tempo'], qtdeTestes, acc, rec, pre, f1, linha['vp'], linha['vn'], linha['fp'], linha['fn']))  
            
                 # Guarda o tempo.
                 listaTempo.append(str(linha['tempo']))
@@ -82,7 +82,7 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
             # Mostra a quantidade de exeucões.
             logging.info("Quantidade de execuções                                 : {}.".format(contaExecucoes))  
             # Calcula a média.
-            media = somaAcuracia/contaExecucoes
+            media = somaAcuracia / contaExecucoes
             logging.info("A média da acurácia de {:2d} execuções é                   : {:.8f}.".format(contaExecucoes, media))
             logging.info("O tempo gasto na execução do treinamento {:2d} execuções é : {}.".format(contaExecucoes, somaTempo(listaTempo)))
             logging.info("A média de tempo de {:2d} execuções é                      : {}.".format(contaExecucoes, mediaTempo(listaTempo)))
@@ -113,7 +113,7 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
         MODELO_BERT = getNomeModeloBERT(model_args)
 
         # Verifica o tamanho do modelo(default large)
-        TAMANHO_BERT =  getTamanhoBERT(model_args)
+        TAMANHO_BERT = getTamanhoBERT(model_args)
         
         # Nome arquivo resultado
         NOME_ARQUIVO_CLASSIFICACAO = training_args.output_dir + MODELO_BERT + TAMANHO_BERT
@@ -144,7 +144,7 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
 
         logging.info("Criando arquivo classificação: {}.".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
         # Abre novamente o arquivo (escrita).
-        arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO,'w')
+        arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO, 'w')
         arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
         # Fecha o arquivo.
         arquivo.close()            
@@ -169,7 +169,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
         MODELO_BERT = getNomeModeloBERT(model_args)
 
         # Verifica o tamanho do modelo(default large)
-        TAMANHO_BERT =  getTamanhoBERT(model_args)
+        TAMANHO_BERT = getTamanhoBERT(model_args)
 
         # Nome arquivo resultado
         NOME_ARQUIVO_AVALIACAO = training_args.output_dir + MODELO_BERT + TAMANHO_BERT
@@ -189,20 +189,20 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
         NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + ".csv"
 
         # Conteúdo a ser adicionado.
-        novoConteudo = NOME_ARQUIVO_AVALIACAO + ";" + data_e_hora.strftime("%d/%m/%Y %H:%M") + ";"  + treinamento_total + ";"  + str(acc) + ";"  +  str(vp_s) + ";"  +  str(vn_s) + ";" +  str(fp_s) + ";" +  str(fn_s) + "\n"
+        novoConteudo = NOME_ARQUIVO_AVALIACAO + ";" + data_e_hora.strftime("%d/%m/%Y %H:%M") + ";"  + treinamento_total + ";"  + str(acc) + ";" + str(vp_s) + ";" + str(vn_s) + ";" + str(fp_s) + ";" + str(fn_s) + "\n"
 
         # Verifica se o arquivo existe.
         if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
             logging.info("Atualizando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre o arquivo para leitura.
-            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'r')
+            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO, 'r')
             # Leitura de todas as linhas do arquivo.
             conteudo = arquivo.readlines()
             # Conteúdo a ser adicionado.
             conteudo.append(novoConteudo)
 
             # Abre novamente o arquivo (escrita).
-            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
+            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO, 'w')
             # escreva o conteúdo criado anteriormente nele.
             arquivo.writelines(conteudo)  
             # Fecha o arquivo.
@@ -210,7 +210,7 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
         else:
             logging.info("Criando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
-            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
+            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO, 'w')
             arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
             # Fecha o arquivo.
             arquivo.close()                      

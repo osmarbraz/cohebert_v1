@@ -23,7 +23,7 @@ def downloadCSTNewsICMC():
     NOME_ARQUIVO = "Summarycoherencemodels.zip"
 
     if os.path.isfile(NOME_ARQUIVO):
-       os.remove(NOME_ARQUIVO)
+        os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do ICMC
     URL_ARQUIVO = "https://sites.icmc.usp.br/taspardo/Summary coherence models.zip"
@@ -75,7 +75,7 @@ def downloadCSTNewsOnDrive():
     NOME_ARQUIVO = "Summarycoherencemodels.zip"
 
     if os.path.isfile(NOME_ARQUIVO):
-       os.remove(NOME_ARQUIVO)
+        os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do OneDrive
     URL_ARQUIVO = "https://udesc-my.sharepoint.com/:u:/g/personal/91269423991_udesc_br/EQfOLQ6Vg_1Hs4JSwg0aO4wBnxY2ym8tua1XIQB00kczOg?e=hBAqpE&download=1"
@@ -135,7 +135,7 @@ def carregaArquivosOriginaisCSTNews():
 
     # Apaga arquivos desnecessários da lista
     if '.DS_Store' in arquivos:
-      arquivos.remove('.DS_Store')
+        arquivos.remove('.DS_Store')
 
     # Percorre a lista de arquivos
     for i in range(len(arquivos)):
@@ -239,7 +239,7 @@ def carregaParesDocumentosCSTNews():
         # Percorre as 20 permutações.
         for j in range(20):
             # Recupera o nome do arquivo permutado.
-            arquivoPermutado = arquivoOriginal + '_Perm_'+str(j) + '.txt'
+            arquivoPermutado = arquivoOriginal + '_Perm_' + str(j) + '.txt'
 
             # Carrega o arquivo permutado.
             documentoPermutado = carregar("/content/Modelo de Relacoaes Discursivas/Sumarios_Humanos_Permutados/" + arquivoPermutado)
@@ -286,7 +286,7 @@ def converteListaParesDocumentos(lista_documentos):
     '''
 
     # Converte a lista em um dataframe.
-    dfdados = pd.DataFrame.from_records(lista_documentos, columns=['idOriginal','sentencasOriginais','documentoOriginal','idPermutado','sentencasPermutadas','documentoPermutado'])
+    dfdados = pd.DataFrame.from_records(lista_documentos, columns=['idOriginal', 'sentencasOriginais', 'documentoOriginal', 'idPermutado', 'sentencasPermutadas', 'documentoPermutado'])
 
     return dfdados
 
@@ -318,7 +318,7 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
         dfdados['input_ids'] = dfdados['documentoOriginal'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         # Reduz para o tamanho máximo suportado pelo BERT.
-        dfdados_512 = dfdados[dfdados['input_ids'].apply(len)<=tamanho_maximo]
+        dfdados_512 = dfdados[dfdados['input_ids'].apply(len) <= tamanho_maximo]
 
         # Remove as colunas desnecessárias.
         dfdadosAnterior = dfdados.drop(columns=['input_ids'])
@@ -328,11 +328,11 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
         logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
 
         # Remove colunas desnecessárias
-        dfdadosSemLista =  dfdadosretorno.drop(columns=['sentencasOriginais','sentencasPermutadas'])
-        dfdados512SemLista =  dfdadosAnterior.drop(columns=['sentencasOriginais','sentencasPermutadas'])
+        dfdadosSemLista = dfdadosretorno.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
+        dfdados512SemLista = dfdadosAnterior.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
 
         # Registros removidos
-        df = dfdados512SemLista.merge(dfdadosSemLista, how = 'outer' ,indicator=True).loc[lambda x : x['_merge']=='left_only']
+        df = dfdados512SemLista.merge(dfdadosSemLista, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
         logging.info("Quantidade de registros removidos: {}.".format(len(df)))
         
     else:

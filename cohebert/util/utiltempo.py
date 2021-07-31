@@ -6,20 +6,20 @@ import datetime # Biblioteca de data e tempo
  
 # ============================    
 def formataTempo(tempo):
-     '''
+    '''
      Pega a tempo em segundos e retorna uma string hh:mm:ss
      '''
         
-     # Arredonda para o segundo mais próximo.
-     tempoArredondado = int(round((tempo)))
+    # Arredonda para o segundo mais próximo.
+    tempoArredondado = int(round((tempo)))
    
-     # Formata como hh:mm:ss
-     return str(datetime.timedelta(seconds=tempoArredondado))  
+    # Formata como hh:mm:ss
+    return str(datetime.timedelta(seconds=tempoArredondado))  
 
 # ============================      
 def mediaAngulo(deg):
     
-    return degrees(phase(sum(rect(1, radians(d)) for d in deg)/len(deg)))
+    return degrees(phase(sum(rect(1, radians(d)) for d in deg) / len(deg)))
  
 # ============================  
 def mediaTempo(tempos):

@@ -39,14 +39,14 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
 
     for x in range(QTDE_FOLDS):
   
-        dadostrain = pd.read_csv(PREFIXO_NOME_ARQUIVO_TREINO+str(x + 1) + ".csv", sep=';')
+        dadostrain = pd.read_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(x + 1) + ".csv", sep=';')
         logging.info("Dados treino do fold {}: {}.".format(x + 1, len(dadostrain)))
 
         dadostest = pd.read_csv(PREFIXO_NOME_ARQUIVO_TESTE + str(x + 1) + ".csv", sep=';')
-        logging.info("Dados teste do fold {}: {}.".format(x+1,len(dadostest)))
+        logging.info("Dados teste do fold {}: {}.".format(x + 1, len(dadostest)))
 
-        lista_dadostrain_folds.append([x,dadostrain.tipo.sum(), len(dadostrain.tipo) - dadostrain.tipo.sum()])
-        lista_dadostest_folds.append([x,dadostest.tipo.sum(), len(dadostest.tipo) - dadostest.tipo.sum()])
+        lista_dadostrain_folds.append([x, dadostrain.tipo.sum(), len(dadostrain.tipo) - dadostrain.tipo.sum()])
+        lista_dadostest_folds.append([x, dadostest.tipo.sum(), len(dadostest.tipo) - dadostest.tipo.sum()])
 
         # Pega as listas de documentos e seus rótulos.
         documentos = dadostrain.documento.values
@@ -74,25 +74,25 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
         logging.info("Máximo de token no conjunto de dados de teste: {}.".format(maior_tamanho_documento_teste))
 
         logging.info("Fold {} Treino positivos: {} de {} ({:.2f}%).".format(x + 1, 
-                                                                  dadostrain.tipo.sum(), 
-                                                                  len(dadostrain.tipo), 
-                                                                  (dadostrain.tipo.sum() / len(dadostrain.tipo) * 100.0)
-                                                                  ))
+                     dadostrain.tipo.sum(), 
+                     len(dadostrain.tipo), 
+                     (dadostrain.tipo.sum() / len(dadostrain.tipo) * 100.0)
+                     ))
 
         logging.info("Fold {} Treino negativos: {} de {} ({:.2f}%).".format(x + 1, 
-                                                                  len(dadostrain.tipo)-dadostrain.tipo.sum(), 
-                                                                  len(dadostrain.tipo), 
-                                                                  ((len(dadostrain.tipo)-dadostrain.tipo.sum()) / len(dadostrain.tipo) * 100.0)))
+                     len(dadostrain.tipo)-dadostrain.tipo.sum(), 
+                     len(dadostrain.tipo), 
+                     ((len(dadostrain.tipo)-dadostrain.tipo.sum()) / len(dadostrain.tipo) * 100.0)))
 
         logging.info("Fold {} Teste positivos: {} de {} ({:.2f}%).".format(x + 1, 
-                                                                  dadostest.tipo.sum(), 
-                                                                  len(dadostest.tipo), 
-                                                                  (dadostest.tipo.sum() / len(dadostest.tipo) * 100.0)))
+                     dadostest.tipo.sum(), 
+                     len(dadostest.tipo), 
+                     (dadostest.tipo.sum() / len(dadostest.tipo) * 100.0)))
         
         logging.info("Fold {} Teste negativos: {} de {} ({:.2f}%).".format(x + 1, 
-                                                                  len(dadostest.tipo)-dadostest.tipo.sum(), 
-                                                                  len(dadostest.tipo), 
-                                                                  ((len(dadostest.tipo)-dadostest.tipo.sum()) / len(dadostest.tipo) * 100.0)))                               
+                     len(dadostest.tipo)-dadostest.tipo.sum(), 
+                     len(dadostest.tipo), 
+                     ((len(dadostest.tipo)-dadostest.tipo.sum()) / len(dadostest.tipo) * 100.0)))                               
         logging.info("")
 
 # ============================
@@ -124,12 +124,12 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     PREFIXO_NOME_ARQUIVO_TESTE = DIRETORIO_BASE + "/cstnews_md_test_f"
 
     # Preparação do conjunto de dados.
-    X =  np.array(dfdados)
+    X = np.array(dfdados)
 
     # Divisão em k folds(n_splits).
     # shuffle, embaralha cada amostra.
     # Quando shuffle igual True, random_state afeta a ordem dos índices, que controla a aleatoriedade de cada dobra.
-    kf = KFold(n_splits=QTDE_FOLDS,  random_state=True, shuffle=True)
+    kf = KFold(n_splits=QTDE_FOLDS, random_state=True, shuffle=True)
     
     CONTAFOLD = 1
     
@@ -158,10 +158,10 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
             documentos_train_organizada.append((linha[3], linha[5], 0))
     
         # Cria um dataframe com os dados de treinamento.
-        pddata_tuples_train = pd.DataFrame(documentos_train_organizada, columns=["id","documento","tipo"])
+        pddata_tuples_train = pd.DataFrame(documentos_train_organizada, columns=["id", "documento", "tipo"])
     
         # Salva o arquivo de treino do fold.
-        pddata_tuples_train.to_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(CONTAFOLD) + ".csv", index = False, sep=';')
+        pddata_tuples_train.to_csv(PREFIXO_NOME_ARQUIVO_TREINO + str(CONTAFOLD) + ".csv", index=False, sep=';')
 
         # Organiza dados de teste.
         documentos_test_organizada = []
@@ -174,10 +174,10 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
             documentos_test_organizada.append((linha[3], linha[5], 0))
     
         # Cria um dataframe com os dados de teste.
-        pddata_tuples_test = pd.DataFrame(documentos_test_organizada, columns=["id","documento","tipo"])  
+        pddata_tuples_test = pd.DataFrame(documentos_test_organizada, columns=["id", "documento", "tipo"])  
   
         # Salva o arquivo de teste do fold.
-        pddata_tuples_test.to_csv(PREFIXO_NOME_ARQUIVO_TESTE + str(CONTAFOLD) + ".csv", index = False, sep=';')
+        pddata_tuples_test.to_csv(PREFIXO_NOME_ARQUIVO_TESTE + str(CONTAFOLD) + ".csv", index=False, sep=';')
 
         # Avança o contador de testes.
         CONTAFOLD = CONTAFOLD + 1        
@@ -210,13 +210,13 @@ def copiaCSTNewsGithub():
     
     # Apaga o arquivo    
     if os.path.isfile(NOME_ARQUIVO):
-       os.remove(NOME_ARQUIVO)
+        os.remove(NOME_ARQUIVO)
     
     # Copia o arquivo de dados do diretório fonte para o diretório de destino
     shutil.copy(DIRETORIO_FONTE_ARQUIVO, DIRETORIO_DESTINO_ARQUIVO) 
         
     # Descompacta o arquivo no diretório de descompactação.                
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO, "r")
     arquivoZip.extractall(DIRETORIO)     
 
 # ============================
@@ -245,7 +245,7 @@ def downloadCSTNewsGithub():
 
     # Apaga o arquivo.    
     if os.path.isfile(NOME_ARQUIVO):
-       os.remove(NOME_ARQUIVO)
+        os.remove(NOME_ARQUIVO)
     
     # Realiza o download do arquivo do OneDrive
     URL_ARQUIVO = "https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/cstnews/" + NOME_ARQUIVO + "?raw=true"
@@ -254,7 +254,7 @@ def downloadCSTNewsGithub():
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
     
     # Descompacta o arquivo no diretório de descompactação                
-    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO,"r")
+    arquivoZip = zipfile.ZipFile(NOME_ARQUIVO, "r")
     arquivoZip.extractall(DIRETORIO)       
 
 # ============================
@@ -290,7 +290,7 @@ def copiaCSTNewsGoogleDrive():
         shutil.copy(CAMINHO_ARQUIVO, DIRETORIO) 
 
         # Descompacta o arquivo no diretório de descompactação.                
-        arquivoZip = zipfile.ZipFile(DIRETORIO + '/' + NOME_ARQUIVO,"r")
+        arquivoZip = zipfile.ZipFile(DIRETORIO + '/' + NOME_ARQUIVO, "r")
         arquivoZip.extractall(DIRETORIO)
     
     else:

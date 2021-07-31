@@ -73,13 +73,13 @@ def carregarLista(nome_arquivo):
 
 # ============================      
 def salvar(nome_arquivo, texto):                       
-     '''
+    '''
      Salva um texto em um arquivo.
      Parâmetros:
         `nome_arquivo` - Nome do arquivo a ser salvo.     
         `texto` - Texto a ser salvo.     
      '''
 
-     arquivo = open(nome_arquivo, 'w')
-     arquivo.write(str(texto))
-     arquivo.close()     
+    arquivo = open(nome_arquivo, 'w')
+    arquivo.write(str(texto))
+    arquivo.close()     

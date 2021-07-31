@@ -72,7 +72,7 @@ def acertosMedidaSimilaridadePermutado(medida, dfListaParesDocumentosMedidas):
     acertosOriginal  = 0
     acertosPermutado  = 0  
     for i, linha in dfListaParesDocumentosMedidas.iterrows():
-        if linha[medida + 'DO']  < linha[ medida + 'Perm']:
+        if linha[medida + 'DO']  < linha[medida + 'Perm']:
             acertosOriginal = acertosOriginal + 1
             
         else:
@@ -102,7 +102,7 @@ def acertosMedidaSimilaridadeOriginal(medida, dfListaParesDocumentosMedidas):
     acertosOriginal  = 0
     acertosPermutado  = 0  
     for i, linha in dfListaParesDocumentosMedidas.iterrows():
-        if linha[medida + 'DO']  >= linha[ medida + 'Perm']:
+        if linha[medida + 'DO']  >= linha[medida + 'Perm']:
             acertosOriginal = acertosOriginal + 1
             
         else:
@@ -132,7 +132,7 @@ def acertosMedidaDistanciaPermutado(medida, dfListaParesDocumentosMedidas):
     acertosOriginal  = 0  
     acertosPermutado  = 0  
     for i, linha in dfListaParesDocumentosMedidas.iterrows():
-        if linha[medida + 'DO'] < linha[ medida + 'Perm']:      
+        if linha[medida + 'DO'] < linha[medida + 'Perm']:      
             acertosPermutado = acertosPermutado + 1
             
         else:
@@ -162,7 +162,7 @@ def acertosMedidaDistanciaOriginal(medida, dfListaParesDocumentosMedidas):
     acertosPermutado  = 0  
     
     for i, linha in dfListaParesDocumentosMedidas.iterrows():
-        if linha[medida + 'DO'] <= linha[ medida + 'Perm']:
+        if linha[medida + 'DO'] <= linha[medida + 'Perm']:
             acertosOriginal = acertosOriginal + 1
             
         else:
@@ -212,22 +212,22 @@ def geraEstatisticasMedidasDocumentos(dfdadosMedidasDocumentos):
       
         # Registra as estatística da comparação
         stats_medidas_documentos.append(
-            {  
-              'documento': i,                  
-              'original ccos': linha['ccosDO'],
-              'permutado ccos': linha['ccosPerm'],
-              'dif ccos' : linha['ccosDO'] - linha['ccosPerm'],
-              'difabs ccos' : abs(linha['ccosDO'] - linha['ccosPerm']),
-              'original ceuc': linha['ceucDO'],
-              'permutado ceuc': linha['ceucPerm'],
-              'dif ceuc' : linha['ceucDO'] - linha['ceucPerm'],
-              'difabs ceuc' : abs(linha['ceucDO'] - linha['ceucPerm']),
-              'original cman': linha['cmanDO'],
-              'permutado cman': linha['cmanPerm'],
-              'dif cman' : linha['cmanDO'] - linha['cmanPerm'],
-              'difabs cman' : abs(linha['cmanDO'] - linha['cmanPerm']),
-            }
-        )     
+                                        {
+                                        'documento': i, 
+                                        'original ccos': linha['ccosDO'],
+                                        'permutado ccos': linha['ccosPerm'],
+                                        'dif ccos': linha['ccosDO'] - linha['ccosPerm'],
+                                        'difabs ccos': abs(linha['ccosDO'] - linha['ccosPerm']),
+                                        'original ceuc': linha['ceucDO'],
+                                        'permutado ceuc': linha['ceucPerm'],
+                                        'dif ceuc': linha['ceucDO'] - linha['ceucPerm'],
+                                        'difabs ceuc': abs(linha['ceucDO'] - linha['ceucPerm']),
+                                        'original cman': linha['cmanDO'],
+                                        'permutado cman': linha['cmanPerm'],
+                                        'dif cman': linha['cmanDO'] - linha['cmanPerm'],
+                                        'difabs cman': abs(linha['cmanDO'] - linha['cmanPerm']),
+                                        }
+                                        )     
         
     return stats_medidas_documentos
 
@@ -243,13 +243,13 @@ def separaDocumentos(dadosMedida):
         `dfPermutadoMedida` - Dataframe com os dados de documentos permutados.
     '''        
     # Separa os originais
-    dfOriginalMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==False]
+    dfOriginalMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm') == False]
     # Remove os duplicados
     dfOriginalMedida = dfOriginalMedida.drop_duplicates(subset=['arquivo'])
     logging.info("Registros: {}.".format(len(dfOriginalMedida)))
 
     # Separa os permutados
-    dfPermutadoMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm')==True]
+    dfPermutadoMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm') == True]
     # Remove os duplicados
     dfPermutadoMedida = dfPermutadoMedida.drop_duplicates(subset=['arquivo'])
     
@@ -260,153 +260,153 @@ def separaDocumentos(dadosMedida):
 # ============================
 def salvaResultadoMedicao(model_args, NOME_BASE, DIRETORIO_MEDICAO, lista_medidas_documentos_salvar):
 
-  if model_args.salvar_medicao:
+    if model_args.salvar_medicao:
 
-    # Recupera a hora do sistema.
-    data_e_hora = datetime.datetime.now()
+        # Recupera a hora do sistema.
+        data_e_hora = datetime.datetime.now()
 
-    AJUSTADO = '_pretreinado'
-    if model_args.usar_mcl_ajustado == True:
-        AJUSTADO = '_ajustado'
+        AJUSTADO = '_pretreinado'
+        if model_args.usar_mcl_ajustado == True:
+            AJUSTADO = '_ajustado'
 
-    ESTRATEGIA_POOLING = '_mean'
-    if model_args.estrategia_pooling == 1:
-      ESTRATEGIA_POOLING = '_max'
+        ESTRATEGIA_POOLING = '_mean'
+        if model_args.estrategia_pooling == 1:
+            ESTRATEGIA_POOLING = '_max'
 
-    PALAVRA_RELEVANTE = '_tap'
-    if model_args.palavra_relevante == 1:
-      PALAVRA_RELEVANTE = '_ssw'       
-    else:
-      if model_args.palavra_relevante == 2:
-        PALAVRA_RELEVANTE = '_ssb'   
+        PALAVRA_RELEVANTE = '_tap'
+        if model_args.palavra_relevante == 1:
+            PALAVRA_RELEVANTE = '_ssw'       
+        else:
+            if model_args.palavra_relevante == 2:
+                PALAVRA_RELEVANTE = '_ssb'   
 
-    # Nome arquivo resultado
-    NOME_ARQUIVO_MEDICAO = NOME_BASE + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
+        # Nome arquivo resultado
+        NOME_ARQUIVO_MEDICAO = NOME_BASE + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
 
-    # Verifica se o diretório existe
-    if not os.path.exists(DIRETORIO_MEDICAO):  
-      # Cria o diretório
-      os.makedirs(DIRETORIO_MEDICAO)
-      logging.info("Diretório criado: {}.".format(DIRETORIO_MEDICAO))
+        # Verifica se o diretório existe
+        if not os.path.exists(DIRETORIO_MEDICAO):  
+            # Cria o diretório
+            os.makedirs(DIRETORIO_MEDICAO)
+            logging.info("Diretório criado: {}.".format(DIRETORIO_MEDICAO))
     
-    else:
-      logging.info("Diretório já existe: {}.".format(DIRETORIO_MEDICAO))
+        else:
+            logging.info("Diretório já existe: {}.".format(DIRETORIO_MEDICAO))
 
-    # Nome do arquivo a ser aberto.
-    NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDICAO + NOME_ARQUIVO_MEDICAO + '.csv'
+        # Nome do arquivo a ser aberto.
+        NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDICAO + NOME_ARQUIVO_MEDICAO + '.csv'
     
-    # Cabeçalho do arquivo csv
-    CABECALHO_ARQUIVO = "data;arquivo;ccos;ceuc;cman"
+        # Cabeçalho do arquivo csv
+        CABECALHO_ARQUIVO = "data;arquivo;ccos;ceuc;cman"
 
-    # Verifica se o diretório existe
-    if not os.path.exists(DIRETORIO_MEDICAO):  
-      # Cria o diretório
-      os.makedirs(DIRETORIO_MEDICAO)
-      logging.info("Diretório criado: {}.".format(DIRETORIO_MEDICAO))
+        # Verifica se o diretório existe
+        if not os.path.exists(DIRETORIO_MEDICAO):  
+            # Cria o diretório
+            os.makedirs(DIRETORIO_MEDICAO)
+            logging.info("Diretório criado: {}.".format(DIRETORIO_MEDICAO))
     
-    else:
-      logging.info("Diretório já existe: {}.".format(DIRETORIO_MEDICAO))
+        else:
+            logging.info("Diretório já existe: {}.".format(DIRETORIO_MEDICAO))
 
-    # Nome do arquivo a ser aberto.
-    NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDICAO + NOME_ARQUIVO_MEDICAO + '.csv'
+        # Nome do arquivo a ser aberto.
+        NOME_ARQUIVO_MEDICAO_COMPLETO = DIRETORIO_MEDICAO + NOME_ARQUIVO_MEDICAO + '.csv'
 
-    # Gera todo o conteúdo a ser salvo no arquivo
-    novoConteudo = ''        
-    for resultado in lista_medidas_documentos_salvar:            
-      novoConteudo = novoConteudo + data_e_hora.strftime('%d/%m/%Y %H:%M') + ';' + str(resultado[0]) + ';' + str(resultado[1]) + ';'  + str(resultado[2]) + ';'  + str(resultado[3]) + '\n'
+        # Gera todo o conteúdo a ser salvo no arquivo
+        novoConteudo = ''        
+        for resultado in lista_medidas_documentos_salvar:            
+            novoConteudo = novoConteudo + data_e_hora.strftime('%d/%m/%Y %H:%M') + ';' + str(resultado[0]) + ';' + str(resultado[1]) + ';'  + str(resultado[2]) + ';'  + str(resultado[3]) + '\n'
 
-    # Verifica se o arquivo existe.
-    if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
-      logging.info("Atualizando arquivo medição: {}.".format(NOME_ARQUIVO_MEDICAO_COMPLETO))
-      # Abre o arquivo para leitura.
-      arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO,'r')
-      # Leitura de todas as linhas do arquivo.
-      conteudo = arquivo.readlines()
-      # Conteúdo a ser adicionado.
-      conteudo.append(novoConteudo)
+        # Verifica se o arquivo existe.
+        if os.path.isfile(NOME_ARQUIVO_MEDICAO_COMPLETO):
+            logging.info("Atualizando arquivo medição: {}.".format(NOME_ARQUIVO_MEDICAO_COMPLETO))
+            # Abre o arquivo para leitura.
+            arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO, 'r')
+            # Leitura de todas as linhas do arquivo.
+            conteudo = arquivo.readlines()
+            # Conteúdo a ser adicionado.
+            conteudo.append(novoConteudo)
 
-      # Abre novamente o arquivo (escrita).
-      arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO,'w')
-      # escreva o conteúdo criado anteriormente nele.
-      arquivo.writelines(conteudo)  
-      # Fecha o arquivo.
-      arquivo.close()
-    else:
+            # Abre novamente o arquivo (escrita).
+            arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO, 'w')
+            # escreva o conteúdo criado anteriormente nele.
+            arquivo.writelines(conteudo)  
+            # Fecha o arquivo.
+            arquivo.close()
+        else:
         
-      logging.info("Criando arquivo medição: {}.".format(NOME_ARQUIVO_MEDICAO_COMPLETO))
-      # Abre novamente o arquivo (escrita).
-      arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO,'w')
-      arquivo.writelines( CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
-      # Fecha o arquivo.
-      arquivo.close()
+            logging.info("Criando arquivo medição: {}.".format(NOME_ARQUIVO_MEDICAO_COMPLETO))
+            # Abre novamente o arquivo (escrita).
+            arquivo = open(NOME_ARQUIVO_MEDICAO_COMPLETO, 'w')
+            arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+            # Fecha o arquivo.
+            arquivo.close()
 
 # ============================        
 def salvaResultadoAvaliacao(model_args, NOME_BASE, DIRETORIO_AVALIACAO, tempoTotalProcessamento, conta, acuraciaCcos, contaCcos, acuraciaCeuc, contaCeuc, acuraciaCman, contaCman):
 
-  if model_args.salvar_avaliacao:
+    if model_args.salvar_avaliacao:
 
-    # Recupera a hora do sistema.
-    data_e_hora = datetime.datetime.now()
+        # Recupera a hora do sistema.
+        data_e_hora = datetime.datetime.now()
 
-    AJUSTADO = '_pretreinado'
-    if model_args.usar_mcl_ajustado == True:
-        AJUSTADO = '_ajustado'
+        AJUSTADO = '_pretreinado'
+        if model_args.usar_mcl_ajustado == True:
+            AJUSTADO = '_ajustado'
 
-    ESTRATEGIA_POOLING = '_mean'
-    if model_args.estrategia_pooling == 1:
-      ESTRATEGIA_POOLING = '_max'
+        ESTRATEGIA_POOLING = '_mean'
+        if model_args.estrategia_pooling == 1:
+            ESTRATEGIA_POOLING = '_max'
 
-    PALAVRA_RELEVANTE = '_tap'
-    if model_args.palavra_relevante == 1:
-        PALAVRA_RELEVANTE = '_ssw'       
-    else:
-      if model_args.palavra_relevante == 2:
-        PALAVRA_RELEVANTE = '_ssb' 
+        PALAVRA_RELEVANTE = '_tap'
+        if model_args.palavra_relevante == 1:
+            PALAVRA_RELEVANTE = '_ssw'       
+        else:
+            if model_args.palavra_relevante == 2:
+                PALAVRA_RELEVANTE = '_ssb' 
     
-    # Nome arquivo resultado
-    NOME_ARQUIVO_AVALIACAO = NOME_BASE + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
+        # Nome arquivo resultado
+        NOME_ARQUIVO_AVALIACAO = NOME_BASE + AJUSTADO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + getNomeModeloBERT(model_args) + getTamanhoBERT(model_args)
 
-    # Verifica se o diretório existe
-    if not os.path.exists(DIRETORIO_AVALIACAO):  
-      # Cria o diretório
-      os.makedirs(DIRETORIO_AVALIACAO)
-      logging.info("Diretório criado: {}".format(DIRETORIO_AVALIACAO))
-    else:
-      logging.info("Diretório já existe: {}".format(DIRETORIO_AVALIACAO))
+        # Verifica se o diretório existe
+        if not os.path.exists(DIRETORIO_AVALIACAO):  
+            # Cria o diretório
+            os.makedirs(DIRETORIO_AVALIACAO)
+            logging.info("Diretório criado: {}".format(DIRETORIO_AVALIACAO))
+        else:
+            logging.info("Diretório já existe: {}".format(DIRETORIO_AVALIACAO))
 
-    # Nome do arquivo a ser aberto.
-    NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + '.csv'
+        # Nome do arquivo a ser aberto.
+        NOME_ARQUIVO_AVALIACAO_COMPLETO = DIRETORIO_AVALIACAO + NOME_ARQUIVO_AVALIACAO + '.csv'
     
-    # Cabeçalho do arquivo csv
-    CABECALHO_ARQUIVO = "arquivo;data;tempo;conta;ccos;contaccos;ceuc;contaceuc;cman;contacman"
+        # Cabeçalho do arquivo csv
+        CABECALHO_ARQUIVO = "arquivo;data;tempo;conta;ccos;contaccos;ceuc;contaceuc;cman;contacman"
 
-    # Conteúdo a ser adicionado.
-    novoConteudo = NOME_ARQUIVO_AVALIACAO + ';' + data_e_hora.strftime('%d/%m/%Y %H:%M') + ';' + tempoTotalProcessamento + ';'  + str(conta) + ';'  + str(acuraciaCcos) + ';' + str(contaCcos) + ';' + str(acuraciaCeuc) + ';' + str(contaCeuc) + ';' + str(acuraciaCman) + ';' + str(contaCman) + '\n'
+        # Conteúdo a ser adicionado.
+        novoConteudo = NOME_ARQUIVO_AVALIACAO + ';' + data_e_hora.strftime('%d/%m/%Y %H:%M') + ';' + tempoTotalProcessamento + ';'  + str(conta) + ';'  + str(acuraciaCcos) + ';' + str(contaCcos) + ';' + str(acuraciaCeuc) + ';' + str(contaCeuc) + ';' + str(acuraciaCman) + ';' + str(contaCman) + '\n'
 
-    # Verifica se o arquivo existe.
-    if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
-      logging.info("Atualizando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
-      # Abre o arquivo para leitura.
-      arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'r')
-      # Leitura de todas as linhas do arquivo.
-      conteudo = arquivo.readlines()
-      # Conteúdo a ser adicionado.
-      conteudo.append(novoConteudo)
+        # Verifica se o arquivo existe.
+        if os.path.isfile(NOME_ARQUIVO_AVALIACAO_COMPLETO):
+            logging.info("Atualizando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+            # Abre o arquivo para leitura.
+            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO, 'r')
+            # Leitura de todas as linhas do arquivo.
+            conteudo = arquivo.readlines()
+            # Conteúdo a ser adicionado.
+            conteudo.append(novoConteudo)
 
-      # Abre novamente o arquivo (escrita).
-      arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
-      # escreva o conteúdo criado anteriormente nele.
-      arquivo.writelines(conteudo)  
-      # Fecha o arquivo.
-      arquivo.close()
+            # Abre novamente o arquivo (escrita).
+            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO, 'w')
+            # escreva o conteúdo criado anteriormente nele.
+            arquivo.writelines(conteudo)  
+            # Fecha o arquivo.
+            arquivo.close()
     
-    else:
-      logging.info("Criando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
-      # Abre novamente o arquivo (escrita).
-      arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO,'w')
-      arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
-      # Fecha o arquivo.
-      arquivo.close()
+        else:
+            logging.info("Criando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
+            # Abre novamente o arquivo (escrita).
+            arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO, 'w')
+            arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+            # Fecha o arquivo.
+            arquivo.close()
 
 # ============================
 def carregaMedidas(NOME_BASE, DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
@@ -519,7 +519,7 @@ def calculaMedidasDocumentosConjuntoDeDados(model_args, dfdados, model, tokenize
 
         # Guarda as medidas em uma lista para salvar em arquivo
         # Guarda as medidas dos documentos originais
-        lista_medidas_documentos_salvar.append([linha[0], Ccos,  Ceuc,  Cman])
+        lista_medidas_documentos_salvar.append([linha[0], Ccos, Ceuc, Cman])
         # Guarda as medidas dos documentos permutados
         lista_medidas_documentos_salvar.append([linha[3], Ccosp, Ceucp, Cmanp])
 
@@ -529,22 +529,22 @@ def calculaMedidasDocumentosConjuntoDeDados(model_args, dfdados, model, tokenize
         wandb.log({'pares_doc': conta})
 
     logging.info("Pares Corretos Ccos: {}.".format(contaCcos))
-    percentualCcos = float(contaCcos)/float(conta)
-    logging.info("Percentual acertos Ccos: {}.".format(percentualCcos*100))
+    percentualCcos = float(contaCcos) / float(conta)
+    logging.info("Percentual acertos Ccos: {}.".format(percentualCcos * 100))
 
     if model_args.use_wandb:
         wandb.log({'acuracia_ccos': acuraciaCcos})
 
     logging.info("Pares Corretos Ceuc: {}.".format(contaCeuc))
-    percentualCeuc = float(contaCeuc)/float(conta)
-    logging.info("Percentual acertos Ceuc: {}.".format(percentualCeuc*100))
+    percentualCeuc = float(contaCeuc) / float(conta)
+    logging.info("Percentual acertos Ceuc: {}.".format(percentualCeuc * 100))
 
     if model_args.use_wandb:
         wandb.log({'acuracia_ceuc': acuraciaCeuc})  
 
     logging.info("Pares Corretos Cman: {}.".format(contaCman))
-    percentualCman = float(contaCman)/float(conta)
-    logging.info("Percentual acertos Cman: {}.".format(percentualCman*100))
+    percentualCman = float(contaCman) / float(conta)
+    logging.info("Percentual acertos Cman: {}.".format(percentualCman * 100))
 
     if model_args.use_wandb:
         wandb.log({'acuracia_cman': acuraciaCman})  
@@ -574,17 +574,17 @@ def organizaParesDocumentos(dfOriginalMedida, dfPermutadoMedida):
         for i, linha2 in dfPermutadoMedida.iterrows():
             if nomeArquivo in linha2['arquivo']:
                 listaParesDocumentosMedidas.append(
-                                                    [linha1['data'], 
-                                                    linha1['arquivo'],	
-                                                    linha1['ccos'], 
-                                                    linha1['ceuc'], 
-                                                    linha1['cman'],
+                                                   [linha1['data'], 
+                                                   linha1['arquivo'],	
+                                                   linha1['ccos'], 
+                                                   linha1['ceuc'], 
+                                                   linha1['cman'],
                                        
-                                                    linha2['data'], 
-                                                    linha2['arquivo'],	
-                                                    linha2['ccos'], 
-                                                    linha2['ceuc'], 
-                                                    linha2['cman'] ],)
+                                                   linha2['data'], 
+                                                   linha2['arquivo'],	
+                                                   linha2['ccos'], 
+                                                   linha2['ceuc'], 
+                                                   linha2['cman']], )
 
     logging.info("Registros antes: {}.".format(len(listaParesDocumentosMedidas)))
 

@@ -38,11 +38,11 @@ def downloadOnlineEducGoogleDrive():
         shutil.copy(CAMINHO_ARQUIVO_PERMUTADO, '.') 
 
         # Descompacta o arquivo no diretório de descompactação.                
-        arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_ORIGINAL,"r")
+        arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_ORIGINAL, "r")
         arquivoZip.extractall()
 
         # Descompacta o arquivo no diretório de descompactação.                
-        arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_PERMUTADO,"r")
+        arquivoZip = zipfile.ZipFile(NOME_ARQUIVO_PERMUTADO, "r")
         arquivoZip.extractall()
         
     else:        
@@ -131,7 +131,7 @@ def carregaParesDocumentosOnlineEduc():
         # Percorre as 20 permutações.
         for j in range(20):
             # Recupera o nome do arquivo permutado.
-            arquivoPermutado = arquivoOriginal + '_Perm_'+str(j) + '.txt'
+            arquivoPermutado = arquivoOriginal + '_Perm_' + str(j) + '.txt'
 
             # Carrega o arquivo permutado.
             documentoPermutado = carregar("/content/dadosmoodle_documento_pergunta_sentenca_intervalo/permutado/" + arquivoPermutado)
@@ -171,7 +171,7 @@ def converteListaParesDocumentos(lista_documentos):
     '''
 
     # Converte a lista em um dataframe.
-    dfdados = pd.DataFrame.from_records(lista_documentos, columns=['idOriginal','sentencasOriginais','documentoOriginal','idPermutado','sentencasPermutadas','documentoPermutado'])
+    dfdados = pd.DataFrame.from_records(lista_documentos, columns=['idOriginal', 'sentencasOriginais', 'documentoOriginal', 'idPermutado', 'sentencasPermutadas', 'documentoPermutado'])
 
     return dfdados
     
@@ -203,7 +203,7 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
         dfdados['input_ids'] = dfdados['documentoOriginal'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         # Reduz para o tamanho máximo suportado pelo BERT.
-        dfdados_512 = dfdados[dfdados['input_ids'].apply(len)<=tamanho_maximo]
+        dfdados_512 = dfdados[dfdados['input_ids'].apply(len) <= tamanho_maximo]
 
         # Remove as colunas desnecessárias.
         dfdadosAnterior = dfdados.drop(columns=['input_ids'])
@@ -213,11 +213,11 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
         logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
 
         # Remove colunas desnecessárias
-        dfdadosSemLista =  dfdadosretorno.drop(columns=['sentencasOriginais','sentencasPermutadas'])
-        dfdados512SemLista =  dfdadosAnterior.drop(columns=['sentencasOriginais','sentencasPermutadas'])
+        dfdadosSemLista = dfdadosretorno.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
+        dfdados512SemLista = dfdadosAnterior.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
 
         # Registros removidos
-        df = dfdados512SemLista.merge(dfdadosSemLista, how = 'outer' ,indicator=True).loc[lambda x : x['_merge']=='left_only']
+        df = dfdados512SemLista.merge(dfdadosSemLista, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
         logging.info("Quantidade de registros removidos: {}.".format(len(df)))
         
     else:

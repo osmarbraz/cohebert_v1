@@ -84,35 +84,35 @@ def avaliaClassificacao(dfDadosClassificacao):
     fp_s = 0
     fn_s = 0
     for index, linha in dfDadosClassificacao.iterrows():
-      #if index < 20:
-        if linha['classe'] == 1 and linha['predicao'] == 1:
-            vp_s = vp_s + 1
-        if linha['classe'] == 0 and linha['predicao'] == 0:
-            vn_s = vn_s + 1        
-        if linha['classe'] == 1 and linha['predicao'] == 0:
-            fp_s = fp_s + 1        
-        if linha['classe'] == 0 and linha['predicao'] == 1:
-            fn_s = fn_s + 1        
+        #if index < 20:
+            if linha['classe'] == 1 and linha['predicao'] == 1:
+                vp_s = vp_s + 1
+            if linha['classe'] == 0 and linha['predicao'] == 0:
+                vn_s = vn_s + 1        
+            if linha['classe'] == 1 and linha['predicao'] == 0:
+                fp_s = fp_s + 1        
+            if linha['classe'] == 0 and linha['predicao'] == 1:
+                fn_s = fn_s + 1        
 
     # Acurácia indica uma performance geral do modelo. 
     # Dentre todas as classificações, quantas o modelo classificou corretamente(vp=1 e vn=0).
-    acc = (vp_s+vn_s)/(vp_s+vn_s+fp_s+fn_s)
+    acc = (vp_s + vn_s) / (vp_s + vn_s + fp_s + fn_s)
 
     # Recall(Revocação) avalia todas as situações da classe Positivo(vp=1) com o valor esperado e quantas estão corretas.
-    if (vp_s+fn_s) != 0:
-        rec = (vp_s)/(vp_s+fn_s)
+    if (vp_s + fn_s) != 0:
+        rec = (vp_s) / (vp_s + fn_s)
     else:
         rec = 0
   
     # Precisão avalia as classificações da classe positivo(vp=1 e fp=0) que o modelo fez e quantas estão corretas.
-    if (vp_s+fp_s) != 0:
-        pre = (vp_s)/(vp_s+fp_s)
+    if (vp_s + fp_s) != 0:
+        pre = (vp_s) / (vp_s + fp_s)
     else:
         pre = 0  
 
     # F1 é a média harmônica entre precisão e recall.
     if (pre + rec) != 0:  
-        f1 = 2 * ((pre * rec)/(pre + rec))
+        f1 = 2 * ((pre * rec) / (pre + rec))
     else:
         f1 = 0
 
@@ -137,7 +137,7 @@ def carregaClassificacoes(NOME_BASE, DIRETORIO_CLASSIFICACAO, EPOCA, TAXA_APREND
         contaReg = 0
         
         # Carrega todos os folds
-        for fold in range(1,11):    
+        for fold in range(1, 11):    
             NOME_ARQUIVO_CLASSIFICAO = NOME_BASE + EPOCA + '_lr_' + TAXA_APRENDIZAGEM + '_b_4_8_f' + str(fold) + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
             NOME_ARQUIVO_CLASSIFICACAO_COMPLETO = DIRETORIO_CLASSIFICACAO + NOME_ARQUIVO_CLASSIFICAO
 
@@ -240,9 +240,9 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
             # Retorno de model quando ´last_hidden_state=True´ é setado:    
             # last_hidden_state = outputs[0], pooler_output = outputs[1], hidden_states = outputs[2]
             outputs = model(d_input_ids,
-                        token_type_ids=None, 
-                        attention_mask=d_input_mask, 
-                        labels=d_labels)
+                            token_type_ids=None, 
+                            attention_mask=d_input_mask, 
+                            labels=d_labels)
         
         # A perda(loss) é retornado em outputs[0] porque fornecemos rótulos(labels). 
         # É útil para comparar com a perda do treinamento, quando é realizado a avaliação entre as épocas de treinamento.
@@ -262,17 +262,17 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
         _, classificacao = torch.max(logits, 1)
 
         # Verifica a classificação realizada e o rótulo previsto
-        vp.append(((classificacao==1) & (d_labels==1)).sum().cpu().item())
-        vn.append(((classificacao==0) & (d_labels==0)).sum().cpu().item())
-        fp.append(((classificacao==1) & (d_labels==0)).sum().cpu().item())
-        fn.append(((classificacao==0) & (d_labels==1)).sum().cpu().item())
+        vp.append(((classificacao == 1) & (d_labels == 1)).sum().cpu().item())
+        vn.append(((classificacao == 0) & (d_labels == 0)).sum().cpu().item())
+        fp.append(((classificacao == 1) & (d_labels == 0)).sum().cpu().item())
+        fn.append(((classificacao == 0) & (d_labels == 1)).sum().cpu().item())
 
         # Adiciona o documento de teste, o rótulo e a classificação realizada a lista de resultado
         for lote in range(len(d_labels)):
             # Adiciona o documento de teste a lista        
             lista_resultado_avaliacao.append([d_documentoids[lote],
-                                    d_labels[lote].cpu().item(), 
-                                    classificacao[lote].cpu().item()])
+                                             d_labels[lote].cpu().item(), 
+                                             classificacao[lote].cpu().item()])
         
         # Apaga o objeto de saída
         del outputs
@@ -282,23 +282,23 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
   
     # Acurácia indica uma performance geral do modelo. 
     # Dentre todas as classificações, quantas o modelo classificou corretamente(vp=1 e vn=0).
-    acc = (vp_s+vn_s)/(vp_s+vn_s+fp_s+fn_s)
+    acc = (vp_s + vn_s) / (vp_s + vn_s + fp_s + fn_s)
 
     # Recall(Revocação) avalia todas as situações da classe Positivo(vp=1) com o valor esperado e quantas estão corretas.
-    if (vp_s+fn_s) != 0:
-        rec = (vp_s)/(vp_s+fn_s)
+    if (vp_s + fn_s) != 0:
+        rec = (vp_s) / (vp_s + fn_s)
     else:
         rec = 0
   
     # Precisão avalia as classificações da classe positivo(vp=1 e fp=0) que o modelo fez e quantas estão corretas.
-    if (vp_s+fp_s) != 0:
-        pre = (vp_s)/(vp_s+fp_s)
+    if (vp_s + fp_s) != 0:
+        pre = (vp_s) / (vp_s + fp_s)
     else:
         pre = 0  
 
     # F1 é a média harmônica entre precisão e recall.
     if (pre + rec) != 0:  
-        f1 = 2 * ((pre * rec)/(pre + rec))
+        f1 = 2 * ((pre * rec) / (pre + rec))
     else:
         f1 = 0
 
@@ -400,7 +400,7 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
         train_epoca_losses = []
 
         # Barras de progresso.    
-        lote_treino_bar = tqdm_notebook(range(0, len(py_input_ids)), desc=f'Epoca {epoca_i+1}', unit=f'lotes', total=len(py_input_ids) )
+        lote_treino_bar = tqdm_notebook(range(0, len(py_input_ids)), desc=f'Epoca {epoca_i+1}', unit=f'lotes', total=len(py_input_ids))
 
         # Para cada lote dos dados de treinamento.
         for index in lote_treino_bar:      
@@ -448,9 +448,9 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
 
             # last_hidden_state = outputs[0], pooler_output = outputs[1], hidden_states = outputs[2]
             outputs = model(d_input_ids, 
-                        token_type_ids=None, 
-                        attention_mask=d_input_mask, 
-                        labels=d_labels)
+                            token_type_ids=None, 
+                            attention_mask=d_input_mask, 
+                            labels=d_labels)
         
             # A perda(loss) é retornado em outputs[0] porque fornecemos rótulos(labels))                  
             loss = outputs[0]

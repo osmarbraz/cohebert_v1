@@ -24,7 +24,7 @@ def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'
     '''
         
     # Quantidade de elementos de teste considerando o percentual
-    test_qtde = int(percentualDivisao*dfdados.shape[0])
+    test_qtde = int(percentualDivisao * dfdados.shape[0])
     
     # Divide o conjunto
     dfdados_train, dfdados_test = train_test_split(dfdados, test_size=test_qtde, random_state=42, stratify=dfdados[classeStratify])
@@ -51,12 +51,12 @@ def organizaDados(dfdados):
     # Coloca o par um embaixo do outro.
     for index, linha in dfdados.iterrows():        
         # 1 Para original
-        dados_organizados.append((linha['idOriginal'],linha['documentoOriginal'],1))    
+        dados_organizados.append((linha['idOriginal'], linha['documentoOriginal'], 1))    
         # 0 para uma permutação 
-        dados_organizados.append((linha['idPermutado'],linha['documentoPermutado'],0))
+        dados_organizados.append((linha['idPermutado'], linha['documentoPermutado'], 0))
 
     # Cria um dataframe com os dados
-    dfdados = pd.DataFrame(dados_organizados, columns=["id","documento","classe"])      
+    dfdados = pd.DataFrame(dados_organizados, columns=["id", "documento", "classe"])      
     
     return dfdados 
     
@@ -114,7 +114,7 @@ def descartandoDocumentosGrandesTreinoTeste(model_args, tokenizer, dfdados_train
         # Tokenize a codifica as setenças para o BERT     
         dfdados_train['input_ids'] = dfdados_train['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
-        dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len)<tamanho_maximo]
+        dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len) < tamanho_maximo]
 
         logging.info("Tamanho do dataset de treino: {}.".format(len(dfdados_train)))
 
@@ -125,7 +125,7 @@ def descartandoDocumentosGrandesTreinoTeste(model_args, tokenizer, dfdados_train
         dfdados_test['input_ids'] = dfdados_test['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         # Corta os inputs para o tamanho máximo 512
-        dfdados_test = dfdados_test[dfdados_test['input_ids'].apply(len)<tamanho_maximo]
+        dfdados_test = dfdados_test[dfdados_test['input_ids'].apply(len) < tamanho_maximo]
 
         logging.info("Tamanho do dataset de teste: {}".format(len(dfdados_test)))
 

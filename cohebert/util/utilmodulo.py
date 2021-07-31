@@ -38,12 +38,12 @@ def limpaTexto(texto):
     
 # ============================  
 def remove_tags(texto):
-     '''
+    '''
      Remove tags de um texto.
      Parâmetros:
        `texto` - Texto com tags a serem removidas.      
      '''
      
-     textoLimpo = re.compile('<.*?>')
+    textoLimpo = re.compile('<.*?>')
      
-     return re.sub(textoLimpo, '', texto)
+    return re.sub(textoLimpo, '', texto)
