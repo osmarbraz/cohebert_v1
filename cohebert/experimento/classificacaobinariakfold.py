@@ -1,13 +1,8 @@
 # Import das bibliotecas.
 import logging  # Biblioteca de logging
 import os  # Biblioteca para apagar arquivos
-import time  # Biblioteca de hora
 import datetime # Biblioteca de data e hora
-import random # Biblioteca para números aleatórios
 import pandas as pd # Biblioteca para manipulação e análise de dados
-import numpy as np # Biblioteca para manipulação e análise de dados
-import torch # Biblioteca para manipular os tensores
-from tqdm.notebook import tqdm as tqdm_notebook # Biblioteca para barra de progresso
 
 # Import de bibliotecas próprias
 from bert.bertmodulo  import *

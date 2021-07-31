@@ -10,13 +10,16 @@ def removeAcentos(texto):
     Parâmetros:
        `texto` - Texto a ser removido os acentos.
     '''
+    
     try:
         text = unicode(texto, 'utf-8')
     except (TypeError, NameError): 
         pass
+    
     texto = unicodedata.normalize('NFD', texto)
     texto = texto.encode('ascii', 'ignore')
     texto = texto.decode("utf-8")
+    
     return str(texto)
 
 # ============================  
@@ -26,9 +29,11 @@ def limpaTexto(texto):
     Parâmetros:
        `texto` - Texto a ser limpo.
     '''
+    
     texto = removeAcentos(texto.lower())
     texto = re.sub('[ ]+', '_', texto)
     texto = re.sub('[^.0-9a-zA-Z_-]', '', texto)
+    
     return texto
     
 # ============================  
@@ -38,5 +43,7 @@ def remove_tags(texto):
      Parâmetros:
        `texto` - Texto com tags a serem removidas.      
      '''
+     
      textoLimpo = re.compile('<.*?>')
+     
      return re.sub(textoLimpo, '', texto)

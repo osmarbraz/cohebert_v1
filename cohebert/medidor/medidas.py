@@ -14,6 +14,7 @@ def similaridadeCoseno(texto1, texto2):
     '''
     
     similaridade = 1 - cosine(texto1, texto2)
+    
     return similaridade
 
 # ============================  
@@ -27,6 +28,7 @@ def distanciaEuclidiana(texto1, texto2):
     '''
     
     distancia = euclidean(texto1, texto2)
+    
     return distancia
 
 # ============================  

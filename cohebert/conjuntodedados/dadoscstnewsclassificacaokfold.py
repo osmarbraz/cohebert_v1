@@ -4,7 +4,6 @@ import zipfile # Biblioteca para descompactar
 import os # Biblioteca para apagar arquivos
 import shutil # Biblioteca para mover arquivos    
 import pandas as pd # Biblioteca para manipulação e análise de dados
-from sklearn.model_selection import train_test_split # Biblioteca de divisão
 import numpy as np # Biblioteca para manipulação de arrays e matrizes multidimensionais
 from sklearn.model_selection import KFold # Biblioteca de divisão Kfold
 

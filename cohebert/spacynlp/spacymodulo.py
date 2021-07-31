@@ -1,9 +1,7 @@
 # Import das bibliotecas.
 import logging  # Biblioteca de logging
-import requests # Biblioteca de download
 import tarfile # Biblioteca de descompactação
 import os # Biblioteca de manipulação de arquivos
-import shutil # Biblioteca de manipulação arquivos de alto nível
 import spacy # Biblioteca do spaCy
 
 # Import de bibliotecas próprias

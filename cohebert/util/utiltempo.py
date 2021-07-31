@@ -2,14 +2,13 @@
 import logging  # Biblioteca de logging
 from cmath import rect, phase
 from math import radians, degrees
+import datetime # Biblioteca de data e tempo
  
 # ============================    
 def formataTempo(tempo):
      '''
      Pega a tempo em segundos e retorna uma string hh:mm:ss
      '''
-     import time
-     import datetime
         
      # Arredonda para o segundo mais próximo.
      tempoArredondado = int(round((tempo)))
@@ -19,6 +18,7 @@ def formataTempo(tempo):
 
 # ============================      
 def mediaAngulo(deg):
+    
     return degrees(phase(sum(rect(1, radians(d)) for d in deg)/len(deg)))
  
 # ============================  
@@ -26,6 +26,7 @@ def mediaTempo(tempos):
     '''
     Calcula a média de uma lista de tempo string no formato hh:mm:ss
     '''
+    
     t = (tempo.split(':') for tempo in tempos)
     # Converte para segundos
     segundos = ((float(s) + int(m) * 60 + int(h) * 3600) for h, m, s in t)
@@ -41,7 +42,8 @@ def mediaTempo(tempos):
     # Recupera as horas e os minutos  
     h, m = divmod(media_segundos, 3600)
     # Recupera os minutos e os segundos
-    m, s = divmod(m, 60)    
+    m, s = divmod(m, 60)  
+    
     return '{:02d}:{:02d}:{:02d}'.format(int(h), int(m), int(s))    
 
 # ============================    
@@ -49,6 +51,7 @@ def somaTempo(tempos):
     '''
     Calcula a soma de uma lista de tempo string no formato hh:mm:ss
     '''
+    
     t = (tempo.split(':') for tempo in tempos)
     # Converte para segundos
     segundos = ((float(s) + int(m) * 60 + int(h) * 3600) for h, m, s in t)
@@ -57,5 +60,6 @@ def somaTempo(tempos):
     # Recupera as horas e os minutos   
     h, m = divmod(soma_segundos, 3600)
     # Recupera os minutos e os segundos
-    m, s = divmod(m, 60)    
+    m, s = divmod(m, 60) 
+    
     return '{:02d}:{:02d}:{:02d}'.format(int(h), int(m), int(s))  
