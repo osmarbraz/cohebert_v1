@@ -77,6 +77,9 @@ Apesar de existir uma lista grande de [Modelos Pré-treinados](https://huggingfa
 Exemplos de execução completos com o **CoheBERT** são mostrados nos [notebooks](notebooks/cstnews/).
 
 ## **Diretórios**
+
+Relação e descrição dos principais diretórios do cohebert.
+
 * **cohebert** - Código fonte do CoheBERT versão 1.0
 * **conjuntodedados** - Diretório com os conjuntos de dados.
   * **cstnews** - Arquivos do conjunto de dados do CSTNews.
