@@ -38,23 +38,23 @@ Realizamos o import das bibliotecas do **CoheBERT** e instanciamos a classe Cohe
 ````python
 from coherence_bert import CoherenceBERT
 
-cohebert = CoherenceBERT("neuralmind/bert-large-portuguese-cased" # BERTimbau large
+cohebert = CoherenceBERT("neuralmind/bert-large-portuguese-cased") # BERTimbau large
 ````
 
 Em seguida, forneça algumas sentenças ao **CoheBERT** e recupere a medida.
 
 ````python
 # Documento e suas sentenças
-DO = ["Bom Dia, professor."
-      "Qual o conteúdo da prova?"
+DO = ["Bom Dia, professor.",
+      "Qual o conteúdo da prova?",
       "Vai cair tudo na prova?",
-      "Aguardo uma resposta, João."      
+      "Aguardo uma resposta, João."]
 
 # Recupera a medida Ccos do documento
-CcosDO =  cohebert.getMedidaCoerenciaCosseno(DO)
+CcosDO = cohebert.getMedidaCoerenciaCosseno(DO)
 
 # Mostra a medida recuperada
-print("Ccos DO    :" CcosDO) #Ccos DO    : 0.8178287347157797
+print("Ccos DO    :", CcosDO) #Ccos DO    : 0.8178287347157797
 ````
 
 ## Medidas de (In)coerência **CoheBERT**
