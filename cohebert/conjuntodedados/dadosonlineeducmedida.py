@@ -165,9 +165,10 @@ def converteListaParesDocumentos(lista_documentos):
         5. 'documentoPermutado' - Documento permutado.
         
     Parâmetros:
-        `lista_documentos` - Lista de pares de documentos. 
-    Saída:
-        `dfdados` - Um dataframe com os dados carregados.    
+    `lista_documentos` - Lista de pares de documentos. 
+    
+    Retorno:
+    `dfdados` - Um dataframe com os dados carregados.    
     '''
 
     # Converte a lista em um dataframe.
@@ -183,12 +184,14 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
     No nosso caso vamos utilizar o modelo BERT, que tem 512 tokens de tamanho limite de documento. 
     O tokenizador gera quantidades diferentes tokens para cada modelo pré-treinado. 
     Portanto é necessário especificar o tokenizador para descatar os documentos que ultrapassam o limite de tokens de entrada do BERT.
+    
     Parâmetros:      
-        `model_args` - Objeto com os argumentos do modelo.    
-        `tokenizer` - Tokenizador BERT.
-        `dfdados` - Dataframe com os documentos a serem analisados.           
-    Saída:
-        `dfdadosretorno` - Um dataframe sem os documentos grandes.
+    `model_args` - Objeto com os argumentos do modelo.    
+    `tokenizer` - Tokenizador BERT.
+    `dfdados` - Dataframe com os documentos a serem analisados. 
+    
+    Retorno:
+    `dfdadosretorno` - Um dataframe sem os documentos grandes.
     '''
     
     dfdadosretorno = None
@@ -229,11 +232,13 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
 def getListasDocumentosMedidas(ORIGEM):  
     '''    
     Carrega os arquivos de documentos originais e permutados do OnlineEduc 1.0 e retorna suas listas preenchidas.
+    
     Parâmetros:        
-        `ORIGEM` - Se a variável for setada indica de onde fazer o download. 
-    Saída:
-        `lista_documentos_originais` - Lista com os documentos originais.
-        `lista_documentos_permutados` - Lista com os documentos permutados.
+    `ORIGEM` - Se a variável for setada indica de onde fazer o download.
+    
+    Retorno:
+    `lista_documentos_originais` - Lista com os documentos originais.
+    `lista_documentos_permutados` - Lista com os documentos permutados.
     '''
     
     # # Realiza o download do conjunto de dados
@@ -250,12 +255,14 @@ def getListasDocumentosMedidas(ORIGEM):
 # ============================    
 def getConjuntoDeDadosMedida(model_args, tokenizer): 
     '''    
-    Carrega os dados do OnlineEduc 1.0 para o cálculo de medida  e retorna um dataframe.    
+    Carrega os dados do OnlineEduc 1.0 para o cálculo de medida  e retorna um dataframe.  
+    
     Parâmetros:        
-        `model_args` - Objeto com os argumentos do modelo.
-        `tokenizer` - Tokenizador BERT.
-    Saída:
-        `dfdados` - Um dataframe com os dados carregados.
+    `model_args` - Objeto com os argumentos do modelo.
+    `tokenizer` - Tokenizador BERT.
+    
+    Retorno:
+    `dfdados` - Um dataframe com os dados carregados.
     '''
     
     # Realiza o download do conjunto de dados

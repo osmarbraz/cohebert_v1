@@ -165,15 +165,16 @@ def carregaClassificacoes(NOME_BASE, DIRETORIO_CLASSIFICACAO, EPOCA, TAXA_APREND
 # ============================
 def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_teste, classes_teste, documentoids_teste, wandb):
     '''
-    Realiza a avaliação do modelo BERT ajustado com conjunto de dados de teste.    
+    Realiza a avaliação do modelo BERT ajustado com conjunto de dados de teste. 
+    
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo.
-        `training_args` - Objeto com os argumentos do treinamento. 
-        `model` - Modelo BERT. 
-        `tokenizer` - Tokenizador BERT. 
-        `documentos_teste` - Lista dos documentos de teste. 
-        `classes_teste` - Lista das classes dos documentos de teste. 
-        `documentoids_teste` - Lista dos ids dos documentos de teste.     
+    `model_args` - Objeto com os argumentos do modelo.
+    `training_args` - Objeto com os argumentos do treinamento. 
+    `model` - Modelo BERT. 
+    `tokenizer` - Tokenizador BERT. 
+    `documentos_teste` - Lista dos documentos de teste. 
+    `classes_teste` - Lista das classes dos documentos de teste. 
+    `documentoids_teste` - Lista dos ids dos documentos de teste.     
     '''
 
     # Recupera o dispotivo da GPU 
@@ -327,16 +328,18 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
 def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_treino, classes_treino, documentoids_treino, wandb):
     '''
     Realiza o treinamento do modelo BERT com o conjunto de dados de treino.
+    
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo. 
-        `training_args` - Objeto com os argumentos do treinamento. 
-        `model` - Modelo pré-treinado BERT. 
-        `tokenizer` - Tokenizador BERT. 
-        `documentos_treino` - Lista dos documentos de treino. 
-        `classes_treino` - Lista das classes dos documentos de treino. 
-        `documentoids_treino` - Lista dos ids dos documentos de treino.     
-    Saída:  
-        `model` - Modelo BERT ajustado.
+    `model_args` - Objeto com os argumentos do modelo. 
+    `training_args` - Objeto com os argumentos do treinamento. 
+    `model` - Modelo pré-treinado BERT. 
+    `tokenizer` - Tokenizador BERT. 
+    `documentos_treino` - Lista dos documentos de treino. 
+    `classes_treino` - Lista das classes dos documentos de treino. 
+    `documentoids_treino` - Lista dos ids dos documentos de treino.     
+    
+    Retorno:  
+    `model` - Modelo BERT ajustado.
     '''
     
     # Recupera o dispotivo da GPU 

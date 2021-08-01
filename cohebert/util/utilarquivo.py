@@ -10,9 +10,10 @@ from util.utiltempo import *
 def downloadArquivo(url_arquivo, nome_arquivo_destino):
     '''    
     Realiza o download de um arquivo de uma url em salva em nome_arquivo_destino.
+    
     Parâmetros:
-       `url_arquivo` - URL do arquivos a ser feito download.      
-       `nome_arquivo_destino` - Nome do arquivo a ser salvo.      
+    `url_arquivo` - URL do arquivos a ser feito download.      
+    `nome_arquivo_destino` - Nome do arquivo a ser salvo.      
     '''
     
     # Realiza o download de um arquivo em uma url
@@ -25,8 +26,9 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
 def carregar(nome_arquivo):
     '''
     Carrega um arquivo texto e retorna as linhas como um único parágrafo(texto).
+    
     Parâmetros:
-       `nome_arquivo` - Nome do arquivo a ser carregado.           
+    `nome_arquivo` - Nome do arquivo a ser carregado.           
     '''
         
     # Abre o arquivo
@@ -51,8 +53,9 @@ def carregar(nome_arquivo):
 def carregarLista(nome_arquivo):
     '''
     Carrega um arquivo texto e retorna as linhas como uma lista de sentenças(texto).
+    
     Parâmetros:
-       `nome_arquivo` - Nome do arquivo a ser carregado.           
+    `nome_arquivo` - Nome do arquivo a ser carregado.           
     '''
 
     # Abre o arquivo
@@ -74,10 +77,11 @@ def carregarLista(nome_arquivo):
 # ============================      
 def salvar(nome_arquivo, texto):                       
     '''
-     Salva um texto em um arquivo.
-     Parâmetros:
-        `nome_arquivo` - Nome do arquivo a ser salvo.     
-        `texto` - Texto a ser salvo.     
+    Salva um texto em um arquivo.
+     
+    Parâmetros:
+    `nome_arquivo` - Nome do arquivo a ser salvo.     
+    `texto` - Texto a ser salvo.     
      '''
 
     arquivo = open(nome_arquivo, 'w')

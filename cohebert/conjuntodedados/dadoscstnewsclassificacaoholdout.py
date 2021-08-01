@@ -14,13 +14,14 @@ from conjuntodedados.dadoscstnewsmedida import *
 def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
     '''    
     Divide o conjunto de dados em treino e teste utilizando um percentual de divisão.
+    
     Parâmetros:
-        `dfdados` - Dataframe com os dados a serem divididos.  
-        `percentualDivisao` - Percentual de divisão dos dados.
-        `classeStratify` - Faz uma divisão de forma que a proporção dos valores na amostra produzida seja a mesma que a proporção dos valores fornecidos.
-    Saída:
-        `dfdados_train` - Dataframe com os dados de treinamento.
-        `dfdados_test` - Dataframe com os dados de teste.
+    `dfdados` - Dataframe com os dados a serem divididos.  
+    `percentualDivisao` - Percentual de divisão dos dados.
+    `classeStratify` - Faz uma divisão de forma que a proporção dos valores na amostra produzida seja a mesma que a proporção dos valores fornecidos.
+    Retorno:
+    `dfdados_train` - Dataframe com os dados de treinamento.
+    `dfdados_test` - Dataframe com os dados de teste.
     '''
         
     # Quantidade de elementos de teste considerando o percentual
@@ -41,8 +42,9 @@ def organizaDados(dfdados):
     Organiza osdados do CSTNews para classificação e retorna um dataframe. 
     Coloca os dados dos pares de documento um após o outro. 
     Primeiro adiciona o original e rotula como 1 e depois coloca o permutado rotulando como 0.
+    
     Parâmetros:
-        `dfdados` - Dataframe com os dados a serem organizados para classificação.    
+    `dfdados` - Dataframe com os dados a serem organizados para classificação.    
     '''
     
     # Organiza os dados
@@ -64,12 +66,13 @@ def organizaDados(dfdados):
 def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):  
     '''    
     Carrega os dados do CSTNews e retorna um dataframe para classificação.
+    
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo.            
-        `tokenizer` - Tokenizador BERT.
-        `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
-    Saída:
-        `dfdados` - Um dataframe com os dados carregados.
+    `model_args` - Objeto com os argumentos do modelo.            
+    `tokenizer` - Tokenizador BERT.
+    `ORIGEM` - Se a variável for setada indica de onde fazer o download.       
+    Retorno:
+    `dfdados` - Um dataframe com os dados carregados.
     '''
     
     # Realiza o download do conjunto de dados
@@ -93,14 +96,16 @@ def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
 def descartandoDocumentosGrandesTreinoTeste(model_args, tokenizer, dfdados_train, dfdados_test):
     '''
     Descarta os documentos que possuem mais tokens que o tamanho máximo em model_args(max_seq_len). 
+    
     Parâmetros:        
-        `model_args` - Objeto com os argumentos do modelo.
-        `tokenizer` - Tokenizador BERT.
-        `dfdados_train` - Dataframe com os dados de treinamento.
-        `dfdados_test` - Dataframe com os dados de teste.
-    Saída:
-        `dfdados_train` - Dataframe com os dados de treinamento sem documentos grandes.
-        `dfdados_test` - Dataframe com os dados de teste sem documentos grandes.
+    `model_args` - Objeto com os argumentos do modelo.
+    `tokenizer` - Tokenizador BERT.
+    `dfdados_train` - Dataframe com os dados de treinamento.
+    `dfdados_test` - Dataframe com os dados de teste.
+    
+    Retorno:
+    `dfdados_train` - Dataframe com os dados de treinamento sem documentos grandes.
+    `dfdados_test` - Dataframe com os dados de teste sem documentos grandes.
     '''    
     
     # Verifica se o tokenizador foi carregado

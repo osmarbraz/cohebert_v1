@@ -7,8 +7,8 @@ import datetime # Biblioteca de data e tempo
 # ============================    
 def formataTempo(tempo):
     '''
-     Pega a tempo em segundos e retorna uma string hh:mm:ss
-     '''
+    Pega a tempo em segundos e retorna uma string hh:mm:ss
+    '''
         
     # Arredonda para o segundo mais próximo.
     tempoArredondado = int(round((tempo)))

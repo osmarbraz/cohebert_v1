@@ -18,9 +18,9 @@ def carregaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO):
     Carrega e mostra os dados da avaliação de folds. 
     
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo. 
-        `training_args` - Objeto com os argumentos do treinamento. 
-        `DIRETORIO_AVALIACAO` - Diretório com os dados da avaliação.        .        
+    `model_args` - Objeto com os argumentos do modelo. 
+    `training_args` - Objeto com os argumentos do treinamento. 
+    `DIRETORIO_AVALIACAO` - Diretório com os dados da avaliação.        .        
     '''      
     
     # Acumuladores.
@@ -99,10 +99,10 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
     Salva o resultado da classificação de um fold. 
     
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo.
-        `training_args` - Objeto com os argumentos do treinamento. 
-        `DIRETORIO_CLASSIFICACAO` - Diretório para salvar os dados da classificação.
-        `lista_resultado_avaliacao` - Lista com os dados da avaliação da classificação. 
+    `model_args` - Objeto com os argumentos do modelo.
+    `training_args` - Objeto com os argumentos do treinamento. 
+    `DIRETORIO_CLASSIFICACAO` - Diretório para salvar os dados da classificação.
+    `lista_resultado_avaliacao` - Lista com os dados da avaliação da classificação. 
     '''  
 
     if model_args.salvar_classificacao:
@@ -170,9 +170,9 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
     Salva os dados da avaliação de um fold. 
     
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo. 
-        `training_args` - Objeto com os argumentos do treinamento. 
-        `DIRETORIO_AVALIACAO` - Diretório para salvar os dados da avaliação.        .        
+    `model_args` - Objeto com os argumentos do modelo. 
+    `training_args` - Objeto com os argumentos do treinamento. 
+    `DIRETORIO_AVALIACAO` - Diretório para salvar os dados da avaliação.        .        
     '''      
 
     if model_args.salvar_avaliacao:

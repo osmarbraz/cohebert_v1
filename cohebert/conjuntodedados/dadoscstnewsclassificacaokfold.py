@@ -18,10 +18,11 @@ from conjuntodedados.dadoscstnewsmedida import *
 def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
     '''    
     Analisa os dados dos arquivos para Kfolds.
+    
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo.    
-        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
-        `tokenizer` - Tokenizador BERT.        
+    `model_args` - Objeto com os argumentos do modelo.    
+    `DIRETORIO_BASE` - Diretório onde salvar os dados.  
+    `tokenizer` - Tokenizador BERT.        
     '''
   
     logging.info("Análise dos dados dos arquivos dos KFolds do diretório: {}.".format(DIRETORIO_BASE))
@@ -99,12 +100,13 @@ def analiseArquivosKFold(model_args, DIRETORIO_BASE, tokenizer):
 def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     '''    
     Divide o conjunto de dados em arquivos de treino e teste para Kfolds.
+    
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo.    
-        `DIRETORIO_BASE` - Diretório onde salvar os dados.  
-        `dfdados` - Dataframe com os dados a serem divididos.        
+    `model_args` - Objeto com os argumentos do modelo.    
+    `DIRETORIO_BASE` - Diretório onde salvar os dados.  
+    `dfdados` - Dataframe com os dados a serem divididos.        
         
-    Saída:
+    Retorno:
         Arquivos dos KFolds salvos no diretório base.
     '''
 
@@ -262,6 +264,7 @@ def copiaCSTNewsGoogleDrive():
     '''    
     Copia dos arquivos do conjunto de dados do CSTNews para classificação KFold do Google Drive.
     '''
+    
     logging.info("Copia do CSTNews do Google Drive")  
     
     DIRETORIO_GOOGLEDRIVE = "/content/drive"
@@ -300,8 +303,9 @@ def copiaCSTNewsGoogleDrive():
 def downloadCSTNews(ORIGEM):
     '''
     Realiza o download o arquivo KFold do CSTNews de uma determinada origem(ORIGEM).
+    
     Parâmetros:
-        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrório usar a copia do checkout.       
+    `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrório usar a copia do checkout.       
     '''    
     
     if ORIGEM:
@@ -316,13 +320,15 @@ def downloadCSTNews(ORIGEM):
 def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     '''    
     Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
+    
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo.  
-        `tokenizer` -Tokenizador do BERT para descartar documentos grandes.  
-        `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.    
-    Saída:
-        `dfdados_train` - Dataframe com os dados de treinamento.
-        `dfdados_test` - Dataframe com os dados de teste.
+    `model_args` - Objeto com os argumentos do modelo.  
+    `tokenizer` -Tokenizador do BERT para descartar documentos grandes.  
+    `ORIGEM` - Se a variável for setada indica para fazer o download do Github caso contrário usar a copia do checkout.  
+    
+    Retorno:
+    `dfdados_train` - Dataframe com os dados de treinamento.
+    `dfdados_test` - Dataframe com os dados de teste.
     '''
     
     # Fold de dados a ser carregado

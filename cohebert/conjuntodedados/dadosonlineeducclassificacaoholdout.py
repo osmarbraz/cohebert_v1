@@ -13,13 +13,15 @@ from conjuntodedados.dadosonlineeducmedida import *
 def divisaoConjuntoDados(dfdados, percentualDivisao=0.3, classeStratify='classe'):
     '''    
     Divide o conjunto de dados em treino e teste utilizando um percentual de divisão.
+    
     Parâmetros:
-        `dfdados` - Dataframe com os dados a serem divididos.  
-        `percentualDivisao` - Percentual de divisão dos dados.
-        `classeStratify` - Faz uma divisão de forma que a proporção dos valores na amostra produzida seja a mesma que a proporção dos valores fornecidos.
-    Saída:
-        `dfdados_train` - Dataframe com os dados de treinamento.
-        `dfdados_test` - Dataframe com os dados de teste.
+    `dfdados` - Dataframe com os dados a serem divididos.  
+    `percentualDivisao` - Percentual de divisão dos dados.
+    `classeStratify` - Faz uma divisão de forma que a proporção dos valores na amostra produzida seja a mesma que a proporção dos valores fornecidos.
+    
+    Retorno:
+    `dfdados_train` - Dataframe com os dados de treinamento.
+    `dfdados_test` - Dataframe com os dados de teste.
     '''
         
     # Quantidade de elementos de teste considerando o percentual
@@ -40,8 +42,9 @@ def organizaDados(dfdados):
     Organiza osdados do OnlineEduc 1.0 para classificação e retorna um dataframe.
     Coloca os dados dos pares de documento um após o outro. 
     Primeiro adiciona o original e rotula como 1 e depois coloca o permutado rotulando como 0.
+    
     Parâmetros:
-        `dfdados` - Dataframe com os dados a serem organizados para classificação.  
+    `dfdados` - Dataframe com os dados a serem organizados para classificação.  
     '''
   
     # Organiza os dados
@@ -63,11 +66,13 @@ def organizaDados(dfdados):
 def getConjuntoDeDadosClassificacao(model_args, tokenizer): 
     '''    
     Carrega os dados do OnlineEduc 1.0 para classificação e retorna um dataframe.
+    
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo.  
-        `tokenizer` - Tokenizador BERT.
-    Saída:
-        `dfdados` - Um dataframe com os dados carregados.
+    `model_args` - Objeto com os argumentos do modelo.  
+    `tokenizer` - Tokenizador BERT.
+    
+    Retorno:
+    `dfdados` - Um dataframe com os dados carregados.
     '''
     
     # Realiza o download do conjunto de dados

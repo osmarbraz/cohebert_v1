@@ -24,9 +24,10 @@ from bert.bertarguments import ModeloArgumentosMedida
 def carregaOtimizador(training_args, model):
     '''
     Esta função carrega o otimizador utilizado no agendador de aprendizado.
+    
     Parâmetros:
-        `training_args` - Objeto com os argumentos do treinamento. 
-        `model` - Modelo BERT. 
+    `training_args` - Objeto com os argumentos do treinamento. 
+    `model` - Um objeto do modelo BERT. 
     '''
     
     # Nota: AdamW é uma classe da biblioteca huggingface (ao contrário de pytorch).
@@ -50,10 +51,11 @@ def carregaOtimizador(training_args, model):
 def carregaAgendador(training_args, otimizador, tamanho_conjunto):
     '''
     Esta função carrega o agendador com um taxa de aprendizado que diminua linearmente até 0.
+    
     Parâmetros:
-        `training_args` - Objeto com os argumentos do treinamento. 
-        `otimizador` - Objeto do otmizador do modelo. 
-        `tamanho_conjunto` - Tamanho do conjunto de dados de treino. 
+    `training_args` - Objeto com os argumentos do treinamento. 
+    `otimizador` - Objeto do otmizador do modelo. 
+    `tamanho_conjunto` - Tamanho do conjunto de dados de treino. 
     '''
 
     # O número total de etapas de ajuste fino é [número de lotes] x [número de épocas].
@@ -75,9 +77,8 @@ def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
     Esta função tentará escolher um intervalo de atualização de progresso inteligente com base na magnitude das iterações totais.
 
     Parâmetros:
-       `total_iteracoes` - O número de iterações no loop for.
-       `numero_atualizacoes` - Quantas vezes queremos ver uma atualização sobre o
-                               curso do loop for.
+    `total_iteracoes` - O número de iterações no loop for.
+    `numero_atualizacoes` - Quantas vezes queremos ver uma atualização sobre o curso do loop for.
     '''
     
     # Divide o total de iterações pelo número desejado de atualizações. Provavelmente
@@ -108,18 +109,20 @@ def obter_intervalo_atualizacao(total_iteracoes, numero_atualizacoes):
 def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, documentoids, tamanho_lote):
     '''
     Esta função combina todos os passos para preparar os lotes inteligentes(smartbatch).
+    
     Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.       
-       `tokenizer` - Tokenizador BERT dos documentos.
-       `documentos` - Lista dos documentos a serem colocados nos lotes inteligentes.
-       `classes` - Lista das classes dos documentos a serem colocados nos lotes inteligentes.
-       `documentosis` - Lista dos ids dos documentos a serem colocados nos lotes inteligentes.
-       `tamanho_lote` - Tamanho do lotes inteligente.
-    Saída:
-        `py_input_ids` - Tensores Pytorh com os ids dos tokens.
-        `py_attention_masks`- Tensores Pytorh com a máscara de atenção. 
-        `py_labels` - Tensores Pytorh com as classes dos documentos.
-        `list_documentoids` Ids dos documentos.
+    `model_args` - Objeto com os argumentos do modelo.       
+    `tokenizer` - Tokenizador BERT dos documentos.
+    `documentos` - Lista dos documentos a serem colocados nos lotes inteligentes.
+    `classes` - Lista das classes dos documentos a serem colocados nos lotes inteligentes.
+    `documentosis` - Lista dos ids dos documentos a serem colocados nos lotes inteligentes.
+    `tamanho_lote` - Tamanho do lotes inteligente.
+    
+    Retorno:
+    `py_input_ids` - Tensores Pytorh com os ids dos tokens.
+    `py_attention_masks`- Tensores Pytorh com a máscara de atenção. 
+    `py_labels` - Tensores Pytorh com as classes dos documentos.
+    `list_documentoids` Ids dos documentos.
     '''
     #print('Criando Lotes Inteligentes de {:,} amostras com tamanho de lote {:,}...\n'.format(len(documentos), tamanho_lote))
     
@@ -286,8 +289,8 @@ def conectaGPU(model, device):
     Conecta um modelo BERT a GPU.
 
     Parâmetros:
-       `model` - Um modelo BERT carregado.       
-       `device` - Um device de GPU.       
+    `model` - Um modelo BERT carregado.       
+    `device` - Um device de GPU.       
     '''
     # Associa a GPU ao modelo.
     model.to(device)
@@ -307,8 +310,9 @@ def conectaGPU(model, device):
 def getNomeModeloBERT(model_args):
     '''    
     Recupera uma string com uma descrição do modelo BERT para nomes de arquivos e diretórios.
+    
     Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.       
+    `model_args` - Objeto com os argumentos do modelo.       
     '''
 
     # Verifica o nome do modelo(default SEM_MODELO_BERT)
@@ -327,8 +331,9 @@ def getNomeModeloBERT(model_args):
 def getTamanhoBERT(model_args):
     '''    
     Recupera uma string com o tamanho(dimensão) do modelo BERT para nomes de arquivos e diretórios.
+    
     Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.       
+    `model_args` - Objeto com os argumentos do modelo.       
     '''
     
     # Verifica o tamanho do modelo(default large)
@@ -343,8 +348,9 @@ def getTamanhoBERT(model_args):
 def downloadModeloPretreinado(model_args):
     ''' 
     Realiza o download do modelo BERT(MODELO) e retorna o diretório onde o modelo BERT(MODELO) foi descompactado.
+    
     Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.       
+    `model_args` - Objeto com os argumentos do modelo.       
     ''' 
     
     # Recupera o nome ou caminho do modelo
@@ -405,8 +411,9 @@ def downloadModeloPretreinado(model_args):
 def copiaModeloAjustado(model_args):
     ''' 
     Copia o modelo ajustado BERT do GoogleDrive para o projeto.
+    
     Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.       
+    `model_args` - Objeto com os argumentos do modelo.       
     ''' 
     # Verifica o nome do modelo BERT a ser utilizado
     MODELO_BERT = getNomeModeloBERT(model_args)
@@ -431,8 +438,9 @@ def copiaModeloAjustado(model_args):
 def verificaModelo(model_args):
     ''' 
     Verifica de onde utilizar o modelo.
+    
     Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.       
+    `model_args` - Objeto com os argumentos do modelo.       
     ''' 
 
     DIRETORIO_MODELO = None
@@ -460,8 +468,8 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     O parâmetro `do_lower_case` interfere na quantidade tokens a ser gerado a partir de um texto. Quando igual a `False` reduz a quantidade de tokens gerados.
     
     Parâmetros:
-       `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
-       `model_args` - Objeto com os argumentos do modelo.       
+    `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
+    `model_args` - Objeto com os argumentos do modelo.       
     ''' 
 
     tokenizer = None
@@ -485,9 +493,10 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
 def carregaModeloMedida(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o modelo e retorna o modelo.
+    
     Parâmetros:
-       `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
-       `model_args` - Objeto com os argumentos do modelo.           
+    `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
+    `model_args` - Objeto com os argumentos do modelo.           
     ''' 
 
     # Variável para setar o arquivo.
@@ -519,9 +528,10 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
 def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o modelo e retorna o modelo.
+    
     Parâmetros:
-       `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
-       `model_args` - Objeto com os argumentos do modelo.           
+    `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
+    `model_args` - Objeto com os argumentos do modelo.           
     ''' 
 
     # Variável para setar o arquivo.
@@ -555,10 +565,15 @@ def carregaBERT(model_args):
     ''' 
     Carrega o BERT para cálculo de medida ou classificação e retorna o modelo e o tokenizador.
     O tipo do model retornado pode ser BertModel ou BertForSequenceClassification, depende do tipo de model_args.
+    
     Parâmetros:
-       `model_args` - Objeto com os argumentos do modelo.       
-            - Se model_args = ModeloArgumentosClassificacao deve ser carregado o BERT para classificação(BertForSequenceClassification).
-            - Se model_args = ModeloArgumentosMedida deve ser carregado o BERT para cálculo de medida(BertModel).
+    `model_args` - Objeto com os argumentos do modelo.       
+        - Se model_args = ModeloArgumentosClassificacao deve ser carregado o BERT para classificação(BertForSequenceClassification).
+        - Se model_args = ModeloArgumentosMedida deve ser carregado o BERT para cálculo de medida(BertModel).
+
+    Retorno:    
+    `model` - Um objeto do modelo BERT carregado.       
+    `tokenizer` - Um objeto tokenizador BERT carregado.       
     ''' 
             
     # Verifica a origem do modelo

@@ -7,8 +7,9 @@ import unicodedata # Biblioteca de codificação de caracteres
 def removeAcentos(texto):   
     '''    
     Remove acentos de um texto.
+    
     Parâmetros:
-       `texto` - Texto a ser removido os acentos.
+   `texto` - Texto a ser removido os acentos.
     '''
     
     try:
@@ -26,8 +27,9 @@ def removeAcentos(texto):
 def limpaTexto(texto):    
     '''    
     Remove acentos e espaços e outros caracteres de um texto.
+    
     Parâmetros:
-       `texto` - Texto a ser limpo.
+   `texto` - Texto a ser limpo.
     '''
     
     texto = removeAcentos(texto.lower())
@@ -39,10 +41,11 @@ def limpaTexto(texto):
 # ============================  
 def remove_tags(texto):
     '''
-     Remove tags de um texto.
-     Parâmetros:
-       `texto` - Texto com tags a serem removidas.      
-     '''
+    Remove tags de um texto.
+     
+    Parâmetros:
+    `texto` - Texto com tags a serem removidas.      
+    '''
      
     textoLimpo = re.compile('<.*?>')
      

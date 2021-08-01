@@ -18,11 +18,11 @@ def getSomatorioDiferencaAbsolutaOrdenada(listaMedida1, listaMedida2):
     Calcula o somatório da diferença absoluta entre a lista ordenada de duas medidas.
     
     Parâmetros:
-        `listaMedida1` - Lista 1 com medidas.
-        `listaMedida2` - Lista 2 com medidas.
+    `listaMedida1` - Lista 1 com medidas.
+    `listaMedida2` - Lista 2 com medidas.
         
-    Saída:  
-        `soma` - Somátorio da diferença absoluta.
+    Retorno:  
+    `soma` - Somátorio da diferença absoluta.
     '''  
     lista1 = sorted(listaMedida1)
     lista2 = sorted(listaMedida2)
@@ -39,11 +39,11 @@ def getSomatorioDiferencaAbsoluta(listaMedida1, listaMedida2):
     Calcula o somatório da diferença absoluta entre a lista de duas medidas.
     
     Parâmetros:
-        `listaMedida1` - Lista 1 com medidas.
-        `listaMedida2` - Lista 2 com medidas.
+    `listaMedida1` - Lista 1 com medidas.
+    `listaMedida2` - Lista 2 com medidas.
         
-    Saída:  
-        `soma` - Somátorio da diferença absoluta.
+    Retorno:  
+    `soma` - Somátorio da diferença absoluta.
     '''  
     
     soma = 0
@@ -59,14 +59,14 @@ def acertosMedidaSimilaridadePermutado(medida, dfListaParesDocumentosMedidas):
     Conta os acerto de uma medida de similaridade(DO < permDO) com base em documentos permutados. 
     
     Parâmetros:
-        `medida` - Medida a ser contada.
-        `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
+    `medida` - Medida a ser contada.
+    `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
         
-    Saída:  
-        `acertosOriginal` - Quantidade de acertos do documento original para a medida.
-        `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
-        `percentualOriginal` - Percentual de acertos do documento original para a medida.
-        `percentualPermutado` - Percentual de acertos do documento original para a medida.        
+    Retorno:  
+    `acertosOriginal` - Quantidade de acertos do documento original para a medida.
+    `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
+    `percentualOriginal` - Percentual de acertos do documento original para a medida.
+    `percentualPermutado` - Percentual de acertos do documento original para a medida.        
     '''  
     
     acertosOriginal  = 0
@@ -89,14 +89,14 @@ def acertosMedidaSimilaridadeOriginal(medida, dfListaParesDocumentosMedidas):
     Conta os acerto de uma medida de similaridade(DO >= permDO) com base em documentos originais. 
     
     Parâmetros:
-        `medida` - Medida a ser contada.
-        `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
+    `medida` - Medida a ser contada.
+    `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
         
-    Saída:  
-        `acertosOriginal` - Quantidade de acertos do documento original para a medida.
-        `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
-        `percentualOriginal` - Percentual de acertos do documento original para a medida.
-        `percentualPermutado` - Percentual de acertos do documento original para a medida.        
+    Retorno:  
+    `acertosOriginal` - Quantidade de acertos do documento original para a medida.
+    `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
+    `percentualOriginal` - Percentual de acertos do documento original para a medida.
+    `percentualPermutado` - Percentual de acertos do documento original para a medida.        
     '''  
         
     acertosOriginal  = 0
@@ -119,14 +119,14 @@ def acertosMedidaDistanciaPermutado(medida, dfListaParesDocumentosMedidas):
     Conta os acerto de uma medida de distância(DO < permDO) com base em documentos permutados. 
     
     Parâmetros:
-        `medida` - Medida a ser contada.
-        `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
+    `medida` - Medida a ser contada.
+    `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
         
-    Saída:  
-        `acertosOriginal` - Quantidade de acertos do documento original para a medida.
-        `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
-        `percentualOriginal` - Percentual de acertos do documento original para a medida.
-        `percentualPermutado` - Percentual de acertos do documento original para a medida.        
+    Retorno:  
+    `acertosOriginal` - Quantidade de acertos do documento original para a medida.
+    `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
+    `percentualOriginal` - Percentual de acertos do documento original para a medida.
+    `percentualPermutado` - Percentual de acertos do documento original para a medida.        
     '''  
     
     acertosOriginal  = 0  
@@ -149,14 +149,14 @@ def acertosMedidaDistanciaOriginal(medida, dfListaParesDocumentosMedidas):
     Conta os acerto de uma medida de distância(DO <= permDO) com base em documentos originais. 
     
     Parâmetros:
-        `medida` - Medida a ser contado.
-        `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
+    `medida` - Medida a ser contado.
+    `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
         
-    Saída:  
-        `acertosOriginal` - Quantidade de acertos do documento original para a medida.
-        `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
-        `percentualOriginal` - Percentual de acertos do documento original para a medida.
-        `percentualPermutado` - Percentual de acertos do documento original para a medida.        
+    Retorno:  
+    `acertosOriginal` - Quantidade de acertos do documento original para a medida.
+    `acertosPermutado` - Quantidade de acertos do documento permutado para a medida.
+    `percentualOriginal` - Percentual de acertos do documento original para a medida.
+    `percentualPermutado` - Percentual de acertos do documento original para a medida.        
     '''  
     acertosOriginal  = 0  
     acertosPermutado  = 0  
@@ -177,13 +177,14 @@ def acertosMedidaDistanciaOriginal(medida, dfListaParesDocumentosMedidas):
 def recuperaListasDeMedidas(medida, dfListaParesDocumentosMedidas):
     '''
     Divide o dataframe uma lista de documentos originais e uma lista de documentos permutados para uma medida.
+    
     Parâmetros:
-        `medida` - Medida a ser recuperada.
-        `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
+    `medida` - Medida a ser recuperada.
+    `dfListaParesDocumentosMedidas` - Datafrane dos documentos e suas medidas.
         
-    Saída:     
-        `lista_medida_original` - Lista com os documentos originais da medida.
-        `lista_medida_permutado` - Lista com os documentos permutados da medida.
+    Retorno:     
+    `lista_medida_original` - Lista com os documentos originais da medida.
+    `lista_medida_permutado` - Lista com os documentos permutados da medida.
     '''        
 
     # Medida do documento original 
@@ -198,11 +199,12 @@ def recuperaListasDeMedidas(medida, dfListaParesDocumentosMedidas):
 def geraEstatisticasMedidasDocumentos(dfdadosMedidasDocumentos):
     '''
     Gera as estatísticas dos pares dos documentos e suas medidas.
+    
     Parâmetros:
-        `dfdadosMedidasDocumentos` - Datafrane dos documentos e suas medidas.
+    `dfdadosMedidasDocumentos` - Datafrane dos documentos e suas medidas.
         
-    Saída:     
-        `stats_medidas_documentos` - Lista com as estatísticas.        
+    Retorno:     
+    `stats_medidas_documentos` - Lista com as estatísticas.        
     '''        
 
     # Lista das estatísticas das medidas
@@ -235,12 +237,13 @@ def geraEstatisticasMedidasDocumentos(dfdadosMedidasDocumentos):
 def separaDocumentos(dadosMedida):
     '''
     Separa os dados do dataframe em originais e permutados.
+    
     Parâmetros:
-        `dadosMedida` - Dados a serem separados em originais e permutados.    
+    `dadosMedida` - Dados a serem separados em originais e permutados.    
         
-    Saída:
-        `dfOriginalMedida` - Dataframe com os dados de documentos originais.        
-        `dfPermutadoMedida` - Dataframe com os dados de documentos permutados.
+    Retorno:
+    `dfOriginalMedida` - Dataframe com os dados de documentos originais.        
+    `dfPermutadoMedida` - Dataframe com os dados de documentos permutados.
     '''        
     # Separa os originais
     dfOriginalMedida = dadosMedida.loc[dadosMedida['arquivo'].str.contains('Perm') == False]
@@ -259,6 +262,9 @@ def separaDocumentos(dadosMedida):
 
 # ============================
 def salvaResultadoMedicao(model_args, NOME_BASE, DIRETORIO_MEDICAO, lista_medidas_documentos_salvar):
+    '''
+    Salva o resultado da medição.
+    '''
 
     if model_args.salvar_medicao:
 
@@ -342,6 +348,9 @@ def salvaResultadoMedicao(model_args, NOME_BASE, DIRETORIO_MEDICAO, lista_medida
 
 # ============================        
 def salvaResultadoAvaliacao(model_args, NOME_BASE, DIRETORIO_AVALIACAO, tempoTotalProcessamento, conta, acuraciaCcos, contaCcos, acuraciaCeuc, contaCeuc, acuraciaCman, contaCman):
+    '''
+    Salva o resultado da avaliação.
+    '''
 
     if model_args.salvar_avaliacao:
 
@@ -412,17 +421,18 @@ def salvaResultadoAvaliacao(model_args, NOME_BASE, DIRETORIO_AVALIACAO, tempoTot
 def carregaMedidas(NOME_BASE, DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING, PALAVRA_RELEVANTE, NOME_MODELO_BERT, TAMANHO_BERT):
     '''
     Carrega as medidas de coerência de um diretório e retorna um dataframe.
+    
     Parâmetros:
-        `NOME_BASE` - Nome base do arquivo de medidas.    
-        `DIRETORIO_MEDIDAS` - Diretório com os arquivos das medidas.    
-        `TIPO_MODELO` - Tipo do modelo(pretreinado ou ajustado) a ser carregado.  
-        `ESTRATEGIA_POOLING` - Nome da estratégia de pooling(MEAN ou MAX).
-        `PALAVRA_RELEVANTE` - Nome da estratégia de relevância(ALL, CLEAN ou NOUN).
-        `NOME_MODELO_BERT` - Nome do modelo(BERTimbau ou BERT) a ser carregado.  
-        `TAMANHO_BERT` - Tamanho do modelo(Base ou Large) a ser carregado. 
+    `NOME_BASE` - Nome base do arquivo de medidas.    
+    `DIRETORIO_MEDIDAS` - Diretório com os arquivos das medidas.    
+    `TIPO_MODELO` - Tipo do modelo(pretreinado ou ajustado) a ser carregado.  
+    `ESTRATEGIA_POOLING` - Nome da estratégia de pooling(MEAN ou MAX).
+    `PALAVRA_RELEVANTE` - Nome da estratégia de relevância(ALL, CLEAN ou NOUN).
+    `NOME_MODELO_BERT` - Nome do modelo(BERTimbau ou BERT) a ser carregado.  
+    `TAMANHO_BERT` - Tamanho do modelo(Base ou Large) a ser carregado. 
         
-    Saída:
-        `dfMedida` - Um dataframe com os dados carregados.
+    Retorno:
+    `dfMedida` - Um dataframe com os dados carregados.
     '''
         
     NOME_ARQUIVO_MEDICAO = NOME_BASE + TIPO_MODELO + ESTRATEGIA_POOLING + PALAVRA_RELEVANTE + NOME_MODELO_BERT + TAMANHO_BERT + '.csv'
@@ -456,23 +466,24 @@ def carregaMedidas(NOME_BASE, DIRETORIO_MEDIDAS, TIPO_MODELO, ESTRATEGIA_POOLING
 def calculaMedidasDocumentosConjuntoDeDados(model_args, dfdados, model, tokenizer, nlp, wandb):
     '''
     Cálcula a medida de todos os documentos do conjunto.
+    
     Parâmetros:
-        `model_args` - Objeto com os argumentos do modelo. 
-        `dfdados` - Datafrane dos documentos.
-        `model` - Modelo BERT.
-        `tokenizer` - Tokenizador BERT.
-        `nlp` - Objeto spaCy.        
-        `wandg` - Wandb para log do experimento.  
+    `model_args` - Objeto com os argumentos do modelo. 
+    `dfdados` - Datafrane dos documentos.
+    `model` - Modelo BERT.
+    `tokenizer` - Tokenizador BERT.
+    `nlp` - Objeto spaCy.        
+    `wandg` - Wandb para log do experimento.  
         
-    Saída:     
-        `lista_medidas_documentos_salvar` - Lista com as medidas dos documentos para salvamento.
-        `conta` - Quantidade de pares de documentos.
-        `percentualCcos` - Percentual de acertos para a medida Ccos.
-        `contaCcos` - Quantidade de acertos para a medida Ccos.
-        `percentualCeuc` - Percentual de acertos para a medida Ceuc
-        `contaCeuc` - Quantidade de acertos para a medida Ceuc
-        `percentualCman` - Percentual de acertos para a medida Cman
-        `contaCman` - Quantidade de acertos para a medida Cman
+    Retorno:     
+    `lista_medidas_documentos_salvar` - Lista com as medidas dos documentos para salvamento.
+    `conta` - Quantidade de pares de documentos.
+    `percentualCcos` - Percentual de acertos para a medida Ccos.
+    `contaCcos` - Quantidade de acertos para a medida Ccos.
+    `percentualCeuc` - Percentual de acertos para a medida Ceuc
+    `contaCeuc` - Quantidade de acertos para a medida Ceuc
+    `percentualCman` - Percentual de acertos para a medida Cman
+    `contaCman` - Quantidade de acertos para a medida Cman
                 
     '''  
     
@@ -556,13 +567,14 @@ def calculaMedidasDocumentosConjuntoDeDados(model_args, dfdados, model, tokenize
 # ============================
 def organizaParesDocumentos(dfOriginalMedida, dfPermutadoMedida):
     '''
-    Organiza as medidas do.
+    Organiza os pares de documentos dos dataframes colocando documentos originais lado a lado com suas permutações.
+    
     Parâmetros:
-        `dfOriginalMedida` - Dados de medidas de documentos originais.
-        `dfPermutadoMedida` - Dados de medidas de documentos permutados.
+    `dfOriginalMedida` - Dados de medidas de documentos originais.
+    `dfPermutadoMedida` - Dados de medidas de documentos permutados.
         
-    Saída:
-        `dfListaParesDocumentosMedidas` - Dataframe com as medidas de documentos originais seguidos das medidas de documentos permutados.
+    Retorno:
+    `dfListaParesDocumentosMedidas` - Dataframe com as medidas de documentos originais seguidos das medidas de documentos permutados.
     '''  
 
     listaParesDocumentosMedidas = []

@@ -6,8 +6,7 @@ from typing import Optional
 
 # ============================
 @dataclass
-class ModeloArgumentosMedida:
-        
+class ModeloArgumentosMedida:        
     '''
     Classe(ModeloArgumentosMedida) de definição dos parâmetros do modelo BERT para o cálculo de medidas de coerência.
     '''
@@ -71,8 +70,7 @@ class ModeloArgumentosMedida:
 
 # ============================        
 @dataclass
-class ModeloArgumentosClassificacao:
-        
+class ModeloArgumentosClassificacao:        
     '''
     Classe(ModeloArgumentosClassificacao) de definição dos parâmetros do modelo BERT para a classificação de coerência.
     '''
