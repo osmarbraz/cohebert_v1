@@ -22,9 +22,7 @@ def verificaDiretorioCoheBERT():
         # Cria o diretório
         os.makedirs(DIRETORIO_COHEBERT)
         logging.info("Diretório Cohebert criado: {}".format(DIRETORIO_COHEBERT))
-    else:
-        logging.info("Diretório Cohebert já existe: {}".format(DIRETORIO_COHEBERT))
-
+    
     return DIRETORIO_COHEBERT
 
 # ============================  
