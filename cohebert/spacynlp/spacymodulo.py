@@ -30,13 +30,15 @@ def downloadSpacy(model_args):
     Parâmetros:
     `model_args` - Objeto com os argumentos do modelo.       
     '''
+    # Verifica se existe o diretório base
+    DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
         
     # Nome arquivo spacy
     ARQUIVO_MODELO_SPACY = model_args.modelo_spacy
     # Versão spaCy
     VERSAO_SPACY = "-" + model_args.versao_spacy
     # Nome arquivo compactado
-    NOME_ARQUIVO_MODELO_COMPACTADO = ARQUIVO_MODELO_SPACY + VERSAO_SPACY + ".tar.gz"
+    NOME_ARQUIVO_MODELO_COMPACTADO = DIRETORIO_COHEBERT  + "/" + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + ".tar.gz"
     
     # Url do arquivo
     URL_ARQUIVO_MODELO_COMPACTADO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + "/" + NOME_ARQUIVO_MODELO_COMPACTADO
@@ -54,13 +56,16 @@ def descompactaSpacy(model_args):
     `model_args` - Objeto com os argumentos do modelo.       
     '''
     
+    # Verifica se existe o diretório base
+    DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
+    
     # Nome arquivo spacy
     ARQUIVO_MODELO_SPACY = model_args.modelo_spacy
     # Versão spaCy
     VERSAO_SPACY = "-" + model_args.versao_spacy
     
     # Nome do arquivo a ser descompactado
-    NOME_ARQUIVO_MODELO_COMPACTADO = ARQUIVO_MODELO_SPACY + VERSAO_SPACY + ".tar.gz"
+    NOME_ARQUIVO_MODELO_COMPACTADO = DIRETORIO_COHEBERT + "/" + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + ".tar.gz"
     
     logging.info("Descompactando o arquivo do modelo do spaCy.")
     arquivoTar = tarfile.open(NOME_ARQUIVO_MODELO_COMPACTADO, "r:gz")    
