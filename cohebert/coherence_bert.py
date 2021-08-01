@@ -23,6 +23,12 @@ PALAVRA_RELEVANTE = ['ALL', 'CLEAN', 'NOUN']
 
 class CoherenceBERT:
     
+    """
+     Carrega e cria um modelo CoherenceBERT, que pode ser usado para medir a (in)coerência de documentos.
+     
+     :param model_name_or_path: Se for um caminho de arquivo no disco, carrega o modelo a partir desse caminho. Se não for um caminho, ele primeiro tenta fazer o download de um modelo pré-treinado do Coherence BERT. Se isso falhar, tenta construir um modelo do repositório de modelos do Huggingface com esse nome.
+    """
+    
     # Construtor da classe
     def __init__(self, pretrained_model_name_or_path):
         # Parâmetro recebido para o modelo BERT
