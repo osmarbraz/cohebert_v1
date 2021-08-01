@@ -35,17 +35,20 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
     `nome_arquivo_destino` - Nome do arquivo a ser salvo.      
     '''
     
+    # Verifica se existe o diretório base
+    DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
+    
     # Realiza o download de um arquivo em uma url
     data = requests.get(url_arquivo, stream=True)
     
     # Verifica se o arquivo existe
     if data.status_code != 200:
-        loggin.info("Exceção ao tentar realizar download {}. Response {}".format(url, data.status_code), file=sys.stderr)
+        logging.info("Exceção ao tentar realizar download {}. Response {}".format(url, data.status_code), file=sys.stderr)
         data.raise_for_status()
         return
 
     # Arquivo temporário    
-    nome_arquivo_temporario = nome_arquivo_destino + "_part"
+    nome_arquivo_temporario = DIRETORIO_COHEBERT + "/" + nome_arquivo_destino + "_part"
     
     logging.info("Download do arquivo: {}.".format(nome_arquivo_destino))
     
