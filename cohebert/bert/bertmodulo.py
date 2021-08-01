@@ -414,8 +414,9 @@ def downloadModeloPretreinado(model_args):
         # O vocabulário não está no arquivo compactado acima, mesma url mas arquivo diferente.
         URL_MODELO_VOCAB = CAMINHO_ARQUIVO + ARQUIVO_VOCAB
         # Coloca o arquivo do vocabulário no diretório de descompactação.
-        print("URL_MODELO_VOCAB:", URL_MODELO_VOCAB)
+        
         downloadArquivo(URL_MODELO_VOCAB, ARQUIVO_VOCAB)
+        os.rename(ARQUIVO_VOCAB, DIRETORIO_MODELO + "/" + ARQUIVO_VOCAB)
 
         # Apaga o arquivo compactado
         os.remove(NOME_ARQUIVO)
