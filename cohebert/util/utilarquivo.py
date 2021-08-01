@@ -48,9 +48,10 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
         data.raise_for_status()
         return
 
+    # Recupera o nome do arquivo a ser realizado o download    
     nome_arquivo = nome_arquivo_destino.split('/')[-1]  
 
-    # Arquivo temporário    
+    # Define o nome e caminho do arquivo temporário    
     nome_arquivo_temporario = DIRETORIO_COHEBERT + "/" + nome_arquivo + "_part"
     
     logging.info("Download do arquivo: {}.".format(nome_arquivo_destino))

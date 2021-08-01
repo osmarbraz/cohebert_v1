@@ -400,9 +400,7 @@ def downloadModeloPretreinado(model_args):
             logging.info('Apagando diretório existente do modelo!')
             # Apaga o diretório e os arquivos existentes                     
             shutil.rmtree(DIRETORIO_MODELO)
-
-        print("URL_MODELO:", URL_MODELO)
-
+        
         # Realiza o download do arquivo do modelo        
         downloadArquivo(URL_MODELO, NOME_ARQUIVO)
 
@@ -413,11 +411,9 @@ def downloadModeloPretreinado(model_args):
         # Baixa o arquivo do vocabulário.
         # O vocabulário não está no arquivo compactado acima, mesma url mas arquivo diferente.
         URL_MODELO_VOCAB = CAMINHO_ARQUIVO + ARQUIVO_VOCAB
-        # Coloca o arquivo do vocabulário no diretório de descompactação.
-        
+        # Coloca o arquivo do vocabulário no diretório do modelo.        
         downloadArquivo(URL_MODELO_VOCAB, DIRETORIO_MODELO + "/" + ARQUIVO_VOCAB)
-        #os.rename(ARQUIVO_VOCAB, DIRETORIO_MODELO + "/" + ARQUIVO_VOCAB)
-
+        
         # Apaga o arquivo compactado
         os.remove(NOME_ARQUIVO)
 
