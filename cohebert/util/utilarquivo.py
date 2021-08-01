@@ -29,10 +29,10 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
     caminho_download = nome_arquivo_destino + "_part"
     
     with open(caminho_download, "wb") as arquivo_binario:        
-        content_length = req.headers.get('Content-Length')        
-        total = int(content_length) if content_length is not None else None        
+        tamanho_conteudo = data.headers.get('Content-Length')        
+        total = int(tamanho_conteudo) if tamanho_conteudo is not None else None        
         progress = tqdm_notebook(unit="B", total=total, unit_scale=True)        
-        for chunk in req.iter_content(chunk_size=1024):        
+        for chunk in data.iter_content(chunk_size=1024):        
             if chunk: 
                 progress.update(len(chunk))
                 arquivo_binario.write(chunk)
