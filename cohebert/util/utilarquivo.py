@@ -8,7 +8,6 @@ import os # Biblioteca para manipular arquivos
 from util.utilmodulo import *
 from util.utiltempo import *
 
-
 # Diretório do cohebert
 DIRETORIO_COHEBERT = 'cohebert_v1'
 
