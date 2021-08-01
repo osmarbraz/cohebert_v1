@@ -25,10 +25,10 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
         req.raise_for_status()
         return
 
+    # Diretório temporário    
     caminho_download = nome_arquivo_destino + "_part"
     
-    with open(caminho_download, "wb") as file_binary:
-        
+    with open(caminho_download, "wb") as file_binary:        
         content_length = req.headers.get('Content-Length')        
         total = int(content_length) if content_length is not None else None        
         progress = tqdm_notebook(unit="B", total=total, unit_scale=True)        
