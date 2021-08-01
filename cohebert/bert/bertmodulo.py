@@ -368,6 +368,9 @@ def downloadModeloPretreinado(model_args):
     `DIRETORIO_MODELO` - Diretório de download do modelo.
     ''' 
     
+    # Verifica se existe o diretório base
+    DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
+    
     # Recupera o nome ou caminho do modelo
     MODELO = model_args.pretrained_model_name_or_path
 
@@ -381,7 +384,7 @@ def downloadModeloPretreinado(model_args):
     if URL_MODELO:
 
         # Diretório descompactação.
-        DIRETORIO_MODELO = "/content/modelo"
+        DIRETORIO_MODELO = DIRETORIO_COHEBERT + "/modelo"
 
         # Recupera o nome do arquivo do modelo da url.
         NOME_ARQUIVO = URL_MODELO.split('/')[-1]
@@ -439,10 +442,13 @@ def copiaModeloAjustado(model_args):
     # Verifica o tamanho do modelo(default large)
     TAMANHO_BERT = getTamanhoBERT(model_args)
 
-    # Diretório local de salvamento do modelo.
-    DIRETORIO_LOCAL_MODELO_AJUSTADO = "/content/modelo_ajustado/"
+    # Verifica se existe o diretório base
+    DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
 
-    # Diretório remoto de salvamento do modelo.
+    # Diretório local de salvamento do modelo.
+    DIRETORIO_LOCAL_MODELO_AJUSTADO = DIRETORIO_COHEBERT + "/modelo_ajustado/"
+
+    # Diretório remoto de salvamento do modelo no google drive.
     DIRETORIO_REMOTO_MODELO_AJUSTADO = "/content/drive/MyDrive/Colab Notebooks/Data/CSTNEWS/validacao_classificacao/holdout/modelo/" + MODELO_BERT + TAMANHO_BERT
 
     # Copia o arquivo do modelo para o diretório no Google Drive.
@@ -483,7 +489,7 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     ''' 
     Carrega o tokenizador do DIRETORIO_MODELO.
     O tokenizador utiliza WordPiece.
-    Carregando o tokenizador do diretório '/content/modelo/' do diretório padrão se variável `DIRETORIO_MODELO` setada.
+    Carregando o tokenizador do diretório './modelo/' do diretório padrão se variável `DIRETORIO_MODELO` setada.
     Caso contrário carrega da comunidade
     Por default(`do_lower_case=True`) todas as letras são colocadas para minúsculas. Para ignorar a conversão para minúsculo use o parâmetro `do_lower_case=False`. Esta opção também considera as letras acentuadas(ãçéí...), que são necessárias a língua portuguesa.
     O parâmetro `do_lower_case` interfere na quantidade tokens a ser gerado a partir de um texto. Quando igual a `False` reduz a quantidade de tokens gerados.

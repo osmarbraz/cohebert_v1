@@ -8,6 +8,26 @@ import os # Biblioteca para manipular arquivos
 from util.utilmodulo import *
 from util.utiltempo import *
 
+
+# Diretório do cohebert
+DIRETORIO_COHEBERT = 'cohebert_v1'
+
+# ============================  
+def verificaDiretorioCoheBERT():
+    '''    
+    Verifica se existe o diretório cohebert_v1 no diretório corrente.    
+    '''
+    
+    # Verifica se o diretório existe
+    if not os.path.exists(DIRETORIO_COHEBERT):  
+        # Cria o diretório
+        os.makedirs(DIRETORIO_COHEBERT)
+        logging.info("Diretório Cohebert criado: {}".format(DIRETORIO_COHEBERT))
+    else:
+        logging.info("Diretório Cohebert já existe: {}".format(DIRETORIO_COHEBERT))
+
+    return DIRETORIO_COHEBERT
+
 # ============================  
 def downloadArquivo(url_arquivo, nome_arquivo_destino):
     '''    
