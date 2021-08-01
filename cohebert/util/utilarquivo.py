@@ -28,10 +28,10 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
         return
 
     # Arquivo temporário    
-    caminho_download = nome_arquivo_destino + "_part"
+    nome_arquivo_temporario = nome_arquivo_destino + "_part"
     
     # Baixa o arquivo
-    with open(caminho_download, "wb") as arquivo_binario:        
+    with open(nome_arquivo_temporario, "wb") as arquivo_binario:        
         tamanho_conteudo = data.headers.get('Content-Length')        
         total = int(tamanho_conteudo) if tamanho_conteudo is not None else None
         # Barra de progresso de download
@@ -43,27 +43,10 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
                 arquivo_binario.write(chunk)
     
     # Renomeia o arquivo temporário para o arquivo definitivo
-    os.rename(caminho_download, nome_arquivo_destino)
+    os.rename(nome_arquivo_temporario, nome_arquivo_destino)
     
     # Fecha a barra de progresso.
     progresso_bar.close()
-
-# ============================  
-def downloadArquivoAntigo(url_arquivo, nome_arquivo_destino):
-    '''    
-    Realiza o download de um arquivo de uma url em salva em nome_arquivo_destino.
-    
-    Parâmetros:
-    `url_arquivo` - URL do arquivos a ser feito download.      
-    `nome_arquivo_destino` - Nome do arquivo a ser salvo.      
-    '''
-    
-    # Realiza o download de um arquivo em uma url
-    data = requests.get(url_arquivo)
-    
-    # Salva em um arquivo
-    arquivo = open(nome_arquivo_destino, 'wb')
-    arquivo.write(data.content)
 
 # ============================      
 def carregar(nome_arquivo):
