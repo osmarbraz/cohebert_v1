@@ -38,16 +38,14 @@ def downloadSpacy(model_args):
     # Versão spaCy
     VERSAO_SPACY = "-" + model_args.versao_spacy
     # Nome arquivo compactado
-    NOME_ARQUIVO_MODELO_COMPACTADO = DIRETORIO_COHEBERT  + "/" + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + ".tar.gz"
+    NOME_ARQUIVO_MODELO_COMPACTADO = ARQUIVO_MODELO_SPACY + VERSAO_SPACY + ".tar.gz"
     
     # Url do arquivo
     URL_ARQUIVO_MODELO_COMPACTADO = "https://github.com/explosion/spacy-models/releases/download/" + ARQUIVO_MODELO_SPACY + VERSAO_SPACY + "/" + NOME_ARQUIVO_MODELO_COMPACTADO
 
     # Realiza o download do arquivo do modelo
     logging.info("Download do arquivo do modelo do spaCy.")
-    print("URL_ARQUIVO_MODELO_COMPACTADO:",URL_ARQUIVO_MODELO_COMPACTADO)
-    print("NOME_ARQUIVO_MODELO_COMPACTADO:",NOME_ARQUIVO_MODELO_COMPACTADO)
-    downloadArquivo(URL_ARQUIVO_MODELO_COMPACTADO, NOME_ARQUIVO_MODELO_COMPACTADO)
+    downloadArquivo(URL_ARQUIVO_MODELO_COMPACTADO, DIRETORIO_COHEBERT + "/" + NOME_ARQUIVO_MODELO_COMPACTADO)
 
 # ============================   
 def descompactaSpacy(model_args):

@@ -44,7 +44,7 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
     
     # Verifica se o arquivo existe
     if data.status_code != 200:
-        logging.info("Exceção ao tentar realizar download {}. Response {}".format(url_arquivo, data.status_code))
+        logging.info("Exceção ao tentar realizar download {}. Response {}.".format(url_arquivo, data.status_code))
         data.raise_for_status()
         return
 
