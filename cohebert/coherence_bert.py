@@ -111,9 +111,9 @@ class CoherenceBERT:
         Retorna a medida de coerência do texto utilizando a medida de similaridade de cosseno.
         
         Parâmetros:
-            `texto` - Um texto a ser medido a coerência.           
-            `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
-            `palavraRelevante` - Estratégia de relevância das palavras do texto.            
+        :param `texto`: - Um texto a ser medido a coerência.           
+        :param `estrategiaPooling`: - Estratégia de pooling das camadas do BERT.
+        :param `palavraRelevante`: - Estratégia de relevância das palavras do texto.            
         ''' 
         
         self.defineEstrategiaPooling(estrategiaPooling)
