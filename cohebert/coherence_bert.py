@@ -23,11 +23,12 @@ PALAVRA_RELEVANTE = ['ALL', 'CLEAN', 'NOUN']
 
 class CoherenceBERT:
     
-    """
-     Carrega e cria um modelo CoherenceBERT, que pode ser usado para medir a (in)coerência de documentos.
+    ''' 
+    Carrega e cria um modelo CoherenceBERT, que pode ser usado para medir a (in)coerência de documentos.
      
-     :param model_name_or_path: Se for um caminho de arquivo no disco, carrega o modelo a partir desse caminho. Se não for um caminho, ele primeiro tenta fazer o download de um modelo pré-treinado do Coherence BERT. Se isso falhar, tenta construir um modelo do repositório de modelos do Huggingface com esse nome.
-    """
+    Parâmetros:
+    `pretrained_model_name_or_path' - Se for um caminho de arquivo no disco, carrega o modelo a partir desse caminho. Se não for um caminho, ele primeiro tenta fazer o download de um modelo pré-treinado do Coherence BERT. Se isso falhar, tenta construir um modelo do repositório de modelos do Huggingface com esse nome.
+    ''' 
     
     # Construtor da classe
     def __init__(self, pretrained_model_name_or_path):
@@ -55,6 +56,9 @@ class CoherenceBERT:
     def defineEstrategiaPooling(self, estrategiaPooling):
         ''' 
         Define a estratégia de pooling para os parâmetros do modelo.
+
+        Parâmetros:
+        `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
         ''' 
         
         if estrategiaPooling == ESTRATEGIA_POOLING[1]:
@@ -66,6 +70,9 @@ class CoherenceBERT:
     def definePalavraRelevante(self, palavraRelevante):
         ''' 
         Define a estratégia de palavra relavante para os parâmetros do modelo.
+        
+        Parâmetros:        
+        `palavraRelevante` - Estratégia de relevância das palavras do texto.               
         ''' 
         
         if palavraRelevante == PALAVRA_RELEVANTE[1]:
@@ -86,9 +93,14 @@ class CoherenceBERT:
         Retorna as medidas de (in)coerência Ccos, Ceuc, Cman do texto.
         
         Parâmetros:
-            `texto` - Um texto a ser medido a coerência.           
-            `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
-            `palavraRelevante` - Estratégia de relevância das palavras do texto.            
+        `texto` - Um texto a ser medido a coerência.           
+        `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
+        `palavraRelevante` - Estratégia de relevância das palavras do texto.            
+        
+        Retorno:
+        `Ccos` - Medida de coerência Ccos do do texto.            
+        `Ceuc` - Medida de incoerência Ceuc do do texto.            
+        `Cman` - Medida de incoerência Cman do do texto.            
         ''' 
 
         self.defineEstrategiaPooling(estrategiaPooling)
@@ -111,10 +123,13 @@ class CoherenceBERT:
         Retorna a medida de coerência do texto utilizando a medida de similaridade de cosseno.
         
         Parâmetros:
-        :param `texto`: - Um texto a ser medido a coerência.           
-        :param `estrategiaPooling`: - Estratégia de pooling das camadas do BERT.
-        :param `palavraRelevante`: - Estratégia de relevância das palavras do texto.            
-        ''' 
+        `texto` - Um texto a ser medido a coerência.           
+        `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
+        `palavraRelevante` - Estratégia de relevância das palavras do texto.            
+        
+        Retorno:
+        `Ccos` - Medida de coerência Ccos do do texto.            
+        '''         
         
         self.defineEstrategiaPooling(estrategiaPooling)
         self.definePalavraRelevante(palavraRelevante)
@@ -133,6 +148,14 @@ class CoherenceBERT:
     def getMedidaCoerenciaEuclediana(self, texto, estrategiaPooling='MEAN', palavraRelevante='ALL'):
         ''' 
         Retorna a medida de incoerência do texto utilizando a medida de distância de Euclidiana.
+                 
+        Parâmetros:
+        `texto` - Um texto a ser medido a coerência.           
+        `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
+        `palavraRelevante` - Estratégia de relevância das palavras do texto.            
+        
+        Retorno:
+        `Ceuc` - Medida de incoerência Ceuc do do texto.            
         ''' 
         
         self.defineEstrategiaPooling(estrategiaPooling)
@@ -152,6 +175,14 @@ class CoherenceBERT:
     def getMedidaCoerenciaManhattan(self, texto, estrategiaPooling='MEAN', palavraRelevante='ALL'):
         ''' 
         Retorna a medida de incoerência do texto utilizando a medida de distância de Manhattan.
+                 
+        Parâmetros:
+        `texto` - Um texto a ser medido a coerência.           
+        `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
+        `palavraRelevante` - Estratégia de relevância das palavras do texto.            
+        
+        Retorno:
+        `Cman` - Medida de incoerência Cman do do texto.            
         ''' 
         
         self.defineEstrategiaPooling(estrategiaPooling)
