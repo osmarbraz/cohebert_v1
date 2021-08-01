@@ -65,6 +65,8 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
                 arquivo_binario.write(chunk)
     
     # Renomeia o arquivo temporário para o arquivo definitivo
+    print("nome_arquivo_temporario:",nome_arquivo_temporario)
+    print("nome_arquivo_destino:",nome_arquivo_destino)
     os.rename(nome_arquivo_temporario, nome_arquivo_destino)
     
     # Fecha a barra de progresso.
