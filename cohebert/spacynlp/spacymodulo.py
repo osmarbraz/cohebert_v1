@@ -56,7 +56,7 @@ def descompactaSpacy(model_args):
     `model_args` - Objeto com os argumentos do modelo.       
     '''
     
-    # Verifica se existe o diretório base
+    # Verifica se existe o diretório base do cohebert e retorna o nome do diretório
     DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
     
     # Nome arquivo spacy

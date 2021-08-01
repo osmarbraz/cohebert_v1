@@ -367,10 +367,11 @@ def downloadModeloPretreinado(model_args):
     Retorno:
     `DIRETORIO_MODELO` - Diretório de download do modelo.
     ''' 
-    # Nome diretório base modelo
+    
+    # Nome diretório base modelo BERT
     NOME_DIRETORIO_BASE_MODELO = "modeloBERT"
     
-    # Verifica se existe o diretório base
+    # Verifica se existe o diretório base do cohebert e retorna o nome do diretório
     DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
     
     # Recupera o nome ou caminho do modelo
@@ -444,7 +445,7 @@ def copiaModeloAjustado(model_args):
     # Verifica o tamanho do modelo(default large)
     TAMANHO_BERT = getTamanhoBERT(model_args)
 
-    # Verifica se existe o diretório base
+    # Verifica se existe o diretório base do cohebert e retorna o nome do diretório
     DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
 
     # Diretório local de salvamento do modelo.
