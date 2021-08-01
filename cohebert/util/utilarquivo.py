@@ -30,6 +30,8 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
     # Arquivo temporário    
     nome_arquivo_temporario = nome_arquivo_destino + "_part"
     
+    logging.info("Download do arquivo: {}.".format(nome_arquivo_destino))
+    
     # Baixa o arquivo
     with open(nome_arquivo_temporario, "wb") as arquivo_binario:        
         tamanho_conteudo = data.headers.get('Content-Length')        
