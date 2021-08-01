@@ -264,7 +264,10 @@ def cria_lotes_inteligentes(model_args, tokenizer, documentos, classes, document
 # ============================
 def getDeviceGPU():
     '''
-    Retorna um dispositivo de GPU.
+    Retorna um dispositivo de GPU se disponível ou CPU.
+    
+    Retorno:
+    `device` - Um device de GPU ou CPU.       
     '''
         
     # Se existe GPU disponível.
@@ -290,7 +293,10 @@ def conectaGPU(model, device):
 
     Parâmetros:
     `model` - Um modelo BERT carregado.       
-    `device` - Um device de GPU.       
+    `device` - Um device de GPU.     
+    
+    Retorno:
+    `model` - Um objeto model BERT conectado a GPU.     
     '''
     # Associa a GPU ao modelo.
     model.to(device)
@@ -313,6 +319,9 @@ def getNomeModeloBERT(model_args):
     
     Parâmetros:
     `model_args` - Objeto com os argumentos do modelo.       
+    
+    Retorno:
+    `MODELO_BERT` - Nome do modelo BERT.
     '''
 
     # Verifica o nome do modelo(default SEM_MODELO_BERT)
@@ -334,6 +343,9 @@ def getTamanhoBERT(model_args):
     
     Parâmetros:
     `model_args` - Objeto com os argumentos do modelo.       
+    
+    Retorno:
+    `TAMANHO_BERT` - Nome do tamanho do modelo BERT.
     '''
     
     # Verifica o tamanho do modelo(default large)
@@ -350,7 +362,10 @@ def downloadModeloPretreinado(model_args):
     Realiza o download do modelo BERT(MODELO) e retorna o diretório onde o modelo BERT(MODELO) foi descompactado.
     
     Parâmetros:
-    `model_args` - Objeto com os argumentos do modelo.       
+    `model_args` - Objeto com os argumentos do modelo.
+    
+    Retorno:
+    `DIRETORIO_MODELO` - Diretório de download do modelo.
     ''' 
     
     # Recupera o nome ou caminho do modelo
@@ -413,7 +428,10 @@ def copiaModeloAjustado(model_args):
     Copia o modelo ajustado BERT do GoogleDrive para o projeto.
     
     Parâmetros:
-    `model_args` - Objeto com os argumentos do modelo.       
+    `model_args` - Objeto com os argumentos do modelo.
+    
+    Retorno:
+    `DIRETORIO_LOCAL_MODELO_AJUSTADO` - Diretório de download ajustado do modelo.
     ''' 
     # Verifica o nome do modelo BERT a ser utilizado
     MODELO_BERT = getNomeModeloBERT(model_args)
@@ -440,7 +458,10 @@ def verificaModelo(model_args):
     Verifica de onde utilizar o modelo.
     
     Parâmetros:
-    `model_args` - Objeto com os argumentos do modelo.       
+    `model_args` - Objeto com os argumentos do modelo.
+    
+    Retorno:
+    `DIRETORIO_MODELO` - Diretório de download do modelo.
     ''' 
 
     DIRETORIO_MODELO = None
@@ -470,6 +491,9 @@ def carregaTokenizadorModeloPretreinado(DIRETORIO_MODELO, model_args):
     Parâmetros:
     `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
     `model_args` - Objeto com os argumentos do modelo.       
+    
+    Retorno:
+    `tokenizer` - Tokenizador BERT.
     ''' 
 
     tokenizer = None
@@ -496,7 +520,10 @@ def carregaModeloMedida(DIRETORIO_MODELO, model_args):
     
     Parâmetros:
     `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
-    `model_args` - Objeto com os argumentos do modelo.           
+    `model_args` - Objeto com os argumentos do modelo.   
+    
+    Retorno:
+    `model` - Um objeto do modelo BERT carregado.
     ''' 
 
     # Variável para setar o arquivo.
@@ -531,7 +558,10 @@ def carregaModeloClassifica(DIRETORIO_MODELO, model_args):
     
     Parâmetros:
     `DIRETORIO_MODELO` - Diretório a ser utilizado pelo modelo BERT.           
-    `model_args` - Objeto com os argumentos do modelo.           
+    `model_args` - Objeto com os argumentos do modelo.
+    
+    Retorno:
+    `model` - Um objeto do modelo BERT carregado.
     ''' 
 
     # Variável para setar o arquivo.
