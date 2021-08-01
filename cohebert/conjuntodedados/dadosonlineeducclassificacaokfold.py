@@ -1,7 +1,7 @@
 # Import das bibliotecas.
 import logging  # Biblioteca de logging
 import zipfile # Biblioteca para descompactar
-import os # Biblioteca para apagar arquivos
+import os # Biblioteca para manipular arquivos
 import shutil # Biblioteca para mover arquivos    
 import pandas as pd # Biblioteca para manipulação e análise de dados
 import numpy as np # Biblioteca para manipulação de arrays e matrizes multidimensionais

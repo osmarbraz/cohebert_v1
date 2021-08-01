@@ -2,6 +2,7 @@
 import logging  # Biblioteca de logging
 import requests # Biblioteca de download
 from tqdm.notebook import tqdm as tqdm_notebook # Biblioteca para barra de progresso
+import os # Biblioteca para manipular arquivos
 
 # Import de bibliotecas próprias
 from util.utilmodulo import *

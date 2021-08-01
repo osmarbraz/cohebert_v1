@@ -1,6 +1,6 @@
 # Import das bibliotecas.
 import logging  # Biblioteca de logging
-import os  # Biblioteca para apagar arquivos
+import os  # Biblioteca para manipular arquivos
 import datetime # Biblioteca de data e hora
 import pandas as pd # Biblioteca para manipulação e análise de dados
 
