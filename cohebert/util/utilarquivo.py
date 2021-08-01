@@ -14,7 +14,7 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
     Realiza o download de um arquivo de uma url em salva em nome_arquivo_destino.
     
     Parâmetros:
-    `url_arquivo` - URL do arquivos a ser feito download.      
+    `url_arquivo` - URL do arquivo a ser feito download.      
     `nome_arquivo_destino` - Nome do arquivo a ser salvo.      
     '''
     
