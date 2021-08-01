@@ -278,6 +278,7 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
         # Apaga o objeto de saída
         del outputs
 
+    
     # Soma as classificações realizadas
     vp_s, vn_s, fp_s, fn_s = sum(vp), sum(vn), sum(fp), sum(fn)
   
@@ -314,6 +315,9 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
         wandb.log({"fp": fp_s})
         wandb.log({"fn": fn_s})
         wandb.log({"media_test_loss": media_test_loss})
+
+    # Fecha a barra de progresso.
+    lote_teste_bar.close()
 
     # Apaga objetos não utilizados    
     del py_input_ids
@@ -509,6 +513,9 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
         logging.info("  Tempo de treinamento da época             : {:}.".format(treinamento_epoca_total))    
         logging.info("  Tempo parcial do treinamento              : {:} (h:mm:ss).".format(formataTempo(time.time()-treinamento_t0)))
 
+        # Fecha a barra de progresso.
+        lote_treino_bar.close()
+
         # Apaga objetos não utilizados
         del py_input_ids
         del py_attention_masks
@@ -524,6 +531,9 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
 
     logging.info("  Média perda(loss) treinamento : {0:.8f}.".format(media_train_loss))
 
+    # Fecha a barra de progresso.
+    epoca_bar.close()
+    
     # Apaga objetos não utilizados
     del train_losses
     del epoca_bar

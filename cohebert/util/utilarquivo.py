@@ -21,28 +21,35 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
     # Realiza o download de um arquivo em uma url
     data = requests.get(url_arquivo, stream=True)
     
+    # Verifica se o arquivo existe
     if data.status_code != 200:
         loggin.info("Exceção ao tentar realizar download {}. Response {}".format(url, data.status_code), file=sys.stderr)
         data.raise_for_status()
         return
 
-    # Diretório temporário    
+    # Arquivo temporário    
     caminho_download = nome_arquivo_destino + "_part"
     
+    # Baixa o arquivo
     with open(caminho_download, "wb") as arquivo_binario:        
         tamanho_conteudo = data.headers.get('Content-Length')        
-        total = int(tamanho_conteudo) if tamanho_conteudo is not None else None        
-        progress = tqdm_notebook(unit="B", total=total, unit_scale=True)        
+        total = int(tamanho_conteudo) if tamanho_conteudo is not None else None
+        # Barra de progresso de download
+        progresso_bar = tqdm_notebook(unit="B", total=total, unit_scale=True)                
+        # Atualiza a barra de progresso
         for chunk in data.iter_content(chunk_size=1024):        
-            if chunk: 
-                progress.update(len(chunk))
+            if chunk:                
+                progresso_bar.update(len(chunk))
                 arquivo_binario.write(chunk)
-
+    
+    # Renomeia o arquivo temporário para o arquivo definitivo
     os.rename(caminho_download, nome_arquivo_destino)
-    progress.close()
+    
+    # Fecha a barra de progresso.
+    progresso_bar.close()
 
 # ============================  
-def downloadArquivo1(url_arquivo, nome_arquivo_destino):
+def downloadArquivoAntigo(url_arquivo, nome_arquivo_destino):
     '''    
     Realiza o download de um arquivo de uma url em salva em nome_arquivo_destino.
     

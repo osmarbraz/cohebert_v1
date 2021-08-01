@@ -559,6 +559,12 @@ def calculaMedidasDocumentosConjuntoDeDados(model_args, dfdados, model, tokenize
 
     if model_args.use_wandb:
         wandb.log({'acuracia_cman': acuraciaCman})  
+    
+    # Fecha a barra de progresso.
+    dfdado_bar.close()
+    
+     # Apaga objetos não utilizados    
+    del dfdado_bar
 
     logging.info("Cálculo de medida de documentos terminado!")
 
