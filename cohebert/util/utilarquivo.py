@@ -46,8 +46,11 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
         data.raise_for_status()
         return
 
+    # Verifica se existe o diretório base
+    DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
+
     # Arquivo temporário    
-    nome_arquivo_temporario = nome_arquivo_destino + "_part"
+    nome_arquivo_temporario = DIRETORIO_COHEBERT + "/" + nome_arquivo_destino + "_part"
     
     logging.info("Download do arquivo: {}.".format(nome_arquivo_destino))
     
