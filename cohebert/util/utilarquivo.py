@@ -20,22 +20,22 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
     # Realiza o download de um arquivo em uma url
     data = requests.get(url_arquivo, stream=True)
     
-    if req.status_code != 200:
-        loggin.info("Exceção ao tentar realizar download {}. Response {}".format(url, req.status_code), file=sys.stderr)
-        req.raise_for_status()
+    if data.status_code != 200:
+        loggin.info("Exceção ao tentar realizar download {}. Response {}".format(url, data.status_code), file=sys.stderr)
+        data.raise_for_status()
         return
 
     # Diretório temporário    
     caminho_download = nome_arquivo_destino + "_part"
     
-    with open(caminho_download, "wb") as file_binary:        
+    with open(caminho_download, "wb") as arquivo_binario:        
         content_length = req.headers.get('Content-Length')        
         total = int(content_length) if content_length is not None else None        
         progress = tqdm_notebook(unit="B", total=total, unit_scale=True)        
         for chunk in req.iter_content(chunk_size=1024):        
             if chunk: 
                 progress.update(len(chunk))
-                file_binary.write(chunk)
+                arquivo_binario.write(chunk)
 
     os.rename(caminho_download, nome_arquivo_destino)
     progress.close()
