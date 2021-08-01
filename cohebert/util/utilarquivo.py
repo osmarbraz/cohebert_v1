@@ -3,6 +3,7 @@ import logging  # Biblioteca de logging
 import requests # Biblioteca de download
 from tqdm.notebook import tqdm as tqdm_notebook # Biblioteca para barra de progresso
 import os # Biblioteca para manipular arquivos
+import sys
 
 # Import de bibliotecas próprias
 from util.utilmodulo import *
@@ -47,8 +48,10 @@ def downloadArquivo(url_arquivo, nome_arquivo_destino):
         data.raise_for_status()
         return
 
+    nome_arquivo = nome_arquivo_destino.split('/')[-1]  
+
     # Arquivo temporário    
-    nome_arquivo_temporario = DIRETORIO_COHEBERT + "/" + nome_arquivo_destino + "_part"
+    nome_arquivo_temporario = DIRETORIO_COHEBERT + "/" + nome_arquivo + "_part"
     
     logging.info("Download do arquivo: {}.".format(nome_arquivo_destino))
     
