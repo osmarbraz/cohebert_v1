@@ -84,6 +84,11 @@ class CoherenceBERT:
     def getMedidaCoerencia(self, texto, estrategiaPooling='MEAN', palavraRelevante='ALL'):
         ''' 
         Retorna as medidas de (in)coerência Ccos, Ceuc, Cman do texto.
+        
+        Parâmetros:
+            `texto` - Um texto a ser medido a coerência.           
+            `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
+            `palavraRelevante` - Estratégia de relevância das palavras do texto.            
         ''' 
 
         self.defineEstrategiaPooling(estrategiaPooling)
