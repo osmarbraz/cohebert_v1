@@ -367,6 +367,8 @@ def downloadModeloPretreinado(model_args):
     Retorno:
     `DIRETORIO_MODELO` - Diretório de download do modelo.
     ''' 
+    # Nome diretório base modelo
+    NOME_DIRETORIO_BASE_MODELO = "modeloBERT"
     
     # Verifica se existe o diretório base
     DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
@@ -384,7 +386,7 @@ def downloadModeloPretreinado(model_args):
     if URL_MODELO:
 
         # Diretório do modelo.
-        DIRETORIO_MODELO = DIRETORIO_COHEBERT + "/modelo"
+        DIRETORIO_MODELO = DIRETORIO_COHEBERT + "/" + NOME_DIRETORIO_BASE_MODELO
         
         # Recupera o nome do arquivo do modelo da url.
         NOME_ARQUIVO = URL_MODELO.split('/')[-1]
