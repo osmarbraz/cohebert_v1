@@ -383,14 +383,15 @@ def downloadModeloPretreinado(model_args):
     # Se a variável foi setada.
     if URL_MODELO:
 
-        # Diretório descompactação.
+        # Diretório do modelo.
         DIRETORIO_MODELO = DIRETORIO_COHEBERT + "/modelo"
-
+        
         # Recupera o nome do arquivo do modelo da url.
         NOME_ARQUIVO = URL_MODELO.split('/')[-1]
 
         # Nome do arquivo do vocabulário.
         ARQUIVO_VOCAB = 'vocab.txt'
+        
 
         # Caminho do arquivo na url.
         CAMINHO_ARQUIVO = URL_MODELO[0:len(URL_MODELO)-len(NOME_ARQUIVO)]
@@ -412,7 +413,7 @@ def downloadModeloPretreinado(model_args):
         # O vocabulário não está no arquivo compactado acima, mesma url mas arquivo diferente.
         URL_MODELO_VOCAB = CAMINHO_ARQUIVO + ARQUIVO_VOCAB
         # Coloca o arquivo do vocabulário no diretório de descompactação.
-        downloadArquivo(URL_MODELO_VOCAB, DIRETORIO_MODELO + "/" + ARQUIVO_VOCAB)
+        downloadArquivo(URL_MODELO_VOCAB, ARQUIVO_VOCAB)
 
         # Apaga o arquivo compactado
         os.remove(NOME_ARQUIVO)
