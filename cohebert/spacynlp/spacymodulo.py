@@ -69,7 +69,7 @@ def descompactaSpacy(model_args):
     
     logging.info("Descompactando o arquivo do modelo do spaCy.")
     arquivoTar = tarfile.open(NOME_ARQUIVO_MODELO_COMPACTADO, "r:gz")    
-    arquivoTar.extractall()    
+    arquivoTar.extractall(DIRETORIO_COHEBERT)    
     arquivoTar.close()
     
     # Apaga o arquivo compactado
