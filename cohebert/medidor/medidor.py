@@ -866,7 +866,7 @@ def comparaMedidasCamadasSentencas(Si, Sj, modelo, tokenizador, camada):
     Facilita a exibição dos valores de comparação de duas orações.
     '''
   
-    # Recupera os embeddings da sentença 1 e sentença 2
+    # Recupera os embeddings da sentença Si e sentença Sj e suas medidas
     embeddingSi, embeddingSj, Scos, Seuc, Sman = getMedidasCamadasSentencas(Si, Sj, modelo, tokenizador, camada)
 
     logging.info('  ->Mostra comparação da ' + camada[LISTATIPOCAMADA_NOME] + ' camada(s)')    
