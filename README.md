@@ -67,7 +67,7 @@ Para obter a medida de coerência das sentenças utilize as operações a seguir
 ## Modelos Pré-treinados do BERT
 
 Apesar de existir uma lista grande de [Modelos Pré-treinados](https://huggingface.co/models) testamos no **CoheBERT** somente três modelos pré-treinados para a língua portuguesa: 
-* ```neuralmind/bert-base-portuguese-cased``` -[BERTimbau base](https://github.com/neuralmind-ai/portuguese-bert)
+* ```neuralmind/bert-base-portuguese-cased``` - [BERTimbau base](https://github.com/neuralmind-ai/portuguese-bert)
 * ```neuralmind/bert-large-portuguese-cased``` - [BERTimbau large](https://github.com/neuralmind-ai/portuguese-bert)
 * ```bert-base-multilingual-cased``` - BERT Multilingual
 
