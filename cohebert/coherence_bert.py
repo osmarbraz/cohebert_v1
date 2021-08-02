@@ -7,8 +7,8 @@ from bert.bertmodulo import *
 from experimento.calculomedida import *
 from spacynlp.spacymodulo import *
 
-from medidor.estrategiaspooling import EstrategiasPooling
-from medidor.palavrasrelevantes import PalavrasRelevantes
+from medidor.estrategiaspooling import *
+from medidor.palavrasrelevantes import *
 
 # Definição dos parâmetros do Modelo para os cálculos das Medidas
 model_args = ModeloArgumentosMedida(
