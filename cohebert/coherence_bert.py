@@ -7,8 +7,8 @@ from bert.bertmodulo import *
 from experimento.calculomedida import *
 from spacynlp.spacymodulo import *
 
-from medidor.EstrategiasPooling import EstrategiasPooling
-from medidor.PalavrasRelevantes import PalavrasRelevantes
+from medidor.estrategiaspooling import EstrategiasPooling
+from medidor.palavrasrelevantes import PalavrasRelevantes
 
 # Definição dos parâmetros do Modelo para os cálculos das Medidas
 model_args = ModeloArgumentosMedida(
@@ -85,8 +85,8 @@ class CoherenceBERT:
             verificaCarregamentoSpacy()
             
         else:
-            if palavraRelevante == PalavrasRelevantes.NOUM.name:
-                model_args.palavra_relevante = PalavrasRelevantes.NOUM.value
+            if palavraRelevante == PalavrasRelevantes.NOUN.name:
+                model_args.palavra_relevante = PalavrasRelevantes.NOUN.value
                 verificaCarregamentoSpacy()
                 
             else:
