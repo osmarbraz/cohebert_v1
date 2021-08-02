@@ -7,8 +7,7 @@ from bert.bertmodulo import *
 from experimento.calculomedida import *
 from spacynlp.spacymodulo import *
 
-from medidor.estrategiaspooling import *
-from medidor.palavrasrelevantes import *
+from medidor.medidorenum import *
 
 # Definição dos parâmetros do Modelo para os cálculos das Medidas
 model_args = ModeloArgumentosMedida(
@@ -131,7 +130,7 @@ class CoherenceBERT:
         
         Parâmetros:
         `texto` - Um texto a ser medido a coerência.           
-        `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
+        `estrategiaPooling` - Estratégia de pooling das camadas do BERT. 
         `palavraRelevante` - Estratégia de relevância das palavras do texto.            
         
         Retorno:
