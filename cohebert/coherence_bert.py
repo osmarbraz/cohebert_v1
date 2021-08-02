@@ -1,8 +1,14 @@
+# Import das bibliotecas.
+import logging  # Biblioteca de logging
+
 # Biblioteca cohebert
 from bert.bertarguments import ModeloArgumentosMedida
 from bert.bertmodulo import *
 from experimento.calculomedida import *
 from spacynlp.spacymodulo import *
+
+from medidor import EstrategiasPooling
+from medidor import PalavrasRelevantes
 
 # Definição dos parâmetros do Modelo para os cálculos das Medidas
 model_args = ModeloArgumentosMedida(
@@ -16,10 +22,6 @@ model_args = ModeloArgumentosMedida(
                                     estrategia_pooling=0, # 0 - MEAN estratégia média / 1 - MAX  estratégia maior
                                     palavra_relevante=0 # 0 - Considera todas as palavras das sentenças / 1 - Desconsidera as stopwords / 2 - Considera somente as palavras substantivas
                                     )
-
-# Constantes 
-ESTRATEGIA_POOLING = ['MEAN', 'MAX']
-PALAVRA_RELEVANTE = ['ALL', 'CLEAN', 'NOUN']
 
 class CoherenceBERT:
     
@@ -46,7 +48,7 @@ class CoherenceBERT:
         Utilizado para as estratégias de palavras relevantes CLEAN e NOUN.
         ''' 
         
-        if model_args.palavra_relevante != 0:
+        if model_args.palavra_relevante != PalavrasRelevantes.ALL.value:
             # Carrega o modelo spacy
             self.nlp = carregaSpacy(model_args)
             
@@ -61,11 +63,14 @@ class CoherenceBERT:
         `estrategiaPooling` - Estratégia de pooling das camadas do BERT.
         ''' 
         
-        if estrategiaPooling == ESTRATEGIA_POOLING[1]:
-            model_args.estrategia_pooling = 1
+        if estrategiaPooling == EstrategiasPooling.MAX.name:
+            model_args.estrategia_pooling = EstrategiasPooling.MAX.value
             
         else:
-            model_args.estrategia_pooling = 0
+            if estrategiaPooling == EstrategiasPooling.MEAN.name:
+                model_args.estrategia_pooling = EstrategiasPooling.MEAN.value
+            else:
+                logging.info("Não foi especificado uma estratégia de pooling válida.") 
 
     def definePalavraRelevante(self, palavraRelevante):
         ''' 
@@ -75,18 +80,21 @@ class CoherenceBERT:
         `palavraRelevante` - Estratégia de relevância das palavras do texto.               
         ''' 
         
-        if palavraRelevante == PALAVRA_RELEVANTE[1]:
-            model_args.palavra_relevante = 1
+        if palavraRelevante == PalavrasRelevantes.CLEAN.name:
+            model_args.palavra_relevante = PalavrasRelevantes.CLEAN.value
             verificaCarregamentoSpacy()
             
         else:
-            if palavraRelevante == PALAVRA_RELEVANTE[2]:
-                model_args.palavra_relevante = 2
+            if palavraRelevante == PalavrasRelevantes.NOUM.name:
+                model_args.palavra_relevante = PalavrasRelevantes.NOUM.value
                 verificaCarregamentoSpacy()
                 
             else:
-                model_args.palavra_relevante = 0
-
+                if palavraRelevante == PalavrasRelevantes.ALL.name:
+                    model_args.palavra_relevante = PalavrasRelevantes.ALL.value
+                    
+                else:
+                    logging.info("Não foi especificado uma estratégia de relevância de palavras do texto válida.") 
 
     def getMedidaCoerencia(self, texto, estrategiaPooling='MEAN', palavraRelevante='ALL'):
         ''' 
@@ -116,7 +124,6 @@ class CoherenceBERT:
                                                                        palavra_relevante=model_args.palavra_relevante)
           
         return self.Ccos, self.Ceuc, self.Cman
-
     
     def getMedidaCoerenciaCosseno(self, texto, estrategiaPooling='MEAN', palavraRelevante='ALL'):
         ''' 
