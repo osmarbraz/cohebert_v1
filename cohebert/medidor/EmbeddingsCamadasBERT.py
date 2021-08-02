@@ -30,3 +30,5 @@ class EmbeddingsCamadasBERT(Enum):
     SOMA_4_ULTIMAS_CAMADAS =[3, -4, 'SUM', 'Soma 4 últimas']
     CONCAT_4_ULTIMAS_CAMADAS = [4, -4, 'CONCAT', 'Concat 4 últimas']
     TODAS_AS_CAMADAS = [5, 24, 'SUM', 'Todas']
+    
+    

@@ -5,4 +5,3 @@ from enum import Enum # Biblioteca de Enum
 class EstrategiasPooling(Enum):
     MEAN = 0 # Média
     MAX = 1 # Máximo
-    
