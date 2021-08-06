@@ -57,6 +57,22 @@ CcosDO = cohebert.getMedidaCoerenciaCosseno(DO)
 print("Ccos DO    :", CcosDO) #Ccos DO    : 0.8178287347157797
 ````
 
+Este exemplo permuta as sentenças antes de submeter ao **CoheBERT**.
+
+````python
+# Documento e suas sentenças permutadas
+permDO = ["Aguardo uma resposta, João.",
+          "Qual o conteúdo da prova?",              
+          "Bom Dia, professor.",
+          "Vai cair tudo na prova?"]         
+
+# Recupera a medida Ccos do documento
+CcospermDO = cohebert.getMedidaCoerenciaCosseno(permDO)
+
+# Mostra a medida recuperada
+print("Ccos permDO    :", CcospermDO) #Ccos permDO    : 0.7760167121887207
+````
+
 ## Medidas de (In)coerência **CoheBERT**
 Para obter a medida de coerência das sentenças utilize as operações a seguir passando o texto como parâmetro:
 
