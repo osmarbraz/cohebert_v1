@@ -41,7 +41,7 @@ from coherence_bert import CoherenceBERT
 cohebert = CoherenceBERT("neuralmind/bert-large-portuguese-cased") # BERTimbau large
 ````
 
-Em seguida, forneça algumas sentenças ao **CoheBERT** e recupere a medida.
+Em seguida, forneça um documento com suas sentenças separadas em uma lista ao **CoheBERT** e recupere a medida.
 
 ````python
 # Documento e suas sentenças
