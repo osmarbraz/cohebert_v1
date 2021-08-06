@@ -54,7 +54,7 @@ DO = ["Bom Dia, professor.",
 CcosDO = cohebert.getMedidaCoerenciaCosseno(DO)
 
 # Mostra a medida recuperada
-print("Ccos DO    :", CcosDO) #Ccos DO    : 0.8178287347157797
+print("Ccos DO    :", CcosDO)     #Ccos DO    : 0.8178287347157797
 ````
 
 Este exemplo permuta as sentenças antes de submeter ao **CoheBERT**.
@@ -70,7 +70,7 @@ permDO = ["Aguardo uma resposta, João.",
 CcospermDO = cohebert.getMedidaCoerenciaCosseno(permDO)
 
 # Mostra a medida recuperada
-print("Ccos permDO    :", CcospermDO) #Ccos permDO    : 0.7760167121887207
+print("Ccos permDO:", CcospermDO) #Ccos permDO: 0.7760167121887207
 ````
 
 ## Medidas de (In)coerência **CoheBERT**
