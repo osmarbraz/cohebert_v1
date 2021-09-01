@@ -103,7 +103,7 @@ Relação e descrição dos principais diretórios do cohebert.
  
 
 ## Citando & Autores
-Se achar este repositório útil, sinta-se à vontade para citar nossa [publicação] (https://):
+Se achar este repositório útil, sinta-se à vontade para citar nossa [publicação](https://):
 
 ```bibtex 
 @inproceedings{brazfileto-2021-cohebert,
