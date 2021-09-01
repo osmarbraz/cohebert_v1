@@ -1,4 +1,4 @@
-# CoheBERT 1.0 - Classificação e mensuração de coerência textual usando BERT
+# Investigando coerência em postagens de um fórum de dúvidas em ambiente virtual de aprendizagem com o BERT
 Classificação e mensuração de coerência textual utilizando o MCL BERT.
 
 
