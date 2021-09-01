@@ -1,5 +1,5 @@
-# CoheBERT 1.0 - Classificação e mensuração de coerência textual utilizando BERT
-Classificação e mensuração de coerência textual utilizando o modelo contextualizado de linguagem BERT em português.
+# CoheBERT 1.0 - Classificação e mensuração de coerência textual usando BERT
+Classificação e mensuração de coerência textual utilizando o MCL BERT.
 
 
 ## **Instalação**
@@ -7,10 +7,9 @@ Classificação e mensuração de coerência textual utilizando o modelo context
 **Requisitos**
 
 * Python 3.6.9+
-* Transformer Huggingface 4.5.1
-* PyTorch 1.8.1
-* Spacy 2.3.5
-* Wandb
+* [Transformer Huggingface 4.5.1](https://huggingface.co/transformers/)
+* [PyTorch 1.8.1](https://pytorch.org/)
+* [Spacy 2.3.5](https://spacy.io/)
 
 **Download - Clone**
 
@@ -29,11 +28,11 @@ sys.path.append("./coebert_v1/coebert")
 
 ## Exemplo simples
 
-[Este exemplo simples](notebooks/ExemploCoherenceBERT.ipynb) mostra como utilizar o **CoheBERT** e o modelo BERT pré-treinado para medir a coerência de documentos. Utiliza um documento com as sentenças em sua ordem orginal e outro exemplo com a ordem das sentenças permutadas.
+[Este exemplo simples](notebooks/ExemploCoherenceBERT.ipynb) mostra como utilizar o **CoheBERT** e um modelo BERT pré-treinado para medir a coerência de documentos.
 
-Depois de instalar as bibliotecas necessárias para o ambiente e realizar o clone do repositório podemos fazer uso da biblioteca **CoheBERT**.
+Depois de instalar as bibliotecas necessárias podemos fazer uso da biblioteca **CoheBERT**.
 
-Realizamos o import das bibliotecas do **CoheBERT** e instanciamos a classe CoherenceBERT para que seja realizado download do modelo pré-treinado. O download do modelo é realizado da comunidade ou de uma url. Esta especificação é realizada no construtor da classe CoherenceBERT.
+Realizamos o import das bibliotecas do **CoheBERT** e instanciamos a classe CoherenceBERT para que seja realizado download do modelo pré-treinado. O download é realizado da comunidade ou de uma url.
 
 ````python
 from coherence_bert import CoherenceBERT
@@ -41,7 +40,7 @@ from coherence_bert import CoherenceBERT
 cohebert = CoherenceBERT("neuralmind/bert-large-portuguese-cased") # BERTimbau large
 ````
 
-Em seguida, forneça um documento com suas sentenças separadas em uma lista ao **CoheBERT** e recupere a medida.
+Em seguida, forneça algumas sentenças ao **CoheBERT** e recupere a medida.
 
 ````python
 # Documento e suas sentenças
@@ -54,27 +53,11 @@ DO = ["Bom Dia, professor.",
 CcosDO = cohebert.getMedidaCoerenciaCosseno(DO)
 
 # Mostra a medida recuperada
-print("Ccos DO    :", CcosDO)     #Ccos DO    : 0.8178287347157797
-````
-
-Este outro exemplo permuta as sentenças do documento anterior antes de submeter ao **CoheBERT**.
-
-````python
-# Documento e suas sentenças permutadas
-permDO = ["Aguardo uma resposta, João.",
-          "Qual o conteúdo da prova?",              
-          "Bom Dia, professor.",
-          "Vai cair tudo na prova?"]         
-
-# Recupera a medida Ccos do documento
-CcospermDO = cohebert.getMedidaCoerenciaCosseno(permDO)
-
-# Mostra a medida recuperada
-print("Ccos permDO:", CcospermDO) #Ccos permDO: 0.7760167121887207
+print("Ccos DO    :", CcosDO) #Ccos DO    : 0.8178287347157797
 ````
 
 ## Medidas de (In)coerência **CoheBERT**
-Para obter a medida de coerência do documento utilize as operações a seguir passando o texto como parâmetro:
+Para obter a medida de coerência das sentenças utilize as operações a seguir passando o texto como parâmetro:
 
 * ```getMedidaCoerenciaCosseno``` - Retorna a medida de coerência utilizando a similaridade cosseno das sentenças.
 * ```getMedidaCoerenciaEuclidiana``` - Retorna a medida de coerência utilizando a distância de Euclidiana das sentenças.
@@ -85,7 +68,8 @@ Para obter a medida de coerência do documento utilize as operações a seguir p
 Apesar de existir uma lista grande de [Modelos Pré-treinados](https://huggingface.co/models) testamos no **CoheBERT** somente três modelos pré-treinados para a língua portuguesa: 
 * ```neuralmind/bert-base-portuguese-cased``` - [BERTimbau base](https://github.com/neuralmind-ai/portuguese-bert)
 * ```neuralmind/bert-large-portuguese-cased``` - [BERTimbau large](https://github.com/neuralmind-ai/portuguese-bert)
-* ```bert-base-multilingual-cased``` - BERT Multilingual
+* ```bert-base-multilingual-cased``` - [BERT Multilingual](https://huggingface.co/bert-base-multilingual-cased)
+
 
 ## Exemplos completos
 
