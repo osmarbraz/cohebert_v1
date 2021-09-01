@@ -103,11 +103,11 @@ Relação e descrição dos principais diretórios do cohebert.
  
 
 ## Citando & Autores
-Se achar este repositório útil, sinta-se à vontade para citar nossa publicação [CoheBERT: Coherence BERT](https://):
+Se achar este repositório útil, sinta-se à vontade para citar nossa [publicação] (https://):
 
 ```bibtex 
 @inproceedings{brazfileto-2021-cohebert,
-    title = "xxxx",
+    title = "Investigando coerência em postagens de um fórum de dúvidas em ambiente virtual de aprendizagem com o BERT",
     author = "Braz, Osmar and Fileto, Renato",
     booktitle = "xxxxxx",
     year = "2021",
