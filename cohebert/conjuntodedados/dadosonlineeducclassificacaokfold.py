@@ -321,6 +321,54 @@ def downloadOnlineEduc(ORIGEM):
     
     # O arquivo é restrito e está disponível somente para o Google Drive 
     copiaOnlineEducGoogleDrive()
+
+# ============================   
+def descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados):
+    '''    
+    Remove os documentos que extrapolam 512 tokens.
+    Você pode definir o tamanho de documento que quiser no BERT, mas o modelo pré-treinado vem com um tamanho pré-definido. 
+    No nosso caso vamos utilizar o modelo BERT, que tem 512 tokens de tamanho limite de documento. 
+    O tokenizador gera quantidades diferentes tokens para cada modelo pré-treinado. 
+    Portanto é necessário especificar o tokenizador para descatar os documentos que ultrapassam o limite de tokens de entrada do BERT.
+    
+    Parâmetros:              
+    `model_args` - Objeto com os argumentos do modelo.    
+    `tokenizer` - Tokenizador BERT.
+    `dfdados` - Dataframe com os documentos a serem analisados.   
+    
+    Retorno:
+    `dfdadosretorno` - Um dataframe sem os documentos grandes.
+    '''
+    
+    dfdadosretorno = None
+    
+    # Verifica se o tokenizador foi carregado
+    if tokenizer != None:
+    
+        # Define o tamanho máximo para os tokens
+        tamanho_maximo = model_args.max_seq_len
+  
+        # Tokenize a codifica os documentos para o BERT.     
+        dfdados['input_ids'] = dfdados['documentoOriginal'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+
+        # Reduz para o tamanho máximo suportado pelo BERT.
+        dfdados_512 = dfdados[dfdados['input_ids'].apply(len) <= tamanho_maximo]
+
+        # Remove as colunas desnecessárias.
+        dfdadosAnterior = dfdados.drop(columns=['input_ids'])
+        dfdadosretorno = dfdados_512.drop(columns=['input_ids'])
+
+        logging.info("Quantidade de dados anterior: {}.".format(len(dfdadosAnterior)))
+        logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
+       
+        # Registros removidos
+        df = dfdadosAnterior.merge(dfdadosretorno, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
+        logging.info("Quantidade de registros removidos: {}.".format(len(df)))
+        
+    else:
+        logging.info("Tokenizador não definido.")        
+
+    return dfdadosretorno              
             
 # ============================
 def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
@@ -365,7 +413,7 @@ def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     logging.info("Qtde de dados de teste: {}.".format(len(dfdados_test)))
     
     # Remove os documentos muito grandes
-    dfdados_train = descartandoDocumentosGrandes(model_args, tokenizer, dfdados_train)
-    dfdados_test = descartandoDocumentosGrandes(model_args, tokenizer, dfdados_test)
+    dfdados_train = descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados_train)
+    dfdados_test = descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados_test)
     
     return dfdados_train, dfdados_test        
