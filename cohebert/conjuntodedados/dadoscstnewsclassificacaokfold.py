@@ -407,6 +407,8 @@ def getConjuntoDeDadosClassificacaoFold(model_args, tokenizer, ORIGEM):
     logging.info("Qtde de dados de teste: {}.".format(len(dfdados_test)))
 
     # Remove os documentos muito grandes
+    # Os dados de originais e permutados foram colocados em uma mesma coluna chamada "documento"
+    # , o que diferencia é a classe 0 - Original e 1 - Permutado.
     dfdados_train = descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados_train)
     dfdados_test = descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados_test)
     
