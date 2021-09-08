@@ -265,7 +265,7 @@ def downloadConjuntoDeDados(ORIGEM):
         logging.info("Realizando o download do CSTNews do site do ICMC.")
         downloadCSTNewsICMC()
     else:
-        logging.info("Realizando o download do CSTNews meu OneDrive.")
+        logging.info("Realizando o download do CSTNews do meu OneDrive.")
         downloadCSTNewsOnDrive()
 
 # ============================
@@ -289,6 +289,9 @@ def converteListaParesDocumentos(lista_documentos):
 
     # Converte a lista em um dataframe.
     dfdados = pd.DataFrame.from_records(lista_documentos, columns=['idOriginal', 'sentencasOriginais', 'documentoOriginal', 'idPermutado', 'sentencasPermutadas', 'documentoPermutado'])
+    
+    # Remove colunas desnecessárias
+    dfdados = dfdados .drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
 
     return dfdados
 
