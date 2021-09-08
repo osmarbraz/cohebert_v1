@@ -359,6 +359,7 @@ def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     logging.info("Qtde de dados de teste: {}.".format(len(dfdados_test)))
 
     # Remove os documentos muito grandes
-    dfdados_train, dfdados_test = descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train, dfdados_test)
+    dfdados_train = descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train)
+    dfdados_test = descartandoDocumentosGrandes(tokenizer, model_args, dfdados_test)
     
     return dfdados_train, dfdados_test        
