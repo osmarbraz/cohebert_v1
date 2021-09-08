@@ -155,9 +155,9 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         # Adiciona a documento incoerente logo após a coerente para treino.
         for linha in documentos_train:     
             # 1 para o documento original
-            documentos_train_organizada.append((linha[0], linha[2], 1))  
+            documentos_train_organizada.append((linha[0], linha[1], 1))  
             # 0 para o documento permutado  
-            documentos_train_organizada.append((linha[3], linha[5], 0))
+            documentos_train_organizada.append((linha[2], linha[3], 0))
     
         # Cria um dataframe com os dados de treinamento.
         pddata_tuples_train = pd.DataFrame(documentos_train_organizada, columns=["id", "documento", "tipo"])
@@ -171,9 +171,9 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         # Adiciona a documento incoerente logo após a coerente para teste.
         for linha in documentos_test:    
             # 1 Para coerente.
-            documentos_test_organizada.append((linha[0], linha[2], 1))
+            documentos_test_organizada.append((linha[0], linha[1], 1))
             # 0 para uma permutação como incoerente.
-            documentos_test_organizada.append((linha[3], linha[5], 0))
+            documentos_test_organizada.append((linha[2], linha[3], 0))
     
         # Cria um dataframe com os dados de teste.
         pddata_tuples_test = pd.DataFrame(documentos_test_organizada, columns=["id", "documento", "tipo"])  
