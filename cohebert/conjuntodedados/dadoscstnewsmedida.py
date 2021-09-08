@@ -319,7 +319,7 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
         tamanho_maximo = model_args.max_seq_len
   
         # Tokenize a codifica os documentos para o BERT.     
-        dfdados['input_ids'] = dfdados['documentoOriginal'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+        dfdados['input_ids'] = dfdados['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         # Reduz para o tamanho máximo suportado pelo BERT.
         dfdados_512 = dfdados[dfdados['input_ids'].apply(len) <= tamanho_maximo]
@@ -330,13 +330,9 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
 
         logging.info("Quantidade de dados anterior: {}.".format(len(dfdadosAnterior)))
         logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
-
-        # Remove colunas desnecessárias
-        dfdadosSemLista = dfdadosretorno.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
-        dfdados512SemLista = dfdadosAnterior.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
-
+       
         # Registros removidos
-        df = dfdados512SemLista.merge(dfdadosSemLista, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
+        df = dfdadosAnterior.merge(dfdadosretorno, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
         logging.info("Quantidade de registros removidos: {}.".format(len(df)))
         
     else:
