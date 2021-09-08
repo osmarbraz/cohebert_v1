@@ -317,7 +317,7 @@ def downloadCSTNews(ORIGEM):
         #copiaCSTNewsGoogleDrive(): 
 
 # ============================   
-def descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados):
+def descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados):
     '''    
     Remove os documentos que extrapolam 512 tokens.
     Você pode definir o tamanho de documento que quiser no BERT, mas o modelo pré-treinado vem com um tamanho pré-definido. 
@@ -343,7 +343,7 @@ def descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados):
         tamanho_maximo = model_args.max_seq_len
   
         # Tokenize a codifica os documentos para o BERT.     
-        dfdados['input_ids'] = dfdados['documentoOriginal'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+        dfdados['input_ids'] = dfdados['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         # Reduz para o tamanho máximo suportado pelo BERT.
         dfdados_512 = dfdados[dfdados['input_ids'].apply(len) <= tamanho_maximo]
@@ -365,7 +365,7 @@ def descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados):
     return dfdadosretorno  
             
 # ============================
-def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
+def getConjuntoDeDadosClassificacaoFold(model_args, tokenizer, ORIGEM):
     '''    
     Carrega os dados do CSTNews de um fold e retorna um dataframe para classificação.
     
@@ -407,7 +407,7 @@ def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     logging.info("Qtde de dados de teste: {}.".format(len(dfdados_test)))
 
     # Remove os documentos muito grandes
-    dfdados_train = descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados_train)
-    dfdados_test = descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados_test)
+    dfdados_train = descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados_train)
+    dfdados_test = descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados_test)
     
     return dfdados_train, dfdados_test        
