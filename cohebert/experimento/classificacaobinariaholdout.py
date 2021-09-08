@@ -137,15 +137,15 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
         # Cabeçalho do arquivo csv
         CABECALHO_ARQUIVO = "data;id;classe;predicao"
 
-        # Gera todo o conteúdo a ser salvo no arquivo
-        novoConteudo = ""        
+        # Gera todo o conteúdo a ser salvo no arquivo        
+        novoConteudo = CABECALHO_ARQUIVO + "\n";      
         for resultado in lista_resultado_avaliacao:      
             novoConteudo = novoConteudo + data_e_hora.strftime("%d/%m/%Y %H:%M") + ";" + str(resultado[0]) + ";" + str(resultado[1]) + ";" + str(resultado[2]) + "\n"
 
         logging.info("Criando arquivo classificação: {}.".format(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO))
         # Abre novamente o arquivo (escrita).
         arquivo = open(NOME_ARQUIVO_CLASSIFICACAO_COMPLETO, 'w')
-        arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+        arquivo.writelines(novoConteudo)  # escreva o conteúdo criado anteriormente nele.
         # Fecha o arquivo.
         arquivo.close()            
             
@@ -211,6 +211,6 @@ def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc,
             logging.info("Criando arquivo resultado avaliação: {}.".format(NOME_ARQUIVO_AVALIACAO_COMPLETO))
             # Abre novamente o arquivo (escrita).
             arquivo = open(NOME_ARQUIVO_AVALIACAO_COMPLETO, 'w')
-            arquivo.writelines(CABECALHO_ARQUIVO + '\n' + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
+            arquivo.writelines(CABECALHO_ARQUIVO + "\n" + novoConteudo)  # escreva o conteúdo criado anteriormente nele.
             # Fecha o arquivo.
             arquivo.close()                      
