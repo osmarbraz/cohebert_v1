@@ -174,7 +174,8 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
     `tokenizer` - Tokenizador BERT. 
     `documentos_teste` - Lista dos documentos de teste. 
     `classes_teste` - Lista das classes dos documentos de teste. 
-    `documentoids_teste` - Lista dos ids dos documentos de teste.     
+    `documentoids_teste` - Lista dos ids dos documentos de teste.
+    `wandb` - Registro dos logs da avaliação.
     '''
 
     # Recupera o dispotivo da GPU 
@@ -308,13 +309,14 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
     media_test_loss = np.mean(test_losses)
 
     if model_args.use_wandb:
-        # Log do wandb
-        wandb.log({"acuracia": acc})
-        wandb.log({"vp": vp_s})
-        wandb.log({"vn": vn_s})
-        wandb.log({"fp": fp_s})
-        wandb.log({"fn": fn_s})
-        wandb.log({"media_test_loss": media_test_loss})
+        if wandb != None:
+            # Log do wandb
+            wandb.log({"acuracia": acc})
+            wandb.log({"vp": vp_s})
+            wandb.log({"vn": vn_s})
+            wandb.log({"fp": fp_s})
+            wandb.log({"fn": fn_s})
+            wandb.log({"media_test_loss": media_test_loss})
 
     # Fecha a barra de progresso.
     lote_teste_bar.close()
@@ -341,6 +343,7 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
     `documentos_treino` - Lista dos documentos de treino. 
     `classes_treino` - Lista das classes dos documentos de treino. 
     `documentoids_treino` - Lista dos ids dos documentos de treino.     
+    `wandb` - Wandb para log do experimento. 
     
     Retorno:  
     `model` - Modelo BERT ajustado.
@@ -382,8 +385,9 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
     train_losses = []
 
     if model_args.use_wandb:
-        # Log das métricas com wandb.
-        wandb.watch(model)
+        if wandb != None:
+            # Log das métricas com wandb.
+            wandb.watch(model)
 
     # Barra de progresso da época.
     epoca_bar = tqdm_notebook(range(training_args.num_train_epochs), desc=f"Épocas", unit=f"épocas")
@@ -476,7 +480,8 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
             lote_treino_bar.set_postfix(loss=loss.item())
 
             if model_args.use_wandb:
-                wandb.log({"train_batch_loss": loss.item()})
+                if wandb != None:
+                    wandb.log({"train_batch_loss": loss.item()})
 
             # Execute uma passagem para trás para calcular os gradientes.
             # Todos os parâmetros do modelo deve ter sido setado para param.requires_grad = False
@@ -504,7 +509,8 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
         train_losses.append(media_train_epoca_loss)
 
         if model_args.use_wandb:
-            wandb.log({"media_train_epoca_loss": media_train_epoca_loss})           
+            if wandb != None:
+                wandb.log({"media_train_epoca_loss": media_train_epoca_loss})           
         
         # Medida de quanto tempo levou essa época.
         treinamento_epoca_total = formataTempo(time.time() - treinamento_epoca_t0)
@@ -527,7 +533,8 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
     media_train_loss = np.mean(train_losses)
 
     if model_args.use_wandb:
-        wandb.log({"media_train_loss": media_train_loss})   
+        if wandb != None:
+            wandb.log({"media_train_loss": media_train_loss})   
 
     logging.info("  Média perda(loss) treinamento : {0:.8f}.".format(media_train_loss))
 
