@@ -274,11 +274,9 @@ def converteListaParesDocumentos(lista_documentos):
     Converte a lista de pares(lista_documentos) de documentos em um dataframe.
     Atributos do dataframe:
         0. 'idOriginal' - Nome do arquivo original.
-        1. 'sentencasOriginais' - Lista das sentenças do documento original.
-        2. 'documentoOriginal' - Documento original.
-        3. 'idPermutado' - Nome do arquivo permutado.
-        4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado.
-        5. 'documentoPermutado' - Documento permutado.
+        1. 'documentoOriginal' - Documento original.
+        2. 'idPermutado' - Nome do arquivo permutado.
+        3. 'documentoPermutado' - Documento permutado.
         
     Parâmetros:
     `lista_documentos` - Lista de pares de documentos.
@@ -322,7 +320,7 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
         tamanho_maximo = model_args.max_seq_len
   
         # Tokenize a codifica os documentos para o BERT.     
-        dfdados['input_ids'] = dfdados['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+        dfdados['input_ids'] = dfdados['documentoOriginal'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         # Reduz para o tamanho máximo suportado pelo BERT.
         dfdados_512 = dfdados[dfdados['input_ids'].apply(len) <= tamanho_maximo]
