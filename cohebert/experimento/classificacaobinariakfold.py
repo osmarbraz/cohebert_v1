@@ -165,7 +165,7 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
             arquivo.close()        
 
 # ============================        
-def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc, rec, pre, f1, vp_s, vn_s, fp_s, fn_s):
+def salvaResultadoAvaliacao(model_args, training_args, DIRETORIO_AVALIACAO, acc, rec, pre, f1, vp_s, vn_s, fp_s, fn_s, treinamento_total):
     '''
     Salva os dados da avaliação de um fold. 
     
