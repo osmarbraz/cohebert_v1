@@ -32,7 +32,7 @@ sys.path.append("./coebert_v1/coebert")
 
 Depois de instalar as bibliotecas necessárias podemos fazer uso da biblioteca **CoheBERT**.
 
-Realizamos o import das bibliotecas do **CoheBERT** e instanciamos a classe CoherenceBERT para que seja realizado download do modelo pré-treinado. O download é realizado da comunidade ou de uma url.
+Realizamos o import das bibliotecas do **CoheBERT** e instanciamos um objeto da classe CoherenceBERT para que seja realizado download do modelo pré-treinado. O download é realizado da comunidade ou de uma url.
 
 ````python
 from coherence_bert import CoherenceBERT
