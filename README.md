@@ -1,4 +1,4 @@
-# Investigando coerência em postagens de um fórum de dúvidas em ambiente virtual de aprendizagem com o BERT
+# Classificação e mensuração de coerência com BERT - CoheBERT
 Classificação e mensuração de coerência textual utilizando o MCL BERT.
 
 
