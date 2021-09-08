@@ -355,17 +355,17 @@ def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     ARQUIVO_TREINO = DIRETORIO + "/" + PREFIXO_NOME_ARQUIVO_TREINO + str(fold) + ".csv"
     ARQUIVO_TESTE = DIRETORIO + "/" + PREFIXO_NOME_ARQUIVO_TESTE + str(fold) + ".csv" 
 
-    logging.info("Carregando arquivo de treino: {}".format(ARQUIVO_TREINO))
-    logging.info("Carregando arquivo de teste: {}".format(ARQUIVO_TESTE))
+    logging.info("Carregando arquivo de treino: {}.".format(ARQUIVO_TREINO))
+    logging.info("Carregando arquivo de teste: {}.".format(ARQUIVO_TESTE))
 
     # Carrega o dataset de treino e teste.
     dfdados_train = pd.read_csv(ARQUIVO_TREINO, sep=';')
-    logging.info('Qtde de dados de treino: {}'.format(len(dfdados_train)))
+    logging.info("Qtde de dados de treino: {}.".format(len(dfdados_train)))
     dfdados_test = pd.read_csv(ARQUIVO_TESTE, sep=';')
-    logging.info('Qtde de dados de teste: {}'.format(len(dfdados_test)))
+    logging.info("Qtde de dados de teste: {}.".format(len(dfdados_test)))
     
     # Remove os documentos muito grandes
-    dfdados_train = descartandoDocumentosGrandes(tokenizer, model_args, dfdados_train)
-    dfdados_test = descartandoDocumentosGrandes(tokenizer, model_args, dfdados_test)
+    dfdados_train = descartandoDocumentosGrandes(model_args, tokenizer, dfdados_train)
+    dfdados_test = descartandoDocumentosGrandes(model_args, tokenizer, dfdados_test)
     
     return dfdados_train, dfdados_test        
