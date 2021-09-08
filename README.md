@@ -28,7 +28,7 @@ sys.path.append("./coebert_v1/coebert")
 
 ## Exemplo simples
 
-[Este exemplo simples](notebooks/ExemploCoherenceBERT.ipynb) mostra como utilizar o **CoheBERT** e um modelo BERT pré-treinado para medir a coerência de documentos.
+[Este exemplo simples](notebooks/ExemploCoherenceBERT.ipynb) mostra como utilizar o **CoheBERT** e um modelo BERT pré-treinado são usados para medir a coerência de documentos através da permutação de sentenças.
 
 Depois de instalar as bibliotecas necessárias podemos fazer uso da biblioteca **CoheBERT**.
 
@@ -40,7 +40,7 @@ from coherence_bert import CoherenceBERT
 cohebert = CoherenceBERT("neuralmind/bert-large-portuguese-cased") # BERTimbau large
 ````
 
-Em seguida, forneça algumas sentenças ao **CoheBERT** e recupere a medida.
+Em seguida, forneça algumas sentenças separadas em uma lista ao **CoerenciaBERT** e recupere a medida.
 
 ````python
 # Documento e suas sentenças
