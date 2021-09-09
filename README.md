@@ -100,7 +100,13 @@ Relação e descrição dos principais diretórios do cohebert.
     * **AjusteFinoCSTNews_v1_C_SB_KFold_Todos.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado para todos os folds de uma parâmetrização.
     * **AjusteFinoCSTNews_AvaliacaoOnlineEduc_v1_C_SB.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado com os dados do CSTNews e a avaliação com os dados do OnlineEduc 1.0.
     * **CorrelacaoCSTNews_ClassificadorCalculo_v1.ipynb** - Realiza o análise dos resultados do classificador e o cálculo das medidas de coerência.
- 
+
+## Registro dos resultados dos experimentos
+
+Os resultados dos experimentos foram armazenados na ferramenta Wandb.
+
+*  Classificação: [CSTNews](https://wandb.ai/osmar-braz/ajustefinocstnews_v1_c_sb_kfold?workspace=user-osmar-braz) e [OnlineEduc1.0](https://wandb.ai/osmar-braz/ajustefinomoodle_v1_c_sb_kfold?workspace=user-osmar-braz)
+*  Mensuração: [CSTNews](https://wandb.ai/osmar-braz/medidacoerenciamoodle_v1?workspace=user-osmar-braz) e [OnlineEduc1.0](https://wandb.ai/osmar-braz/medidacoerenciamoodle_v1?workspace=user-osmar-braz) 
 
 ## Citando & Autores
 Se achar este repositório útil, sinta-se à vontade para citar nossa [publicação](https://):
