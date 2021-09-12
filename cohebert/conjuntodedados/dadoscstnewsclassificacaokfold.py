@@ -105,6 +105,13 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     `model_args` - Objeto com os argumentos do modelo.    
     `DIRETORIO_BASE` - Diretório onde salvar os dados.  
     `dfdados` - Dataframe com os dados a serem divididos.        
+        Atributos de dfdados:
+        0. 'idOriginal' - Nome do arquivo original.
+        1. 'sentencasOriginais' - Lista das sentenças do documento original.
+        2. 'documentoOriginal' - Documento original.
+        3. 'idPermutado' - Nome do arquivo permutado.
+        4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado.
+        5. 'documentoPermutado' - Documento permutado.        
         
     Retorno:
         Arquivos dos KFolds salvos no diretório base.
@@ -124,6 +131,9 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     # Define o prefixo do nome dos arquivos dos folds
     PREFIXO_NOME_ARQUIVO_TREINO = DIRETORIO_BASE + "/cstnews_md_train_f"
     PREFIXO_NOME_ARQUIVO_TESTE = DIRETORIO_BASE + "/cstnews_md_test_f"
+
+    # Remove colunas desnecessárias
+    dfdados = dfdados.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
 
     # Preparação do conjunto de dados.
     X = np.array(dfdados)
