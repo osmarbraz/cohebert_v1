@@ -314,6 +314,9 @@ def descartandoDocumentosGrandesMedida(model_args, tokenizer, dfdados):
     
     # Verifica se o tokenizador foi carregado
     if tokenizer != None:
+        
+        # Remove colunas desnecessárias
+        dfdados = dfdados.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
     
         # Define o tamanho máximo para os tokens
         tamanho_maximo = model_args.max_seq_len
