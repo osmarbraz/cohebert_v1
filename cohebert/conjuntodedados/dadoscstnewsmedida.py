@@ -314,9 +314,6 @@ def descartandoDocumentosGrandesMedida(model_args, tokenizer, dfdados):
     
     # Verifica se o tokenizador foi carregado
     if tokenizer != None:
-        
-        # Remove colunas desnecessárias
-        dfdados = dfdados.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
     
         # Define o tamanho máximo para os tokens
         tamanho_maximo = model_args.max_seq_len
@@ -333,15 +330,19 @@ def descartandoDocumentosGrandesMedida(model_args, tokenizer, dfdados):
 
         logging.info("Quantidade de dados anterior: {}.".format(len(dfdadosAnterior)))
         logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
-       
+
+        # Remove colunas desnecessárias
+        dfdadosSemLista = dfdadosretorno.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
+        dfdados512SemLista = dfdadosAnterior.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
+
         # Registros removidos
-        df = dfdadosAnterior.merge(dfdadosretorno, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
+        df = dfdados512SemLista.merge(dfdadosSemLista, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
         logging.info("Quantidade de registros removidos: {}.".format(len(df)))
         
     else:
         logging.info("Tokenizador não definido.")        
-
-    return dfdadosretorno  
+    
+    return dfdadosretorno   
 
 # ============================
 def getListasDocumentosMedidas(ORIGEM):  
