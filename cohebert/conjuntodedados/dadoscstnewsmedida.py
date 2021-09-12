@@ -274,9 +274,11 @@ def converteListaParesDocumentos(lista_documentos):
     Converte a lista de pares(lista_documentos) de documentos em um dataframe.
     Atributos do dataframe:
         0. 'idOriginal' - Nome do arquivo original.
-        1. 'documentoOriginal' - Documento original.
-        2. 'idPermutado' - Nome do arquivo permutado.
-        3. 'documentoPermutado' - Documento permutado.
+        1. 'sentencasOriginais' - Lista das sentenças do documento original.
+        2. 'documentoOriginal' - Documento original.
+        3. 'idPermutado' - Nome do arquivo permutado.
+        4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado.
+        5. 'documentoPermutado' - Documento permutado.
         
     Parâmetros:
     `lista_documentos` - Lista de pares de documentos.
@@ -287,9 +289,6 @@ def converteListaParesDocumentos(lista_documentos):
 
     # Converte a lista em um dataframe.
     dfdados = pd.DataFrame.from_records(lista_documentos, columns=['idOriginal', 'sentencasOriginais', 'documentoOriginal', 'idPermutado', 'sentencasPermutadas', 'documentoPermutado'])
-    
-    # Remove colunas desnecessárias
-    dfdados = dfdados.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
 
     return dfdados
 
