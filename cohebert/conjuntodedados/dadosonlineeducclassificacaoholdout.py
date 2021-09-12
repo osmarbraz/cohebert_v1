@@ -63,7 +63,7 @@ def organizaDados(dfdados):
     return dfdados 
 
 # ============================   
-def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
+def descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados):
     '''    
     Remove os documentos que extrapolam 512 tokens.
     Você pode definir o tamanho de documento que quiser no BERT, mas o modelo pré-treinado vem com um tamanho pré-definido. 
@@ -84,6 +84,9 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
     
     # Verifica se o tokenizador foi carregado
     if tokenizer != None:
+        
+        # Remove colunas desnecessárias
+        dfdados = dfdados.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
     
         # Define o tamanho máximo para os tokens
         tamanho_maximo = model_args.max_seq_len
@@ -100,7 +103,7 @@ def descartandoDocumentosGrandes(model_args, tokenizer, dfdados):
 
         logging.info("Quantidade de dados anterior: {}.".format(len(dfdadosAnterior)))
         logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
-       
+
         # Registros removidos
         df = dfdadosAnterior.merge(dfdadosretorno, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
         logging.info("Quantidade de registros removidos: {}.".format(len(df)))

@@ -332,6 +332,7 @@ def descartandoDocumentosGrandesMedida(model_args, tokenizer, dfdados):
         logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
 
         # Remove colunas desnecessárias
+        # Para calcular o número de registros removidos não pode existir listas no dataframe
         dfdadosSemLista = dfdadosretorno.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
         dfdados512SemLista = dfdadosAnterior.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
 
