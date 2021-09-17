@@ -1,6 +1,7 @@
-# Classificação e mensuração de coerência com BERT - CoheBERT
-Classificação e mensuração de coerência textual utilizando o MCL BERT.
+# Investigando coerência em postagens de um fórum de dúvidas em ambiente virtual de aprendizagem com o BERT
 
+## **Resumo**
+Incoerências podem causar dificuldades na interpretação de discursos e impactar o desempenho de agentes conversacionais e tutores inteligentes, entre outros. Modelos contextualizados de linguagem como o BERT não foram ainda explorados na análise de incoerência, a despeito de sua eficácia comprovada em diversas tarefas afins. Este trabalho usa variações do BERT em língua portuguesa para classificar e medir coerência textual. Experimentos com textos de notícias e de um fórum educacional de dúvidas de estudantes mostram que o BERT suporta discriminação da ordem de sentenças com até 99,20% de acurácia e algumas medidas de (in)coerência consistentes com tal classificação, sendo a maioria dos melhores resultados para os textos do fórum. 
 
 ## **Instalação**
 
@@ -23,24 +24,24 @@ Mudar o diretório corrente para a pasta clonada
 ```python
 import sys
 
-sys.path.append("./coebert_v1/coebert")
+sys.path.append("./cohebert_v1/cohebert")
 ```
 
 ## Exemplo simples
 
-[Este exemplo simples](notebooks/ExemploCoherenceBERT.ipynb) mostra como utilizar o **CoheBERT** e um modelo BERT pré-treinado são usados para medir a coerência de documentos através da permutação de sentenças.
+[Este exemplo simples](notebooks/ExemploCoheBERT_v1.ipynb) mostra como o pacote **cohebert_v1** e um modelo BERT pré-treinado são usados para medir a coerência de documentos através da permutação de sentenças.
 
-Depois de instalar as bibliotecas necessárias podemos fazer uso da biblioteca **CoheBERT**.
+Depois de instalar as bibliotecas necessárias podemos fazer uso da biblioteca **cohebert_v1**.
 
-Realizamos o import das bibliotecas de **CoheBERT** e instanciamos um objeto da classe **CoherenceBERT** para que seja realizado download do modelo pré-treinado. O download é realizado da comunidade ou de uma url.
+Realizamos o import das bibliotecas de **cohebert_v1** e instanciamos um objeto da classe **CoheBERT** para que seja realizado download do modelo pré-treinado. O download é realizado da comunidade ou de uma url.
 
 ````python
-from coherence_bert import CoherenceBERT
+from cohebert import CoheBERT
 
-cohebert = CoherenceBERT("neuralmind/bert-large-portuguese-cased") # BERTimbau large
+cohebert = CoheBERT("neuralmind/bert-large-portuguese-cased") # BERTimbau large
 ````
 
-Em seguida, forneça algumas sentenças separadas em uma lista ao **CoerenciaBERT** e recupere a medida.
+Em seguida, forneça algumas sentenças separadas em uma lista ao **CoheBERT** e recupere a medida.
 
 ````python
 # Documento e suas sentenças
@@ -79,7 +80,7 @@ Exemplos de execução completos com o **CoheBERT** são mostrados nos [notebook
 
 Relação e descrição dos principais diretórios do cohebert.
 
-* **cohebert** - Código fonte do CoheBERT versão 1.0
+* **cohebert** - Código fonte do CoheBERT.
 * **conjuntodedados** - Diretório com os conjuntos de dados.
   * **cstnews** - Arquivos do conjunto de dados do CSTNews.
   * **onlineeduc1.0** - Arquivos do conjunto de dados do OnlineEduc 1.0 (**Não disponibilizado**).
@@ -100,24 +101,26 @@ Relação e descrição dos principais diretórios do cohebert.
     * **AjusteFinoCSTNews_v1_C_SB_KFold_Todos.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado para todos os folds de uma parâmetrização.
     * **AjusteFinoCSTNews_AvaliacaoOnlineEduc_v1_C_SB.ipynb** - Realiza o ajuste fino do MCL BERT Pré-treinado com os dados do CSTNews e a avaliação com os dados do OnlineEduc 1.0.
     * **CorrelacaoCSTNews_ClassificadorCalculo_v1.ipynb** - Realiza o análise dos resultados do classificador e o cálculo das medidas de coerência.
-
+ 
 ## Registro dos resultados dos experimentos
 
 Os resultados dos experimentos foram armazenados na ferramenta Wandb.
 
 *  Classificação: [CSTNews](https://wandb.ai/osmar-braz/ajustefinocstnews_v1_c_sb_kfold?workspace=user-osmar-braz) e [OnlineEduc1.0](https://wandb.ai/osmar-braz/ajustefinomoodle_v1_c_sb_kfold?workspace=user-osmar-braz)
-*  Mensuração: [CSTNews](https://wandb.ai/osmar-braz/medidacoerenciamoodle_v1?workspace=user-osmar-braz) e [OnlineEduc1.0](https://wandb.ai/osmar-braz/medidacoerenciamoodle_v1?workspace=user-osmar-braz) 
+*  Mensuração: [CSTNews](https://wandb.ai/osmar-braz/medidacoerenciamoodle_v1?workspace=user-osmar-braz) e [OnlineEduc1.0](https://wandb.ai/osmar-braz/medidacoerenciamoodle_v1?workspace=user-osmar-braz)
 
 ## Citando & Autores
+
 Se achar este repositório útil, sinta-se à vontade para citar nossa [publicação](https://):
 
 ```bibtex 
 @inproceedings{brazfileto-2021-cohebert,
     title = "Investigando coerência em postagens de um fórum de dúvidas em ambiente virtual de aprendizagem com o BERT",
     author = "Braz, Osmar and Fileto, Renato",
-    booktitle = "xxxxxx",
-    year = "2021",
-    publisher = "xxx",
+    booktitle = "Anais do XXXII Simpósio Brasileiro de Informática na Educação",
+	pages={XXXX-XXXX},
+    year = "2021",    
+	organization={SBC},
     url = "https://xxxxx",
 }
 ```
