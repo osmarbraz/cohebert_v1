@@ -219,7 +219,7 @@ def copiaOnlineEducGithub():
     NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"
     
     # Diretórios dos arquivos
-    DIRETORIO_FONTE_ARQUIVO = "/content/coerenciabert/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO
+    DIRETORIO_FONTE_ARQUIVO = "./conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO
     DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
     
     # Apaga o arquivo    
@@ -263,7 +263,7 @@ def downloadOnlineEducGithub():
         os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do OneDrive
-    URL_ARQUIVO = "https://github.com/osmarbraz/coerenciabert/blob/main/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO + "?raw=true"
+    URL_ARQUIVO = "https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO + "?raw=true"
 
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
