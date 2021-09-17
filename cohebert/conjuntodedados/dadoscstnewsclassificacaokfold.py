@@ -200,6 +200,9 @@ def copiaCSTNewsGithub():
     Copia dos arquivos do conjunto de dados do CSTNews para classificação KFold do Github.
     '''
     
+    # Verifica se existe o diretório base
+    DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
+    
     logging.info("Copiando do CSTNews do checkout do Github")
 
     # Diretório dos arquivos de dados.
@@ -217,7 +220,7 @@ def copiaCSTNewsGithub():
     NOME_ARQUIVO = "CSTNEWS_MD_KFOLD_10.zip"
     
     # Diretórios dos arquivos
-    DIRETORIO_FONTE_ARQUIVO = "./conjuntodedados/cstnews/" + NOME_ARQUIVO
+    DIRETORIO_FONTE_ARQUIVO = "/content/" + DIRETORIO_COHEBERT + "/conjuntodedados/cstnews/" + NOME_ARQUIVO
     DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
     
     # Apaga o arquivo    

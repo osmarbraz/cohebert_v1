@@ -10,7 +10,7 @@ from util.utilmodulo import *
 from util.utiltempo import *
 
 # Diretório do cohebert
-DIRETORIO_COHEBERT = 'coerenciabert'
+DIRETORIO_COHEBERT = 'cohebert_v1'
 
 # ============================  
 def verificaDiretorioCoheBERT():
