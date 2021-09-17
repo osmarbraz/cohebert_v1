@@ -156,6 +156,7 @@ def downloadConjuntoDeDados():
 def converteListaParesDocumentos(lista_documentos):
     ''' 
     Converte a lista de pares(lista_documentos) de documentos em um dataframe.
+    Atributos do dataframe:
         0. 'idOriginal' - Nome do arquivo original.
         1. 'sentencasOriginais' - Lista das sentenças do documento original.
         2. 'documentoOriginal' - Documento original.
@@ -172,7 +173,7 @@ def converteListaParesDocumentos(lista_documentos):
 
     # Converte a lista em um dataframe.
     dfdados = pd.DataFrame.from_records(lista_documentos, columns=['idOriginal', 'sentencasOriginais', 'documentoOriginal', 'idPermutado', 'sentencasPermutadas', 'documentoPermutado'])
-   
+    
     return dfdados
     
 # ============================    
@@ -226,7 +227,7 @@ def descartandoDocumentosGrandesMedida(model_args, tokenizer, dfdados):
     else:
         logging.info("Tokenizador não definido.")        
     
-    return dfdadosretorno 
+    return dfdadosretorno  
 
 # ============================
 def getListasDocumentosMedidas(ORIGEM):  

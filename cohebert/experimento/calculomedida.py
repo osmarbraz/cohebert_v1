@@ -537,32 +537,28 @@ def calculaMedidasDocumentosConjuntoDeDados(model_args, dfdados, model, tokenize
     logging.info("Total de Pares: {}.".format(conta))
     
     if model_args.use_wandb:
-        if wandb != None:
-            wandb.log({'pares_doc': conta})
+        wandb.log({'pares_doc': conta})
 
     logging.info("Pares Corretos Ccos: {}.".format(contaCcos))
     percentualCcos = float(contaCcos) / float(conta)
     logging.info("Percentual acertos Ccos: {}.".format(percentualCcos * 100))
 
     if model_args.use_wandb:
-        if wandb != None:
-            wandb.log({'acuracia_ccos': acuraciaCcos})
+        wandb.log({'acuracia_ccos': acuraciaCcos})
 
     logging.info("Pares Corretos Ceuc: {}.".format(contaCeuc))
     percentualCeuc = float(contaCeuc) / float(conta)
     logging.info("Percentual acertos Ceuc: {}.".format(percentualCeuc * 100))
 
     if model_args.use_wandb:
-        if wandb != None:
-            wandb.log({'acuracia_ceuc': acuraciaCeuc})  
+        wandb.log({'acuracia_ceuc': acuraciaCeuc})  
 
     logging.info("Pares Corretos Cman: {}.".format(contaCman))
     percentualCman = float(contaCman) / float(conta)
     logging.info("Percentual acertos Cman: {}.".format(percentualCman * 100))
 
     if model_args.use_wandb:
-        if wandb != None:
-            wandb.log({'acuracia_cman': acuraciaCman})  
+        wandb.log({'acuracia_cman': acuraciaCman})  
     
     # Fecha a barra de progresso.
     dfdado_bar.close()

@@ -111,7 +111,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         2. 'documentoOriginal' - Documento original.
         3. 'idPermutado' - Nome do arquivo permutado.
         4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado.
-        5. 'documentoPermutado' - Documento permutado.       
+        5. 'documentoPermutado' - Documento permutado. 
         
     Retorno:
         Arquivos dos KFolds salvos no diretório base.
@@ -131,7 +131,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
     # Define o prefixo do nome dos arquivos dos folds
     PREFIXO_NOME_ARQUIVO_TREINO = DIRETORIO_BASE + "/moodle_train_f"
     PREFIXO_NOME_ARQUIVO_TESTE = DIRETORIO_BASE + "/moodle_test_f"
-    
+
     # Remove colunas desnecessárias
     dfdados = dfdados.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
 
@@ -165,7 +165,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         # Adiciona a documento incoerente logo após a coerente para treino.
         for linha in documentos_train:     
             # 1 para o documento original
-            documentos_train_organizada.append((linha[0], linha[1], 1))  
+            documentos_train_organizada.append((linha[0], linha[2], 1))  
             # 0 para o documento permutado  
             documentos_train_organizada.append((linha[2], linha[3], 0))
     
@@ -219,7 +219,7 @@ def copiaOnlineEducGithub():
     NOME_ARQUIVO = "MOODLE_KFOLD_10.zip"
     
     # Diretórios dos arquivos
-    DIRETORIO_FONTE_ARQUIVO = "/content/cohebert_v1/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO
+    DIRETORIO_FONTE_ARQUIVO = "/content/coerenciabert/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO
     DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
     
     # Apaga o arquivo    
@@ -263,7 +263,7 @@ def downloadOnlineEducGithub():
         os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do OneDrive
-    URL_ARQUIVO = "https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO + "?raw=true"
+    URL_ARQUIVO = "https://github.com/osmarbraz/coerenciabert/blob/main/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO + "?raw=true"
 
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
@@ -359,7 +359,7 @@ def descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados
         tamanho_maximo = model_args.max_seq_len
   
         # Tokenize a codifica os documentos para o BERT.     
-        dfdados['input_ids'] = dfdados['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+        dfdados['input_ids'] = dfdados['documentoOriginal'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         # Reduz para o tamanho máximo suportado pelo BERT.
         dfdados_512 = dfdados[dfdados['input_ids'].apply(len) <= tamanho_maximo]
@@ -370,7 +370,7 @@ def descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados
 
         logging.info("Quantidade de dados anterior: {}.".format(len(dfdadosAnterior)))
         logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
-       
+
         # Registros removidos
         df = dfdadosAnterior.merge(dfdadosretorno, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
         logging.info("Quantidade de registros removidos: {}.".format(len(df)))
@@ -413,19 +413,19 @@ def getConjuntoDeDadosClassificacaoFold(model_args, tokenizer, ORIGEM):
     ARQUIVO_TREINO = DIRETORIO + "/" + PREFIXO_NOME_ARQUIVO_TREINO + str(fold) + ".csv"
     ARQUIVO_TESTE = DIRETORIO + "/" + PREFIXO_NOME_ARQUIVO_TESTE + str(fold) + ".csv" 
 
-    logging.info("Carregando arquivo de treino: {}.".format(ARQUIVO_TREINO))
-    logging.info("Carregando arquivo de teste: {}.".format(ARQUIVO_TESTE))
+    logging.info("Carregando arquivo de treino: {}'".format(ARQUIVO_TREINO))
+    logging.info("Carregando arquivo de teste: {}'".format(ARQUIVO_TESTE))
 
     # Carrega o dataset de treino e teste.
     dfdados_train = pd.read_csv(ARQUIVO_TREINO, sep=';')
     logging.info("Qtde de dados de treino: {}.".format(len(dfdados_train)))
     dfdados_test = pd.read_csv(ARQUIVO_TESTE, sep=';')
     logging.info("Qtde de dados de teste: {}.".format(len(dfdados_test)))
-    
-    # Remove os documentos muito grandes
+
+    # Remove os documentos muito grandes    
     # Os dados de originais e permutados foram colocados em uma mesma coluna chamada "documento"
     # , o que diferencia é a classe 0 - Original e 1 - Permutado.
-    dfdados_train = descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados_train)
-    dfdados_test = descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados_test)
+    dfdados_train = descartandoDocumentosGrandesFold(model_args, tokenizer, dfdados_train)
+    dfdados_test = descartandoDocumentosGrandesFold(model_args, tokenizer, dfdados_test)
     
     return dfdados_train, dfdados_test        

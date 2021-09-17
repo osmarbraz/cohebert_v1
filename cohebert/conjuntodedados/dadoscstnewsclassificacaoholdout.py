@@ -103,7 +103,7 @@ def descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados):
 
         logging.info("Quantidade de dados anterior: {}.".format(len(dfdadosAnterior)))
         logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
-       
+
         # Registros removidos
         df = dfdadosAnterior.merge(dfdadosretorno, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
         logging.info("Quantidade de registros removidos: {}.".format(len(df)))
@@ -111,7 +111,7 @@ def descartandoDocumentosGrandesClassificacao(model_args, tokenizer, dfdados):
     else:
         logging.info("Tokenizador não definido.")        
 
-    return dfdadosretorno  
+    return dfdadosretorno      
     
 # ============================
 def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):  
@@ -142,3 +142,54 @@ def getConjuntoDeDadosClassificacao(model_args, tokenizer, ORIGEM):
     dfdados = organizaDados(dfdados)
     
     return dfdados
+
+
+
+# ============================
+def descartandoDocumentosGrandesTreinoTeste(model_args, tokenizer, dfdados_train, dfdados_test):
+    '''
+    Descarta os documentos que possuem mais tokens que o tamanho máximo em model_args(max_seq_len). 
+    
+    Parâmetros:        
+    `model_args` - Objeto com os argumentos do modelo.
+    `tokenizer` - Tokenizador BERT.
+    `dfdados_train` - Dataframe com os dados de treinamento.
+    `dfdados_test` - Dataframe com os dados de teste.
+    
+    Retorno:
+    `dfdados_train` - Dataframe com os dados de treinamento sem documentos grandes.
+    `dfdados_test` - Dataframe com os dados de teste sem documentos grandes.
+    '''    
+    
+    # Verifica se o tokenizador foi carregado
+    if tokenizer != None:
+        
+        # Define o tamanho máximo para os tokens
+        tamanho_maximo = model_args.max_seq_len
+
+        logging.info("Removendo documentos grandes, acima de {} tokens.".format(tamanho_maximo))
+
+        # Tokenize a codifica as setenças para o BERT     
+        dfdados_train['input_ids'] = dfdados_train['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+
+        dfdados_train = dfdados_train[dfdados_train['input_ids'].apply(len) < tamanho_maximo]
+
+        logging.info("Tamanho do dataset de treino: {}.".format(len(dfdados_train)))
+
+        # Remove as colunas desnecessárias
+        dfdados_train = dfdados_train.drop(columns=['input_ids'])
+
+        # Tokenize a codifica as setenças para o BERT.     
+        dfdados_test['input_ids'] = dfdados_test['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+
+        # Corta os inputs para o tamanho máximo 512
+        dfdados_test = dfdados_test[dfdados_test['input_ids'].apply(len) < tamanho_maximo]
+
+        logging.info("Tamanho do dataset de teste: {}".format(len(dfdados_test)))
+
+        # Remove as colunas desnecessárias
+        dfdados_test = dfdados_test.drop(columns=['input_ids'])
+    else:
+        logging.info("Tokenizador não definido.")        
+
+    return dfdados_train, dfdados_test

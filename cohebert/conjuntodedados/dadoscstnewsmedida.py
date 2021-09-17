@@ -343,7 +343,7 @@ def descartandoDocumentosGrandesMedida(model_args, tokenizer, dfdados):
     else:
         logging.info("Tokenizador não definido.")        
     
-    return dfdadosretorno   
+    return dfdadosretorno  
 
 # ============================
 def getListasDocumentosMedidas(ORIGEM):  

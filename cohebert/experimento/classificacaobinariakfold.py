@@ -135,7 +135,8 @@ def salvaResultadoClassificacao(model_args, training_args, DIRETORIO_CLASSIFICAC
         CABECALHO_ARQUIVO = "data;id;classe;predicao"
         
         # Gera todo o conteúdo a ser salvo no arquivo        
-        novoConteudo = "";    
+        novoConteudo = "";
+        
         for resultado in lista_resultado_avaliacao:      
             novoConteudo = novoConteudo + data_e_hora.strftime("%d/%m/%Y %H:%M") + ";" + str(resultado[0]) + ";" + str(resultado[1]) + ";" + str(resultado[2]) + "\n"
 

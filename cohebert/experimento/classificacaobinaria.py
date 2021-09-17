@@ -174,8 +174,8 @@ def realizaAvaliacao(model_args, training_args, model, tokenizer, documentos_tes
     `tokenizer` - Tokenizador BERT. 
     `documentos_teste` - Lista dos documentos de teste. 
     `classes_teste` - Lista das classes dos documentos de teste. 
-    `documentoids_teste` - Lista dos ids dos documentos de teste.
-    `wandb` - Registro dos logs da avaliação.
+    `documentoids_teste` - Lista dos ids dos documentos de teste.     
+    `wandb` - Wandb para log do experimento.
     '''
 
     # Recupera o dispotivo da GPU 
@@ -342,8 +342,8 @@ def realizaTreinamento(model_args, training_args, model, tokenizer, documentos_t
     `tokenizer` - Tokenizador BERT. 
     `documentos_treino` - Lista dos documentos de treino. 
     `classes_treino` - Lista das classes dos documentos de treino. 
-    `documentoids_treino` - Lista dos ids dos documentos de treino.     
-    `wandb` - Wandb para log do experimento. 
+    `documentoids_treino` - Lista dos ids dos documentos de treino.  
+    `wandb` - Registro dos logs da avaliação. 
     
     Retorno:  
     `model` - Modelo BERT ajustado.

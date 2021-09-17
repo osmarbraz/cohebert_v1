@@ -10,12 +10,12 @@ from util.utilmodulo import *
 from util.utiltempo import *
 
 # Diretório do cohebert
-DIRETORIO_COHEBERT = 'cohebert_v1'
+DIRETORIO_COHEBERT = 'coerenciabert'
 
 # ============================  
 def verificaDiretorioCoheBERT():
     '''    
-    Verifica se existe o diretório cohebert_v1 no diretório corrente.    
+    Verifica se existe o diretório coerenciabert no diretório corrente.    
     '''
     
     # Verifica se o diretório existe

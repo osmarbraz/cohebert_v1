@@ -111,7 +111,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
         2. 'documentoOriginal' - Documento original.
         3. 'idPermutado' - Nome do arquivo permutado.
         4. 'sentencasPermutadas' - Lista das sentenças do documento permtuado.
-        5. 'documentoPermutado' - Documento permutado.        
+        5. 'documentoPermutado' - Documento permutado.
         
     Retorno:
         Arquivos dos KFolds salvos no diretório base.
@@ -134,7 +134,7 @@ def gerarArquivosKFold(model_args, DIRETORIO_BASE, dfdados):
 
     # Remove colunas desnecessárias
     dfdados = dfdados.drop(columns=['sentencasOriginais', 'sentencasPermutadas'])
-
+    
     # Preparação do conjunto de dados.
     X = np.array(dfdados)
 
@@ -217,7 +217,7 @@ def copiaCSTNewsGithub():
     NOME_ARQUIVO = "CSTNEWS_MD_KFOLD_10.zip"
     
     # Diretórios dos arquivos
-    DIRETORIO_FONTE_ARQUIVO = "/content/cohebert_v1/conjuntodedados/cstnews/" + NOME_ARQUIVO
+    DIRETORIO_FONTE_ARQUIVO = "/content/coerenciabert/conjuntodedados/cstnews/" + NOME_ARQUIVO
     DIRETORIO_DESTINO_ARQUIVO = "/content/" + NOME_ARQUIVO
     
     # Apaga o arquivo    
@@ -260,7 +260,7 @@ def downloadCSTNewsGithub():
         os.remove(NOME_ARQUIVO)
     
     # Realiza o download do arquivo do OneDrive
-    URL_ARQUIVO = "https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/cstnews/" + NOME_ARQUIVO + "?raw=true"
+    URL_ARQUIVO = "https://github.com/osmarbraz/coerenciabert/blob/main/conjuntodedados/cstnews/" + NOME_ARQUIVO + "?raw=true"
 
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
@@ -364,7 +364,7 @@ def descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados
 
         logging.info("Quantidade de dados anterior: {}.".format(len(dfdadosAnterior)))
         logging.info("Nova quantidade de dados    : {}.".format(len(dfdadosretorno)))
-       
+
         # Registros removidos
         df = dfdadosAnterior.merge(dfdadosretorno, how='outer', indicator=True).loc[lambda x: x['_merge'] == 'left_only']
         logging.info("Quantidade de registros removidos: {}.".format(len(df)))
@@ -372,7 +372,7 @@ def descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados
     else:
         logging.info("Tokenizador não definido.")        
 
-    return dfdadosretorno  
+    return dfdadosretorno             
             
 # ============================
 def getConjuntoDeDadosClassificacaoFold(model_args, tokenizer, ORIGEM):
@@ -421,5 +421,5 @@ def getConjuntoDeDadosClassificacaoFold(model_args, tokenizer, ORIGEM):
     # , o que diferencia é a classe 0 - Original e 1 - Permutado.
     dfdados_train = descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados_train)
     dfdados_test = descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados_test)
-    
+        
     return dfdados_train, dfdados_test        
