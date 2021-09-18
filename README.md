@@ -29,7 +29,7 @@ sys.path.append("./cohebert_v1/cohebert")
 
 ## Exemplo simples
 
-[Este exemplo simples](notebooks/ExemploCoheBERT_v1.ipynb) mostra como o pacote **cohebert_v1** e um modelo BERT pré-treinado são usados para medir a coerência de documentos através da permutação de sentenças.
+[Este exemplo simples](notebooks/ExemploCoheBERT.ipynb) mostra como o pacote **cohebert_v1** e um modelo BERT pré-treinado são usados para medir a coerência de documentos através da permutação de sentenças.
 
 Depois de instalar as bibliotecas necessárias podemos fazer uso da biblioteca **cohebert_v1**.
 
