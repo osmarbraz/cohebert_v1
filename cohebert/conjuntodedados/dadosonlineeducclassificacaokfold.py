@@ -243,6 +243,9 @@ def downloadOnlineEducGithub():
     '''
 
     logging.info("Download do OnlineEduc do Github")  
+    
+    # Verifica se existe o diretório base do cohebert e retorna o nome do diretório
+    DIRETORIO_COHEBERT = verificaDiretorioCoheBERT()
    
     # Diretório dos arquivos de dados
     DIRETORIO = "/content/validacao_kfold"
@@ -263,7 +266,7 @@ def downloadOnlineEducGithub():
         os.remove(NOME_ARQUIVO)
 
     # Realiza o download do arquivo do OneDrive
-    URL_ARQUIVO = "https://github.com/osmarbraz/cohebert_v1/blob/main/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO + "?raw=true"
+    URL_ARQUIVO = "https://github.com/osmarbraz/" +  DIRETORIO_COHEBERT + "/blob/main/conjuntodedados/onlineeduc1.0/" + NOME_ARQUIVO + "?raw=true"
 
     # Realiza o download do arquivo do conjunto de dados    
     downloadArquivo(URL_ARQUIVO, NOME_ARQUIVO)
