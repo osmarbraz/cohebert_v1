@@ -362,7 +362,7 @@ def descartandoDocumentosGrandesClassificacaoFold(model_args, tokenizer, dfdados
         tamanho_maximo = model_args.max_seq_len
   
         # Tokenize a codifica os documentos para o BERT.     
-        dfdados['input_ids'] = dfdados['documentoOriginal'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
+        dfdados['input_ids'] = dfdados['documento'].apply(lambda tokens: tokenizer.encode(tokens, add_special_tokens=True))
 
         # Reduz para o tamanho máximo suportado pelo BERT.
         dfdados_512 = dfdados[dfdados['input_ids'].apply(len) <= tamanho_maximo]
