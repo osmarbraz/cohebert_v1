@@ -41,7 +41,7 @@ from cohebert import CoheBERT
 cohebert = CoheBERT("neuralmind/bert-large-portuguese-cased") # BERTimbau large
 ````
 
-Em seguida, forneça algumas sentenças separadas em uma lista ao **CoheBERT** e recupere a medida.
+Em seguida, forneça algumas sentenças separadas em uma lista para o **CoheBERT** calcular a coerência dessas sentenças usando alguma função de similaridade ou distância, tais como a similaridade cosseno ou a distância Euclidiana ou Manhathan.
 
 ````python
 # Documento e suas sentenças
@@ -83,7 +83,7 @@ Relação e descrição dos principais diretórios do cohebert.
 * **cohebert** - Código fonte do CoheBERT.
 * **conjuntodedados** - Diretório com os conjuntos de dados.
   * **cstnews** - Arquivos do conjunto de dados do CSTNews.
-  * **onlineeduc1.0** - Arquivos do conjunto de dados do OnlineEduc 1.0 (**Não disponibilizado**).
+  * **onlineeduc1.0** - Arquivos do conjunto de dados do OnlineEduc 1.0 (**Não disponibilizado** por se tratar de conjunto de dados de propriedade de uma universidade).
 
 * **experimentos** - Diretório com o resultados dos experimentos.
   * **cstnews** - Arquivos dos resultados do CSTNews.
