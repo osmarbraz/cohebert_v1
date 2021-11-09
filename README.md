@@ -118,9 +118,9 @@ Se achar este repositório útil, sinta-se à vontade para citar nossa [publica�
     title = "Investigando coerência em postagens de um fórum de dúvidas em ambiente virtual de aprendizagem com o BERT",
     author = "Braz, Osmar and Fileto, Renato",
     booktitle = "Anais do XXXII Simpósio Brasileiro de Informática na Educação",
-	pages={XXXX-XXXX},
+    pages={XXXX-XXXX},
     year = "2021",    
-	organization={SBC},
+    organization={SBC},
     url = "https://xxxxx",
 }
 ```
