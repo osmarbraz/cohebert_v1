@@ -116,11 +116,14 @@ Se achar este repositório útil, sinta-se à vontade para citar nossa [publica�
 ```bibtex 
 @inproceedings{brazfileto-2021-cohebert,
     title = "Investigando coerência em postagens de um fórum de dúvidas em ambiente virtual de aprendizagem com o BERT",
-    author = "Braz, Osmar and Fileto, Renato",
-    booktitle = "Anais do XXXII Simpósio Brasileiro de Informática na Educação",
-    pages={XXXX-XXXX},
-    year = "2021",    
-    organization={SBC},
-    url = "https://xxxxx",
+    author = "Braz, Osmar and Fileto, Renato",    
+	booktitle = {Anais do XXXII Simpósio Brasileiro de Informática na Educação},
+	location = {Online},
+	year = {2021},
+	pages = {749--759},
+	publisher = {SBC},
+    address = {Porto Alegre, RS, Brasil},
+	doi = {10.5753/sbie.2021.217397},
+	url = {https://sol.sbc.org.br/index.php/sbie/article/view/18103}        
 }
 ```
