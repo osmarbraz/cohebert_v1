@@ -111,7 +111,7 @@ Os resultados dos experimentos foram armazenados na ferramenta Wandb.
 
 ## Citando & Autores
 
-Se achar este repositório útil, sinta-se à vontade para citar nossa [publicação](https://sol.sbc.org.br/index.php/sbie/article/view/18103:
+Se achar este repositório útil, sinta-se à vontade para citar nossa [publicação](https://sol.sbc.org.br/index.php/sbie/article/view/18103):
 
 ```bibtex 
 @inproceedings{brazfileto-2021-cohebert,
