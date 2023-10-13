@@ -68,11 +68,13 @@ def encontrarIndiceSubLista(lista, sublista):
             if lista[i - j] != sublista[-j - 1]:
                 i += skip.get(lista[i], n)
                 break
-        else:
-            indiceInicio = i - n + 1
-            indiceFim = indiceInicio + len(sublista)-1
-            return indiceInicio, indiceFim
-        
+            else:
+                indiceInicio = i - n + 1
+                indiceFim = indiceInicio + len(sublista)-1
+                
+                return indiceInicio, indiceFim
+     
+     # Não encontrou a sublista na lista       
     return -1, -1
 
 # ============================
