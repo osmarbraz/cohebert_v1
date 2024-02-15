@@ -120,7 +120,7 @@ Se achar este repositório útil, sinta-se à vontade para citar nossa [publica�
     booktitle = {Anais do XXXII Simpósio Brasileiro de Informática na Educação},
     location = {Online},
     year = {2021},
-    pages = {749--759},
+    pages = {749-759},
     publisher = {SBC},
     address = {Porto Alegre, RS, Brasil},
     doi = {10.5753/sbie.2021.217397},
