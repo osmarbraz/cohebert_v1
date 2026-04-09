@@ -115,8 +115,8 @@ Se achar este repositório útil, sinta-se à vontade para citar nossa [publica�
 
 ```bibtex 
 @inproceedings{brazfileto-2021-cohebert,
-    title = "Investigando coerência em postagens de um fórum de dúvidas em ambiente virtual de aprendizagem com o BERT",
-    author = "Braz, Osmar and Fileto, Renato",    
+    title = {Investigando coerência em postagens de um fórum de dúvidas em ambiente virtual de aprendizagem com o BERT},    
+    author = {Junior, Osmar de Oliveira Braz and Fileto, Renato}, 
     booktitle = {Anais do XXXII Simpósio Brasileiro de Informática na Educação},
     location = {Online},
     year = {2021},
